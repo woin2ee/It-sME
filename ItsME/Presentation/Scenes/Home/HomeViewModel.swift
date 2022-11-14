@@ -5,19 +5,28 @@
 //  Created by Jaewon Yun on 2022/11/09.
 //
 
-import Foundation
+import RxSwift
+import RxCocoa
 
 final class HomeViewModel: ViewModelType {
     
     struct Input {
-        
+        let viewWillAppear: Signal<Void>
     }
     
     struct Output {
-        
+        let userInfo: Driver<UserInfo>
     }
     
+    private let userRepository: UserRepository = .init()
+    
     func transform(input: Input) -> Output {
-        return .init()
+        let userInfo = input.viewWillAppear
+            .flatMapLatest { _ in
+                return self.userRepository.getUserInfo()
+                    .asDriver(onErrorDriveWith: .empty())
+            }
+        
+        return Output(userInfo: userInfo)
     }
 }
