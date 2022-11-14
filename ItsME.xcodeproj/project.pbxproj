@@ -22,6 +22,7 @@
 		DAAFB2532918EE5A007A8DF0 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAFB2522918EE5A007A8DF0 /* UserInfo.swift */; };
 		DAB06A3D291BA5B400E86163 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06A3C291BA5B400E86163 /* HomeViewModel.swift */; };
 		DAB06A40291BA61100E86163 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06A3F291BA61100E86163 /* ViewModelType.swift */; };
+		DB169790AB17D072F4936595 /* Pods_ItsME.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 823C7DD7960C5DD2229AC1B1 /* Pods_ItsME.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +57,7 @@
 		D09AC9782918DE8B0081C0EC /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		D09AC97D2918DE8C0081C0EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D09AC9802918DE8C0081C0EC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		D09AC9822918DE8C0081C0EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "It'sME/Resources/Info.plist"; sourceTree = SOURCE_ROOT; };
+		D09AC9822918DE8C0081C0EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ItsME/Resources/Info.plist; sourceTree = SOURCE_ROOT; };
 		D09AC9872918DE8C0081C0EC /* ItsMETests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ItsMETests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09AC98B2918DE8C0081C0EC /* It_sMETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = It_sMETests.swift; sourceTree = "<group>"; };
 		D09AC9912918DE8C0081C0EC /* ItsMEUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ItsMEUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +68,7 @@
 		DAAFB2522918EE5A007A8DF0 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		DAB06A3C291BA5B400E86163 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		DAB06A3F291BA61100E86163 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		F871EFEC5CD92283AADAD541 /* Pods_ItsMETests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ItsMETests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
