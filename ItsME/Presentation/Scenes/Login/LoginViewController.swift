@@ -46,10 +46,15 @@ private extension LoginViewController {
     }
     
     func bindViewModel() {
-        let input = LoginViewModel.Input.init()
+        let input = LoginViewModel.Input.init(
+            kakaoLoginRequest: kakaoLoginButton.rx.tap.asSignal(),
+            appleLoginRequest: appleLoginButton.rx.controlEvent(.touchUpInside).asSignal()
+        )
         let output = viewModel.transform(input: input)
         
-        _ = output
+        output.loggedIn
+            .drive()
+            .disposed(by: disposeBag)
     }
     
     func configureSubviews() {
