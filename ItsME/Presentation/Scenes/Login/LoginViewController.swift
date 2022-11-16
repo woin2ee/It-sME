@@ -19,7 +19,7 @@ final class LoginViewController: UIViewController {
     // MARK: - UI Components
     
     private let logoImageView: UIImageView = {
-        return UIImageView.init(image: UIImage.init(systemName: "wrench.and.screwdriver.fill"))
+        return UIImageView.init(image: UIImage.init(named: "its_me_logo"))
     }()
     private let appleLoginButton: ASAuthorizationAppleIDButton = .init(type: .signIn, style: .black)
     private let kakaoLoginButton: UIButton = {
