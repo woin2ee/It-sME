@@ -68,6 +68,10 @@ private extension LoginViewController {
             make.width.height.equalTo(200)
         }
         
+        layoutLoginButtons()
+    }
+    
+    func layoutLoginButtons() {
         let screenWidth = self.view.safeAreaLayoutGuide.layoutFrame.size.width
         let widthInset: CGFloat = 60
         let buttonSpec: LoginButtonSpec = .init(width: screenWidth - widthInset)
