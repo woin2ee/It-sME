@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import SnapKit
+import AuthenticationServices
 
 final class LoginViewController: UIViewController {
     
@@ -20,10 +21,7 @@ final class LoginViewController: UIViewController {
     private let logoImageView: UIImageView = {
         return UIImageView.init(image: UIImage.init(systemName: "wrench.and.screwdriver.fill"))
     }()
-    private let appleLoginButton: UIButton = {
-        let button: UIButton = .init()
-        return button
-    }()
+    private let appleLoginButton: ASAuthorizationAppleIDButton = .init(type: .signIn, style: .black)
     private let kakaoLoginButton: UIButton = {
         let button: UIButton = .init()
         let image: UIImage? = .init(named: "kakao_login_large")
