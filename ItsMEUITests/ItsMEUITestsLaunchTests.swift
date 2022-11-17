@@ -1,13 +1,13 @@
 //
-//  It_sMEUITestsLaunchTests.swift
-//  It'sMEUITests
+//  ItsMEUITestsLaunchTests.swift
+//  ItsMEUITests
 //
 //  Created by MacBook Air on 2022/11/07.
 //
 
 import XCTest
 
-final class It_sMEUITestsLaunchTests: XCTestCase {
+final class ItsMEUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

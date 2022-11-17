@@ -14,18 +14,18 @@
 		D09AC9792918DE8B0081C0EC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9782918DE8B0081C0EC /* HomeViewController.swift */; };
 		D09AC97E2918DE8C0081C0EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D09AC97D2918DE8C0081C0EC /* Assets.xcassets */; };
 		D09AC9812918DE8C0081C0EC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D09AC97F2918DE8C0081C0EC /* LaunchScreen.storyboard */; };
-		D09AC98C2918DE8C0081C0EC /* It_sMETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC98B2918DE8C0081C0EC /* It_sMETests.swift */; };
-		D09AC9962918DE8C0081C0EC /* It_sMEUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9952918DE8C0081C0EC /* It_sMEUITests.swift */; };
-		D09AC9982918DE8C0081C0EC /* It_sMEUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9972918DE8C0081C0EC /* It_sMEUITestsLaunchTests.swift */; };
 		D0CCF4E12925FB0100AD4AE6 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E02925FB0100AD4AE6 /* UIView+.swift */; };
 		D0CCF4E3292604BE00AD4AE6 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E2292604BE00AD4AE6 /* UIColor+.swift */; };
 		D0CCF4E629260C2B00AD4AE6 /* ProfileInfoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E529260C2B00AD4AE6 /* ProfileInfoComponent.swift */; };
 		D0CCF4E829260ED200AD4AE6 /* UserInfoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E729260ED200AD4AE6 /* UserInfoItem.swift */; };
 		D0CCF4EB292A690600AD4AE6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0CCF4EA292A690600AD4AE6 /* GoogleService-Info.plist */; };
+		D09AC98C2918DE8C0081C0EC /* ItsMETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC98B2918DE8C0081C0EC /* ItsMETests.swift */; };
+		D09AC9982918DE8C0081C0EC /* ItsMEUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9972918DE8C0081C0EC /* ItsMEUITestsLaunchTests.swift */; };
 		DA0A88692921245000E9AE43 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0A88682921245000E9AE43 /* UserRepository.swift */; };
 		DA739DDA292398BE003AEE4C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DD9292398BE003AEE4C /* LoginViewController.swift */; };
 		DA739DDC292398C3003AEE4C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DDB292398C3003AEE4C /* LoginViewModel.swift */; };
 		DA739DE42924FE54003AEE4C /* CommonAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DE32924FE54003AEE4C /* CommonAlertViewController.swift */; };
+		DA739DE62925E35A003AEE4C /* ItsMEUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9952918DE8C0081C0EC /* ItsMEUITests.swift */; };
 		DAAFB2532918EE5A007A8DF0 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAFB2522918EE5A007A8DF0 /* UserInfo.swift */; };
 		DAB06A3D291BA5B400E86163 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06A3C291BA5B400E86163 /* HomeViewModel.swift */; };
 		DAB06A40291BA61100E86163 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06A3F291BA61100E86163 /* ViewModelType.swift */; };
@@ -66,15 +66,15 @@
 		D09AC9802918DE8C0081C0EC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D09AC9822918DE8C0081C0EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ItsME/Resources/Info.plist; sourceTree = SOURCE_ROOT; };
 		D09AC9872918DE8C0081C0EC /* ItsMETests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ItsMETests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D09AC98B2918DE8C0081C0EC /* It_sMETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = It_sMETests.swift; sourceTree = "<group>"; };
+		D09AC98B2918DE8C0081C0EC /* ItsMETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMETests.swift; sourceTree = "<group>"; };
 		D09AC9912918DE8C0081C0EC /* ItsMEUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ItsMEUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D09AC9952918DE8C0081C0EC /* It_sMEUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = It_sMEUITests.swift; sourceTree = "<group>"; };
-		D09AC9972918DE8C0081C0EC /* It_sMEUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = It_sMEUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D0CCF4E02925FB0100AD4AE6 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		D0CCF4E2292604BE00AD4AE6 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		D0CCF4E529260C2B00AD4AE6 /* ProfileInfoComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoComponent.swift; sourceTree = "<group>"; };
 		D0CCF4E729260ED200AD4AE6 /* UserInfoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoItem.swift; sourceTree = "<group>"; };
 		D0CCF4EA292A690600AD4AE6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D09AC9952918DE8C0081C0EC /* ItsMEUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMEUITests.swift; sourceTree = "<group>"; };
+		D09AC9972918DE8C0081C0EC /* ItsMEUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMEUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		DA0A88682921245000E9AE43 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		DA739DD9292398BE003AEE4C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DA739DDB292398C3003AEE4C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -177,7 +177,7 @@
 		D09AC98A2918DE8C0081C0EC /* ItsMETests */ = {
 			isa = PBXGroup;
 			children = (
-				D09AC98B2918DE8C0081C0EC /* It_sMETests.swift */,
+				D09AC98B2918DE8C0081C0EC /* ItsMETests.swift */,
 			);
 			path = ItsMETests;
 			sourceTree = "<group>";
@@ -185,8 +185,8 @@
 		D09AC9942918DE8C0081C0EC /* ItsMEUITests */ = {
 			isa = PBXGroup;
 			children = (
-				D09AC9952918DE8C0081C0EC /* It_sMEUITests.swift */,
-				D09AC9972918DE8C0081C0EC /* It_sMEUITestsLaunchTests.swift */,
+				D09AC9952918DE8C0081C0EC /* ItsMEUITests.swift */,
+				D09AC9972918DE8C0081C0EC /* ItsMEUITestsLaunchTests.swift */,
 			);
 			path = ItsMEUITests;
 			sourceTree = "<group>";
@@ -559,7 +559,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D09AC98C2918DE8C0081C0EC /* It_sMETests.swift in Sources */,
+				D09AC98C2918DE8C0081C0EC /* ItsMETests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,8 +567,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D09AC9962918DE8C0081C0EC /* It_sMEUITests.swift in Sources */,
-				D09AC9982918DE8C0081C0EC /* It_sMEUITestsLaunchTests.swift in Sources */,
+				DA739DE62925E35A003AEE4C /* ItsMEUITests.swift in Sources */,
+				D09AC9982918DE8C0081C0EC /* ItsMEUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -789,13 +789,16 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 585F6TK5A8;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ILGOB.It-sMETests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ItsME.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ItsME";
 			};
 			name = Debug;
@@ -810,13 +813,16 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 585F6TK5A8;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ILGOB.It-sMETests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ItsME.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ItsME";
 			};
 			name = Release;
@@ -833,10 +839,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ILGOB.It-sMEUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "It'sME";
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = ItsME;
 			};
 			name = Debug;
 		};
@@ -852,10 +861,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ILGOB.It-sMEUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "It'sME";
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = ItsME;
 			};
 			name = Release;
 		};

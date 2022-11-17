@@ -1,14 +1,14 @@
 //
-//  It_sMETests.swift
-//  It'sMETests
+//  ItsMETests.swift
+//  ItsMETests
 //
 //  Created by MacBook Air on 2022/11/07.
 //
 
 import XCTest
-@testable import It_sME
+@testable import ItsME
 
-final class It_sMETests: XCTestCase {
+final class ItsMETests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
