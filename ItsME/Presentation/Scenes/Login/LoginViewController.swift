@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import SnapKit
+import AuthenticationServices
 
 final class LoginViewController: UIViewController {
     
@@ -18,12 +19,9 @@ final class LoginViewController: UIViewController {
     // MARK: - UI Components
     
     private let logoImageView: UIImageView = {
-        return UIImageView.init(image: UIImage.init(systemName: "wrench.and.screwdriver.fill"))
+        return UIImageView.init(image: UIImage.init(named: "its_me_logo"))
     }()
-    private let appleLoginButton: UIButton = {
-        let button: UIButton = .init()
-        return button
-    }()
+    private let appleLoginButton: ASAuthorizationAppleIDButton = .init(type: .signIn, style: .black)
     private let kakaoLoginButton: UIButton = {
         let button: UIButton = .init()
         let image: UIImage? = .init(named: "kakao_login_large")
@@ -48,10 +46,15 @@ private extension LoginViewController {
     }
     
     func bindViewModel() {
-        let input = LoginViewModel.Input.init()
+        let input = LoginViewModel.Input.init(
+            kakaoLoginRequest: kakaoLoginButton.rx.tap.asSignal(),
+            appleLoginRequest: appleLoginButton.rx.controlEvent(.touchUpInside).asSignal()
+        )
         let output = viewModel.transform(input: input)
         
-        _ = output
+        output.loggedIn
+            .drive()
+            .disposed(by: disposeBag)
     }
     
     func configureSubviews() {
@@ -65,6 +68,10 @@ private extension LoginViewController {
             make.width.height.equalTo(200)
         }
         
+        layoutLoginButtons()
+    }
+    
+    func layoutLoginButtons() {
         let screenWidth = self.view.safeAreaLayoutGuide.layoutFrame.size.width
         let widthInset: CGFloat = 60
         let buttonSpec: LoginButtonSpec = .init(width: screenWidth - widthInset)
