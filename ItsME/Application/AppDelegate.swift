@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxKakaoSDKCommon
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -13,7 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        let infoDictionaryKey: String = "KAKAO_NATIVE_APP_KEY"
+        guard let appKey = Bundle.main.object(forInfoDictionaryKey: infoDictionaryKey) as? String else {
+            fatalError("Info.plist 파일에 \(infoDictionaryKey) 키 항목이 없습니다.")
+        }
+        RxKakaoSDK.initSDK(appKey: appKey)
+        
         return true
     }
 
