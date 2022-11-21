@@ -10,6 +10,7 @@ target 'ItsME' do
 	pod 'RxCocoa', '6.5.0'
 	pod 'SnapKit', '5.6.0'
 	pod 'RxKakaoSDK'
+	pod 'Firebase/Analytics' # Google Analytics
 
   target 'ItsMETests' do
     inherit! :search_paths
