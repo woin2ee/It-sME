@@ -17,6 +17,11 @@
 		D09AC98C2918DE8C0081C0EC /* It_sMETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC98B2918DE8C0081C0EC /* It_sMETests.swift */; };
 		D09AC9962918DE8C0081C0EC /* It_sMEUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9952918DE8C0081C0EC /* It_sMEUITests.swift */; };
 		D09AC9982918DE8C0081C0EC /* It_sMEUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9972918DE8C0081C0EC /* It_sMEUITestsLaunchTests.swift */; };
+		D0CCF4E12925FB0100AD4AE6 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E02925FB0100AD4AE6 /* UIView+.swift */; };
+		D0CCF4E3292604BE00AD4AE6 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E2292604BE00AD4AE6 /* UIColor+.swift */; };
+		D0CCF4E629260C2B00AD4AE6 /* ProfileInfoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E529260C2B00AD4AE6 /* ProfileInfoComponent.swift */; };
+		D0CCF4E829260ED200AD4AE6 /* UserInfoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E729260ED200AD4AE6 /* UserInfoItem.swift */; };
+		D0CCF4EB292A690600AD4AE6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0CCF4EA292A690600AD4AE6 /* GoogleService-Info.plist */; };
 		DA0A88692921245000E9AE43 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0A88682921245000E9AE43 /* UserRepository.swift */; };
 		DA739DDA292398BE003AEE4C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DD9292398BE003AEE4C /* LoginViewController.swift */; };
 		DA739DDC292398C3003AEE4C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DDB292398C3003AEE4C /* LoginViewModel.swift */; };
@@ -65,6 +70,11 @@
 		D09AC9912918DE8C0081C0EC /* ItsMEUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ItsMEUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09AC9952918DE8C0081C0EC /* It_sMEUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = It_sMEUITests.swift; sourceTree = "<group>"; };
 		D09AC9972918DE8C0081C0EC /* It_sMEUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = It_sMEUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D0CCF4E02925FB0100AD4AE6 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		D0CCF4E2292604BE00AD4AE6 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		D0CCF4E529260C2B00AD4AE6 /* ProfileInfoComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoComponent.swift; sourceTree = "<group>"; };
+		D0CCF4E729260ED200AD4AE6 /* UserInfoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoItem.swift; sourceTree = "<group>"; };
+		D0CCF4EA292A690600AD4AE6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DA0A88682921245000E9AE43 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		DA739DD9292398BE003AEE4C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DA739DDB292398C3003AEE4C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -152,6 +162,7 @@
 		D09AC9732918DE8B0081C0EC /* ItsME */ = {
 			isa = PBXGroup;
 			children = (
+				D0CCF4EA292A690600AD4AE6 /* GoogleService-Info.plist */,
 				DA739DDD2923B4D2003AEE4C /* ItsME.entitlements */,
 				DAAFB2492918E43B007A8DF0 /* Application */,
 				DAAFB2512918EE3D007A8DF0 /* Entities */,
@@ -180,6 +191,15 @@
 			path = ItsMEUITests;
 			sourceTree = "<group>";
 		};
+		D0CCF4E429260AF300AD4AE6 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				DA739DE22924FCA0003AEE4C /* AlertViewController */,
+				D0CCF4E529260C2B00AD4AE6 /* ProfileInfoComponent.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		DA0A88672921244400E9AE43 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,14 +215,6 @@
 				DA739DDB292398C3003AEE4C /* LoginViewModel.swift */,
 			);
 			path = Login;
-			sourceTree = "<group>";
-		};
-		DA739DE12924FC94003AEE4C /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				DA739DE22924FCA0003AEE4C /* AlertViewController */,
-			);
-			path = Common;
 			sourceTree = "<group>";
 		};
 		DA739DE22924FCA0003AEE4C /* AlertViewController */ = {
@@ -235,7 +247,7 @@
 		DAAFB24B2918E49A007A8DF0 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				DA739DE12924FC94003AEE4C /* Common */,
+				D0CCF4E429260AF300AD4AE6 /* Common */,
 				DAB06A3A291BA5A300E86163 /* Scenes */,
 			);
 			path = Presentation;
@@ -254,6 +266,7 @@
 			isa = PBXGroup;
 			children = (
 				DAAFB2522918EE5A007A8DF0 /* UserInfo.swift */,
+				D0CCF4E729260ED200AD4AE6 /* UserInfoItem.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -271,6 +284,7 @@
 			isa = PBXGroup;
 			children = (
 				DAB06A41291BA8C800E86163 /* Protocols */,
+				D0CCF4E02925FB0100AD4AE6 /* UIView+.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -279,6 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				DAB06A3F291BA61100E86163 /* ViewModelType.swift */,
+				D0CCF4E2292604BE00AD4AE6 /* UIColor+.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -395,6 +410,7 @@
 			files = (
 				D09AC9812918DE8C0081C0EC /* LaunchScreen.storyboard in Resources */,
 				D09AC97E2918DE8C0081C0EC /* Assets.xcassets in Resources */,
+				D0CCF4EB292A690600AD4AE6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,10 +542,14 @@
 				D09AC9792918DE8B0081C0EC /* HomeViewController.swift in Sources */,
 				DAB06A40291BA61100E86163 /* ViewModelType.swift in Sources */,
 				DA0A88692921245000E9AE43 /* UserRepository.swift in Sources */,
+				D0CCF4E12925FB0100AD4AE6 /* UIView+.swift in Sources */,
+				D0CCF4E629260C2B00AD4AE6 /* ProfileInfoComponent.swift in Sources */,
 				DA739DDA292398BE003AEE4C /* LoginViewController.swift in Sources */,
 				D09AC9752918DE8B0081C0EC /* AppDelegate.swift in Sources */,
 				DA739DE42924FE54003AEE4C /* CommonAlertViewController.swift in Sources */,
 				DAB06A3D291BA5B400E86163 /* HomeViewModel.swift in Sources */,
+				D0CCF4E3292604BE00AD4AE6 /* UIColor+.swift in Sources */,
+				D0CCF4E829260ED200AD4AE6 /* UserInfoItem.swift in Sources */,
 				D09AC9772918DE8B0081C0EC /* SceneDelegate.swift in Sources */,
 				DA739DDC292398C3003AEE4C /* LoginViewModel.swift in Sources */,
 			);

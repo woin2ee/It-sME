@@ -17,11 +17,4 @@ struct UserInfo {
     let otherItems: [UserInfoItem]
 }
 
-struct UserInfoItem {
-    let icon: UserInfoItemIcon?
-    let contents: String
-}
 
-enum UserInfoItemIcon: String {
-    case computer = "computer"
-}
