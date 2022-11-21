@@ -24,6 +24,7 @@
 		DA0A88692921245000E9AE43 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0A88682921245000E9AE43 /* UserRepository.swift */; };
 		DA739DDA292398BE003AEE4C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DD9292398BE003AEE4C /* LoginViewController.swift */; };
 		DA739DDC292398C3003AEE4C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DDB292398C3003AEE4C /* LoginViewModel.swift */; };
+		DA739DE42924FE54003AEE4C /* CommonAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DE32924FE54003AEE4C /* CommonAlertViewController.swift */; };
 		DAAFB2532918EE5A007A8DF0 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAFB2522918EE5A007A8DF0 /* UserInfo.swift */; };
 		DAB06A3D291BA5B400E86163 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06A3C291BA5B400E86163 /* HomeViewModel.swift */; };
 		DAB06A40291BA61100E86163 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06A3F291BA61100E86163 /* ViewModelType.swift */; };
@@ -76,6 +77,7 @@
 		DA739DD9292398BE003AEE4C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DA739DDB292398C3003AEE4C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		DA739DDD2923B4D2003AEE4C /* ItsME.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ItsME.entitlements; sourceTree = "<group>"; };
+		DA739DE32924FE54003AEE4C /* CommonAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonAlertViewController.swift; sourceTree = "<group>"; };
 		DAAFB2522918EE5A007A8DF0 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		DAB06A3C291BA5B400E86163 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		DAB06A3F291BA61100E86163 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 		D0CCF4E429260AF300AD4AE6 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				DA739DE22924FCA0003AEE4C /* AlertViewController */,
 				D0CCF4E529260C2B00AD4AE6 /* ProfileInfoComponent.swift */,
 			);
 			path = Common;
@@ -209,6 +212,14 @@
 				DA739DDB292398C3003AEE4C /* LoginViewModel.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		DA739DE22924FCA0003AEE4C /* AlertViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DA739DE32924FE54003AEE4C /* CommonAlertViewController.swift */,
+			);
+			path = AlertViewController;
 			sourceTree = "<group>";
 		};
 		DAAFB2492918E43B007A8DF0 /* Application */ = {
@@ -531,6 +542,7 @@
 				D0CCF4E629260C2B00AD4AE6 /* ProfileInfoComponent.swift in Sources */,
 				DA739DDA292398BE003AEE4C /* LoginViewController.swift in Sources */,
 				D09AC9752918DE8B0081C0EC /* AppDelegate.swift in Sources */,
+				DA739DE42924FE54003AEE4C /* CommonAlertViewController.swift in Sources */,
 				DAB06A3D291BA5B400E86163 /* HomeViewModel.swift in Sources */,
 				D0CCF4E3292604BE00AD4AE6 /* UIColor+.swift in Sources */,
 				D0CCF4E829260ED200AD4AE6 /* UserInfoItem.swift in Sources */,
