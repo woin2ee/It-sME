@@ -11,6 +11,8 @@ import SnapKit
 
 final class HomeViewController: UIViewController {
     
+    
+    
     private var disposeBag: DisposeBag = .init()
     
     private let viewModel: HomeViewModel = .init()
@@ -25,6 +27,10 @@ final class HomeViewController: UIViewController {
         let button: UIButton = .init()
         return button
     }()
+    
+    private var profileInfo: ProfileInfoComponent = .init(userInfoItem: .init(icon: .computer, contents: "asdfasdfasdfasdfklahsdfadhgladfljglakdghlijadfglkjahl"))
+    
+    private var vStackLayout = UIStackView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,10 +72,19 @@ private extension HomeViewController {
     func configureSubviews() {
         self.view.addSubview(editProfileButton)
         self.view.addSubview(profileImageView)
+        self.view.addSubview(vStackLayout)
         
         editProfileButton.backgroundColor = .mainColor
         editProfileButton.layer.cornerRadius = 10
         profileImageView.contentMode = .scaleAspectFill
+        
+        vStackLayout.addArrangedSubview(profileInfo)
+        vStackLayout.backgroundColor = .mainColor
+        vStackLayout.axis = .vertical
+        vStackLayout.distribution = .fillEqually
+        vStackLayout.spacing = 5
+        
+        
         
         editProfileButton.snp.makeConstraints { make in
             make.width.equalTo(70)
@@ -82,6 +97,13 @@ private extension HomeViewController {
             make.width.height.equalTo(150)
             make.centerX.equalTo(self.view)
             make.top.equalTo(editProfileButton.snp.bottom).offset(20)
+        }
+        
+        vStackLayout.snp.makeConstraints { make in
+            make.height.equalTo((vStackLayout.arrangedSubviews.count * 40))
+            make.width.equalTo(300)
+            make.centerX.equalTo(self.view.safeAreaLayoutGuide)
+            make.top.equalTo(profileImageView.snp.bottom).offset(20)
         }
         
     }
