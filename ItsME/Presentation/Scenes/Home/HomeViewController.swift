@@ -32,6 +32,10 @@ final class HomeViewController: UIViewController {
     
     private var vStackLayout = UIStackView()
     
+    private let cvCard = CVCard()
+    
+    private var hStackLayout = UIStackView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureAppearance()
@@ -73,21 +77,28 @@ private extension HomeViewController {
         self.view.addSubview(editProfileButton)
         self.view.addSubview(profileImageView)
         self.view.addSubview(vStackLayout)
+        self.view.addSubview(hStackLayout)
         
         editProfileButton.backgroundColor = .mainColor
+        editProfileButton.setTitle("프로필 수정", for: .normal)
         editProfileButton.layer.cornerRadius = 10
         profileImageView.contentMode = .scaleAspectFill
         
         vStackLayout.addArrangedSubview(profileInfo)
-        vStackLayout.backgroundColor = .mainColor
         vStackLayout.axis = .vertical
         vStackLayout.distribution = .fillEqually
         vStackLayout.spacing = 5
         
+        cvCard.layer.cornerRadius = 10
+        cvCard.backgroundColor = .mainColor
         
+        hStackLayout.addArrangedSubview(cvCard)
+        hStackLayout.axis = .horizontal
+        hStackLayout.distribution = .fillEqually
+        hStackLayout.spacing = 30
         
         editProfileButton.snp.makeConstraints { make in
-            make.width.equalTo(70)
+            make.width.equalTo(100)
             make.height.equalTo(40)
             make.trailing.equalTo(-30)
             make.top.equalTo(50)
@@ -104,6 +115,13 @@ private extension HomeViewController {
             make.width.equalTo(300)
             make.centerX.equalTo(self.view.safeAreaLayoutGuide)
             make.top.equalTo(profileImageView.snp.bottom).offset(20)
+        }
+        
+        hStackLayout.snp.makeConstraints{ make in
+            make.top.equalTo(vStackLayout.snp.bottom).offset(70)
+            make.height.equalTo(250)
+            make.width.equalTo(200)
+            make.centerX.equalTo(self.view.safeAreaLayoutGuide)
         }
         
     }
