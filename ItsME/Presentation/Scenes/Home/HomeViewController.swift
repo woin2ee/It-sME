@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import SnapKit
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController, UIScrollViewDelegate {
     
     
     
@@ -33,8 +33,13 @@ final class HomeViewController: UIViewController {
     private var vStackLayout = UIStackView()
     
     private let cvCard = CVCard()
+    private let cvCard2 = CVCard()
+    private let cvCard3 = CVCard()
     
     private var hStackLayout = UIStackView()
+    
+    private var cardScrollView = UIScrollView()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,7 +82,8 @@ private extension HomeViewController {
         self.view.addSubview(editProfileButton)
         self.view.addSubview(profileImageView)
         self.view.addSubview(vStackLayout)
-        self.view.addSubview(hStackLayout)
+        cardScrollView.addSubview(hStackLayout)
+        self.view.addSubview(cardScrollView)
         
         editProfileButton.backgroundColor = .mainColor
         editProfileButton.setTitle("프로필 수정", for: .normal)
@@ -91,11 +97,27 @@ private extension HomeViewController {
         
         cvCard.layer.cornerRadius = 10
         cvCard.backgroundColor = .mainColor
+        cvCard2.layer.cornerRadius = 10
+        cvCard2.backgroundColor = .mainColor
+        cvCard3.layer.cornerRadius = 10
+        cvCard3.backgroundColor = .mainColor
         
         hStackLayout.addArrangedSubview(cvCard)
+        hStackLayout.addArrangedSubview(cvCard2)
+        hStackLayout.addArrangedSubview(cvCard3)
+        hStackLayout.translatesAutoresizingMaskIntoConstraints = false
         hStackLayout.axis = .horizontal
         hStackLayout.distribution = .fillEqually
+        hStackLayout.alignment = .fill
         hStackLayout.spacing = 30
+        
+        cardScrollView.delegate = self
+        cardScrollView.isScrollEnabled = true
+        cardScrollView.isPagingEnabled = true
+        cardScrollView.alwaysBounceHorizontal = true
+        cardScrollView.translatesAutoresizingMaskIntoConstraints = true
+        cardScrollView.layoutMargins = .zero
+        
         
         editProfileButton.snp.makeConstraints { make in
             make.width.equalTo(100)
@@ -118,9 +140,15 @@ private extension HomeViewController {
         }
         
         hStackLayout.snp.makeConstraints{ make in
+            make.height.equalToSuperview()
+            make.width.equalTo(hStackLayout.arrangedSubviews.count * 200)
+            make.centerX.equalTo(self.view.safeAreaLayoutGuide)
+        }
+        
+        cardScrollView.snp.makeConstraints{ make in
             make.top.equalTo(vStackLayout.snp.bottom).offset(70)
             make.height.equalTo(250)
-            make.width.equalTo(200)
+            make.width.equalToSuperview()
             make.centerX.equalTo(self.view.safeAreaLayoutGuide)
         }
         
