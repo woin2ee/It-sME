@@ -23,7 +23,7 @@ final class HomeViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let userInfo = input.viewWillAppear
             .flatMapLatest { _ in
-                return self.userRepository.getUserInfo()
+                return self.userRepository.getUserInfo(byUID: "testUser")
                     .asDriver(onErrorDriveWith: .empty())
             }
         
