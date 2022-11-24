@@ -15,7 +15,7 @@ final class UserRepository {
             UserInfo(
                 name: "Bob",
                 profileImageURL: "",
-                birthday: Date(),
+                birthday: "1999.01.01",
                 address: "abcd",
                 phoneNumber: "010-1234-1234",
                 email: "test@gmail.com",

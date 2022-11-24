@@ -10,7 +10,7 @@ import Foundation
 struct UserInfo {
     let name: String
     let profileImageURL: String
-    let birthday: Date
+    let birthday: String
     let address: String
     let phoneNumber: String
     let email: String
