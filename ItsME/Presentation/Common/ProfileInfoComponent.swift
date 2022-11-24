@@ -22,7 +22,7 @@ class ProfileInfoComponent: UIStackView {
     }
     
     private lazy var icon: UIImageView = {
-        let icon: UIImageView = .init(image: UIImage(systemName: userInfoItem.icon?.rawValue ?? ""))
+        let icon: UIImageView = .init(image: UIImage(systemName: userInfoItem.icon.rawValue))
         return icon
     }()
     

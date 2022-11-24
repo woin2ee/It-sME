@@ -8,10 +8,11 @@
 import Foundation
 
 struct UserInfoItem {
-    let icon: UserInfoItemIcon?
+    let icon: UserInfoItemIcon
     let contents: String
 }
 
 enum UserInfoItemIcon: String {
+    case `default` = "default"
     case computer = "computer"
 }
