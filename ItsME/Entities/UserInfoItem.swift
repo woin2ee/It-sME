@@ -7,12 +7,34 @@
 
 import Foundation
 
-struct UserInfoItem {
+final class UserInfoItem: Decodable {
     let icon: UserInfoItemIcon
     let contents: String
+    
+    init(icon: UserInfoItemIcon, contents: String) {
+        self.icon = icon
+        self.contents = contents
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let iconString = try container.decode(String.self, forKey: .icon)
+        self.icon = .init(rawValue: iconString) ?? .default
+        self.contents = try container.decode(String.self, forKey: .contents)
+    }
 }
 
 enum UserInfoItemIcon: String {
     case `default` = "default"
     case computer = "computer"
+}
+
+// MARK: - CodingKeys
+
+extension UserInfoItem {
+    
+    enum CodingKeys: CodingKey {
+        case icon
+        case contents
+    }
 }
