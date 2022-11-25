@@ -53,7 +53,10 @@ private extension LoginViewController {
         let output = viewModel.transform(input: input)
         
         output.loggedIn
-            .drive()
+            .drive(onNext: {
+                let homeViewController: HomeViewController = .init()
+                self.navigationController?.setViewControllers([homeViewController], animated: false)
+            })
             .disposed(by: disposeBag)
     }
     
