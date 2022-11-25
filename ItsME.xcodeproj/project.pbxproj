@@ -25,6 +25,7 @@
 		DA6BCE5E292F04910059E95D /* DatabaseReferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */; };
 		DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */; };
 		DA7201EA29309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */; };
+		DA7201EC29309B9600A69519 /* AuthenticationServices+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */; };
 		DA739DDA292398BE003AEE4C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DD9292398BE003AEE4C /* LoginViewController.swift */; };
 		DA739DDC292398C3003AEE4C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DDB292398C3003AEE4C /* LoginViewModel.swift */; };
 		DA739DE42924FE54003AEE4C /* CommonAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DE32924FE54003AEE4C /* CommonAlertViewController.swift */; };
@@ -82,6 +83,7 @@
 		DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseReferenceManager.swift; sourceTree = "<group>"; };
 		DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseReference+Rx.swift"; sourceTree = "<group>"; };
 		DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASAuthorizationControllerDelegateProxy.swift; sourceTree = "<group>"; };
+		DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationServices+Rx.swift"; sourceTree = "<group>"; };
 		DA739DD9292398BE003AEE4C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DA739DDB292398C3003AEE4C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		DA739DDD2923B4D2003AEE4C /* ItsME.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ItsME.entitlements; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */,
+				DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -564,6 +567,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAAFB2532918EE5A007A8DF0 /* UserInfo.swift in Sources */,
+				DA7201EC29309B9600A69519 /* AuthenticationServices+Rx.swift in Sources */,
 				D09AC9792918DE8B0081C0EC /* HomeViewController.swift in Sources */,
 				DAB06A40291BA61100E86163 /* ViewModelType.swift in Sources */,
 				DA0A88692921245000E9AE43 /* UserRepository.swift in Sources */,
