@@ -7,6 +7,8 @@
 
 import RxSwift
 import RxCocoa
+import KakaoSDKUser
+import RxKakaoSDKUser
 
 final class LoginViewModel: ViewModelType {
     
@@ -21,7 +23,10 @@ final class LoginViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         let loggedInKakao = input.kakaoLoginRequest
-            .asDriver(onErrorDriveWith: .empty())
+            .flatMapFirst {
+                return self.loginWithKakao()
+                    .asDriver(onErrorDriveWith: .empty())
+            }
         
         let loggedInApple = input.appleLoginRequest
             .asDriver(onErrorDriveWith: .empty())
@@ -29,5 +34,32 @@ final class LoginViewModel: ViewModelType {
         let loggedIn = Driver.merge(loggedInKakao, loggedInApple)
         
         return .init(loggedIn: loggedIn)
+    }
+}
+
+// MARK: - Private Functions
+
+private extension LoginViewModel {
+    
+    func loginWithKakao() -> Observable<Void> {
+        if (UserApi.isKakaoTalkLoginAvailable()) {
+            return UserApi.shared.rx.loginWithKakaoTalk()
+                .map { AuthToken -> Void in
+                    #if DEBUG
+                        print("Login Success")
+                        print(AuthToken.accessToken)
+                    #endif
+                    return ()
+                }
+        } else {
+            return UserApi.shared.rx.loginWithKakaoAccount()
+                .map { AuthToken -> Void in
+                    #if DEBUG
+                        print("Login Success")
+                        print(AuthToken.accessToken)
+                    #endif
+                    return ()
+                }
+        }
     }
 }
