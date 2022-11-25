@@ -14,14 +14,16 @@
 		D09AC9792918DE8B0081C0EC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9782918DE8B0081C0EC /* HomeViewController.swift */; };
 		D09AC97E2918DE8C0081C0EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D09AC97D2918DE8C0081C0EC /* Assets.xcassets */; };
 		D09AC9812918DE8C0081C0EC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D09AC97F2918DE8C0081C0EC /* LaunchScreen.storyboard */; };
+		D09AC98C2918DE8C0081C0EC /* ItsMETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC98B2918DE8C0081C0EC /* ItsMETests.swift */; };
+		D09AC9982918DE8C0081C0EC /* ItsMEUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9972918DE8C0081C0EC /* ItsMEUITestsLaunchTests.swift */; };
 		D0CCF4E12925FB0100AD4AE6 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E02925FB0100AD4AE6 /* UIView+.swift */; };
 		D0CCF4E3292604BE00AD4AE6 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E2292604BE00AD4AE6 /* UIColor+.swift */; };
 		D0CCF4E629260C2B00AD4AE6 /* ProfileInfoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E529260C2B00AD4AE6 /* ProfileInfoComponent.swift */; };
 		D0CCF4E829260ED200AD4AE6 /* UserInfoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E729260ED200AD4AE6 /* UserInfoItem.swift */; };
 		D0CCF4EB292A690600AD4AE6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0CCF4EA292A690600AD4AE6 /* GoogleService-Info.plist */; };
-		D09AC98C2918DE8C0081C0EC /* ItsMETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC98B2918DE8C0081C0EC /* ItsMETests.swift */; };
-		D09AC9982918DE8C0081C0EC /* ItsMEUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9972918DE8C0081C0EC /* ItsMEUITestsLaunchTests.swift */; };
 		DA0A88692921245000E9AE43 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0A88682921245000E9AE43 /* UserRepository.swift */; };
+		DA6BCE5E292F04910059E95D /* DatabaseReferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */; };
+		DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */; };
 		DA739DDA292398BE003AEE4C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DD9292398BE003AEE4C /* LoginViewController.swift */; };
 		DA739DDC292398C3003AEE4C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DDB292398C3003AEE4C /* LoginViewModel.swift */; };
 		DA739DE42924FE54003AEE4C /* CommonAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DE32924FE54003AEE4C /* CommonAlertViewController.swift */; };
@@ -68,14 +70,16 @@
 		D09AC9872918DE8C0081C0EC /* ItsMETests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ItsMETests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09AC98B2918DE8C0081C0EC /* ItsMETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMETests.swift; sourceTree = "<group>"; };
 		D09AC9912918DE8C0081C0EC /* ItsMEUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ItsMEUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D09AC9952918DE8C0081C0EC /* ItsMEUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMEUITests.swift; sourceTree = "<group>"; };
+		D09AC9972918DE8C0081C0EC /* ItsMEUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMEUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D0CCF4E02925FB0100AD4AE6 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		D0CCF4E2292604BE00AD4AE6 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		D0CCF4E529260C2B00AD4AE6 /* ProfileInfoComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoComponent.swift; sourceTree = "<group>"; };
 		D0CCF4E729260ED200AD4AE6 /* UserInfoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoItem.swift; sourceTree = "<group>"; };
 		D0CCF4EA292A690600AD4AE6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		D09AC9952918DE8C0081C0EC /* ItsMEUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMEUITests.swift; sourceTree = "<group>"; };
-		D09AC9972918DE8C0081C0EC /* ItsMEUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMEUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		DA0A88682921245000E9AE43 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseReferenceManager.swift; sourceTree = "<group>"; };
+		DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseReference+Rx.swift"; sourceTree = "<group>"; };
 		DA739DD9292398BE003AEE4C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DA739DDB292398C3003AEE4C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		DA739DDD2923B4D2003AEE4C /* ItsME.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ItsME.entitlements; sourceTree = "<group>"; };
@@ -203,9 +207,26 @@
 		DA0A88672921244400E9AE43 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				DA6BCE5F292F04930059E95D /* Firebase */,
 				DA0A88682921245000E9AE43 /* UserRepository.swift */,
 			);
 			path = Repositories;
+			sourceTree = "<group>";
+		};
+		DA6BCE5F292F04930059E95D /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		DA7201E5292F684900A69519 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		DA739DD82923989A003AEE4C /* Login */ = {
@@ -283,6 +304,7 @@
 		DAB06A3E291BA5E600E86163 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				DA7201E5292F684900A69519 /* Extensions */,
 				DAB06A41291BA8C800E86163 /* Protocols */,
 				D0CCF4E02925FB0100AD4AE6 /* UIView+.swift */,
 			);
@@ -547,10 +569,12 @@
 				DA739DDA292398BE003AEE4C /* LoginViewController.swift in Sources */,
 				D09AC9752918DE8B0081C0EC /* AppDelegate.swift in Sources */,
 				DA739DE42924FE54003AEE4C /* CommonAlertViewController.swift in Sources */,
+				DA6BCE5E292F04910059E95D /* DatabaseReferenceManager.swift in Sources */,
 				DAB06A3D291BA5B400E86163 /* HomeViewModel.swift in Sources */,
 				D0CCF4E3292604BE00AD4AE6 /* UIColor+.swift in Sources */,
 				D0CCF4E829260ED200AD4AE6 /* UserInfoItem.swift in Sources */,
 				D09AC9772918DE8B0081C0EC /* SceneDelegate.swift in Sources */,
+				DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */,
 				DA739DDC292398C3003AEE4C /* LoginViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -783,7 +807,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 81657DFF702F5D180BCDB86B /* Pods-ItsMETests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -807,7 +831,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A2659E402408F957C85A0D5B /* Pods-ItsMETests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -831,7 +855,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8B3EB68FEFE206B66839B7F7 /* Pods-ItsME-ItsMEUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 585F6TK5A8;
@@ -853,7 +877,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CEDD5EA30A26348FCEB22EC2 /* Pods-ItsME-ItsMEUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 585F6TK5A8;

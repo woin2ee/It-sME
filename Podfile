@@ -11,6 +11,8 @@ target 'ItsME' do
 	pod 'SnapKit', '5.6.0'
 	pod 'RxKakaoSDK'
 	pod 'Firebase/Analytics' # Google Analytics
+	pod 'FirebaseAuth'
+	pod 'FirebaseDatabase' #Realtime Database
 
   target 'ItsMETests' do
     inherit! :search_paths
