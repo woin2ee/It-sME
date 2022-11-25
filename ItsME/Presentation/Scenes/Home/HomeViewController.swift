@@ -105,19 +105,20 @@ private extension HomeViewController {
         hStackLayout.addArrangedSubview(cvCard)
         hStackLayout.addArrangedSubview(cvCard2)
         hStackLayout.addArrangedSubview(cvCard3)
-        hStackLayout.translatesAutoresizingMaskIntoConstraints = false
         hStackLayout.axis = .horizontal
         hStackLayout.distribution = .fillEqually
         hStackLayout.alignment = .fill
         hStackLayout.spacing = 30
+        hStackLayout.isLayoutMarginsRelativeArrangement = true
+        hStackLayout.layoutMargins.left = 100
+        hStackLayout.layoutMargins.right = 100
         
         cardScrollView.delegate = self
         cardScrollView.isScrollEnabled = true
         cardScrollView.isPagingEnabled = true
         cardScrollView.alwaysBounceHorizontal = true
-        cardScrollView.translatesAutoresizingMaskIntoConstraints = true
         cardScrollView.layoutMargins = .zero
-        
+        cardScrollView.showsHorizontalScrollIndicator = false
         
         editProfileButton.snp.makeConstraints { make in
             make.width.equalTo(100)
@@ -140,16 +141,14 @@ private extension HomeViewController {
         }
         
         hStackLayout.snp.makeConstraints{ make in
-            make.height.equalToSuperview()
-            make.width.equalTo(hStackLayout.arrangedSubviews.count * 200)
-            make.centerX.equalTo(self.view.safeAreaLayoutGuide)
+            make.height.left.right.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(hStackLayout.arrangedSubviews.count)
         }
         
         cardScrollView.snp.makeConstraints{ make in
             make.top.equalTo(vStackLayout.snp.bottom).offset(70)
             make.height.equalTo(250)
             make.width.equalToSuperview()
-            make.centerX.equalTo(self.view.safeAreaLayoutGuide)
         }
         
     }
