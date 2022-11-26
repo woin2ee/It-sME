@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class CVInfo {
+final class CVInfo: Decodable {
     let title: String
     let resume: Resume
     let coverLetter: CoverLetter

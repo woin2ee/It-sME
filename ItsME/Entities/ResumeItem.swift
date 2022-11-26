@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class ResumeItem {
+final class ResumeItem: Decodable {
     let period: String
     let contents: String
     

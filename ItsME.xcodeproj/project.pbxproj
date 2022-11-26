@@ -26,6 +26,7 @@
 		DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */; };
 		DA7201EA29309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */; };
 		DA7201EC29309B9600A69519 /* AuthenticationServices+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */; };
+		DA7201EE2931E7BB00A69519 /* CVRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201ED2931E7BB00A69519 /* CVRepository.swift */; };
 		DA7201F02931EEE600A69519 /* CVInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201EF2931EEE600A69519 /* CVInfo.swift */; };
 		DA7201F22931F21100A69519 /* ResumeCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201F12931F21100A69519 /* ResumeCategory.swift */; };
 		DA7201F42931F25500A69519 /* CoverLetterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201F32931F25500A69519 /* CoverLetterItem.swift */; };
@@ -90,6 +91,7 @@
 		DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseReference+Rx.swift"; sourceTree = "<group>"; };
 		DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASAuthorizationControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationServices+Rx.swift"; sourceTree = "<group>"; };
+		DA7201ED2931E7BB00A69519 /* CVRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVRepository.swift; sourceTree = "<group>"; };
 		DA7201EF2931EEE600A69519 /* CVInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVInfo.swift; sourceTree = "<group>"; };
 		DA7201F12931F21100A69519 /* ResumeCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeCategory.swift; sourceTree = "<group>"; };
 		DA7201F32931F25500A69519 /* CoverLetterItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverLetterItem.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 			children = (
 				DA6BCE5F292F04930059E95D /* Firebase */,
 				DA0A88682921245000E9AE43 /* UserRepository.swift */,
+				DA7201ED2931E7BB00A69519 /* CVRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -606,6 +609,7 @@
 				D0CCF4E829260ED200AD4AE6 /* UserInfoItem.swift in Sources */,
 				DA7201F62931F41100A69519 /* ResumeItem.swift in Sources */,
 				D09AC9772918DE8B0081C0EC /* SceneDelegate.swift in Sources */,
+				DA7201EE2931E7BB00A69519 /* CVRepository.swift in Sources */,
 				DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */,
 				DA739DDC292398C3003AEE4C /* LoginViewModel.swift in Sources */,
 			);

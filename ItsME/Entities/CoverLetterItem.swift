@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class CoverLetterItem {
+final class CoverLetterItem: Decodable {
     let title: String
     let contents: String
     

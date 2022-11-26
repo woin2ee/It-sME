@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class ResumeCategory {
+final class ResumeCategory: Decodable {
     let title: String
     let items: [ResumeItem]
     
