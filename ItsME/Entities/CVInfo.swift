@@ -11,10 +11,12 @@ final class CVInfo: Decodable {
     let title: String
     let resume: Resume
     let coverLetter: CoverLetter
+    let lastModified: String
     
-    init(title: String, resume: Resume, coverLetter: CoverLetter) {
+    init(title: String, resume: Resume, coverLetter: CoverLetter, lastModified: String) {
         self.title = title
         self.resume = resume
         self.coverLetter = coverLetter
+        self.lastModified = lastModified
     }
 }
