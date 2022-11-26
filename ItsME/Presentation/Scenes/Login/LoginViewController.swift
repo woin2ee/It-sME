@@ -48,7 +48,9 @@ private extension LoginViewController {
     func bindViewModel() {
         let input = LoginViewModel.Input.init(
             kakaoLoginRequest: kakaoLoginButton.rx.tap.asSignal(),
-            appleLoginRequest: appleLoginButton.rx.controlEvent(.touchUpInside).asSignal()
+            appleLoginSuccess: appleLoginButton.rx
+                .tapToLogin(scope: [.fullName, .email])
+                .asDriver(onErrorDriveWith: .empty())
         )
         let output = viewModel.transform(input: input)
         

@@ -5,6 +5,7 @@
 //  Created by Jaewon Yun on 2022/11/15.
 //
 
+import AuthenticationServices
 import RxSwift
 import RxCocoa
 import KakaoSDKUser
@@ -14,7 +15,7 @@ final class LoginViewModel: ViewModelType {
     
     struct Input {
         let kakaoLoginRequest: Signal<Void>
-        let appleLoginRequest: Signal<Void>
+        let appleLoginSuccess: Driver<ASAuthorization>
     }
     
     struct Output {
@@ -28,8 +29,21 @@ final class LoginViewModel: ViewModelType {
                     .asDriver(onErrorDriveWith: .empty())
             }
         
-        let loggedInApple = input.appleLoginRequest
-            .asDriver(onErrorDriveWith: .empty())
+        let loggedInApple = input.appleLoginSuccess
+            .do(onNext: { authorization in
+                // TODO: Firebase 계정 생성
+                #if DEBUG
+                    guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
+                        return
+                    }
+                    print("authorizationCode : \(String(data: appleIDCredential.authorizationCode!, encoding: .utf8))")
+                    print("identityToken : \(String(data: appleIDCredential.identityToken!, encoding: .utf8))")
+                    print("uid : \(appleIDCredential.user)")
+                    print("name : \(appleIDCredential.fullName)")
+                    print("email : \(appleIDCredential.email)")
+                #endif
+            })
+            .map { _ -> Void in }
         
         let loggedIn = Driver.merge(loggedInKakao, loggedInApple)
         
