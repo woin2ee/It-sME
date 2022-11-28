@@ -27,6 +27,13 @@
 		DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */; };
 		DA7201EA29309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */; };
 		DA7201EC29309B9600A69519 /* AuthenticationServices+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */; };
+		DA7201EE2931E7BB00A69519 /* CVRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201ED2931E7BB00A69519 /* CVRepository.swift */; };
+		DA7201F02931EEE600A69519 /* CVInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201EF2931EEE600A69519 /* CVInfo.swift */; };
+		DA7201F22931F21100A69519 /* ResumeCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201F12931F21100A69519 /* ResumeCategory.swift */; };
+		DA7201F42931F25500A69519 /* CoverLetterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201F32931F25500A69519 /* CoverLetterItem.swift */; };
+		DA7201F62931F41100A69519 /* ResumeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201F52931F41100A69519 /* ResumeItem.swift */; };
+		DA7201F82931F8EB00A69519 /* CoverLetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201F72931F8EB00A69519 /* CoverLetter.swift */; };
+		DA7201FA2931F90900A69519 /* Resume.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201F92931F90900A69519 /* Resume.swift */; };
 		DA739DDA292398BE003AEE4C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DD9292398BE003AEE4C /* LoginViewController.swift */; };
 		DA739DDC292398C3003AEE4C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DDB292398C3003AEE4C /* LoginViewModel.swift */; };
 		DA739DE42924FE54003AEE4C /* CommonAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DE32924FE54003AEE4C /* CommonAlertViewController.swift */; };
@@ -86,6 +93,13 @@
 		DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseReference+Rx.swift"; sourceTree = "<group>"; };
 		DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASAuthorizationControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationServices+Rx.swift"; sourceTree = "<group>"; };
+		DA7201ED2931E7BB00A69519 /* CVRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVRepository.swift; sourceTree = "<group>"; };
+		DA7201EF2931EEE600A69519 /* CVInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVInfo.swift; sourceTree = "<group>"; };
+		DA7201F12931F21100A69519 /* ResumeCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeCategory.swift; sourceTree = "<group>"; };
+		DA7201F32931F25500A69519 /* CoverLetterItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverLetterItem.swift; sourceTree = "<group>"; };
+		DA7201F52931F41100A69519 /* ResumeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeItem.swift; sourceTree = "<group>"; };
+		DA7201F72931F8EB00A69519 /* CoverLetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverLetter.swift; sourceTree = "<group>"; };
+		DA7201F92931F90900A69519 /* Resume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resume.swift; sourceTree = "<group>"; };
 		DA739DD9292398BE003AEE4C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DA739DDB292398C3003AEE4C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		DA739DDD2923B4D2003AEE4C /* ItsME.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ItsME.entitlements; sourceTree = "<group>"; };
@@ -224,6 +238,7 @@
 			children = (
 				DA6BCE5F292F04930059E95D /* Firebase */,
 				DA0A88682921245000E9AE43 /* UserRepository.swift */,
+				DA7201ED2931E7BB00A69519 /* CVRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -304,6 +319,12 @@
 			children = (
 				DAAFB2522918EE5A007A8DF0 /* UserInfo.swift */,
 				D0CCF4E729260ED200AD4AE6 /* UserInfoItem.swift */,
+				DA7201EF2931EEE600A69519 /* CVInfo.swift */,
+				DA7201F92931F90900A69519 /* Resume.swift */,
+				DA7201F12931F21100A69519 /* ResumeCategory.swift */,
+				DA7201F52931F41100A69519 /* ResumeItem.swift */,
+				DA7201F72931F8EB00A69519 /* CoverLetter.swift */,
+				DA7201F32931F25500A69519 /* CoverLetterItem.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -580,7 +601,9 @@
 				DAAFB2532918EE5A007A8DF0 /* UserInfo.swift in Sources */,
 				DA7201EC29309B9600A69519 /* AuthenticationServices+Rx.swift in Sources */,
 				D09AC9792918DE8B0081C0EC /* HomeViewController.swift in Sources */,
+				DA7201F02931EEE600A69519 /* CVInfo.swift in Sources */,
 				DAB06A40291BA61100E86163 /* ViewModelType.swift in Sources */,
+				DA7201FA2931F90900A69519 /* Resume.swift in Sources */,
 				DA0A88692921245000E9AE43 /* UserRepository.swift in Sources */,
 				D0CCF4E12925FB0100AD4AE6 /* UIView+.swift in Sources */,
 				D0CCF4E629260C2B00AD4AE6 /* ProfileInfoComponent.swift in Sources */,
@@ -589,10 +612,15 @@
 				D09AC9752918DE8B0081C0EC /* AppDelegate.swift in Sources */,
 				DA739DE42924FE54003AEE4C /* CommonAlertViewController.swift in Sources */,
 				DA6BCE5E292F04910059E95D /* DatabaseReferenceManager.swift in Sources */,
+				DA7201F22931F21100A69519 /* ResumeCategory.swift in Sources */,
 				DAB06A3D291BA5B400E86163 /* HomeViewModel.swift in Sources */,
+				DA7201F82931F8EB00A69519 /* CoverLetter.swift in Sources */,
+				DA7201F42931F25500A69519 /* CoverLetterItem.swift in Sources */,
 				D0CCF4E3292604BE00AD4AE6 /* UIColor+.swift in Sources */,
 				D0CCF4E829260ED200AD4AE6 /* UserInfoItem.swift in Sources */,
+				DA7201F62931F41100A69519 /* ResumeItem.swift in Sources */,
 				D09AC9772918DE8B0081C0EC /* SceneDelegate.swift in Sources */,
+				DA7201EE2931E7BB00A69519 /* CVRepository.swift in Sources */,
 				DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */,
 				DA739DDC292398C3003AEE4C /* LoginViewModel.swift in Sources */,
 				D0CCF504292CCB4C00AD4AE6 /* CVCard.swift in Sources */,
