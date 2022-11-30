@@ -81,11 +81,10 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
         - scrollView.adjustedContentInset.left
         - scrollView.adjustedContentInset.right
         let numberOfPages = Int(ceil(scrollView.contentSize.width / pageWidth))
-        print(pageWidth, numberOfPages,scrollView.contentSize.width,"!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#!@!@!@#!@!!@#!@#!@#!@#!@#!@#!@#!@#")
-        let test = [CGFloat(0),CGFloat(280),CGFloat(560)]
-        print(test)
-//        return (0..<numberOfPages).map { CGFloat($0) * pageWidth - scrollView.adjustedContentInset.left }
-        return test
+        let croppedView = 40
+        let padding = hStackLayout.layoutMargins.left
+        let contentSize = cvCard.bounds.width
+        return (0..<numberOfPages).map { CGFloat(Float($0)) * (padding + contentSize - CGFloat(croppedView))}
     }
 }
 
