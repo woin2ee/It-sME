@@ -45,13 +45,9 @@ final class HomeViewController: UIViewController {
     }
 }
 
-// MARK: - Private functions
+// MARK: - Binding ViewModel
 
 private extension HomeViewController {
-    
-    func configureAppearance() {
-        self.view.backgroundColor = .white
-    }
     
     func bindViewModel() {
         let input = makeInput()
@@ -93,6 +89,15 @@ private extension HomeViewController {
             // CVsInfo 가 필요한 곳에 데이터 매핑
             print(cvsInfo.count)
         }
+    }
+}
+
+// MARK: - Private functions
+
+private extension HomeViewController {
+    
+    func configureAppearance() {
+        self.view.backgroundColor = .white
     }
     
     func configureSubviews() {
