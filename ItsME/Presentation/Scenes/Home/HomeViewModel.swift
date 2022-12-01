@@ -11,22 +11,34 @@ import RxCocoa
 final class HomeViewModel: ViewModelType {
     
     struct Input {
+        let viewDidLoad: Signal<Void>
         let viewWillAppear: Signal<Void>
     }
     
     struct Output {
         let userInfo: Driver<UserInfo>
+        let cvsInfo: Driver<[CVInfo]>
     }
     
     private let userRepository: UserRepository = .init()
+    private let cvRepository: CVRepository = .init()
     
     func transform(input: Input) -> Output {
-        let userInfo = input.viewWillAppear
-            .flatMapLatest { _ in
+        let userInfo = Signal.merge(input.viewDidLoad, input.viewWillAppear.skip(1))
+            .flatMap { _ in
                 return self.userRepository.getUserInfo(byUID: "testUser")
                     .asDriver(onErrorDriveWith: .empty())
             }
         
-        return Output(userInfo: userInfo)
+        let cvInfo = Signal.merge(input.viewDidLoad, input.viewWillAppear.skip(1))
+            .flatMapLatest { _ in
+                return self.cvRepository.getAllCV(byUID: "testUser")
+                    .asDriver(onErrorDriveWith: .empty())
+            }
+        
+        return Output(
+            userInfo: userInfo,
+            cvsInfo: cvInfo
+        )
     }
 }
