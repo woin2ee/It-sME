@@ -60,9 +60,7 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
             velocity: velocity.x,
             in: pageOffsets(in: scrollView)
         ) {
-            print(targetContentOffset.pointee.x,"askjdhfhㄴga")
             targetContentOffset.pointee.x = pageOffset
-            print(targetContentOffset.pointee.x,"askjdhfhga")
         }
     }
     
@@ -181,7 +179,8 @@ private extension HomeViewController {
         
         hStackLayout.snp.makeConstraints{ make in
             make.height.left.right.equalToSuperview()
-            make.width.equalTo(950)
+            let contentWidth = 250
+            make.width.equalTo((2 * hStackLayout.layoutMargins.left) + CGFloat(hStackLayout.arrangedSubviews.count * contentWidth) + (hStackLayout.spacing * CGFloat(hStackLayout.arrangedSubviews.count - 1)))
         }
         
         cardScrollView.snp.makeConstraints{ make in
