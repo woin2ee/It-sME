@@ -27,6 +27,15 @@ final class UserInfoItem: Decodable {
 enum UserInfoItemIcon: String {
     case `default` = "default"
     case computer = "computer"
+    
+    var toEmoji: String {
+        switch self {
+        case .`default`:
+            return "👤"
+        case .computer:
+            return "💻"
+        }
+    }
 }
 
 // MARK: - CodingKeys
