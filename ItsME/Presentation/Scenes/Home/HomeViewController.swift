@@ -54,19 +54,45 @@ private extension HomeViewController {
     }
     
     func bindViewModel() {
+        let input = makeInput()
+        let output = viewModel.transform(input: input)
+        
+        output.userInfo
+            .drive(userInfoBinding)
+            .disposed(by: disposeBag)
+        
+        output.cvsInfo
+            .drive(cvsInfoBinding)
+            .disposed(by: disposeBag)
+    }
+    
+    func makeInput() -> HomeViewModel.Input {
+        let viewDidLoad = Observable.just(())
+            .map { _ in }
+            .asSignal(onErrorSignalWith: .empty())
+        
         let viewWillAppear = self.rx.sentMessage(#selector(self.viewWillAppear(_:)))
             .map { _ in }
             .asSignal(onErrorSignalWith: .empty())
         
-        let input = HomeViewModel.Input(viewWillAppear: viewWillAppear)
-        let output = viewModel.transform(input: input)
-        
-        output.userInfo
-            .drive(onNext: { userInfo in
-                // input 에 대한 output 으로 userInfo 를 받았을 때 수행할 작업 정의
-                print(userInfo)
-            })
-            .disposed(by: disposeBag)
+        return .init(
+            viewDidLoad: viewDidLoad,
+            viewWillAppear: viewWillAppear
+        )
+    }
+    
+    var userInfoBinding: Binder<UserInfo> {
+        return .init(self) { viewController, userInfo in
+            // UserInfo 가 필요한 곳에 데이터 매핑
+            print(userInfo.name)
+        }
+    }
+    
+    var cvsInfoBinding: Binder<[CVInfo]> {
+        return .init(self) { viewController, cvsInfo in
+            // CVsInfo 가 필요한 곳에 데이터 매핑
+            print(cvsInfo.count)
+        }
     }
     
     func configureSubviews() {
