@@ -32,9 +32,6 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
     
     private var vStackLayout = UIStackView()
     
-    private let cvCard = CVCard()
-    private let cvCard2 = CVCard()
-    private let cvCard3 = CVCard()
     
     private var hStackLayout = UIStackView()
     
@@ -42,11 +39,14 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
     
     private lazy var pageController = UIPageControl()
     
+    let contentWidth = 250
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureAppearance()
         bindViewModel()
         configureSubviews()
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -65,14 +65,14 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-            if let pageFraction = ScrollPageController().pageFraction(
-                for: scrollView.contentOffset.x,
-                in: pageOffsets(in: scrollView)
-            ) {
-                let pageControl: UIPageControl = pageController
-                pageControl.currentPage = Int(round(pageFraction))
-            }
+        if let pageFraction = ScrollPageController().pageFraction(
+            for: scrollView.contentOffset.x,
+            in: pageOffsets(in: scrollView)
+        ) {
+            let pageControl: UIPageControl = pageController
+            pageControl.currentPage = Int(round(pageFraction))
         }
+    }
     
     private func pageOffsets(in scrollView: UIScrollView) -> [CGFloat] {
         let pageWidth = scrollView.bounds.width
@@ -81,8 +81,7 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
         let numberOfPages = Int(ceil(scrollView.contentSize.width / pageWidth))
         let croppedView = 40
         let padding = hStackLayout.layoutMargins.left
-        let contentSize = cvCard.bounds.width
-        return (0..<numberOfPages).map { CGFloat(Float($0)) * (padding + contentSize - CGFloat(croppedView))}
+        return (0..<numberOfPages).map { CGFloat(Float($0)) * (padding + CGFloat(contentWidth) - CGFloat(croppedView))}
     }
 }
 
@@ -128,7 +127,17 @@ private extension HomeViewController {
     var cvsInfoBinding: Binder<[CVInfo]> {
         return .init(self) { viewController, cvsInfo in
             // CVsInfo 가 필요한 곳에 데이터 매핑
-            print(cvsInfo.count)
+            cvsInfo.forEach { cvInfo in
+                let cvCard = CVCard()
+                cvCard.cVTitle.text = cvInfo.title
+                cvCard.latestDate.text = "최근 수정일: " + cvInfo.lastModified
+                cvCard.layer.cornerRadius = 10
+                cvCard.backgroundColor = .mainColor
+                self.hStackLayout.addArrangedSubview(cvCard)
+                cvCard.snp.makeConstraints{ make in
+                    make.width.equalTo(self.contentWidth)
+                }
+            }
         }
     }
 }
@@ -159,16 +168,6 @@ private extension HomeViewController {
         vStackLayout.distribution = .fillEqually
         vStackLayout.spacing = 5
         
-        cvCard.layer.cornerRadius = 10
-        cvCard.backgroundColor = .mainColor
-        cvCard2.layer.cornerRadius = 10
-        cvCard2.backgroundColor = .mainColor
-        cvCard3.layer.cornerRadius = 10
-        cvCard3.backgroundColor = .mainColor
-        
-        hStackLayout.addArrangedSubview(cvCard)
-        hStackLayout.addArrangedSubview(cvCard2)
-        hStackLayout.addArrangedSubview(cvCard3)
         hStackLayout.axis = .horizontal
         hStackLayout.distribution = .fillEqually
         hStackLayout.alignment = .fill
@@ -210,8 +209,6 @@ private extension HomeViewController {
         
         hStackLayout.snp.makeConstraints{ make in
             make.height.left.right.equalToSuperview()
-            let contentWidth = 250
-            make.width.equalTo((2 * hStackLayout.layoutMargins.left) + CGFloat(hStackLayout.arrangedSubviews.count * contentWidth) + (hStackLayout.spacing * CGFloat(hStackLayout.arrangedSubviews.count - 1)))
         }
         
         cardScrollView.snp.makeConstraints{ make in
@@ -253,7 +250,6 @@ struct ScrollPageController {
         if velocity < 0 {
             return pages[pageOffsets.index(before: page.key)] ?? page.value
         }
-        print(pages[pageOffsets.index(after: page.key)] ?? page.value,"왜")
         return pages[pageOffsets.index(after: page.key)] ?? page.value
     }
     

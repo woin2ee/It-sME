@@ -11,7 +11,7 @@ import SnapKit
 
 class CVCard: UIView {
     
-    private lazy var cVTitle: UILabel = {
+    lazy var cVTitle: UILabel = {
         let label = UILabel()
         label.text = "유재우 애플 아카데미 자소서(개발)"
         label.textColor = .white
@@ -21,7 +21,7 @@ class CVCard: UIView {
         return label
     }()
     
-    private lazy var latestDate: UILabel = {
+    lazy var latestDate: UILabel = {
         let label = UILabel()
         label.text = "최근 수정일: 2022.12.31"
         label.textColor = .white
@@ -31,9 +31,9 @@ class CVCard: UIView {
     }()
 }
 
-private extension CVCard {
+extension CVCard {
     
-    internal override func layoutSubviews() {
+    override func layoutSubviews() {
         self.addSubview(cVTitle)
         self.addSubview(latestDate)
         
@@ -41,7 +41,7 @@ private extension CVCard {
             make.width.equalToSuperview().multipliedBy(0.9)
             make.top.equalTo(self.snp.top).offset(20)
             make.centerX.equalToSuperview().offset(5)
-//            make.centerY.equalToSuperview().offset(50)
+            //            make.centerY.equalToSuperview().offset(50)
         }
         
         
