@@ -23,14 +23,30 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
         return profileImageView
     }()
     
-    private let editProfileButton: UIButton = {
-        let button: UIButton = .init()
+    lazy var editProfileButton: UIButton = {
+        let action = UIAction {_ in
+            print("Clicked!")
+        }
+        
+        let button =  UIButton(type: .system, primaryAction: action)
+        button.backgroundColor = .mainColor
+        button.setTitle("프로필 수정", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 10
         return button
     }()
     
-    private var profileInfo: ProfileInfoComponent = .init(userInfoItem: .init(icon: .computer, contents: "asdfasdfasdfasdfklahsdfadhgladfljglakdghlijadfglkjahl"))
+//    private var profileInfo: ProfileInfoComponent = .init(userInfoItem: .init(icon: .computer, contents: "asdfasdfasdfasdfklahsdfadhgladfljglakdghlijadfglkjahl"))
     
-    private var vStackLayout = UIStackView()
+    private var vStackLayout: UIStackView = {
+        let stackView = UIStackView()
+        for _ in 1...6{
+            let profileInfo: ProfileInfoComponent = .init(userInfoItem: .init(icon: .computer, contents: "TestTestTestTestTestTestTestTestTestTestTestTestTestTestTest"))
+            stackView.addArrangedSubview(profileInfo)
+        }
+        return stackView
+    }()
     
     
     private var hStackLayout = UIStackView()
@@ -47,6 +63,9 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
         bindViewModel()
         configureSubviews()
         
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -153,20 +172,17 @@ private extension HomeViewController {
     func configureSubviews() {
         self.view.addSubview(editProfileButton)
         self.view.addSubview(profileImageView)
+//        vStackLayout.addArrangedSubview(profileInfo)
         self.view.addSubview(vStackLayout)
         cardScrollView.addSubview(hStackLayout)
         self.view.addSubview(cardScrollView)
         self.view.addSubview(pageController)
         
-        editProfileButton.backgroundColor = .mainColor
-        editProfileButton.setTitle("프로필 수정", for: .normal)
-        editProfileButton.layer.cornerRadius = 10
         profileImageView.contentMode = .scaleAspectFill
         
-        vStackLayout.addArrangedSubview(profileInfo)
         vStackLayout.axis = .vertical
         vStackLayout.distribution = .fillEqually
-        vStackLayout.spacing = 5
+//        vStackLayout.spacing = 5
         
         hStackLayout.axis = .horizontal
         hStackLayout.distribution = .fillEqually
@@ -212,7 +228,7 @@ private extension HomeViewController {
         }
         
         cardScrollView.snp.makeConstraints{ make in
-            make.top.equalTo(vStackLayout.snp.bottom).offset(70)
+            make.top.equalTo(vStackLayout.snp.bottom).offset(30)
             make.height.equalTo(250)
             make.width.equalToSuperview()
         }
