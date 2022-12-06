@@ -37,12 +37,10 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
         return button
     }()
     
-//    private var profileInfo: ProfileInfoComponent = .init(userInfoItem: .init(icon: .computer, contents: "asdfasdfasdfasdfklahsdfadhgladfljglakdghlijadfglkjahl"))
-    
     private var vStackLayout: UIStackView = {
         let stackView = UIStackView()
         for _ in 1...6{
-            let profileInfo: ProfileInfoComponent = .init(userInfoItem: .init(icon: .computer, contents: "TestTestTestTestTestTestTestTestTestTestTestTestTestTestTest"))
+            let profileInfo: ProfileInfoComponent = .init(userInfoItem: .init(icon: .cake, contents: "TestTestTestTestTestTestTestTestTestTestTestTestTestTestTest"))
             stackView.addArrangedSubview(profileInfo)
         }
         return stackView
@@ -172,7 +170,6 @@ private extension HomeViewController {
     func configureSubviews() {
         self.view.addSubview(editProfileButton)
         self.view.addSubview(profileImageView)
-//        vStackLayout.addArrangedSubview(profileInfo)
         self.view.addSubview(vStackLayout)
         cardScrollView.addSubview(hStackLayout)
         self.view.addSubview(cardScrollView)
@@ -182,7 +179,6 @@ private extension HomeViewController {
         
         vStackLayout.axis = .vertical
         vStackLayout.distribution = .fillEqually
-//        vStackLayout.spacing = 5
         
         hStackLayout.axis = .horizontal
         hStackLayout.distribution = .fillEqually
