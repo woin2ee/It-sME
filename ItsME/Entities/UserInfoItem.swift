@@ -27,6 +27,27 @@ final class UserInfoItem: Decodable {
 enum UserInfoItemIcon: String {
     case `default` = "default"
     case computer = "computer"
+    case cake = "cake"
+    case house = "house"
+    case phone = "phone"
+    case letter = "letter"
+    
+    var toEmoji: String {
+        switch self {
+        case .`default`:
+            return "👤"
+        case .computer:
+            return "💻"
+        case .cake:
+            return "🎂"
+        case .house:
+            return "🏠"
+        case .phone:
+            return "📱"
+        case .letter:
+            return "✉️"
+        }
+    }
 }
 
 // MARK: - CodingKeys
