@@ -146,7 +146,7 @@ private extension HomeViewController {
             // CVsInfo 가 필요한 곳에 데이터 매핑
             cvsInfo.forEach { cvInfo in
                 let cvCard = CVCard()
-                cvCard.cVTitle.text = cvInfo.title
+                cvCard.cvTitle.text = cvInfo.title
                 cvCard.latestDate.text = "최근 수정일: " + cvInfo.lastModified
                 cvCard.layer.cornerRadius = 10
                 cvCard.backgroundColor = .mainColor
@@ -237,7 +237,7 @@ private extension HomeViewController {
         }
     }
 }
-
+// MARK: - for Paging
 struct ScrollPageController {
     
     /// Computes page offset from page offsets array for given scroll offset and velocity
