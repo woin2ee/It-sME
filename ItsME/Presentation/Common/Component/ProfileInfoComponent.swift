@@ -21,9 +21,12 @@ class ProfileInfoComponent: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var icon: UIImageView = {
-        let icon: UIImageView = .init(image: UIImage(systemName: userInfoItem.icon.rawValue))
-        return icon
+    private lazy var icon: UILabel = {
+        let label = UILabel()
+        label.text = userInfoItem.icon.toEmoji
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textAlignment = .center
+        return label
     }()
     
     
@@ -44,8 +47,6 @@ class ProfileInfoComponent: UIStackView {
         self.spacing = 10
         self.alignment = .center
         self.distribution = .fill
-        
-        icon.backgroundColor = .mainColor
         
         icon.snp.makeConstraints { make in
             make.height.equalToSuperview().multipliedBy(0.9)
