@@ -85,10 +85,21 @@ final class EditProfileViewController: UIViewController {
 private extension EditProfileViewController {
     
     func bindViewModel() {
-        let input = EditProfileViewModel.Input.init()
+        let input = EditProfileViewModel.Input.init(
+            viewDidLoad: .just(()),
+            tapEditingCompleteButton: editingCompleteButton.rx.tap.asSignal()
+        )
         let output = viewModel.transform(input: input)
         
-        _ = output
+        output.userInfo
+            .drive(userInfoBinding)
+            .disposed(by: disposeBag)
+    }
+    
+    var userInfoBinding: Binder<UserInfo> {
+        return .init(self) { viewController, userInfo in
+            // UserInfo 가 필요한 곳에 데이터 매핑
+        }
     }
 }
 
