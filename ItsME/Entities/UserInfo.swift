@@ -10,20 +10,24 @@ import Foundation
 final class UserInfo: Decodable {
     let name: String
     let profileImageURL: String
-    let birthday: String
-    let address: String
-    let phoneNumber: String
-    let email: String
+    let birthday: UserInfoItem
+    let address: UserInfoItem
+    let phoneNumber: UserInfoItem
+    let email: UserInfoItem
     let otherItems: [UserInfoItem]
+
+    var defaultItems: [UserInfoItem] {
+        [birthday, address, phoneNumber, email]
+    }
     
     init(
         name: String,
         profileImageURL: String,
-        birthday: String,
-        address: String,
-        phoneNumber: String,
-        email: String,
-        otherItems: [UserInfoItem] = []
+        birthday: UserInfoItem,
+        address: UserInfoItem,
+        phoneNumber: UserInfoItem,
+        email: UserInfoItem,
+        otherItems: [UserInfoItem]
     ) {
         self.name = name
         self.profileImageURL = profileImageURL
@@ -38,10 +42,10 @@ final class UserInfo: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decode(String.self, forKey: .name)
         self.profileImageURL = try container.decode(String.self, forKey: .profileImageURL)
-        self.birthday = try container.decode(String.self, forKey: .birthday)
-        self.address = try container.decode(String.self, forKey: .address)
-        self.phoneNumber = try container.decode(String.self, forKey: .phoneNumber)
-        self.email = try container.decode(String.self, forKey: .email)
+        self.birthday = try container.decode(UserInfoItem.self, forKey: .birthday)
+        self.address = try container.decode(UserInfoItem.self, forKey: .address)
+        self.phoneNumber = try container.decode(UserInfoItem.self, forKey: .phoneNumber)
+        self.email = try container.decode(UserInfoItem.self, forKey: .email)
         self.otherItems = try container.decode([UserInfoItem].self, forKey: .otherItems)
     }
 }
