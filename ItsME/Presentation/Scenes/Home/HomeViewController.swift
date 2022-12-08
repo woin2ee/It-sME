@@ -37,14 +37,7 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
         return button
     }()
     
-    private var vStackLayout: UIStackView = {
-        let stackView = UIStackView()
-        for _ in 1...6{
-            let profileInfo: ProfileInfoComponent = .init(userInfoItem: .init(icon: .cake, contents: "TestTestTestTestTestTestTestTestTestTestTestTestTestTestTest"))
-            stackView.addArrangedSubview(profileInfo)
-        }
-        return stackView
-    }()
+    private var vStackLayout = UIStackView()
     
     
     private var hStackLayout = UIStackView()
@@ -137,6 +130,16 @@ private extension HomeViewController {
     var userInfoBinding: Binder<UserInfo> {
         return .init(self) { viewController, userInfo in
             // UserInfo 가 필요한 곳에 데이터 매핑
+            userInfo.defaultItems.forEach{ item in
+                let profileInfo: ProfileInfoComponent = .init(userInfoItem: item)
+                self.vStackLayout.addArrangedSubview(profileInfo)
+            }
+            self.vStackLayout.snp.makeConstraints { make in
+                make.height.equalTo((self.vStackLayout.arrangedSubviews.count * 40))
+                make.width.equalTo(300)
+                make.centerX.equalTo(self.view.safeAreaLayoutGuide)
+                make.top.equalTo(self.profileImageView.snp.bottom).offset(20)
+            }
             print(userInfo.name)
         }
     }
@@ -210,13 +213,6 @@ private extension HomeViewController {
             make.width.height.equalTo(150)
             make.centerX.equalTo(self.view)
             make.top.equalTo(editProfileButton.snp.bottom).offset(20)
-        }
-        
-        vStackLayout.snp.makeConstraints { make in
-            make.height.equalTo((vStackLayout.arrangedSubviews.count * 40))
-            make.width.equalTo(300)
-            make.centerX.equalTo(self.view.safeAreaLayoutGuide)
-            make.top.equalTo(profileImageView.snp.bottom).offset(20)
         }
         
         hStackLayout.snp.makeConstraints{ make in
