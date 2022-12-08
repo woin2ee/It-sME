@@ -129,8 +129,7 @@ private extension HomeViewController {
     
     var userInfoBinding: Binder<UserInfo> {
         return .init(self) { viewController, userInfo in
-            // UserInfo 가 필요한 곳에 데이터 매핑
-            userInfo.defaultItems.forEach{ item in
+            userInfo.defaultItems.forEach { item in
                 let profileInfo: ProfileInfoComponent = .init(userInfoItem: item)
                 self.vStackLayout.addArrangedSubview(profileInfo)
             }
@@ -140,13 +139,11 @@ private extension HomeViewController {
                 make.centerX.equalTo(self.view.safeAreaLayoutGuide)
                 make.top.equalTo(self.profileImageView.snp.bottom).offset(20)
             }
-            print(userInfo.name)
         }
     }
     
     var cvsInfoBinding: Binder<[CVInfo]> {
         return .init(self) { viewController, cvsInfo in
-            // CVsInfo 가 필요한 곳에 데이터 매핑
             cvsInfo.forEach { cvInfo in
                 let cvCard = CVCard()
                 cvCard.cvTitle.text = cvInfo.title
