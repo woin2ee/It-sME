@@ -23,12 +23,13 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
         return profileImageView
     }()
     
-    lazy var editProfileButton: UIButton = {
-        let action = UIAction {_ in
-            print("Clicked!")
+    private lazy var editProfileButton: UIButton = {
+        let action = UIAction { _ in
+            let editProfileVC: EditProfileViewController = .init()
+            self.navigationController?.pushViewController(editProfileVC, animated: true)
         }
         
-        let button =  UIButton(type: .system, primaryAction: action)
+        let button = UIButton(type: .system, primaryAction: action)
         button.backgroundColor = .mainColor
         button.setTitle("프로필 수정", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)

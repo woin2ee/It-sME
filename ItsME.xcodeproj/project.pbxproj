@@ -38,9 +38,13 @@
 		DA739DDC292398C3003AEE4C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DDB292398C3003AEE4C /* LoginViewModel.swift */; };
 		DA739DE42924FE54003AEE4C /* CommonAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DE32924FE54003AEE4C /* CommonAlertViewController.swift */; };
 		DA739DE62925E35A003AEE4C /* ItsMEUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9952918DE8C0081C0EC /* ItsMEUITests.swift */; };
+		DAA5B9652938825A00BAB04E /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA5B9642938825A00BAB04E /* EditProfileViewController.swift */; };
+		DAA5B9672938827200BAB04E /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA5B9662938827200BAB04E /* EditProfileViewModel.swift */; };
 		DAAFB2532918EE5A007A8DF0 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAFB2522918EE5A007A8DF0 /* UserInfo.swift */; };
 		DAB06A3D291BA5B400E86163 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06A3C291BA5B400E86163 /* HomeViewModel.swift */; };
 		DAB06A40291BA61100E86163 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06A3F291BA61100E86163 /* ViewModelType.swift */; };
+		DAE6090B2942095400481742 /* TotalUserInfoItemStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE6090A2942095400481742 /* TotalUserInfoItemStackView.swift */; };
+		DAE6090D29420D9900481742 /* ItemAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE6090C29420D9900481742 /* ItemAddButton.swift */; };
 		DB169790AB17D072F4936595 /* Pods_ItsME.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 823C7DD7960C5DD2229AC1B1 /* Pods_ItsME.framework */; };
 /* End PBXBuildFile section */
 
@@ -104,9 +108,13 @@
 		DA739DDB292398C3003AEE4C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		DA739DDD2923B4D2003AEE4C /* ItsME.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ItsME.entitlements; sourceTree = "<group>"; };
 		DA739DE32924FE54003AEE4C /* CommonAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonAlertViewController.swift; sourceTree = "<group>"; };
+		DAA5B9642938825A00BAB04E /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		DAA5B9662938827200BAB04E /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		DAAFB2522918EE5A007A8DF0 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		DAB06A3C291BA5B400E86163 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		DAB06A3F291BA61100E86163 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		DAE6090A2942095400481742 /* TotalUserInfoItemStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalUserInfoItemStackView.swift; sourceTree = "<group>"; };
+		DAE6090C29420D9900481742 /* ItemAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemAddButton.swift; sourceTree = "<group>"; };
 		F871EFEC5CD92283AADAD541 /* Pods_ItsMETests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ItsMETests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -229,6 +237,8 @@
 			children = (
 				D0CCF4E529260C2B00AD4AE6 /* ProfileInfoComponent.swift */,
 				D0CCF503292CCB4C00AD4AE6 /* CVCard.swift */,
+				DAE6090A2942095400481742 /* TotalUserInfoItemStackView.swift */,
+				DAE6090C29420D9900481742 /* ItemAddButton.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -275,6 +285,15 @@
 				DA739DE32924FE54003AEE4C /* CommonAlertViewController.swift */,
 			);
 			path = AlertViewController;
+			sourceTree = "<group>";
+		};
+		DAA5B9632938760900BAB04E /* EditProfile */ = {
+			isa = PBXGroup;
+			children = (
+				DAA5B9642938825A00BAB04E /* EditProfileViewController.swift */,
+				DAA5B9662938827200BAB04E /* EditProfileViewModel.swift */,
+			);
+			path = EditProfile;
 			sourceTree = "<group>";
 		};
 		DAAFB2492918E43B007A8DF0 /* Application */ = {
@@ -332,6 +351,7 @@
 		DAB06A3A291BA5A300E86163 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				DAA5B9632938760900BAB04E /* EditProfile */,
 				DA739DD82923989A003AEE4C /* Login */,
 				DAAFB24D2918EC38007A8DF0 /* Home */,
 			);
@@ -598,6 +618,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAE6090D29420D9900481742 /* ItemAddButton.swift in Sources */,
+				DAA5B9652938825A00BAB04E /* EditProfileViewController.swift in Sources */,
 				DAAFB2532918EE5A007A8DF0 /* UserInfo.swift in Sources */,
 				DA7201EC29309B9600A69519 /* AuthenticationServices+Rx.swift in Sources */,
 				D09AC9792918DE8B0081C0EC /* HomeViewController.swift in Sources */,
@@ -621,8 +643,10 @@
 				DA7201F62931F41100A69519 /* ResumeItem.swift in Sources */,
 				D09AC9772918DE8B0081C0EC /* SceneDelegate.swift in Sources */,
 				DA7201EE2931E7BB00A69519 /* CVRepository.swift in Sources */,
+				DAA5B9672938827200BAB04E /* EditProfileViewModel.swift in Sources */,
 				DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */,
 				DA739DDC292398C3003AEE4C /* LoginViewModel.swift in Sources */,
+				DAE6090B2942095400481742 /* TotalUserInfoItemStackView.swift in Sources */,
 				D0CCF504292CCB4C00AD4AE6 /* CVCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
