@@ -58,6 +58,14 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+        vStackLayout.arrangedSubviews.forEach() { view in
+            vStackLayout.removeArrangedSubview(view)
+            view.removeFromSuperview()
+        }
+        hStackLayout.arrangedSubviews.forEach() { view in
+            hStackLayout.removeArrangedSubview(view)
+            view.removeFromSuperview()
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -130,7 +138,6 @@ private extension HomeViewController {
     
     var userInfoBinding: Binder<UserInfo> {
         return .init(self) { viewController, userInfo in
-            if self.vStackLayout.arrangedSubviews.isEmpty{
                 userInfo.defaultItems.forEach { item in
                     let profileInfo: ProfileInfoComponent = .init(userInfoItem: item)
                     self.vStackLayout.addArrangedSubview(profileInfo)
@@ -141,13 +148,11 @@ private extension HomeViewController {
                     make.centerX.equalTo(self.view.safeAreaLayoutGuide)
                     make.top.equalTo(self.profileImageView.snp.bottom).offset(20)
                 }
-            }
         }
     }
     
     var cvsInfoBinding: Binder<[CVInfo]> {
         return .init(self) { viewController, cvsInfo in
-            if self.hStackLayout.arrangedSubviews.isEmpty {
                 cvsInfo.forEach { cvInfo in
                     let cvCard = CVCard()
                     cvCard.cvTitle.text = cvInfo.title
@@ -159,7 +164,6 @@ private extension HomeViewController {
                         make.width.equalTo(self.contentWidth)
                     }
                 }
-            }
         }
     }
 }
