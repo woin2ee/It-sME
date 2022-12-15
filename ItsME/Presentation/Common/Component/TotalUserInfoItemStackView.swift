@@ -30,21 +30,11 @@ final class TotalUserInfoItemStackView: UIStackView {
     }
     
     func bind(userInfoItems: [UserInfoItem]) {
-        removeAllArrangedSubviews()
+        self.removeAllArrangedSubviews()
+        
         userInfoItems.forEach { userInfoItem in
             let component = ProfileInfoComponent.init(userInfoItem: userInfoItem)
             self.addArrangedSubview(component)
         }
-    }
-    
-    private func removeAllArrangedSubviews() {
-        let removedSubviews = self.arrangedSubviews.reduce([]) { (allSubviews, subview) -> [UIView] in
-            self.removeArrangedSubview(subview)
-            return allSubviews + [subview]
-        }
-        
-        NSLayoutConstraint.deactivate(removedSubviews.flatMap({ $0.constraints }))
-        
-        removedSubviews.forEach({ $0.removeFromSuperview() })
     }
 }

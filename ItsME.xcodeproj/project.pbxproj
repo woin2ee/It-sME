@@ -46,6 +46,7 @@
 		DAE6090B2942095400481742 /* TotalUserInfoItemStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE6090A2942095400481742 /* TotalUserInfoItemStackView.swift */; };
 		DAE6090D29420D9900481742 /* ItemAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE6090C29420D9900481742 /* ItemAddButton.swift */; };
 		DAFCFB63294A9CD0006B287A /* Education.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB62294A9CD0006B287A /* Education.swift */; };
+		DAFCFB67294AC00C006B287A /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB66294AC00C006B287A /* UIStackView+.swift */; };
 		DB169790AB17D072F4936595 /* Pods_ItsME.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 823C7DD7960C5DD2229AC1B1 /* Pods_ItsME.framework */; };
 /* End PBXBuildFile section */
 
@@ -117,6 +118,7 @@
 		DAE6090A2942095400481742 /* TotalUserInfoItemStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalUserInfoItemStackView.swift; sourceTree = "<group>"; };
 		DAE6090C29420D9900481742 /* ItemAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemAddButton.swift; sourceTree = "<group>"; };
 		DAFCFB62294A9CD0006B287A /* Education.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Education.swift; sourceTree = "<group>"; };
+		DAFCFB66294AC00C006B287A /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		F871EFEC5CD92283AADAD541 /* Pods_ItsMETests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ItsMETests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -268,6 +270,7 @@
 			children = (
 				DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */,
 				DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */,
+				DAFCFB66294AC00C006B287A /* UIStackView+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -628,6 +631,7 @@
 				D09AC9792918DE8B0081C0EC /* HomeViewController.swift in Sources */,
 				DA7201F02931EEE600A69519 /* CVInfo.swift in Sources */,
 				DAB06A40291BA61100E86163 /* ViewModelType.swift in Sources */,
+				DAFCFB67294AC00C006B287A /* UIStackView+.swift in Sources */,
 				DA7201FA2931F90900A69519 /* Resume.swift in Sources */,
 				DA0A88692921245000E9AE43 /* UserRepository.swift in Sources */,
 				D0CCF4E12925FB0100AD4AE6 /* UIView+.swift in Sources */,

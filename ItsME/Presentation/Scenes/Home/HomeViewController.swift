@@ -58,14 +58,8 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
-        vStackLayout.arrangedSubviews.forEach() { view in
-            vStackLayout.removeArrangedSubview(view)
-            view.removeFromSuperview()
-        }
-        hStackLayout.arrangedSubviews.forEach() { view in
-            hStackLayout.removeArrangedSubview(view)
-            view.removeFromSuperview()
-        }
+        vStackLayout.removeAllArrangedSubviews()
+        hStackLayout.removeAllArrangedSubviews()
     }
     
     override func viewDidLayoutSubviews() {
