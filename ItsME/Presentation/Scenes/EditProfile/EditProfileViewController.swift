@@ -124,7 +124,7 @@ private extension EditProfileViewController {
         self.contentView.addSubview(profileImageView)
         profileImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(20)
-            make.width.height.equalTo(150)
+            make.width.height.equalTo(self.view.frame.width / 2.5)
             make.centerX.equalToSuperview()
         }
         
