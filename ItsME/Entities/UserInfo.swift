@@ -15,6 +15,7 @@ final class UserInfo: Decodable {
     let phoneNumber: UserInfoItem
     let email: UserInfoItem
     let otherItems: [UserInfoItem]
+    let education: [Education]
 
     var defaultItems: [UserInfoItem] {
         [birthday, address, phoneNumber, email]
@@ -27,7 +28,8 @@ final class UserInfo: Decodable {
         address: UserInfoItem,
         phoneNumber: UserInfoItem,
         email: UserInfoItem,
-        otherItems: [UserInfoItem]
+        otherItems: [UserInfoItem],
+        education: [Education]
     ) {
         self.name = name
         self.profileImageURL = profileImageURL
@@ -36,6 +38,7 @@ final class UserInfo: Decodable {
         self.phoneNumber = phoneNumber
         self.email = email
         self.otherItems = otherItems
+        self.education = education
     }
     
     init(from decoder: Decoder) throws {
@@ -47,6 +50,7 @@ final class UserInfo: Decodable {
         self.phoneNumber = try container.decode(UserInfoItem.self, forKey: .phoneNumber)
         self.email = try container.decode(UserInfoItem.self, forKey: .email)
         self.otherItems = try container.decode([UserInfoItem].self, forKey: .otherItems)
+        self.education = try container.decode([Education].self, forKey: .education)
     }
 }
 
@@ -62,5 +66,6 @@ extension UserInfo {
         case phoneNumber
         case email
         case otherItems
+        case education
     }
 }
