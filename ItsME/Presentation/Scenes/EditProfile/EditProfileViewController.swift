@@ -98,7 +98,10 @@ private extension EditProfileViewController {
     
     var userInfoBinding: Binder<UserInfo> {
         return .init(self) { viewController, userInfo in
-            // UserInfo 가 필요한 곳에 데이터 매핑
+            let userInfoItems: [UserInfoItem] = {
+                userInfo.defaultItems + userInfo.otherItems
+            }()
+            self.totalUserInfoItemStackView.bind(userInfoItems: userInfoItems)
         }
     }
 }
@@ -134,8 +137,7 @@ private extension EditProfileViewController {
         self.contentView.addSubview(totalUserInfoItemStackView)
         totalUserInfoItemStackView.snp.makeConstraints { make in
             make.top.equalTo(profileEditButton.snp.bottom).offset(20)
-            make.left.right.equalToSuperview()
-            make.height.equalTo(300) // FIXME: 임시로 세팅(자동으로 계산됨)
+            make.left.right.equalToSuperview().inset(30)
         }
         
         self.contentView.addSubview(userInfoItemAddButton)
