@@ -14,7 +14,7 @@ final class TotalUserInfoItemStackView: UIStackView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor = .systemGray6
+        self.backgroundColor = .clear
         
         self.isUserInteractionEnabled = false
         self.axis = .vertical
