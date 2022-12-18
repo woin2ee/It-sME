@@ -96,18 +96,19 @@ private extension EditProfileViewController {
         )
         let output = viewModel.transform(input: input)
         
-        output.userInfo
-            .drive(userInfoBinding)
+        output.userInfoItems
+            .drive(onNext: { userInfoItems in
+                self.totalUserInfoItemStackView.bind(userInfoItems: userInfoItems)
+            })
             .disposed(by: disposeBag)
-    }
-    
-    var userInfoBinding: Binder<UserInfo> {
-        return .init(self) { viewController, userInfo in
-            let userInfoItems: [UserInfoItem] = {
-                userInfo.defaultItems + userInfo.otherItems
-            }()
-            self.totalUserInfoItemStackView.bind(userInfoItems: userInfoItems)
-        }
+        
+        output.educationItems
+            .drive(
+                educationTableView.rx.items(cellIdentifier: EducationCell.reuseIdentifier, cellType: EducationCell.self)
+            ) { (index, educationItem, cell) in
+                cell.bind(educationItem: educationItem)
+            }
+            .disposed(by: disposeBag)
     }
 }
 

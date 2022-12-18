@@ -51,6 +51,12 @@ final class EducationCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    func bind(educationItem: EducationItem) {
+        periodLabel.text = educationItem.period
+        titleLabel.text = educationItem.title
+        descriptionLabel.text = educationItem.description
+    }
 }
 
 // MARK: - Private Functions
