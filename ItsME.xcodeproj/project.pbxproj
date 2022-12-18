@@ -48,6 +48,8 @@
 		DAFCFB63294A9CD0006B287A /* EducationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB62294A9CD0006B287A /* EducationItem.swift */; };
 		DAFCFB67294AC00C006B287A /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB66294AC00C006B287A /* UIStackView+.swift */; };
 		FADCA80F0A2F18E72426F35D /* Pods_ItsMETests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46F59CD3F8609AD768369D9E /* Pods_ItsMETests.framework */; };
+		DAFCFB6C294C3666006B287A /* EducationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB6B294C3666006B287A /* EducationCell.swift */; };
+		DB169790AB17D072F4936595 /* Pods_ItsME.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 823C7DD7960C5DD2229AC1B1 /* Pods_ItsME.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,6 +122,8 @@
 		DAFCFB66294AC00C006B287A /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		DFE8424F1D468B78BF19C751 /* Pods-ItsME.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME.debug.xcconfig"; path = "Target Support Files/Pods-ItsME/Pods-ItsME.debug.xcconfig"; sourceTree = "<group>"; };
 		ECD78CBC5F75AA1F9606EA6B /* Pods-ItsME.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME.release.xcconfig"; path = "Target Support Files/Pods-ItsME/Pods-ItsME.release.xcconfig"; sourceTree = "<group>"; };
+		DAFCFB6B294C3666006B287A /* EducationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationCell.swift; sourceTree = "<group>"; };
+		F871EFEC5CD92283AADAD541 /* Pods_ItsMETests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ItsMETests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +234,7 @@
 		D0CCF4E429260AF300AD4AE6 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				DAFCFB6A294C3622006B287A /* Cells */,
 				D0CCF502292CCB2400AD4AE6 /* Component */,
 				DA739DE22924FCA0003AEE4C /* AlertViewController */,
 			);
@@ -382,6 +387,14 @@
 				D0CCF4E2292604BE00AD4AE6 /* UIColor+.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		DAFCFB6A294C3622006B287A /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				DAFCFB6B294C3666006B287A /* EducationCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -627,6 +640,7 @@
 				DAE6090D29420D9900481742 /* ItemAddButton.swift in Sources */,
 				DAA5B9652938825A00BAB04E /* EditProfileViewController.swift in Sources */,
 				DAAFB2532918EE5A007A8DF0 /* UserInfo.swift in Sources */,
+				DAFCFB6C294C3666006B287A /* EducationCell.swift in Sources */,
 				DA7201EC29309B9600A69519 /* AuthenticationServices+Rx.swift in Sources */,
 				D09AC9792918DE8B0081C0EC /* HomeViewController.swift in Sources */,
 				DA7201F02931EEE600A69519 /* CVInfo.swift in Sources */,
