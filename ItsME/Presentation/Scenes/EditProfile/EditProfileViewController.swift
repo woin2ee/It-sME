@@ -49,6 +49,11 @@ final class EditProfileViewController: UIViewController {
     private lazy var educationTableView: UITableView = {
         let tableView: UITableView = .init()
         tableView.backgroundColor = .systemGray2
+        tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
+        tableView.isScrollEnabled = false
+        let cellType = EducationCell.self
+        tableView.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
         return tableView
     }()
 
