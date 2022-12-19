@@ -46,6 +46,14 @@ final class EditProfileViewController: UIViewController {
     
     private lazy var userInfoItemAddButton: ItemAddButton = .init(type: .system)
     
+    private lazy var educationHeaderLabel: UILabel = {
+        let label: UILabel = .init()
+        label.text = "학력"
+        label.font = .boldSystemFont(ofSize: 26)
+        label.textColor = .systemBlue
+        return label
+    }()
+    
     private lazy var educationTableView: UITableView = {
         let tableView: UITableView = .init()
         tableView.backgroundColor = .systemGray2
@@ -152,9 +160,15 @@ private extension EditProfileViewController {
             make.centerX.equalToSuperview()
         }
         
+        self.contentView.addSubview(educationHeaderLabel)
+        educationHeaderLabel.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(20)
+            make.top.equalTo(userInfoItemAddButton.snp.bottom).offset(20)
+        }
+        
         self.contentView.addSubview(educationTableView)
         educationTableView.snp.makeConstraints { make in
-            make.top.equalTo(userInfoItemAddButton.snp.bottom).offset(20)
+            make.top.equalTo(educationHeaderLabel.snp.bottom)
             make.left.right.equalToSuperview()
             make.height.equalTo(300) // FIXME: 임시로 세팅(자동으로 계산됨)
         }

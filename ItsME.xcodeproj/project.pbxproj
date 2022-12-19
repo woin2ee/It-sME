@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3FEAA8A6D1B67D68705C255C /* Pods_ItsME.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA4B29C896D1CB4D3F02A6C6 /* Pods_ItsME.framework */; };
+		85C65DFB318775A3D6A014CF /* Pods_ItsMETests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D4C7E7958AD7A540A2F4007 /* Pods_ItsMETests.framework */; };
+		9A96C2E5BD560E77191C9F32 /* Pods_ItsME.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B5D2390BC583CACFB97AE9A /* Pods_ItsME.framework */; };
+		CB0156BC571BA39C5B2E3B38 /* Pods_ItsME_ItsMEUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA498A7983FFB9D27D9A69F /* Pods_ItsME_ItsMEUITests.framework */; };
 		D09AC9752918DE8B0081C0EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9742918DE8B0081C0EC /* AppDelegate.swift */; };
 		D09AC9772918DE8B0081C0EC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9762918DE8B0081C0EC /* SceneDelegate.swift */; };
 		D09AC9792918DE8B0081C0EC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9782918DE8B0081C0EC /* HomeViewController.swift */; };
@@ -49,7 +52,6 @@
 		DAFCFB67294AC00C006B287A /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB66294AC00C006B287A /* UIStackView+.swift */; };
 		FADCA80F0A2F18E72426F35D /* Pods_ItsMETests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46F59CD3F8609AD768369D9E /* Pods_ItsMETests.framework */; };
 		DAFCFB6C294C3666006B287A /* EducationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB6B294C3666006B287A /* EducationCell.swift */; };
-		DB169790AB17D072F4936595 /* Pods_ItsME.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 823C7DD7960C5DD2229AC1B1 /* Pods_ItsME.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +79,15 @@
 		B46102BE6300661F51F992FD /* Pods-ItsME-ItsMEUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME-ItsMEUITests.release.xcconfig"; path = "Target Support Files/Pods-ItsME-ItsMEUITests/Pods-ItsME-ItsMEUITests.release.xcconfig"; sourceTree = "<group>"; };
 		B97905E154620A1E0BDC44B0 /* Pods-ItsME-ItsMEUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME-ItsMEUITests.debug.xcconfig"; path = "Target Support Files/Pods-ItsME-ItsMEUITests/Pods-ItsME-ItsMEUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		CEB6D29FBEA8599C9A541D32 /* Pods_ItsME_ItsMEUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ItsME_ItsMEUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FA498A7983FFB9D27D9A69F /* Pods_ItsME_ItsMEUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ItsME_ItsMEUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		32E463B896C7B3CE015F0BD1 /* Pods-ItsME.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME.debug.xcconfig"; path = "Target Support Files/Pods-ItsME/Pods-ItsME.debug.xcconfig"; sourceTree = "<group>"; };
+		4D4C7E7958AD7A540A2F4007 /* Pods_ItsMETests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ItsMETests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B5D2390BC583CACFB97AE9A /* Pods_ItsME.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ItsME.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		897F82F9816F31F1FFAE85FC /* Pods-ItsME.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME.release.xcconfig"; path = "Target Support Files/Pods-ItsME/Pods-ItsME.release.xcconfig"; sourceTree = "<group>"; };
+		ABEBD4C86881DE2190733B8B /* Pods-ItsME-ItsMEUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME-ItsMEUITests.debug.xcconfig"; path = "Target Support Files/Pods-ItsME-ItsMEUITests/Pods-ItsME-ItsMEUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		C1D4CCE0F7845448D5307F95 /* Pods-ItsME-ItsMEUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME-ItsMEUITests.release.xcconfig"; path = "Target Support Files/Pods-ItsME-ItsMEUITests/Pods-ItsME-ItsMEUITests.release.xcconfig"; sourceTree = "<group>"; };
+		C8FD4BED63F172D0AF62CEED /* Pods-ItsMETests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsMETests.release.xcconfig"; path = "Target Support Files/Pods-ItsMETests/Pods-ItsMETests.release.xcconfig"; sourceTree = "<group>"; };
+		CF23105F92F17CA32C318115 /* Pods-ItsMETests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsMETests.debug.xcconfig"; path = "Target Support Files/Pods-ItsMETests/Pods-ItsMETests.debug.xcconfig"; sourceTree = "<group>"; };
 		D09AC9712918DE8B0081C0EC /* ItsME.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ItsME.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09AC9742918DE8B0081C0EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D09AC9762918DE8B0081C0EC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -123,7 +134,6 @@
 		DFE8424F1D468B78BF19C751 /* Pods-ItsME.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME.debug.xcconfig"; path = "Target Support Files/Pods-ItsME/Pods-ItsME.debug.xcconfig"; sourceTree = "<group>"; };
 		ECD78CBC5F75AA1F9606EA6B /* Pods-ItsME.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME.release.xcconfig"; path = "Target Support Files/Pods-ItsME/Pods-ItsME.release.xcconfig"; sourceTree = "<group>"; };
 		DAFCFB6B294C3666006B287A /* EducationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationCell.swift; sourceTree = "<group>"; };
-		F871EFEC5CD92283AADAD541 /* Pods_ItsMETests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ItsMETests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FEAA8A6D1B67D68705C255C /* Pods_ItsME.framework in Frameworks */,
+				9A96C2E5BD560E77191C9F32 /* Pods_ItsME.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,6 +174,12 @@
 				B46102BE6300661F51F992FD /* Pods-ItsME-ItsMEUITests.release.xcconfig */,
 				255E2FF5DBEFE72120CC7FD8 /* Pods-ItsMETests.debug.xcconfig */,
 				1AD9CA79DE15066F230BB802 /* Pods-ItsMETests.release.xcconfig */,
+				32E463B896C7B3CE015F0BD1 /* Pods-ItsME.debug.xcconfig */,
+				897F82F9816F31F1FFAE85FC /* Pods-ItsME.release.xcconfig */,
+				ABEBD4C86881DE2190733B8B /* Pods-ItsME-ItsMEUITests.debug.xcconfig */,
+				CF23105F92F17CA32C318115 /* Pods-ItsMETests.debug.xcconfig */,
+				C8FD4BED63F172D0AF62CEED /* Pods-ItsMETests.release.xcconfig */,
+				C1D4CCE0F7845448D5307F95 /* Pods-ItsME-ItsMEUITests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -970,6 +987,7 @@
 		D09AC9A32918DE8C0081C0EC /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B46102BE6300661F51F992FD /* Pods-ItsME-ItsMEUITests.release.xcconfig */;
+			baseConfigurationReference = C1D4CCE0F7845448D5307F95 /* Pods-ItsME-ItsMEUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
