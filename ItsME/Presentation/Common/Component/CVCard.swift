@@ -25,7 +25,7 @@ class CVCard: UIView {
         let label = UILabel()
         label.text = "최근 수정일: 2022.12.31"
         label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         label.textAlignment = .left
         return label
     }()
