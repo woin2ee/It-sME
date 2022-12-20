@@ -58,7 +58,7 @@ final class UserInfo: Decodable {
 
 extension UserInfo {
     
-    enum CodingKeys: CodingKey {
+    enum CodingKeys: String, CodingKey {
         case name
         case profileImageURL
         case birthday
@@ -66,6 +66,6 @@ extension UserInfo {
         case phoneNumber
         case email
         case otherItems
-        case education
+        case education = "educationItems"
     }
 }

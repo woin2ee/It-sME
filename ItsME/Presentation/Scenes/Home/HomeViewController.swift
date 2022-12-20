@@ -132,32 +132,34 @@ private extension HomeViewController {
     
     var userInfoBinding: Binder<UserInfo> {
         return .init(self) { viewController, userInfo in
-                userInfo.defaultItems.forEach { item in
-                    let profileInfo: ProfileInfoComponent = .init(userInfoItem: item)
-                    self.vStackLayout.addArrangedSubview(profileInfo)
-                }
-                self.vStackLayout.snp.makeConstraints { make in
-                    make.height.equalTo((self.vStackLayout.arrangedSubviews.count * 40))
-                    make.width.equalTo(300)
-                    make.centerX.equalTo(self.view.safeAreaLayoutGuide)
-                    make.top.equalTo(self.profileImageView.snp.bottom).offset(20)
-                }
+            
+            userInfo.defaultItems.forEach { item in
+                let profileInfo: ProfileInfoComponent = .init(userInfoItem: item)
+                self.vStackLayout.addArrangedSubview(profileInfo)
+            }
+            
+            self.vStackLayout.snp.makeConstraints { make in
+                make.height.equalTo((self.vStackLayout.arrangedSubviews.count * 40))
+                make.width.equalTo(self.view.snp.width).multipliedBy(0.6)
+                make.centerX.equalTo(self.view.safeAreaLayoutGuide)
+                make.top.equalTo(self.profileImageView.snp.bottom).offset(20)
+            }
         }
     }
     
     var cvsInfoBinding: Binder<[CVInfo]> {
         return .init(self) { viewController, cvsInfo in
-                cvsInfo.forEach { cvInfo in
-                    let cvCard = CVCard()
-                    cvCard.cvTitle.text = cvInfo.title
-                    cvCard.latestDate.text = "최근 수정일: " + cvInfo.lastModified
-                    cvCard.layer.cornerRadius = 10
-                    cvCard.backgroundColor = .mainColor
-                    self.hStackLayout.addArrangedSubview(cvCard)
-                    cvCard.snp.makeConstraints{ make in
-                        make.width.equalTo(self.contentWidth)
-                    }
+            cvsInfo.forEach { cvInfo in
+                let cvCard = CVCard()
+                cvCard.cvTitle.text = cvInfo.title
+                cvCard.latestDate.text = "최근 수정일: " + cvInfo.lastModified
+                cvCard.layer.cornerRadius = 10
+                cvCard.backgroundColor = .mainColor
+                self.hStackLayout.addArrangedSubview(cvCard)
+                cvCard.snp.makeConstraints{ make in
+                    make.width.equalTo(self.contentWidth)
                 }
+            }
         }
     }
 }
@@ -210,7 +212,7 @@ private extension HomeViewController {
         }
         
         profileImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(150)
+            make.width.height.equalTo(self.view.snp.width).multipliedBy(0.4)
             make.centerX.equalTo(self.view)
             make.top.equalTo(editProfileButton.snp.bottom).offset(20)
         }
@@ -221,7 +223,7 @@ private extension HomeViewController {
         
         cardScrollView.snp.makeConstraints{ make in
             make.top.equalTo(vStackLayout.snp.bottom).offset(30)
-            make.height.equalTo(250)
+            make.bottom.equalTo(self.view.snp.bottom).offset(-30)
             make.width.equalToSuperview()
         }
         
