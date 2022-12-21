@@ -127,7 +127,7 @@ private extension EditProfileViewController {
     func configureSubviews() {
         self.view.addSubview(containerScrollView)
         containerScrollView.snp.makeConstraints { make in
-            make.top.bottom.left.right.equalTo(self.view.safeAreaLayoutGuide)
+            make.edges.equalToSuperview()
         }
         
         self.containerScrollView.addSubview(contentView)
