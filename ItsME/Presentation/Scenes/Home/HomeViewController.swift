@@ -40,6 +40,8 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
     
     private var vStackLayout = UIStackView()
     
+    // FIXME: - 1. 스켈레톤 뷰를 생성
+//    private var skelletonView: ProfileInfoComponent = .init(userInfoItem: .init(icon: .default, contents: "skelleton"))
     
     private var hStackLayout = UIStackView()
     
@@ -132,23 +134,18 @@ private extension HomeViewController {
     
     var userInfoBinding: Binder<UserInfo> {
         return .init(self) { viewController, userInfo in
-            
+            // FIXME: - 3. 스켈레톤뷰가 정상적으로 추가 되었을 때 데이터를 받아오면서 스택에 있는 정보를 지우고 새로 생성하기 위한 코드
+//            self.vStackLayout.removeAllArrangedSubviews()
             userInfo.defaultItems.forEach { item in
                 let profileInfo: ProfileInfoComponent = .init(userInfoItem: item)
                 self.vStackLayout.addArrangedSubview(profileInfo)
-            }
-            
-            self.vStackLayout.snp.makeConstraints { make in
-                make.height.equalTo((self.vStackLayout.arrangedSubviews.count * 40))
-                make.width.equalTo(self.view.snp.width).multipliedBy(0.6)
-                make.centerX.equalTo(self.view.safeAreaLayoutGuide)
-                make.top.equalTo(self.profileImageView.snp.bottom).offset(20)
             }
         }
     }
     
     var cvsInfoBinding: Binder<[CVInfo]> {
         return .init(self) { viewController, cvsInfo in
+            
             cvsInfo.forEach { cvInfo in
                 let cvCard = CVCard()
                 cvCard.cvTitle.text = cvInfo.title
@@ -177,8 +174,14 @@ private extension HomeViewController {
         self.view.addSubview(profileImageView)
         self.view.addSubview(vStackLayout)
         cardScrollView.addSubview(hStackLayout)
+        
+        // FIXME: - 2. 스켈레톤 뷰 vStackLayout에 추가
+//        for _ in 1...4 {
+//            self.vStackLayout.addArrangedSubview(skelletonView)
+//        }
         self.view.addSubview(cardScrollView)
         self.view.addSubview(pageController)
+        
         
         profileImageView.contentMode = .scaleAspectFill
         
@@ -215,6 +218,13 @@ private extension HomeViewController {
             make.width.height.equalTo(self.view.snp.width).multipliedBy(0.4)
             make.centerX.equalTo(self.view)
             make.top.equalTo(editProfileButton.snp.bottom).offset(20)
+        }
+        
+        vStackLayout.snp.makeConstraints { make in
+            make.height.equalTo(self.view.snp.height).multipliedBy(0.25)
+            make.width.equalTo(self.view.snp.width).multipliedBy(0.8)
+            make.centerX.equalTo(self.view.safeAreaLayoutGuide)
+            make.top.equalTo(self.profileImageView.snp.bottom).offset(20)
         }
         
         hStackLayout.snp.makeConstraints{ make in
