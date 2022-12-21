@@ -54,12 +54,13 @@ final class EditProfileViewController: UIViewController {
         return label
     }()
     
-    private lazy var educationTableView: UITableView = {
-        let tableView: UITableView = .init()
-        tableView.backgroundColor = .systemGray2
+    private lazy var educationTableView: IntrinsicHeightTableView = {
+        let tableView: IntrinsicHeightTableView = .init()
+        tableView.backgroundColor = .systemBackground
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
         tableView.isScrollEnabled = false
+        tableView.separatorInset = .zero
         let cellType = EducationCell.self
         tableView.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
         return tableView
@@ -169,8 +170,7 @@ private extension EditProfileViewController {
         self.contentView.addSubview(educationTableView)
         educationTableView.snp.makeConstraints { make in
             make.top.equalTo(educationHeaderLabel.snp.bottom)
-            make.left.right.equalToSuperview()
-            make.height.equalTo(300) // FIXME: 임시로 세팅(자동으로 계산됨)
+            make.left.right.equalToSuperview().inset(24)
         }
         
         self.contentView.addSubview(educationItemAddButton)
