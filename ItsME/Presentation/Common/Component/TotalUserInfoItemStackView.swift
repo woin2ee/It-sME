@@ -9,8 +9,6 @@ import UIKit
 
 final class TotalUserInfoItemStackView: UIStackView {
     
-    private let userInfoItems: [UserInfoItem] = []
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -22,7 +20,7 @@ final class TotalUserInfoItemStackView: UIStackView {
         self.alignment = .fill
         self.distribution = .fillEqually
         
-        bind(userInfoItems: userInfoItems)
+        bind(userInfoItems: [])
     }
     
     required init(coder: NSCoder) {
