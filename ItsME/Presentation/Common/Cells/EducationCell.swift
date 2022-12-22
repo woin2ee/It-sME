@@ -17,6 +17,7 @@ final class EducationCell: UITableViewCell {
     private lazy var periodLabel: UILabel = {
         let label: UILabel = .init()
         label.text = "Period"
+        label.numberOfLines = 2
         return label
     }()
     
