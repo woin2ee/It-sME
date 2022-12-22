@@ -44,7 +44,7 @@ final class EditProfileViewController: UIViewController {
     
     private lazy var totalUserInfoItemStackView: TotalUserInfoItemStackView = .init()
     
-    private lazy var userInfoItemAddButton: ItemAddButton = .init(type: .system)
+    private lazy var userInfoItemAddButton: ItemAddButton = .init()
     
     private lazy var educationHeaderLabel: UILabel = {
         let label: UILabel = .init()
@@ -66,7 +66,7 @@ final class EditProfileViewController: UIViewController {
         return tableView
     }()
 
-    private lazy var educationItemAddButton: ItemAddButton = .init(type: .system)
+    private lazy var educationItemAddButton: ItemAddButton = .init()
     
     private lazy var editingCompleteButton: UIBarButtonItem = {
         let button: UIBarButtonItem = .init()
@@ -159,6 +159,8 @@ private extension EditProfileViewController {
         userInfoItemAddButton.snp.makeConstraints { make in
             make.top.equalTo(totalUserInfoItemStackView.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(30)
+            make.height.equalTo(30)
         }
         
         self.contentView.addSubview(educationHeaderLabel)
@@ -178,6 +180,8 @@ private extension EditProfileViewController {
             make.top.equalTo(educationTableView.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-20)
+            make.leading.trailing.equalToSuperview().inset(30)
+            make.height.equalTo(40)
         }
     }
     
