@@ -40,7 +40,6 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
     
     private var vStackLayout = UIStackView()
     
-    
     private var hStackLayout = UIStackView()
     
     private var cardScrollView = UIScrollView()
@@ -58,8 +57,6 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
-        vStackLayout.removeAllArrangedSubviews()
-        hStackLayout.removeAllArrangedSubviews()
     }
     
     override func viewDidLayoutSubviews() {
@@ -133,22 +130,19 @@ private extension HomeViewController {
     var userInfoBinding: Binder<UserInfo> {
         return .init(self) { viewController, userInfo in
             
+            self.vStackLayout.removeAllArrangedSubviews()
             userInfo.defaultItems.forEach { item in
                 let profileInfo: ProfileInfoComponent = .init(userInfoItem: item)
                 self.vStackLayout.addArrangedSubview(profileInfo)
-            }
-            
-            self.vStackLayout.snp.makeConstraints { make in
-                make.height.equalTo((self.vStackLayout.arrangedSubviews.count * 40))
-                make.width.equalTo(self.view.snp.width).multipliedBy(0.6)
-                make.centerX.equalTo(self.view.safeAreaLayoutGuide)
-                make.top.equalTo(self.profileImageView.snp.bottom).offset(20)
             }
         }
     }
     
     var cvsInfoBinding: Binder<[CVInfo]> {
         return .init(self) { viewController, cvsInfo in
+            
+            self.hStackLayout.removeAllArrangedSubviews()
+            
             cvsInfo.forEach { cvInfo in
                 let cvCard = CVCard()
                 cvCard.cvTitle.text = cvInfo.title
@@ -177,6 +171,7 @@ private extension HomeViewController {
         self.view.addSubview(profileImageView)
         self.view.addSubview(vStackLayout)
         cardScrollView.addSubview(hStackLayout)
+        
         self.view.addSubview(cardScrollView)
         self.view.addSubview(pageController)
         
@@ -215,6 +210,13 @@ private extension HomeViewController {
             make.width.height.equalTo(self.view.snp.width).multipliedBy(0.4)
             make.centerX.equalTo(self.view)
             make.top.equalTo(editProfileButton.snp.bottom).offset(20)
+        }
+        
+        vStackLayout.snp.makeConstraints { make in
+            make.height.equalTo(self.view.snp.height).multipliedBy(0.25)
+            make.width.equalTo(self.view.snp.width).multipliedBy(0.8)
+            make.centerX.equalTo(self.view.safeAreaLayoutGuide)
+            make.top.equalTo(self.profileImageView.snp.bottom).offset(20)
         }
         
         hStackLayout.snp.makeConstraints{ make in
