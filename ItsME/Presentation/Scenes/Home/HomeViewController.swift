@@ -40,9 +40,6 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
     
     private var vStackLayout = UIStackView()
     
-    // FIXME: - 1. 스켈레톤 뷰를 생성
-//    private var skelletonView: ProfileInfoComponent = .init(userInfoItem: .init(icon: .default, contents: "skelleton"))
-    
     private var hStackLayout = UIStackView()
     
     private var cardScrollView = UIScrollView()
@@ -60,8 +57,6 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
-        vStackLayout.removeAllArrangedSubviews()
-        hStackLayout.removeAllArrangedSubviews()
     }
     
     override func viewDidLayoutSubviews() {
@@ -134,8 +129,8 @@ private extension HomeViewController {
     
     var userInfoBinding: Binder<UserInfo> {
         return .init(self) { viewController, userInfo in
-            // FIXME: - 3. 스켈레톤뷰가 정상적으로 추가 되었을 때 데이터를 받아오면서 스택에 있는 정보를 지우고 새로 생성하기 위한 코드
-//            self.vStackLayout.removeAllArrangedSubviews()
+            
+            self.vStackLayout.removeAllArrangedSubviews()
             userInfo.defaultItems.forEach { item in
                 let profileInfo: ProfileInfoComponent = .init(userInfoItem: item)
                 self.vStackLayout.addArrangedSubview(profileInfo)
@@ -145,6 +140,8 @@ private extension HomeViewController {
     
     var cvsInfoBinding: Binder<[CVInfo]> {
         return .init(self) { viewController, cvsInfo in
+            
+            self.hStackLayout.removeAllArrangedSubviews()
             
             cvsInfo.forEach { cvInfo in
                 let cvCard = CVCard()
@@ -175,13 +172,8 @@ private extension HomeViewController {
         self.view.addSubview(vStackLayout)
         cardScrollView.addSubview(hStackLayout)
         
-        // FIXME: - 2. 스켈레톤 뷰 vStackLayout에 추가
-//        for _ in 1...4 {
-//            self.vStackLayout.addArrangedSubview(skelletonView)
-//        }
         self.view.addSubview(cardScrollView)
         self.view.addSubview(pageController)
-        
         
         profileImageView.contentMode = .scaleAspectFill
         
