@@ -56,6 +56,7 @@ final class EditProfileViewController: UIViewController {
     
     private lazy var educationTableView: IntrinsicHeightTableView = {
         let tableView: IntrinsicHeightTableView = .init()
+        tableView.delegate = self
         tableView.backgroundColor = .systemBackground
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
@@ -189,6 +190,22 @@ private extension EditProfileViewController {
         self.navigationItem.title = "Edit Profile"
         self.navigationItem.rightBarButtonItem = editingCompleteButton
         self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension EditProfileViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let removeAction: UIContextualAction = .init(style: .destructive, title: "삭제") { (action, view, completionHandler) in
+            print("삭제 완료")
+            completionHandler(true)
+        }
+        let config: UIImage.SymbolConfiguration = .init(pointSize: 24.0, weight: .semibold, scale: .default)
+        removeAction.image = .init(systemName: "minus.circle", withConfiguration: config)
+        
+        return .init(actions: [removeAction])
     }
 }
 
