@@ -39,6 +39,14 @@ class ProfileInfoComponent: UIStackView {
         self.alignment = .center
         self.distribution = .fill
         
+        configureSubviews()
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func configureSubviews() {
         self.addArrangedSubview(icon)
         self.addArrangedSubview(contents)
         
@@ -50,9 +58,5 @@ class ProfileInfoComponent: UIStackView {
         contents.snp.makeConstraints { make in
             make.height.equalToSuperview().multipliedBy(0.9)
         }
-    }
-    
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
