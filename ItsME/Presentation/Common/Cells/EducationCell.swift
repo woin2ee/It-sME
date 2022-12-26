@@ -32,7 +32,7 @@ final class EducationCell: UITableViewCell {
     private lazy var descriptionLabel: UITextField = {
         let label: UITextField = .init()
         label.text = "Description"
-        label.textColor = .systemGray
+        label.textColor = .secondaryLabel
         return label
     }()
     
