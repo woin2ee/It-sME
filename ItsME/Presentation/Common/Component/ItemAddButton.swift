@@ -17,7 +17,6 @@ final class ItemAddButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        configureColor()
         configureSymbolImage()
         configureTitle()
         
@@ -32,6 +31,11 @@ final class ItemAddButton: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
         configureBorder()
+    }
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        configureColor()
     }
 }
 
@@ -60,7 +64,7 @@ private extension ItemAddButton {
     
     func configureBorder() {
         borderLayer.fillColor = UIColor.clear.cgColor
-        borderLayer.strokeColor = UIColor.black.cgColor
+        borderLayer.strokeColor = UIColor.label.cgColor
         borderLayer.lineDashPattern = [2, 2]
         borderLayer.lineWidth = 1.0
         borderLayer.path = UIBezierPath.init(roundedRect: self.bounds, cornerRadius: cornerRadius).cgPath
