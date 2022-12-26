@@ -15,7 +15,7 @@ final class TotalUserInfoItemStackView: UIStackView {
         self.backgroundColor = .clear
         
         self.axis = .vertical
-        self.spacing = 4
+        self.spacing = 8
         self.alignment = .fill
         self.distribution = .fillEqually
         
