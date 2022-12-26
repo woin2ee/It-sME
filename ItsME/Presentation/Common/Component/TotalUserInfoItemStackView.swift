@@ -14,7 +14,6 @@ final class TotalUserInfoItemStackView: UIStackView {
         
         self.backgroundColor = .clear
         
-        self.isUserInteractionEnabled = false
         self.axis = .vertical
         self.spacing = 4
         self.alignment = .fill
@@ -31,7 +30,7 @@ final class TotalUserInfoItemStackView: UIStackView {
         self.removeAllArrangedSubviews()
         
         userInfoItems.forEach { userInfoItem in
-            let component = ProfileInfoComponent.init(userInfoItem: userInfoItem)
+            let component = ProfileInfoComponent.init(userInfoItem: userInfoItem, isEditingMode: true)
             self.addArrangedSubview(component)
         }
     }

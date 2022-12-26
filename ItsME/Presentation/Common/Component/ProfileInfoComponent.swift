@@ -30,7 +30,23 @@ class ProfileInfoComponent: UIStackView {
         return label
     }()
     
-    init(userInfoItem: UserInfoItem) {
+    private lazy var iconTextField: UITextField = {
+        let textField: UITextField = .init()
+        textField.text = userInfoItem.icon.toEmoji
+        textField.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        textField.textAlignment = .center
+        return textField
+    }()
+    
+    private lazy var contentsTextField: UITextField = {
+        let textField: UITextField = .init()
+        textField.text = userInfoItem.contents
+        textField.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        textField.textAlignment = .left
+        return textField
+    }()
+    
+    init(userInfoItem: UserInfoItem, isEditingMode: Bool = false) {
         self.userInfoItem = userInfoItem
         super.init(frame: .zero)
         
@@ -39,24 +55,38 @@ class ProfileInfoComponent: UIStackView {
         self.alignment = .center
         self.distribution = .fill
         
-        configureSubviews()
+        configureSubviews(isEditingMode: isEditingMode)
     }
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureSubviews() {
-        self.addArrangedSubview(icon)
-        self.addArrangedSubview(contents)
-        
-        icon.snp.makeConstraints { make in
-            make.height.equalToSuperview().multipliedBy(0.9)
-            make.width.equalTo(self.snp.height)
-        }
-        
-        contents.snp.makeConstraints { make in
-            make.height.equalToSuperview().multipliedBy(0.9)
+    private func configureSubviews(isEditingMode: Bool) {
+        if isEditingMode {
+            self.addArrangedSubview(iconTextField)
+            self.addArrangedSubview(contentsTextField)
+            
+            iconTextField.snp.makeConstraints { make in
+                make.height.equalToSuperview().multipliedBy(0.9)
+                make.width.equalTo(self.snp.height)
+            }
+            
+            contentsTextField.snp.makeConstraints { make in
+                make.height.equalToSuperview().multipliedBy(0.9)
+            }
+        } else {
+            self.addArrangedSubview(icon)
+            self.addArrangedSubview(contents)
+            
+            icon.snp.makeConstraints { make in
+                make.height.equalToSuperview().multipliedBy(0.9)
+                make.width.equalTo(self.snp.height)
+            }
+            
+            contents.snp.makeConstraints { make in
+                make.height.equalToSuperview().multipliedBy(0.9)
+            }
         }
     }
 }
