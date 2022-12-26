@@ -160,7 +160,7 @@ private extension EditProfileViewController {
             make.top.equalTo(totalUserInfoItemStackView.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(30)
-            make.height.equalTo(30)
+            make.height.equalTo(36)
         }
         
         self.contentView.addSubview(educationHeaderLabel)
@@ -181,7 +181,7 @@ private extension EditProfileViewController {
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-20)
             make.leading.trailing.equalToSuperview().inset(30)
-            make.height.equalTo(40)
+            make.height.equalTo(42)
         }
     }
     
