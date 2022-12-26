@@ -37,7 +37,7 @@ private extension ItemAddButton {
     
     func configureColor() {
         setBackgroundColor(.systemBackground, for: .normal)
-        setBackgroundColor(.black.withAlphaComponent(0.1), for: .highlighted)
+        setBackgroundColor(.systemGray4, for: .highlighted)
         self.tintColor = mainColor
     }
     
