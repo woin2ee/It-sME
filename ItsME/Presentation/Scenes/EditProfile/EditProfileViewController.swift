@@ -171,7 +171,7 @@ private extension EditProfileViewController {
         
         self.contentView.addSubview(educationTableView)
         educationTableView.snp.makeConstraints { make in
-            make.top.equalTo(educationHeaderLabel.snp.bottom)
+            make.top.equalTo(educationHeaderLabel.snp.bottom).offset(10)
             make.left.right.equalToSuperview().inset(24)
         }
         
