@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 import SnapKit
 
-class ProfileInfoComponent: UIStackView {
+final class ProfileInfoComponent: UIStackView {
+    
     var userInfoItem: UserInfoItem
     
     private lazy var icon: UILabel = {
