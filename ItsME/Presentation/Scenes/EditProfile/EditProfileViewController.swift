@@ -15,7 +15,7 @@ final class EditProfileViewController: UIViewController {
     
     private let viewModel: EditProfileViewModel = .init()
     
-    // MARK: UI Components
+    // MARK: - UI Components
     
     private lazy var containerScrollView: UIScrollView = {
         let scrollView: UIScrollView = .init()
