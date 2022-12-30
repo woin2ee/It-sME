@@ -77,9 +77,10 @@ final class EditProfileViewController: UIViewController {
     private lazy var educationItemAddButton: ItemAddButton = .init()
     
     private lazy var editingCompleteButton: UIBarButtonItem = {
-        let button: UIBarButtonItem = .init()
-        button.title = "수정완료"
-        return button
+        let action: UIAction = .init { _ in
+            self.navigationController?.popViewController(animated: true)
+        }
+        return .init(title: "수정완료", primaryAction: action)
     }()
     
     // MARK: - Life Cycle
