@@ -73,7 +73,7 @@ final class EditProfileViewController: UIViewController {
         tableView.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
         return tableView
     }()
-
+    
     private lazy var educationItemAddButton: ItemAddButton = .init()
     
     private lazy var editingCompleteButton: UIBarButtonItem = {
