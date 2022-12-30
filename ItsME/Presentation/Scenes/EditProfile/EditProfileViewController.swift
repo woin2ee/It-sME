@@ -33,11 +33,18 @@ final class EditProfileViewController: UIViewController {
     
     private lazy var profileImageView: UIImageView = {
         let imageView: UIImageView = .init(image: UIImage.init(named: "테스트이미지"))
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
     private lazy var profileEditButton: UIButton = {
-        let button: UIButton = .init(type: .system)
+        let action: UIAction = .init { _ in
+            let imagePickerController = UIImagePickerController.init()
+            imagePickerController.delegate = self
+            imagePickerController.allowsEditing = true
+            self.present(imagePickerController, animated: true)
+        }
+        let button: UIButton = .init(type: .system, primaryAction: action)
         button.setTitle("프로필 사진 변경하기", for: .normal)
         return button
     }()
@@ -207,6 +214,31 @@ extension EditProfileViewController: UITableViewDelegate {
         
         return .init(actions: [removeAction])
     }
+}
+
+// MARK: - UIImagePickerControllerDelegate
+
+extension EditProfileViewController: UIImagePickerControllerDelegate {
+    
+    func imagePickerController(
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
+    ) {
+        picker.dismiss(animated: true)
+        
+        if let croppedImage = info[.editedImage] as? UIImage {
+            profileImageView.image = croppedImage
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+}
+
+// MARK: - UINavigationControllerDelegate
+
+extension EditProfileViewController: UINavigationControllerDelegate {
 }
 
 #if DEBUG
