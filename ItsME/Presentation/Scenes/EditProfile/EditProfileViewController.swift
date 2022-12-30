@@ -38,11 +38,11 @@ final class EditProfileViewController: UIViewController {
     }()
     
     private lazy var profileEditButton: UIButton = {
-        let action: UIAction = .init { _ in
+        let action: UIAction = .init { [weak self] _ in
             let imagePickerController = UIImagePickerController.init()
             imagePickerController.delegate = self
             imagePickerController.allowsEditing = true
-            self.present(imagePickerController, animated: true)
+            self?.present(imagePickerController, animated: true)
         }
         let button: UIButton = .init(type: .system, primaryAction: action)
         button.setTitle("프로필 사진 변경하기", for: .normal)
@@ -77,8 +77,8 @@ final class EditProfileViewController: UIViewController {
     private lazy var educationItemAddButton: ItemAddButton = .init()
     
     private lazy var editingCompleteButton: UIBarButtonItem = {
-        let action: UIAction = .init { _ in
-            self.navigationController?.popViewController(animated: true)
+        let action: UIAction = .init { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
         }
         return .init(title: "수정완료", primaryAction: action)
     }()
