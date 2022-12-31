@@ -13,6 +13,8 @@ final class ProfileInfoComponent: UIStackView {
     
     var userInfoItem: UserInfoItem
     
+    // MARK: - UI Components
+    
     private lazy var icon: UILabel = {
         let label = UILabel()
         label.text = userInfoItem.icon.toEmoji
@@ -46,6 +48,8 @@ final class ProfileInfoComponent: UIStackView {
         textField.textAlignment = .left
         return textField
     }()
+    
+    // MARK: - Initialization
     
     init(userInfoItem: UserInfoItem, isEditingMode: Bool = false) {
         self.userInfoItem = userInfoItem
