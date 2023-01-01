@@ -76,12 +76,7 @@ final class EditProfileViewController: UIViewController {
     
     private lazy var educationItemAddButton: ItemAddButton = .init()
     
-    private lazy var editingCompleteButton: UIBarButtonItem = {
-        let action: UIAction = .init { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
-        }
-        return .init(title: "수정완료", primaryAction: action)
-    }()
+    private lazy var editingCompleteButton: UIBarButtonItem = .init(title: "수정완료")
     
     // MARK: - Life Cycle
     
@@ -110,7 +105,9 @@ private extension EditProfileViewController {
     func bindViewModel() {
         let input = EditProfileViewModel.Input.init(
             viewDidLoad: .just(()),
-            tapEditingCompleteButton: editingCompleteButton.rx.tap.asSignal()
+            tapEditingCompleteButton: editingCompleteButton.rx.tap
+                .map({ self.makeCurrentUserInfo() })
+                .asSignal(onErrorSignalWith: .empty())
         )
         let output = viewModel.transform(input: input)
         
@@ -127,6 +124,26 @@ private extension EditProfileViewController {
                 cell.bind(educationItem: educationItem)
             }
             .disposed(by: disposeBag)
+        
+        output.tappedEditingCompleteButton
+            .emit(with: self, onNext: { owner, userInfo in
+                owner.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func makeCurrentUserInfo() -> UserInfo {
+        // FIXME: 현재 수정된 유저 정보로 생성해야함
+        return .init(
+            name: "A",
+            profileImageURL: "B",
+            birthday: .init(icon: .default, contents: "C"),
+            address: .init(icon: .default, contents: "C"),
+            phoneNumber: .init(icon: .default, contents: "C"),
+            email: .init(icon: .default, contents: "C"),
+            otherItems: [.init(icon: .default, contents: "C")],
+            educationItems: [.init(period: "1", title: "2", description: "3")]
+        )
     }
 }
 

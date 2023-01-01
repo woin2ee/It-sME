@@ -12,12 +12,13 @@ final class EditProfileViewModel: ViewModelType {
     
     struct Input {
         let viewDidLoad: Signal<Void>
-        let tapEditingCompleteButton: Signal<Void>
+        let tapEditingCompleteButton: Signal<UserInfo>
     }
     
     struct Output {
         let userInfoItems: Driver<[UserInfoItem]>
         let educationItems: Driver<[EducationItem]>
+        let tappedEditingCompleteButton: Signal<UserInfo>
     }
     
     private let userRepository: UserRepository = .init()
@@ -33,9 +34,16 @@ final class EditProfileViewModel: ViewModelType {
         
         let educationItems = userInfo.map { $0.educationItems }
         
+        let tappedEditingCompleteButton = input.tapEditingCompleteButton
+            .do(onNext: { userInfo in
+                // TODO: 유저 정보 저장
+                print(userInfo)
+            })
+        
         return .init(
             userInfoItems: userInfoItems,
-            educationItems: educationItems
+            educationItems: educationItems,
+            tappedEditingCompleteButton: tappedEditingCompleteButton
         )
     }
 }
