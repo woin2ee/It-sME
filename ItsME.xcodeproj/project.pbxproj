@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3FEAA8A6D1B67D68705C255C /* Pods_ItsME.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA4B29C896D1CB4D3F02A6C6 /* Pods_ItsME.framework */; };
+		85C65DFB318775A3D6A014CF /* Pods_ItsMETests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D4C7E7958AD7A540A2F4007 /* Pods_ItsMETests.framework */; };
+		9A96C2E5BD560E77191C9F32 /* Pods_ItsME.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B5D2390BC583CACFB97AE9A /* Pods_ItsME.framework */; };
+		CB0156BC571BA39C5B2E3B38 /* Pods_ItsME_ItsMEUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA498A7983FFB9D27D9A69F /* Pods_ItsME_ItsMEUITests.framework */; };
 		D09AC9752918DE8B0081C0EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9742918DE8B0081C0EC /* AppDelegate.swift */; };
 		D09AC9772918DE8B0081C0EC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9762918DE8B0081C0EC /* SceneDelegate.swift */; };
 		D09AC9792918DE8B0081C0EC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9782918DE8B0081C0EC /* HomeViewController.swift */; };
@@ -45,9 +48,12 @@
 		DAB06A40291BA61100E86163 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06A3F291BA61100E86163 /* ViewModelType.swift */; };
 		DAE6090B2942095400481742 /* TotalUserInfoItemStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE6090A2942095400481742 /* TotalUserInfoItemStackView.swift */; };
 		DAE6090D29420D9900481742 /* ItemAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE6090C29420D9900481742 /* ItemAddButton.swift */; };
-		DAFCFB63294A9CD0006B287A /* Education.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB62294A9CD0006B287A /* Education.swift */; };
+		DAFCFB63294A9CD0006B287A /* EducationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB62294A9CD0006B287A /* EducationItem.swift */; };
 		DAFCFB67294AC00C006B287A /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB66294AC00C006B287A /* UIStackView+.swift */; };
 		FADCA80F0A2F18E72426F35D /* Pods_ItsMETests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46F59CD3F8609AD768369D9E /* Pods_ItsMETests.framework */; };
+		DAFCFB6C294C3666006B287A /* EducationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB6B294C3666006B287A /* EducationCell.swift */; };
+		DAFCFB6F2950693F006B287A /* IntrinsicHeightTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB6E2950693F006B287A /* IntrinsicHeightTableView.swift */; };
+		DAFCFB7529543D3B006B287A /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB7429543D3B006B287A /* UIButton+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +81,15 @@
 		B46102BE6300661F51F992FD /* Pods-ItsME-ItsMEUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME-ItsMEUITests.release.xcconfig"; path = "Target Support Files/Pods-ItsME-ItsMEUITests/Pods-ItsME-ItsMEUITests.release.xcconfig"; sourceTree = "<group>"; };
 		B97905E154620A1E0BDC44B0 /* Pods-ItsME-ItsMEUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME-ItsMEUITests.debug.xcconfig"; path = "Target Support Files/Pods-ItsME-ItsMEUITests/Pods-ItsME-ItsMEUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		CEB6D29FBEA8599C9A541D32 /* Pods_ItsME_ItsMEUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ItsME_ItsMEUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FA498A7983FFB9D27D9A69F /* Pods_ItsME_ItsMEUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ItsME_ItsMEUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		32E463B896C7B3CE015F0BD1 /* Pods-ItsME.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME.debug.xcconfig"; path = "Target Support Files/Pods-ItsME/Pods-ItsME.debug.xcconfig"; sourceTree = "<group>"; };
+		4D4C7E7958AD7A540A2F4007 /* Pods_ItsMETests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ItsMETests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B5D2390BC583CACFB97AE9A /* Pods_ItsME.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ItsME.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		897F82F9816F31F1FFAE85FC /* Pods-ItsME.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME.release.xcconfig"; path = "Target Support Files/Pods-ItsME/Pods-ItsME.release.xcconfig"; sourceTree = "<group>"; };
+		ABEBD4C86881DE2190733B8B /* Pods-ItsME-ItsMEUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME-ItsMEUITests.debug.xcconfig"; path = "Target Support Files/Pods-ItsME-ItsMEUITests/Pods-ItsME-ItsMEUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		C1D4CCE0F7845448D5307F95 /* Pods-ItsME-ItsMEUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME-ItsMEUITests.release.xcconfig"; path = "Target Support Files/Pods-ItsME-ItsMEUITests/Pods-ItsME-ItsMEUITests.release.xcconfig"; sourceTree = "<group>"; };
+		C8FD4BED63F172D0AF62CEED /* Pods-ItsMETests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsMETests.release.xcconfig"; path = "Target Support Files/Pods-ItsMETests/Pods-ItsMETests.release.xcconfig"; sourceTree = "<group>"; };
+		CF23105F92F17CA32C318115 /* Pods-ItsMETests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsMETests.debug.xcconfig"; path = "Target Support Files/Pods-ItsMETests/Pods-ItsMETests.debug.xcconfig"; sourceTree = "<group>"; };
 		D09AC9712918DE8B0081C0EC /* ItsME.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ItsME.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09AC9742918DE8B0081C0EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D09AC9762918DE8B0081C0EC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -116,10 +131,13 @@
 		DAB06A3F291BA61100E86163 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		DAE6090A2942095400481742 /* TotalUserInfoItemStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalUserInfoItemStackView.swift; sourceTree = "<group>"; };
 		DAE6090C29420D9900481742 /* ItemAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemAddButton.swift; sourceTree = "<group>"; };
-		DAFCFB62294A9CD0006B287A /* Education.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Education.swift; sourceTree = "<group>"; };
+		DAFCFB62294A9CD0006B287A /* EducationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationItem.swift; sourceTree = "<group>"; };
 		DAFCFB66294AC00C006B287A /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		DFE8424F1D468B78BF19C751 /* Pods-ItsME.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME.debug.xcconfig"; path = "Target Support Files/Pods-ItsME/Pods-ItsME.debug.xcconfig"; sourceTree = "<group>"; };
 		ECD78CBC5F75AA1F9606EA6B /* Pods-ItsME.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME.release.xcconfig"; path = "Target Support Files/Pods-ItsME/Pods-ItsME.release.xcconfig"; sourceTree = "<group>"; };
+		DAFCFB6B294C3666006B287A /* EducationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationCell.swift; sourceTree = "<group>"; };
+		DAFCFB6E2950693F006B287A /* IntrinsicHeightTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrinsicHeightTableView.swift; sourceTree = "<group>"; };
+		DAFCFB7429543D3B006B287A /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +146,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FEAA8A6D1B67D68705C255C /* Pods_ItsME.framework in Frameworks */,
+				9A96C2E5BD560E77191C9F32 /* Pods_ItsME.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,6 +178,12 @@
 				B46102BE6300661F51F992FD /* Pods-ItsME-ItsMEUITests.release.xcconfig */,
 				255E2FF5DBEFE72120CC7FD8 /* Pods-ItsMETests.debug.xcconfig */,
 				1AD9CA79DE15066F230BB802 /* Pods-ItsMETests.release.xcconfig */,
+				32E463B896C7B3CE015F0BD1 /* Pods-ItsME.debug.xcconfig */,
+				897F82F9816F31F1FFAE85FC /* Pods-ItsME.release.xcconfig */,
+				ABEBD4C86881DE2190733B8B /* Pods-ItsME-ItsMEUITests.debug.xcconfig */,
+				CF23105F92F17CA32C318115 /* Pods-ItsMETests.debug.xcconfig */,
+				C8FD4BED63F172D0AF62CEED /* Pods-ItsMETests.release.xcconfig */,
+				C1D4CCE0F7845448D5307F95 /* Pods-ItsME-ItsMEUITests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -230,6 +255,8 @@
 		D0CCF4E429260AF300AD4AE6 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				DAFCFB6D295068EE006B287A /* TableView */,
+				DAFCFB6A294C3622006B287A /* Cells */,
 				D0CCF502292CCB2400AD4AE6 /* Component */,
 				DA739DE22924FCA0003AEE4C /* AlertViewController */,
 			);
@@ -271,6 +298,7 @@
 				DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */,
 				DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */,
 				DAFCFB66294AC00C006B287A /* UIStackView+.swift */,
+				DAFCFB7429543D3B006B287A /* UIButton+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -349,7 +377,7 @@
 				DA7201F52931F41100A69519 /* ResumeItem.swift */,
 				DA7201F72931F8EB00A69519 /* CoverLetter.swift */,
 				DA7201F32931F25500A69519 /* CoverLetterItem.swift */,
-				DAFCFB62294A9CD0006B287A /* Education.swift */,
+				DAFCFB62294A9CD0006B287A /* EducationItem.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -382,6 +410,22 @@
 				D0CCF4E2292604BE00AD4AE6 /* UIColor+.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		DAFCFB6A294C3622006B287A /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				DAFCFB6B294C3666006B287A /* EducationCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		DAFCFB6D295068EE006B287A /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				DAFCFB6E2950693F006B287A /* IntrinsicHeightTableView.swift */,
+			);
+			path = TableView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -627,6 +671,7 @@
 				DAE6090D29420D9900481742 /* ItemAddButton.swift in Sources */,
 				DAA5B9652938825A00BAB04E /* EditProfileViewController.swift in Sources */,
 				DAAFB2532918EE5A007A8DF0 /* UserInfo.swift in Sources */,
+				DAFCFB6C294C3666006B287A /* EducationCell.swift in Sources */,
 				DA7201EC29309B9600A69519 /* AuthenticationServices+Rx.swift in Sources */,
 				D09AC9792918DE8B0081C0EC /* HomeViewController.swift in Sources */,
 				DA7201F02931EEE600A69519 /* CVInfo.swift in Sources */,
@@ -641,7 +686,7 @@
 				D09AC9752918DE8B0081C0EC /* AppDelegate.swift in Sources */,
 				DA739DE42924FE54003AEE4C /* CommonAlertViewController.swift in Sources */,
 				DA6BCE5E292F04910059E95D /* DatabaseReferenceManager.swift in Sources */,
-				DAFCFB63294A9CD0006B287A /* Education.swift in Sources */,
+				DAFCFB63294A9CD0006B287A /* EducationItem.swift in Sources */,
 				DA7201F22931F21100A69519 /* ResumeCategory.swift in Sources */,
 				DAB06A3D291BA5B400E86163 /* HomeViewModel.swift in Sources */,
 				DA7201F82931F8EB00A69519 /* CoverLetter.swift in Sources */,
@@ -649,8 +694,10 @@
 				D0CCF4E3292604BE00AD4AE6 /* UIColor+.swift in Sources */,
 				D0CCF4E829260ED200AD4AE6 /* UserInfoItem.swift in Sources */,
 				DA7201F62931F41100A69519 /* ResumeItem.swift in Sources */,
+				DAFCFB6F2950693F006B287A /* IntrinsicHeightTableView.swift in Sources */,
 				D09AC9772918DE8B0081C0EC /* SceneDelegate.swift in Sources */,
 				DA7201EE2931E7BB00A69519 /* CVRepository.swift in Sources */,
+				DAFCFB7529543D3B006B287A /* UIButton+.swift in Sources */,
 				DAA5B9672938827200BAB04E /* EditProfileViewModel.swift in Sources */,
 				DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */,
 				DA739DDC292398C3003AEE4C /* LoginViewModel.swift in Sources */,
@@ -956,6 +1003,7 @@
 		D09AC9A32918DE8C0081C0EC /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B46102BE6300661F51F992FD /* Pods-ItsME-ItsMEUITests.release.xcconfig */;
+			baseConfigurationReference = C1D4CCE0F7845448D5307F95 /* Pods-ItsME-ItsMEUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;

@@ -1,5 +1,5 @@
 //
-//  Education.swift
+//  EducationItem.swift
 //  ItsME
 //
 //  Created by Jaewon Yun on 2022/12/15.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class Education: Decodable {
+final class EducationItem: Decodable {
     let period: String
     let title: String
     let description: String

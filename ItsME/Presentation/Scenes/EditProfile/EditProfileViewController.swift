@@ -44,15 +44,29 @@ final class EditProfileViewController: UIViewController {
     
     private lazy var totalUserInfoItemStackView: TotalUserInfoItemStackView = .init()
     
-    private lazy var userInfoItemAddButton: ItemAddButton = .init(type: .system)
+    private lazy var userInfoItemAddButton: ItemAddButton = .init()
     
-    private lazy var educationTableView: UITableView = {
-        let tableView: UITableView = .init()
-        tableView.backgroundColor = .systemGray2
+    private lazy var educationHeaderLabel: UILabel = {
+        let label: UILabel = .init()
+        label.text = "학력"
+        label.font = .boldSystemFont(ofSize: 26)
+        label.textColor = .systemBlue
+        return label
+    }()
+    
+    private lazy var educationTableView: IntrinsicHeightTableView = {
+        let tableView: IntrinsicHeightTableView = .init()
+        tableView.backgroundColor = .systemBackground
+        tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
+        tableView.isScrollEnabled = false
+        tableView.separatorInset = .zero
+        let cellType = EducationCell.self
+        tableView.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
         return tableView
     }()
 
-    private lazy var educationItemAddButton: ItemAddButton = .init(type: .system)
+    private lazy var educationItemAddButton: ItemAddButton = .init()
     
     private lazy var editingCompleteButton: UIBarButtonItem = {
         let button: UIBarButtonItem = .init()
@@ -91,18 +105,19 @@ private extension EditProfileViewController {
         )
         let output = viewModel.transform(input: input)
         
-        output.userInfo
-            .drive(userInfoBinding)
+        output.userInfoItems
+            .drive(onNext: { userInfoItems in
+                self.totalUserInfoItemStackView.bind(userInfoItems: userInfoItems)
+            })
             .disposed(by: disposeBag)
-    }
-    
-    var userInfoBinding: Binder<UserInfo> {
-        return .init(self) { viewController, userInfo in
-            let userInfoItems: [UserInfoItem] = {
-                userInfo.defaultItems + userInfo.otherItems
-            }()
-            self.totalUserInfoItemStackView.bind(userInfoItems: userInfoItems)
-        }
+        
+        output.educationItems
+            .drive(
+                educationTableView.rx.items(cellIdentifier: EducationCell.reuseIdentifier, cellType: EducationCell.self)
+            ) { (index, educationItem, cell) in
+                cell.bind(educationItem: educationItem)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -113,7 +128,7 @@ private extension EditProfileViewController {
     func configureSubviews() {
         self.view.addSubview(containerScrollView)
         containerScrollView.snp.makeConstraints { make in
-            make.top.bottom.left.right.equalTo(self.view.safeAreaLayoutGuide)
+            make.edges.equalToSuperview()
         }
         
         self.containerScrollView.addSubview(contentView)
@@ -144,13 +159,20 @@ private extension EditProfileViewController {
         userInfoItemAddButton.snp.makeConstraints { make in
             make.top.equalTo(totalUserInfoItemStackView.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(30)
+            make.height.equalTo(30)
+        }
+        
+        self.contentView.addSubview(educationHeaderLabel)
+        educationHeaderLabel.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(20)
+            make.top.equalTo(userInfoItemAddButton.snp.bottom).offset(20)
         }
         
         self.contentView.addSubview(educationTableView)
         educationTableView.snp.makeConstraints { make in
-            make.top.equalTo(userInfoItemAddButton.snp.bottom).offset(20)
-            make.left.right.equalToSuperview()
-            make.height.equalTo(300) // FIXME: 임시로 세팅(자동으로 계산됨)
+            make.top.equalTo(educationHeaderLabel.snp.bottom)
+            make.left.right.equalToSuperview().inset(24)
         }
         
         self.contentView.addSubview(educationItemAddButton)
@@ -158,6 +180,8 @@ private extension EditProfileViewController {
             make.top.equalTo(educationTableView.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-20)
+            make.leading.trailing.equalToSuperview().inset(30)
+            make.height.equalTo(40)
         }
     }
     

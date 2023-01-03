@@ -16,7 +16,8 @@ final class EditProfileViewModel: ViewModelType {
     }
     
     struct Output {
-        let userInfo: Driver<UserInfo>
+        let userInfoItems: Driver<[UserInfoItem]>
+        let educationItems: Driver<[EducationItem]>
     }
     
     private let userRepository: UserRepository = .init()
@@ -28,6 +29,13 @@ final class EditProfileViewModel: ViewModelType {
                     .asDriver(onErrorDriveWith: .empty())
             }
         
-        return .init(userInfo: userInfo)
+        let userInfoItems = userInfo.map { $0.defaultItems + $0.otherItems }
+        
+        let educationItems = userInfo.map { $0.educationItems }
+        
+        return .init(
+            userInfoItems: userInfoItems,
+            educationItems: educationItems
+        )
     }
 }
