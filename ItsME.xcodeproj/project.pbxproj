@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		677F0E5219EB77930A537BDA /* Pods_ItsME_ItsMEUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0972F2D648B638F9C48CE2A /* Pods_ItsME_ItsMEUITests.framework */; };
 		9A47B6326038EA52F434D10A /* Pods_ItsME.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88974B6A6866A719B6BEC54B /* Pods_ItsME.framework */; };
+		D0472F07296406BC00E83F61 /* TotalCVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0472F06296406BC00E83F61 /* TotalCVViewController.swift */; };
+		D0472F09296406CF00E83F61 /* TotalCVViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0472F08296406CF00E83F61 /* TotalCVViewModel.swift */; };
 		D09AC9752918DE8B0081C0EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9742918DE8B0081C0EC /* AppDelegate.swift */; };
 		D09AC9772918DE8B0081C0EC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9762918DE8B0081C0EC /* SceneDelegate.swift */; };
 		D09AC9792918DE8B0081C0EC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9782918DE8B0081C0EC /* HomeViewController.swift */; };
@@ -79,6 +81,8 @@
 		BEDAE368F327076C8C85DBC1 /* Pods-ItsME.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME.debug.xcconfig"; path = "Target Support Files/Pods-ItsME/Pods-ItsME.debug.xcconfig"; sourceTree = "<group>"; };
 		C04AF30EA2EE965D5BAA68FD /* Pods-ItsME-ItsMEUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME-ItsMEUITests.release.xcconfig"; path = "Target Support Files/Pods-ItsME-ItsMEUITests/Pods-ItsME-ItsMEUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CA93AB469F300CCD4E8D463B /* Pods_ItsMETests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ItsMETests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0472F06296406BC00E83F61 /* TotalCVViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalCVViewController.swift; sourceTree = "<group>"; };
+		D0472F08296406CF00E83F61 /* TotalCVViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalCVViewModel.swift; sourceTree = "<group>"; };
 		D0972F2D648B638F9C48CE2A /* Pods_ItsME_ItsMEUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ItsME_ItsMEUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09AC9712918DE8B0081C0EC /* ItsME.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ItsME.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09AC9742918DE8B0081C0EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -177,6 +181,15 @@
 				CA93AB469F300CCD4E8D463B /* Pods_ItsMETests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D0472F012964054400E83F61 /* TotalCV */ = {
+			isa = PBXGroup;
+			children = (
+				D0472F06296406BC00E83F61 /* TotalCVViewController.swift */,
+				D0472F08296406CF00E83F61 /* TotalCVViewModel.swift */,
+			);
+			path = TotalCV;
 			sourceTree = "<group>";
 		};
 		D09AC9682918DE8B0081C0EC = {
@@ -366,6 +379,7 @@
 		DAB06A3A291BA5A300E86163 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				D0472F012964054400E83F61 /* TotalCV */,
 				DAA5B9632938760900BAB04E /* EditProfile */,
 				DA739DD82923989A003AEE4C /* Login */,
 				DAAFB24D2918EC38007A8DF0 /* Home */,
@@ -663,7 +677,9 @@
 				D0CCF4E12925FB0100AD4AE6 /* UIView+.swift in Sources */,
 				D0CCF4E629260C2B00AD4AE6 /* ProfileInfoComponent.swift in Sources */,
 				DA7201EA29309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift in Sources */,
+				D0472F07296406BC00E83F61 /* TotalCVViewController.swift in Sources */,
 				DA739DDA292398BE003AEE4C /* LoginViewController.swift in Sources */,
+				D0472F09296406CF00E83F61 /* TotalCVViewModel.swift in Sources */,
 				D09AC9752918DE8B0081C0EC /* AppDelegate.swift in Sources */,
 				DA739DE42924FE54003AEE4C /* CommonAlertViewController.swift in Sources */,
 				DA6BCE5E292F04910059E95D /* DatabaseReferenceManager.swift in Sources */,
