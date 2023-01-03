@@ -13,6 +13,7 @@ target 'ItsME' do
 	pod 'Firebase/Analytics' # Google Analytics
 	pod 'FirebaseAuth'
 	pod 'FirebaseDatabase' #Realtime Database
+	pod 'Then'
 
   target 'ItsMETests' do
     inherit! :search_paths
