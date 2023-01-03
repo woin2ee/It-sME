@@ -7,6 +7,7 @@
 
 import RxSwift
 import SnapKit
+import Then
 import UIKit
 
 final class EditProfileViewController: UIViewController {
@@ -17,62 +18,50 @@ final class EditProfileViewController: UIViewController {
     
     // MARK: - UI Components
     
-    private lazy var containerScrollView: UIScrollView = {
-        let scrollView: UIScrollView = .init()
-        scrollView.backgroundColor = .systemBackground
-        scrollView.showsVerticalScrollIndicator = true
-        scrollView.showsHorizontalScrollIndicator = false
-        return scrollView
-    }()
+    private lazy var containerScrollView: UIScrollView = .init().then {
+        $0.backgroundColor = .systemBackground
+        $0.showsVerticalScrollIndicator = true
+        $0.showsHorizontalScrollIndicator = false
+    }
     
-    private lazy var contentView: UIView = {
-        let view: UIView = .init()
-        view.backgroundColor = .systemBackground
-        return view
-    }()
+    private lazy var contentView: UIView = .init().then {
+        $0.backgroundColor = .systemBackground
+    }
     
-    private lazy var profileImageView: UIImageView = {
-        let imageView: UIImageView = .init(image: UIImage.init(named: "테스트이미지"))
-        imageView.contentMode = .scaleAspectFill
-        return imageView
-    }()
+    private lazy var profileImageView: UIImageView = .init(image: .init(named: "테스트이미지")).then {
+        $0.contentMode = .scaleAspectFill
+    }
     
-    private lazy var profileEditButton: UIButton = {
+    private lazy var profileEditButton: UIButton = .init(type: .system).then {
+        let imagePickerController: UIImagePickerController = .init().then {
+            $0.delegate = self
+            $0.allowsEditing = true
+        }
         let action: UIAction = .init { [weak self] _ in
-            let imagePickerController = UIImagePickerController.init()
-            imagePickerController.delegate = self
-            imagePickerController.allowsEditing = true
             self?.present(imagePickerController, animated: true)
         }
-        let button: UIButton = .init(type: .system, primaryAction: action)
-        button.setTitle("프로필 사진 변경하기", for: .normal)
-        return button
-    }()
+        $0.addAction(action, for: .touchUpInside)
+        $0.setTitle("프로필 사진 변경하기", for: .normal)
+    }
     
     private lazy var totalUserInfoItemStackView: TotalUserInfoItemStackView = .init()
     
     private lazy var userInfoItemAddButton: ItemAddButton = .init()
     
-    private lazy var educationHeaderLabel: UILabel = {
-        let label: UILabel = .init()
-        label.text = "학력"
-        label.font = .boldSystemFont(ofSize: 26)
-        label.textColor = .systemBlue
-        return label
-    }()
+    private lazy var educationHeaderLabel: UILabel = .init().then {
+        $0.text = "학력"
+        $0.font = .boldSystemFont(ofSize: 26)
+        $0.textColor = .systemBlue
+    }
     
-    private lazy var educationTableView: IntrinsicHeightTableView = {
-        let tableView: IntrinsicHeightTableView = .init()
-        tableView.delegate = self
-        tableView.backgroundColor = .systemBackground
-        tableView.showsVerticalScrollIndicator = false
-        tableView.showsHorizontalScrollIndicator = false
-        tableView.isScrollEnabled = false
-        tableView.separatorInset = .zero
+    private lazy var educationTableView: IntrinsicHeightTableView = .init().then {
+        $0.delegate = self
+        $0.backgroundColor = .systemBackground
+        $0.isScrollEnabled = false
+        $0.separatorInset = .zero
         let cellType = EducationCell.self
-        tableView.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
-        return tableView
-    }()
+        $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
+    }
     
     private lazy var educationItemAddButton: ItemAddButton = .init()
     
