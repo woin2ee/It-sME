@@ -224,6 +224,7 @@ extension EditProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let removeAction: UIContextualAction = .init(style: .destructive, title: "삭제") { (action, view, completionHandler) in
+            // TODO: 셀 삭제 수행
             print("삭제 완료")
             completionHandler(true)
         }
