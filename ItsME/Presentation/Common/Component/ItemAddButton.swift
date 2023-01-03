@@ -12,13 +12,16 @@ final class ItemAddButton: UIButton {
     let fontSize: CGFloat = 17
     let mainColor: UIColor = .mainColor
     let borderLayer = CAShapeLayer()
+    let cornerRadius: CGFloat = 6.0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        configureColor()
         configureSymbolImage()
         configureTitle()
+        
+        self.layer.cornerRadius = cornerRadius
+        self.clipsToBounds = true
     }
     
     required init?(coder: NSCoder) {
@@ -29,6 +32,11 @@ final class ItemAddButton: UIButton {
         super.layoutSubviews()
         configureBorder()
     }
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        configureColor()
+    }
 }
 
 // MARK: - Private Functions
@@ -37,7 +45,7 @@ private extension ItemAddButton {
     
     func configureColor() {
         setBackgroundColor(.systemBackground, for: .normal)
-        setBackgroundColor(.black.withAlphaComponent(0.1), for: .highlighted)
+        setBackgroundColor(.systemGray4, for: .highlighted)
         self.tintColor = mainColor
     }
     
@@ -56,10 +64,10 @@ private extension ItemAddButton {
     
     func configureBorder() {
         borderLayer.fillColor = UIColor.clear.cgColor
-        borderLayer.strokeColor = UIColor.black.cgColor
+        borderLayer.strokeColor = UIColor.label.cgColor
         borderLayer.lineDashPattern = [2, 2]
         borderLayer.lineWidth = 1.0
-        borderLayer.path = UIBezierPath.init(roundedRect: self.bounds, cornerRadius: 6.0).cgPath
+        borderLayer.path = UIBezierPath.init(roundedRect: self.bounds, cornerRadius: cornerRadius).cgPath
         self.layer.addSublayer(borderLayer)
     }
 }

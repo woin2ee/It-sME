@@ -18,18 +18,21 @@ final class EducationCell: UITableViewCell {
         let label: UILabel = .init()
         label.text = "Period"
         label.numberOfLines = 2
+        label.textColor = .label
         return label
     }()
     
-    private lazy var titleLabel: UILabel = {
-        let label: UILabel = .init()
+    private lazy var titleLabel: UITextField = {
+        let label: UITextField = .init()
         label.text = "Title"
+        label.textColor = .label
         return label
     }()
     
-    private lazy var descriptionLabel: UILabel = {
-        let label: UILabel = .init()
+    private lazy var descriptionLabel: UITextField = {
+        let label: UITextField = .init()
         label.text = "Description"
+        label.textColor = .secondaryLabel
         return label
     }()
     
@@ -48,7 +51,7 @@ final class EducationCell: UITableViewCell {
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+        super.setSelected(false, animated: false)
 
         // Configure the view for the selected state
     }
@@ -65,9 +68,9 @@ final class EducationCell: UITableViewCell {
 private extension EducationCell {
     
     func configureSubviews() {
-        self.addSubview(periodLabel)
-        self.addSubview(titleLabel)
-        self.addSubview(descriptionLabel)
+        self.contentView.addSubview(periodLabel)
+        self.contentView.addSubview(titleLabel)
+        self.contentView.addSubview(descriptionLabel)
         
         periodLabel.snp.makeConstraints { make in
             make.top.left.bottom.equalToSuperview()

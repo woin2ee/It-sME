@@ -15,7 +15,7 @@ final class EditProfileViewController: UIViewController {
     
     private let viewModel: EditProfileViewModel = .init()
     
-    // MARK: UI Components
+    // MARK: - UI Components
     
     private lazy var containerScrollView: UIScrollView = {
         let scrollView: UIScrollView = .init()
@@ -33,11 +33,18 @@ final class EditProfileViewController: UIViewController {
     
     private lazy var profileImageView: UIImageView = {
         let imageView: UIImageView = .init(image: UIImage.init(named: "테스트이미지"))
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
     private lazy var profileEditButton: UIButton = {
-        let button: UIButton = .init(type: .system)
+        let action: UIAction = .init { [weak self] _ in
+            let imagePickerController = UIImagePickerController.init()
+            imagePickerController.delegate = self
+            imagePickerController.allowsEditing = true
+            self?.present(imagePickerController, animated: true)
+        }
+        let button: UIButton = .init(type: .system, primaryAction: action)
         button.setTitle("프로필 사진 변경하기", for: .normal)
         return button
     }()
@@ -56,6 +63,7 @@ final class EditProfileViewController: UIViewController {
     
     private lazy var educationTableView: IntrinsicHeightTableView = {
         let tableView: IntrinsicHeightTableView = .init()
+        tableView.delegate = self
         tableView.backgroundColor = .systemBackground
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
@@ -65,14 +73,10 @@ final class EditProfileViewController: UIViewController {
         tableView.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
         return tableView
     }()
-
+    
     private lazy var educationItemAddButton: ItemAddButton = .init()
     
-    private lazy var editingCompleteButton: UIBarButtonItem = {
-        let button: UIBarButtonItem = .init()
-        button.title = "수정완료"
-        return button
-    }()
+    private lazy var editingCompleteButton: UIBarButtonItem = .init(title: "수정완료")
     
     // MARK: - Life Cycle
     
@@ -101,7 +105,9 @@ private extension EditProfileViewController {
     func bindViewModel() {
         let input = EditProfileViewModel.Input.init(
             viewDidLoad: .just(()),
-            tapEditingCompleteButton: editingCompleteButton.rx.tap.asSignal()
+            tapEditingCompleteButton: editingCompleteButton.rx.tap
+                .map({ self.makeCurrentUserInfo() })
+                .asSignal(onErrorSignalWith: .empty())
         )
         let output = viewModel.transform(input: input)
         
@@ -118,6 +124,26 @@ private extension EditProfileViewController {
                 cell.bind(educationItem: educationItem)
             }
             .disposed(by: disposeBag)
+        
+        output.tappedEditingCompleteButton
+            .emit(with: self, onNext: { owner, userInfo in
+                owner.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func makeCurrentUserInfo() -> UserInfo {
+        // FIXME: 현재 수정된 유저 정보로 생성해야함
+        return .init(
+            name: "A",
+            profileImageURL: "B",
+            birthday: .init(icon: .default, contents: "C"),
+            address: .init(icon: .default, contents: "C"),
+            phoneNumber: .init(icon: .default, contents: "C"),
+            email: .init(icon: .default, contents: "C"),
+            otherItems: [.init(icon: .default, contents: "C")],
+            educationItems: [.init(period: "1", title: "2", description: "3")]
+        )
     }
 }
 
@@ -160,7 +186,7 @@ private extension EditProfileViewController {
             make.top.equalTo(totalUserInfoItemStackView.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(30)
-            make.height.equalTo(30)
+            make.height.equalTo(36)
         }
         
         self.contentView.addSubview(educationHeaderLabel)
@@ -171,7 +197,7 @@ private extension EditProfileViewController {
         
         self.contentView.addSubview(educationTableView)
         educationTableView.snp.makeConstraints { make in
-            make.top.equalTo(educationHeaderLabel.snp.bottom)
+            make.top.equalTo(educationHeaderLabel.snp.bottom).offset(10)
             make.left.right.equalToSuperview().inset(24)
         }
         
@@ -181,7 +207,7 @@ private extension EditProfileViewController {
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-20)
             make.leading.trailing.equalToSuperview().inset(30)
-            make.height.equalTo(40)
+            make.height.equalTo(42)
         }
     }
     
@@ -190,6 +216,48 @@ private extension EditProfileViewController {
         self.navigationItem.rightBarButtonItem = editingCompleteButton
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
+}
+
+// MARK: - UITableViewDelegate
+
+extension EditProfileViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let removeAction: UIContextualAction = .init(style: .destructive, title: "삭제") { (action, view, completionHandler) in
+            // TODO: 셀 삭제 수행
+            print("삭제 완료")
+            completionHandler(true)
+        }
+        let config: UIImage.SymbolConfiguration = .init(pointSize: 24.0, weight: .semibold, scale: .default)
+        removeAction.image = .init(systemName: "minus.circle", withConfiguration: config)
+        
+        return .init(actions: [removeAction])
+    }
+}
+
+// MARK: - UIImagePickerControllerDelegate
+
+extension EditProfileViewController: UIImagePickerControllerDelegate {
+    
+    func imagePickerController(
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
+    ) {
+        picker.dismiss(animated: true)
+        
+        if let croppedImage = info[.editedImage] as? UIImage {
+            profileImageView.image = croppedImage
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+}
+
+// MARK: - UINavigationControllerDelegate
+
+extension EditProfileViewController: UINavigationControllerDelegate {
 }
 
 #if DEBUG

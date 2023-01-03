@@ -9,17 +9,11 @@ import Foundation
 import UIKit
 import SnapKit
 
-class ProfileInfoComponent: UIStackView {
+final class ProfileInfoComponent: UIStackView {
+    
     var userInfoItem: UserInfoItem
     
-    init(userInfoItem: UserInfoItem) {
-        self.userInfoItem = userInfoItem
-        super.init(frame: .zero)
-    }
-    
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    // MARK: - UI Components
     
     private lazy var icon: UILabel = {
         let label = UILabel()
@@ -28,7 +22,6 @@ class ProfileInfoComponent: UIStackView {
         label.textAlignment = .center
         return label
     }()
-    
     
     private lazy var contents: UILabel = {
         let label = UILabel()
@@ -40,23 +33,65 @@ class ProfileInfoComponent: UIStackView {
         return label
     }()
     
-    override func layoutSubviews() {
-        self.addArrangedSubview(icon)
-        self.addArrangedSubview(contents)
+    private lazy var iconTextField: UITextField = {
+        let textField: UITextField = .init()
+        textField.text = userInfoItem.icon.toEmoji
+        textField.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        textField.textAlignment = .center
+        return textField
+    }()
+    
+    private lazy var contentsTextField: UITextField = {
+        let textField: UITextField = .init()
+        textField.text = userInfoItem.contents
+        textField.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        textField.textAlignment = .left
+        return textField
+    }()
+    
+    // MARK: - Initialization
+    
+    init(userInfoItem: UserInfoItem, isEditingMode: Bool = false) {
+        self.userInfoItem = userInfoItem
+        super.init(frame: .zero)
+        
         self.axis = .horizontal
         self.spacing = 10
         self.alignment = .center
         self.distribution = .fill
         
-        icon.snp.makeConstraints { make in
-            make.height.equalToSuperview().multipliedBy(0.9)
-            make.width.equalTo(self.snp.height)
+        configureSubviews(isEditingMode: isEditingMode)
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func configureSubviews(isEditingMode: Bool) {
+        if isEditingMode {
+            self.addArrangedSubview(iconTextField)
+            self.addArrangedSubview(contentsTextField)
+            
+            iconTextField.snp.makeConstraints { make in
+                make.height.equalToSuperview().multipliedBy(0.9)
+                make.width.equalTo(self.snp.height)
+            }
+            
+            contentsTextField.snp.makeConstraints { make in
+                make.height.equalToSuperview().multipliedBy(0.9)
+            }
+        } else {
+            self.addArrangedSubview(icon)
+            self.addArrangedSubview(contents)
+            
+            icon.snp.makeConstraints { make in
+                make.height.equalToSuperview().multipliedBy(0.9)
+                make.width.equalTo(self.snp.height)
+            }
+            
+            contents.snp.makeConstraints { make in
+                make.height.equalToSuperview().multipliedBy(0.9)
+            }
         }
-        
-        contents.snp.makeConstraints { make in
-            make.height.equalToSuperview().multipliedBy(0.9)
-        }
-        
     }
 }
-
