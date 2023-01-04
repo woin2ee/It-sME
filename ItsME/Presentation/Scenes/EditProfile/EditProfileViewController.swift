@@ -94,9 +94,9 @@ private extension EditProfileViewController {
     func bindViewModel() {
         let input = EditProfileViewModel.Input.init(
             viewDidLoad: .just(()),
-            tapEditingCompleteButton: editingCompleteButton.rx.tap
-                .map({ self.makeCurrentUserInfo() })
-                .asSignal(onErrorSignalWith: .empty())
+            tapEditingCompleteButton: editingCompleteButton.rx.tap.asSignal()
+                .withUnretained(self)
+                .map { (owner, _) in owner.makeCurrentUserInfo() }
         )
         let output = viewModel.transform(input: input)
         
