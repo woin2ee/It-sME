@@ -153,6 +153,7 @@ private extension HomeViewController {
                 cvCard.snp.makeConstraints{ make in
                     make.width.equalTo(self.contentWidth)
                 }
+                
             }
         }
     }

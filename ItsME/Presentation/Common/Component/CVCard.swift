@@ -29,6 +29,10 @@ class CVCard: UIView {
         label.textAlignment = .left
         return label
     }()
+    
+    @objc func checkAction(sender : UITapGestureRecognizer) {
+        print(cvTitle.text,"!!!!!!!!")
+    }
 }
 
 extension CVCard {
@@ -36,6 +40,11 @@ extension CVCard {
     override func layoutSubviews() {
         self.addSubview(cvTitle)
         self.addSubview(latestDate)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.checkAction))
+        self.addGestureRecognizer(tapGesture)
+        
+        
         
         cvTitle.snp.makeConstraints{ make in
             make.width.equalToSuperview().multipliedBy(0.9)
