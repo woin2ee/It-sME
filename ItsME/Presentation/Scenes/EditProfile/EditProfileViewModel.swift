@@ -24,18 +24,18 @@ final class EditProfileViewModel: ViewModelType {
     
     private let userRepository: UserRepository = .init()
     
+    private let educationItemsSubject: BehaviorSubject<[EducationItem]> = .init(value: [])
+    
     func transform(input: Input) -> Output {
         let userInfo = input.viewDidLoad
-            .flatMapLatest { _ in
+            .flatMapLatest { _ -> Driver<UserInfo> in
                 self.userRepository.getUserInfo(byUID: "testUser") // FIXME: 유저 고유 ID 저장 방안 필요
                     .asDriver(onErrorDriveWith: .empty())
             }
-        
+            .do(onNext: initializeEducationItemsSubject)
         let userName = userInfo.map { $0.name }
-        
         let userInfoItems = userInfo.map { $0.defaultItems + $0.otherItems }
-        
-        let educationItems = userInfo.map { $0.educationItems }
+        let educationItems = educationItemsSubject.asDriver(onErrorDriveWith: .empty())
         
         let tappedEditingCompleteButton = input.tapEditingCompleteButton
             .do(onNext: { userInfo in
@@ -49,5 +49,14 @@ final class EditProfileViewModel: ViewModelType {
             educationItems: educationItems,
             tappedEditingCompleteButton: tappedEditingCompleteButton
         )
+    }
+}
+
+// MARK: - Private Functions
+
+private extension EditProfileViewModel {
+    
+    func initializeEducationItemsSubject(_ userInfo: UserInfo) {
+        educationItemsSubject.onNext(userInfo.educationItems)
     }
 }
