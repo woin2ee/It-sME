@@ -35,7 +35,7 @@ final class TotalCVViewModel: ViewModelType {
                 return .empty()
             }
         
-        let userInfoItems = userInfo.map { $0.defaultItems + $0.otherItems}
+        let userInfoItems = userInfo.map { $0.defaultItems + $0.otherItems }
         
         let educationItems = userInfo.map { $0.educationItems}
         
