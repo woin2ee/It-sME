@@ -11,8 +11,6 @@ import SnapKit
 
 final class HomeViewController: UIViewController, UIScrollViewDelegate {
     
-    
-    
     private var disposeBag: DisposeBag = .init()
     
     private let viewModel: HomeViewModel = .init()
@@ -47,6 +45,11 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
     private lazy var pageController = UIPageControl()
     
     let contentWidth = 250
+    
+    @objc func checkAction(sender : UITapGestureRecognizer) {
+        let totalCVVC: TotalCVViewController = .init()
+        self.navigationController?.pushViewController(totalCVVC, animated: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -153,6 +156,10 @@ private extension HomeViewController {
                 cvCard.snp.makeConstraints{ make in
                     make.width.equalTo(self.contentWidth)
                 }
+                
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.checkAction))
+                cvCard.addGestureRecognizer(tapGesture)
+                
             }
         }
     }

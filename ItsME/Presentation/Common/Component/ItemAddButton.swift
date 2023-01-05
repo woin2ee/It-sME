@@ -4,7 +4,6 @@
 //
 //  Created by Jaewon Yun on 2022/12/08.
 //
-
 import UIKit
 
 final class ItemAddButton: UIButton {
@@ -40,7 +39,6 @@ final class ItemAddButton: UIButton {
 }
 
 // MARK: - Private Functions
-
 private extension ItemAddButton {
     
     func configureColor() {
