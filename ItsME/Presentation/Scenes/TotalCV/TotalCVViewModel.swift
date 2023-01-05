@@ -15,7 +15,7 @@ final class TotalCVViewModel: ViewModelType {
     }
     
     struct Output {
-        let userInfoItems : Driver<[UserInfoItem]>
+        let userInfoItems: Driver<[UserInfoItem]>
         let educationItems: Driver<[EducationItem]>
         let cvInfo: Driver<CVInfo>
         
