@@ -44,6 +44,16 @@ final class EditProfileViewController: UIViewController {
         $0.setTitle("프로필 사진 변경하기", for: .normal)
     }
     
+    private lazy var nameTextField: UITextField = .init().then {
+        $0.borderStyle = .line
+        $0.textColor = .label
+        $0.font = .systemFont(ofSize: 20)
+        $0.textAlignment = .center
+        $0.placeholder = "이름"
+        $0.keyboardType = .namePhonePad
+        $0.autocorrectionType = .no
+    }
+    
     private lazy var totalUserInfoItemStackView: TotalUserInfoItemStackView = .init()
     
     private lazy var userInfoItemAddButton: ItemAddButton = .init()
@@ -99,6 +109,12 @@ private extension EditProfileViewController {
                 .map { (owner, _) in owner.makeCurrentUserInfo() }
         )
         let output = viewModel.transform(input: input)
+        
+        output.userName
+            .drive(with: self, onNext: { (owner, userName) in
+                owner.nameTextField.text = userName
+            })
+            .disposed(by: disposeBag)
         
         output.userInfoItems
             .drive(onNext: { userInfoItems in
@@ -164,9 +180,15 @@ private extension EditProfileViewController {
             make.centerX.equalToSuperview()
         }
         
+        self.contentView.addSubview(nameTextField)
+        nameTextField.snp.makeConstraints { make in
+            make.top.equalTo(profileEditButton.snp.bottom).offset(20)
+            make.leading.trailing.equalToSuperview().inset(30)
+        }
+        
         self.contentView.addSubview(totalUserInfoItemStackView)
         totalUserInfoItemStackView.snp.makeConstraints { make in
-            make.top.equalTo(profileEditButton.snp.bottom).offset(20)
+            make.top.equalTo(nameTextField.snp.bottom).offset(25)
             make.left.right.equalToSuperview().inset(30)
         }
         
