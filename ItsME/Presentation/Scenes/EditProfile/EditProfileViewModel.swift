@@ -52,6 +52,18 @@ final class EditProfileViewModel: ViewModelType {
     }
 }
 
+// MARK: - Internal Functions
+
+extension EditProfileViewModel {
+    
+    func deleteEducationItem(at indexPath: IndexPath) {
+        guard var educationItems = try? educationItemsSubject.value() else { return }
+        
+        educationItems.remove(at: indexPath.row)
+        educationItemsSubject.onNext(educationItems)
+    }
+}
+
 // MARK: - Private Functions
 
 private extension EditProfileViewModel {
