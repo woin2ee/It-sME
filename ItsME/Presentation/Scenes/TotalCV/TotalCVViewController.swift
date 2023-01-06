@@ -21,29 +21,83 @@ class TotalCVViewController: UIViewController {
         $0.textColor = .systemBlue
         $0.text = "Hello, World!"
     }
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureAppearance()
+        bindViewModel()
         configureSubviews()
-        
-        // Do any additional setup after loading the view.
+        self.view.backgroundColor = .systemBackground
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-}
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNavigationBar()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+    }
+    // MARK: - Navigation
+    
+    func configureNavigationBar() {
+        self.navigationItem.title = "asdasdasd"
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+}
+// MARK: - Binding ViewModel
+
+private extension TotalCVViewController {
+    
+    func bindViewModel() {
+        let input = makeInput()
+        let output = viewModel.transform(input: input)
+        
+        output.userInfoItems
+            .drive(userInfoBinding)
+            .disposed(by: disposeBag)
+        
+        output.educationItems
+            .drive(educationBinding)
+            .disposed(by: disposeBag)
+        
+        output.cvInfo
+            .drive(cvsInfoBinding)
+            .disposed(by: disposeBag)
+    }
+    
+    func makeInput() -> TotalCVViewModel.Input {
+        let viewDidLoad = Observable.just(())
+            .map { _ in }
+            .asSignal(onErrorSignalWith: .empty())
+        
+        return .init(viewDidLoad: viewDidLoad)
+    }
+    
+    var userInfoBinding: Binder<[UserInfoItem]> {
+        return .init(self) { viewController, userInfo in
+            
+        }
+    }
+    
+    var educationBinding: Binder<[EducationItem]> {
+        return .init(self) { viewController, education in
+            
+        }
+    }
+    
+    var cvsInfoBinding: Binder<CVInfo> {
+        return .init(self) { viewController, cvInfo in
+            
+        }
+    }
+}
+
 private extension TotalCVViewController {
     
     func configureAppearance() {
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .systemBackground
     }
     
     func configureSubviews() {
@@ -57,5 +111,5 @@ private extension TotalCVViewController {
         }
     }
 }
-    
+
 
