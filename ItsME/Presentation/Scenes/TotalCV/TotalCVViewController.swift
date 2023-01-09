@@ -28,7 +28,6 @@ class TotalCVViewController: UIViewController {
         configureAppearance()
         bindViewModel()
         configureSubviews()
-        self.view.backgroundColor = .systemBackground
     }
     
     override func viewWillAppear(_ animated: Bool) {
