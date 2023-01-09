@@ -235,8 +235,7 @@ extension EditProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let removeAction: UIContextualAction = .init(style: .destructive, title: "삭제") { (action, view, completionHandler) in
-            // TODO: 셀 삭제 수행
-            print("삭제 완료")
+            self.viewModel.deleteEducationItem(at: indexPath)
             completionHandler(true)
         }
         let config: UIImage.SymbolConfiguration = .init(pointSize: 24.0, weight: .semibold, scale: .default)
