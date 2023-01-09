@@ -24,16 +24,20 @@ final class TotalCVViewModel: ViewModelType {
     private let userRepository: UserRepository = .init()
     private let cvRepository: CVRepository = .init()
     
+    private let behaviorSubject: BehaviorSubject<CVInfo>
+    
+    init(cvInfo: CVInfo) {
+        self.behaviorSubject = .init(value: cvInfo)
+    }
+    
     func transform(input: Input) -> Output {
         let userInfo = input.viewDidLoad
             .flatMapLatest { _ in
                 self.userRepository.getUserInfo(byUID: "testUser") // FIXME: 유저 고유 ID 저장 방안 필요
                     .asDriver(onErrorDriveWith: .empty())
             }
-        let cvInfo = input.viewDidLoad
-            .flatMapLatest { _ -> Driver<CVInfo> in
-                return .empty()
-            }
+        
+        let cvInfo = behaviorSubject.asDriver(onErrorDriveWith: .empty())
         
         let userInfoItems = userInfo.map { $0.defaultItems + $0.otherItems }
         
