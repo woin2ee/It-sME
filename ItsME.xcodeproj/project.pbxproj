@@ -25,6 +25,11 @@
 		D0CCF4E829260ED200AD4AE6 /* UserInfoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E729260ED200AD4AE6 /* UserInfoItem.swift */; };
 		D0CCF4EB292A690600AD4AE6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0CCF4EA292A690600AD4AE6 /* GoogleService-Info.plist */; };
 		D0CCF504292CCB4C00AD4AE6 /* CVCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF503292CCB4C00AD4AE6 /* CVCard.swift */; };
+		DA018809296D146A002C5CB0 /* BirthdayEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA018808296D146A002C5CB0 /* BirthdayEditingViewController.swift */; };
+		DA01880B296D1471002C5CB0 /* AddressEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA01880A296D1471002C5CB0 /* AddressEditingViewController.swift */; };
+		DA01880D296D1477002C5CB0 /* PhoneNumberEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA01880C296D1477002C5CB0 /* PhoneNumberEditingViewController.swift */; };
+		DA01880F296D147D002C5CB0 /* EmailEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA01880E296D147D002C5CB0 /* EmailEditingViewController.swift */; };
+		DA018811296D1483002C5CB0 /* OtherItemEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA018810296D1483002C5CB0 /* OtherItemEditingViewController.swift */; };
 		DA0A88692921245000E9AE43 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0A88682921245000E9AE43 /* UserRepository.swift */; };
 		DA6BCE5E292F04910059E95D /* DatabaseReferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */; };
 		DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */; };
@@ -102,6 +107,11 @@
 		D0CCF4E729260ED200AD4AE6 /* UserInfoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoItem.swift; sourceTree = "<group>"; };
 		D0CCF4EA292A690600AD4AE6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D0CCF503292CCB4C00AD4AE6 /* CVCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVCard.swift; sourceTree = "<group>"; };
+		DA018808296D146A002C5CB0 /* BirthdayEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayEditingViewController.swift; sourceTree = "<group>"; };
+		DA01880A296D1471002C5CB0 /* AddressEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressEditingViewController.swift; sourceTree = "<group>"; };
+		DA01880C296D1477002C5CB0 /* PhoneNumberEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberEditingViewController.swift; sourceTree = "<group>"; };
+		DA01880E296D147D002C5CB0 /* EmailEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailEditingViewController.swift; sourceTree = "<group>"; };
+		DA018810296D1483002C5CB0 /* OtherItemEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherItemEditingViewController.swift; sourceTree = "<group>"; };
 		DA0A88682921245000E9AE43 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseReferenceManager.swift; sourceTree = "<group>"; };
 		DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseReference+Rx.swift"; sourceTree = "<group>"; };
@@ -258,6 +268,46 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
+		DA018803296D0E39002C5CB0 /* BirthdayEditing */ = {
+			isa = PBXGroup;
+			children = (
+				DA018808296D146A002C5CB0 /* BirthdayEditingViewController.swift */,
+			);
+			path = BirthdayEditing;
+			sourceTree = "<group>";
+		};
+		DA018804296D10B5002C5CB0 /* AddressEditing */ = {
+			isa = PBXGroup;
+			children = (
+				DA01880A296D1471002C5CB0 /* AddressEditingViewController.swift */,
+			);
+			path = AddressEditing;
+			sourceTree = "<group>";
+		};
+		DA018805296D10BD002C5CB0 /* PhoneNumberEditing */ = {
+			isa = PBXGroup;
+			children = (
+				DA01880C296D1477002C5CB0 /* PhoneNumberEditingViewController.swift */,
+			);
+			path = PhoneNumberEditing;
+			sourceTree = "<group>";
+		};
+		DA018806296D10F8002C5CB0 /* EmailEditing */ = {
+			isa = PBXGroup;
+			children = (
+				DA01880E296D147D002C5CB0 /* EmailEditingViewController.swift */,
+			);
+			path = EmailEditing;
+			sourceTree = "<group>";
+		};
+		DA018807296D1201002C5CB0 /* OtherItemEditing */ = {
+			isa = PBXGroup;
+			children = (
+				DA018810296D1483002C5CB0 /* OtherItemEditingViewController.swift */,
+			);
+			path = OtherItemEditing;
+			sourceTree = "<group>";
+		};
 		DA0A88672921244400E9AE43 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,6 +359,11 @@
 			children = (
 				DAA5B9642938825A00BAB04E /* EditProfileViewController.swift */,
 				DAA5B9662938827200BAB04E /* EditProfileViewModel.swift */,
+				DA018803296D0E39002C5CB0 /* BirthdayEditing */,
+				DA018804296D10B5002C5CB0 /* AddressEditing */,
+				DA018805296D10BD002C5CB0 /* PhoneNumberEditing */,
+				DA018806296D10F8002C5CB0 /* EmailEditing */,
+				DA018807296D1201002C5CB0 /* OtherItemEditing */,
 			);
 			path = EditProfile;
 			sourceTree = "<group>";
@@ -677,18 +732,22 @@
 				D0CCF4E12925FB0100AD4AE6 /* UIView+.swift in Sources */,
 				D0CCF4E629260C2B00AD4AE6 /* ProfileInfoComponent.swift in Sources */,
 				DA7201EA29309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift in Sources */,
+				DA01880B296D1471002C5CB0 /* AddressEditingViewController.swift in Sources */,
 				D0472F07296406BC00E83F61 /* TotalCVViewController.swift in Sources */,
 				DA739DDA292398BE003AEE4C /* LoginViewController.swift in Sources */,
+				DA01880F296D147D002C5CB0 /* EmailEditingViewController.swift in Sources */,
 				D0472F09296406CF00E83F61 /* TotalCVViewModel.swift in Sources */,
 				D09AC9752918DE8B0081C0EC /* AppDelegate.swift in Sources */,
 				DA739DE42924FE54003AEE4C /* CommonAlertViewController.swift in Sources */,
 				DA6BCE5E292F04910059E95D /* DatabaseReferenceManager.swift in Sources */,
 				DAFCFB63294A9CD0006B287A /* EducationItem.swift in Sources */,
 				DA7201F22931F21100A69519 /* ResumeCategory.swift in Sources */,
+				DA018809296D146A002C5CB0 /* BirthdayEditingViewController.swift in Sources */,
 				DAB06A3D291BA5B400E86163 /* HomeViewModel.swift in Sources */,
 				DA7201F82931F8EB00A69519 /* CoverLetter.swift in Sources */,
 				DA7201F42931F25500A69519 /* CoverLetterItem.swift in Sources */,
 				D0CCF4E3292604BE00AD4AE6 /* UIColor+.swift in Sources */,
+				DA018811296D1483002C5CB0 /* OtherItemEditingViewController.swift in Sources */,
 				D0CCF4E829260ED200AD4AE6 /* UserInfoItem.swift in Sources */,
 				DA7201F62931F41100A69519 /* ResumeItem.swift in Sources */,
 				DAFCFB6F2950693F006B287A /* IntrinsicHeightTableView.swift in Sources */,
@@ -700,6 +759,7 @@
 				DA739DDC292398C3003AEE4C /* LoginViewModel.swift in Sources */,
 				DAE6090B2942095400481742 /* TotalUserInfoItemStackView.swift in Sources */,
 				D0CCF504292CCB4C00AD4AE6 /* CVCard.swift in Sources */,
+				DA01880D296D1477002C5CB0 /* PhoneNumberEditingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
