@@ -56,7 +56,13 @@ final class EditProfileViewController: UIViewController {
     
     private lazy var totalUserInfoItemStackView: TotalUserInfoItemStackView = .init()
     
-    private lazy var userInfoItemAddButton: ItemAddButton = .init()
+    private lazy var userInfoItemAddButton: ItemAddButton = .init().then {
+        let action: UIAction = .init(handler: { [weak self] _ in
+            let otherItemEditingVC: OtherItemEditingViewController = .init()
+            self?.navigationController?.pushViewController(otherItemEditingVC, animated: true)
+        })
+        $0.addAction(action, for: .touchUpInside)
+    }
     
     private lazy var educationHeaderLabel: UILabel = .init().then {
         $0.text = "학력"
