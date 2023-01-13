@@ -30,7 +30,7 @@ final class EditProfileViewModel: ViewModelType {
         let userInfo = input.viewDidLoad
             .flatMapLatest { _ -> Driver<UserInfo> in
                 self.userRepository.getUserInfo(byUID: "testUser") // FIXME: 유저 고유 ID 저장 방안 필요
-                    .asDriver(onErrorDriveWith: .empty())
+                    .asDriverOnErrorJustComplete()
             }
             .do(onNext: initializeEducationItemsSubject)
         let userName = userInfo.map { $0.name }

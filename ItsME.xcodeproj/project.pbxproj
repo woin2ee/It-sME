@@ -48,6 +48,7 @@
 		DA739DE62925E35A003AEE4C /* ItsMEUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9952918DE8C0081C0EC /* ItsMEUITests.swift */; };
 		DAA5B9652938825A00BAB04E /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA5B9642938825A00BAB04E /* EditProfileViewController.swift */; };
 		DAA5B9672938827200BAB04E /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA5B9662938827200BAB04E /* EditProfileViewModel.swift */; };
+		DAAC7A5C29715C0A0083A8E9 /* Rx+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAC7A5B29715C0A0083A8E9 /* Rx+Ext.swift */; };
 		DAAFB2532918EE5A007A8DF0 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAFB2522918EE5A007A8DF0 /* UserInfo.swift */; };
 		DAB06A3D291BA5B400E86163 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06A3C291BA5B400E86163 /* HomeViewModel.swift */; };
 		DAB06A40291BA61100E86163 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06A3F291BA61100E86163 /* ViewModelType.swift */; };
@@ -130,6 +131,7 @@
 		DA739DE32924FE54003AEE4C /* CommonAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonAlertViewController.swift; sourceTree = "<group>"; };
 		DAA5B9642938825A00BAB04E /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		DAA5B9662938827200BAB04E /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
+		DAAC7A5B29715C0A0083A8E9 /* Rx+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx+Ext.swift"; sourceTree = "<group>"; };
 		DAAFB2522918EE5A007A8DF0 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		DAB06A3C291BA5B400E86163 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		DAB06A3F291BA61100E86163 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
@@ -333,6 +335,7 @@
 				DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */,
 				DAFCFB66294AC00C006B287A /* UIStackView+.swift */,
 				DAFCFB7429543D3B006B287A /* UIButton+.swift */,
+				DAAC7A5B29715C0A0083A8E9 /* Rx+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -726,6 +729,7 @@
 				D09AC9792918DE8B0081C0EC /* HomeViewController.swift in Sources */,
 				DA7201F02931EEE600A69519 /* CVInfo.swift in Sources */,
 				DAB06A40291BA61100E86163 /* ViewModelType.swift in Sources */,
+				DAAC7A5C29715C0A0083A8E9 /* Rx+Ext.swift in Sources */,
 				DAFCFB67294AC00C006B287A /* UIStackView+.swift in Sources */,
 				DA7201FA2931F90900A69519 /* Resume.swift in Sources */,
 				DA0A88692921245000E9AE43 /* UserRepository.swift in Sources */,
