@@ -13,4 +13,8 @@ extension ObservableConvertibleType {
     func asDriverOnErrorJustComplete() -> Driver<Element> {
         return self.asDriver(onErrorDriveWith: .empty())
     }
+    
+    func asSignalOnErrorJustComplete() -> Signal<Element> {
+        return self.asSignal(onErrorSignalWith: .empty())
+    }
 }
