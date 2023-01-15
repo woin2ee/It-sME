@@ -112,11 +112,11 @@ private extension HomeViewController {
     
     func makeInput() -> HomeViewModel.Input {
         let viewDidLoad = Observable.just(())
-            .map { _ in }
+            .mapToVoid()
             .asSignalOnErrorJustComplete()
         
         let viewWillAppear = self.rx.sentMessage(#selector(self.viewWillAppear(_:)))
-            .map { _ in }
+            .mapToVoid()
             .asSignalOnErrorJustComplete()
         
         return .init(

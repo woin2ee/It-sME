@@ -18,3 +18,10 @@ extension ObservableConvertibleType {
         return self.asSignal(onErrorSignalWith: .empty())
     }
 }
+
+extension ObservableType {
+    
+    func mapToVoid() -> Observable<Void> {
+        return self.map { _ in }
+    }
+}
