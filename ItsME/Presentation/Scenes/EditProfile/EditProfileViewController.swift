@@ -231,6 +231,7 @@ private extension EditProfileViewController {
     func configureNavigationBar() {
         self.navigationItem.title = "Edit Profile"
         self.navigationItem.rightBarButtonItem = editingCompleteButton
+        self.navigationController?.navigationBar.prefersLargeTitles = false
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
 }
