@@ -6,6 +6,7 @@
 //
 
 import SnapKit
+import Then
 import UIKit
 
 final class EducationCell: UITableViewCell {
@@ -22,19 +23,15 @@ final class EducationCell: UITableViewCell {
         return label
     }()
     
-    private lazy var titleLabel: UITextField = {
-        let label: UITextField = .init()
-        label.text = "Title"
-        label.textColor = .label
-        return label
-    }()
+    private lazy var titleLabel: UILabel = .init().then {
+        $0.text = "Title"
+        $0.textColor = .label
+    }
     
-    private lazy var descriptionLabel: UITextField = {
-        let label: UITextField = .init()
-        label.text = "Description"
-        label.textColor = .secondaryLabel
-        return label
-    }()
+    private lazy var descriptionLabel: UILabel = .init().then {
+        $0.text = "Description"
+        $0.textColor = .secondaryLabel
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
