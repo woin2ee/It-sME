@@ -14,7 +14,7 @@ class TotalCVViewController: UIViewController {
     
     private let disposeBag: DisposeBag = .init()
     
-    private let viewModel: TotalCVViewModel = .init()
+    var viewModel: TotalCVViewModel!
     
     let label = UILabel().then {
         $0.textAlignment = .center
@@ -41,8 +41,10 @@ class TotalCVViewController: UIViewController {
     // MARK: - Navigation
     
     func configureNavigationBar() {
-        self.navigationItem.title = "asdasdasd"
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.prefersLargeTitles = true
+        UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).adjustsFontSizeToFitWidth = true
+
     }
 }
 // MARK: - Binding ViewModel
@@ -88,7 +90,7 @@ private extension TotalCVViewController {
     
     var cvsInfoBinding: Binder<CVInfo> {
         return .init(self) { viewController, cvInfo in
-            
+            self.navigationItem.title = cvInfo.title
         }
     }
 }

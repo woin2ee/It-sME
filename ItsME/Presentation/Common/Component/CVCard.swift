@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class CVCard: UIView {
+class CVCard: UIControl {
     
     lazy var cvTitle: UILabel = {
         let label = UILabel()

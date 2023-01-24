@@ -46,11 +46,6 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
     
     let contentWidth = 250
     
-    @objc func checkAction(sender : UITapGestureRecognizer) {
-        let totalCVVC: TotalCVViewController = .init()
-        self.navigationController?.pushViewController(totalCVVC, animated: true)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureAppearance()
@@ -157,9 +152,15 @@ private extension HomeViewController {
                     make.width.equalTo(self.contentWidth)
                 }
                 
-                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.checkAction))
-                cvCard.addGestureRecognizer(tapGesture)
-                
+                cvCard.addAction(UIAction{ _ in
+                    let totalCVVC: TotalCVViewController = .init()
+                    let totalCVVM: TotalCVViewModel = .init(cvInfo: cvInfo)
+                    
+                    totalCVVC.viewModel = totalCVVM
+                    
+                    self.navigationController?.pushViewController(totalCVVC, animated: true)
+                    
+                }, for: .touchUpInside)
             }
         }
     }
