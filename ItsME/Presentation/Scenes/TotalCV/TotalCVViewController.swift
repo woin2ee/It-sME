@@ -16,6 +16,21 @@ class TotalCVViewController: UIViewController {
     
     var viewModel: TotalCVViewModel!
     
+    private var fullScrollView: UIScrollView = .init().then {
+        $0.backgroundColor = .systemBackground
+        $0.showsVerticalScrollIndicator = true
+        $0.showsHorizontalScrollIndicator = false
+    }
+    
+    private var contentView: UIView = .init().then {
+        $0.backgroundColor = .systemBackground
+    }
+    
+    private lazy var profileImageView =  UIImageView().then {
+        $0.image = .init(named: "테스트이미지")
+        $0.contentMode = .scaleAspectFill
+    }
+    
     let label = UILabel().then {
         $0.textAlignment = .center
         $0.textColor = .systemBlue
@@ -28,6 +43,7 @@ class TotalCVViewController: UIViewController {
         configureAppearance()
         bindViewModel()
         configureSubviews()
+        self.view.layoutIfNeeded()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,6 +53,7 @@ class TotalCVViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        profileImageView.circular()
     }
     // MARK: - Navigation
     
@@ -44,7 +61,7 @@ class TotalCVViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.prefersLargeTitles = true
         UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).adjustsFontSizeToFitWidth = true
-
+        
     }
 }
 // MARK: - Binding ViewModel
@@ -102,13 +119,29 @@ private extension TotalCVViewController {
     }
     
     func configureSubviews() {
-        self.view.addSubview(label)
         
+        self.view.addSubview(fullScrollView)
+        fullScrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        self.fullScrollView.addSubview(contentView)
+        contentView.snp.makeConstraints { make in
+            make.top.bottom.width.equalToSuperview()
+        }
+        
+        self.contentView.addSubview(profileImageView)
+        profileImageView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(20)
+            make.width.height.equalTo(self.view.frame.width * 0.35)
+            make.trailing.equalToSuperview().offset(-20)
+        }
+        
+        self.contentView.addSubview(label)
         label.snp.makeConstraints { make in
-            make.width.equalTo(100)
-            make.height.equalTo(40)
-            make.centerX.equalTo(self.view.safeAreaLayoutGuide)
-            make.centerY.equalTo(self.view.safeAreaLayoutGuide)
+            make.centerX.equalToSuperview()
+            make.top.equalTo(profileImageView.snp.bottom).offset(1200)
+            make.bottom.equalToSuperview()
         }
     }
 }
