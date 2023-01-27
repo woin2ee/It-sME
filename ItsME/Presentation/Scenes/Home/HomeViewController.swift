@@ -221,7 +221,7 @@ private extension HomeViewController {
         }
         
         vStackLayout.snp.makeConstraints { make in
-            make.height.equalTo(self.view.snp.height).multipliedBy(0.25)
+//            make.height.equalTo(self.view.snp.height).multipliedBy(0.25)
             make.width.equalTo(self.view.snp.width).multipliedBy(0.8)
             make.centerX.equalTo(self.view.safeAreaLayoutGuide)
             make.top.equalTo(self.profileImageView.snp.bottom).offset(20)
