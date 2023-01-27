@@ -31,6 +31,8 @@ class TotalCVViewController: UIViewController {
         $0.contentMode = .scaleAspectFill
     }
     
+    private lazy var totalUserInfoItemStackView: TotalUserInfoItemStackView = .init()
+    
     let label = UILabel().then {
         $0.textAlignment = .center
         $0.textColor = .systemBlue
@@ -94,8 +96,8 @@ private extension TotalCVViewController {
     }
     
     var userInfoBinding: Binder<[UserInfoItem]> {
-        return .init(self) { viewController, userInfo in
-            
+        return .init(self) { viewController, userInfoItems in
+            self.totalUserInfoItemStackView.bind(userInfoItems: userInfoItems)
         }
     }
     
@@ -137,10 +139,17 @@ private extension TotalCVViewController {
             make.trailing.equalToSuperview().offset(-20)
         }
         
+        self.contentView.addSubview(totalUserInfoItemStackView)
+        totalUserInfoItemStackView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(10)
+            make.trailing.equalTo(profileImageView.snp.leading).offset(-10)
+            make.leading.equalToSuperview().offset(10)
+        }
+        
         self.contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(profileImageView.snp.bottom).offset(1200)
+            make.top.equalTo(totalUserInfoItemStackView.snp.bottom).offset(1200)
             make.bottom.equalToSuperview()
         }
     }

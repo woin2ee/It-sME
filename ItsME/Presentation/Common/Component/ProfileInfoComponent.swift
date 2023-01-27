@@ -24,12 +24,13 @@ final class ProfileInfoComponent: UIStackView {
     }()
     
     private lazy var contents: UILabel = {
-        let label = UILabel()
+        var label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         label.textColor = .black
         label.textAlignment = .left
         label.text = userInfoItem.contents
-        label.numberOfLines = 2
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         return label
     }()
     
@@ -85,12 +86,11 @@ final class ProfileInfoComponent: UIStackView {
             self.addArrangedSubview(contents)
             
             icon.snp.makeConstraints { make in
-                make.height.equalToSuperview().multipliedBy(0.9)
-                make.width.equalTo(self.snp.height)
+                make.height.width.equalTo(35)
             }
             
             contents.snp.makeConstraints { make in
-                make.height.equalToSuperview().multipliedBy(0.9)
+                make.height.equalToSuperview()
             }
         }
     }
