@@ -54,7 +54,7 @@ final class EditProfileViewController: UIViewController {
         $0.autocorrectionType = .no
     }
     
-    private lazy var totalUserInfoItemStackView: TotalUserInfoItemStackView = .init()
+    private lazy var totalUserInfoItemStackView: UserInfoItemStackView = .init()
     
     private lazy var userInfoItemAddButton: ItemAddButton = .init().then {
         let action: UIAction = .init(handler: { [weak self] _ in

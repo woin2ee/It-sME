@@ -7,7 +7,11 @@
 
 import UIKit
 
-final class TotalUserInfoItemStackView: UIStackView {
+/// 좀 더 적절한 이름으로 사용할 수 있게 함
+final class UserInfoItemStackView: TotalUserInfoItemStackView {
+}
+
+class TotalUserInfoItemStackView: UIStackView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
