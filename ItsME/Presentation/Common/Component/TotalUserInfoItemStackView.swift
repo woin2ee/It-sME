@@ -7,6 +7,9 @@
 
 import UIKit
 
+/// 좀 더 적절한 이름으로 사용할 수 있게 함
+typealias UserInfoItemStackView = TotalUserInfoItemStackView
+
 final class TotalUserInfoItemStackView: UIStackView {
     
     override init(frame: CGRect) {
