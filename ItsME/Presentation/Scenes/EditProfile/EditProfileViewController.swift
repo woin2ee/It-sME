@@ -14,7 +14,7 @@ final class EditProfileViewController: UIViewController {
     
     private let disposeBag: DisposeBag = .init()
     
-    private let viewModel: EditProfileViewModel = .init()
+    var viewModel: EditProfileViewModel!
     
     // MARK: - UI Components
     
@@ -109,7 +109,6 @@ private extension EditProfileViewController {
     
     func bindViewModel() {
         let input = EditProfileViewModel.Input.init(
-            viewDidLoad: .just(()),
             tapEditingCompleteButton: editingCompleteButton.rx.tap.asSignal()
                 .withUnretained(self)
                 .map { (owner, _) in owner.makeCurrentUserInfo() }

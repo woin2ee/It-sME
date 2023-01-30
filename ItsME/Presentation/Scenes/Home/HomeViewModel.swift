@@ -23,11 +23,14 @@ final class HomeViewModel: ViewModelType {
     private let userRepository: UserRepository = .init()
     private let cvRepository: CVRepository = .init()
     
+    private(set) var userInfo: UserInfo = .empty
+    
     func transform(input: Input) -> Output {
         let userInfo = Signal.merge(input.viewDidLoad, input.viewWillAppear.skip(1))
             .flatMap { _ in
                 return self.userRepository.getUserInfo(byUID: "testUser")
                     .asDriver(onErrorDriveWith: .empty())
+                    .do(onNext: { self.userInfo = $0 })
             }
         
         let cvInfo = Signal.merge(input.viewDidLoad, input.viewWillAppear.skip(1))
