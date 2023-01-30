@@ -24,7 +24,7 @@ final class EditProfileViewModel: ViewModelType {
     
     private let userRepository: UserRepository = .init()
     
-    private let educationItemsSubject: BehaviorSubject<[EducationItem]> = .init(value: [])
+    private let educationItemsRelay: BehaviorRelay<[EducationItem]> = .init(value: [])
     
     func transform(input: Input) -> Output {
         let userInfo = input.viewDidLoad
@@ -32,10 +32,10 @@ final class EditProfileViewModel: ViewModelType {
                 self.userRepository.getUserInfo(byUID: "testUser") // FIXME: 유저 고유 ID 저장 방안 필요
                     .asDriverOnErrorJustComplete()
             }
-            .do(onNext: initializeEducationItemsSubject)
+            .do(onNext: initializeEducationItemsRelay)
         let userName = userInfo.map { $0.name }
         let userInfoItems = userInfo.map { $0.defaultItems + $0.otherItems }
-        let educationItems = educationItemsSubject.asDriver(onErrorDriveWith: .empty())
+        let educationItems = educationItemsRelay.asDriver()
         
         let tappedEditingCompleteButton = input.tapEditingCompleteButton
             .do(onNext: { userInfo in
@@ -57,10 +57,9 @@ final class EditProfileViewModel: ViewModelType {
 extension EditProfileViewModel {
     
     func deleteEducationItem(at indexPath: IndexPath) {
-        guard var educationItems = try? educationItemsSubject.value() else { return }
-        
+        var educationItems = educationItemsRelay.value
         educationItems.remove(at: indexPath.row)
-        educationItemsSubject.onNext(educationItems)
+        educationItemsRelay.accept(educationItems)
     }
 }
 
@@ -68,7 +67,7 @@ extension EditProfileViewModel {
 
 private extension EditProfileViewModel {
     
-    func initializeEducationItemsSubject(_ userInfo: UserInfo) {
-        educationItemsSubject.onNext(userInfo.educationItems)
+    func initializeEducationItemsRelay(_ userInfo: UserInfo) {
+        educationItemsRelay.accept(userInfo.educationItems)
     }
 }
