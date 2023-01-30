@@ -117,9 +117,7 @@ private extension EditProfileViewController {
         let output = viewModel.transform(input: input)
         
         output.userName
-            .drive(with: self, onNext: { (owner, userName) in
-                owner.nameTextField.text = userName
-            })
+            .drive(nameTextField.rx.text)
             .disposed(by: disposeBag)
         
         output.userInfoItems
