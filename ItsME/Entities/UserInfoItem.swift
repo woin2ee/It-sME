@@ -59,3 +59,10 @@ extension UserInfoItem {
         case contents
     }
 }
+
+extension UserInfoItem {
+    
+    static var empty: UserInfoItem {
+        .init(icon: .default, contents: "")
+    }
+}
