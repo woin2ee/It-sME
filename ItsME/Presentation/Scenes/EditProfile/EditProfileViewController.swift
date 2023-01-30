@@ -121,8 +121,8 @@ private extension EditProfileViewController {
             .disposed(by: disposeBag)
         
         output.userInfoItems
-            .drive(onNext: { userInfoItems in
-                self.totalUserInfoItemStackView.bind(userInfoItems: userInfoItems)
+            .drive(with: self, onNext: { owner, userInfoItems in
+                owner.totalUserInfoItemStackView.bind(userInfoItems: userInfoItems)
             })
             .disposed(by: disposeBag)
         
