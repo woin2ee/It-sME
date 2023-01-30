@@ -44,6 +44,7 @@ class TotalCVViewController: UIViewController {
         $0.backgroundColor = .systemBackground
         $0.isScrollEnabled = false
         $0.separatorInset = .zero
+        $0.isUserInteractionEnabled = false
         let cellType = EducationCell.self
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
     }
@@ -129,6 +130,7 @@ private extension TotalCVViewController {
     var cvsInfoBinding: Binder<CVInfo> {
         return .init(self) { viewController, cvInfo in
             self.navigationItem.title = cvInfo.title
+            
         }
     }
 }
@@ -167,7 +169,7 @@ private extension TotalCVViewController {
         
         self.contentView.addSubview(educationHeaderLabel)
         educationHeaderLabel.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(20)
+            make.leading.trailing.equalToSuperview().inset(20)
             make.top.equalTo(totalUserInfoItemStackView.snp.bottom).offset(30)
         }
         
