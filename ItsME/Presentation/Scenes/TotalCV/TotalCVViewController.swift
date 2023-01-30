@@ -33,6 +33,22 @@ class TotalCVViewController: UIViewController {
     
     private lazy var totalUserInfoItemStackView: TotalUserInfoItemStackView = .init()
     
+    private lazy var educationHeaderLabel: UILabel = .init().then {
+        $0.text = "학력"
+        $0.font = .boldSystemFont(ofSize: 26)
+        $0.textColor = .systemBlue
+    }
+    
+    private lazy var educationTableView: IntrinsicHeightTableView = .init().then {
+        $0.delegate = self
+        $0.backgroundColor = .systemBackground
+        $0.isScrollEnabled = false
+        $0.separatorInset = .zero
+        $0.isUserInteractionEnabled = false
+        let cellType = EducationCell.self
+        $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
+    }
+    
     let label = UILabel().then {
         $0.textAlignment = .center
         $0.textColor = .systemBlue
@@ -79,7 +95,11 @@ private extension TotalCVViewController {
             .disposed(by: disposeBag)
         
         output.educationItems
-            .drive(educationBinding)
+            .drive(
+                educationTableView.rx.items(cellIdentifier: EducationCell.reuseIdentifier, cellType: EducationCell.self)
+            ) { (index, educationItem, cell) in
+                cell.bind(educationItem: educationItem)
+            }
             .disposed(by: disposeBag)
         
         output.cvInfo
@@ -110,6 +130,7 @@ private extension TotalCVViewController {
     var cvsInfoBinding: Binder<CVInfo> {
         return .init(self) { viewController, cvInfo in
             self.navigationItem.title = cvInfo.title
+            
         }
     }
 }
@@ -146,6 +167,18 @@ private extension TotalCVViewController {
             make.leading.equalToSuperview().offset(10)
         }
         
+        self.contentView.addSubview(educationHeaderLabel)
+        educationHeaderLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.top.equalTo(totalUserInfoItemStackView.snp.bottom).offset(30)
+        }
+        
+        self.contentView.addSubview(educationTableView)
+        educationTableView.snp.makeConstraints { make in
+            make.top.equalTo(educationHeaderLabel.snp.bottom).offset(10)
+            make.left.right.equalToSuperview().inset(24)
+        }
+        
         self.contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -154,5 +187,12 @@ private extension TotalCVViewController {
         }
     }
 }
+
+// MARK: - UITableViewDelegate
+extension TotalCVViewController: UITableViewDelegate {
+    
+}
+
+
 
 
