@@ -9,10 +9,14 @@ import Foundation
 
 final class ResumeItem: Decodable {
     let period: String
-    let contents: String
+    let title: String
+    let secondTitle: String
+    let description: String
     
-    init(period: String, contents: String) {
+    init(period: String, title: String, secondTitle: String, description: String) {
         self.period = period
-        self.contents = contents
+        self.title = title
+        self.secondTitle = secondTitle
+        self.description = description
     }
 }

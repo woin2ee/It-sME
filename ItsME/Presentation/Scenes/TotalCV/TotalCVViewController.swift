@@ -49,6 +49,22 @@ class TotalCVViewController: UIViewController {
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
     }
     
+    private lazy var categoryTableView: IntrinsicHeightTableView = .init().then {
+        $0.delegate = self
+        $0.backgroundColor = .systemBackground
+        $0.isScrollEnabled = false
+        $0.separatorInset = .zero
+        $0.isUserInteractionEnabled = false
+        let cellType = CategoryCell.self
+        $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
+    }
+    
+    private lazy var coverLetterLabel: UILabel = .init().then {
+        $0.text = "자기소개서"
+        $0.font = .boldSystemFont(ofSize: 26)
+        $0.textColor = .systemBlue
+    }
+    
     let label = UILabel().then {
         $0.textAlignment = .center
         $0.textColor = .systemBlue
@@ -78,6 +94,7 @@ class TotalCVViewController: UIViewController {
     func configureNavigationBar() {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.largeTitleDisplayMode = .always
         UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).adjustsFontSizeToFitWidth = true
         
     }
@@ -176,7 +193,13 @@ private extension TotalCVViewController {
         self.contentView.addSubview(educationTableView)
         educationTableView.snp.makeConstraints { make in
             make.top.equalTo(educationHeaderLabel.snp.bottom).offset(10)
-            make.left.right.equalToSuperview().inset(24)
+            make.leading.trailing.equalToSuperview().inset(24)
+        }
+        
+        self.contentView.addSubview(coverLetterLabel)
+        coverLetterLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.top.equalTo(educationTableView.snp.bottom).offset(30)
         }
         
         self.contentView.addSubview(label)
