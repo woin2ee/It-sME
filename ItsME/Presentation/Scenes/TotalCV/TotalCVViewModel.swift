@@ -46,7 +46,7 @@ final class TotalCVViewModel: ViewModelType {
         
         return .init(
             userInfoItems: userInfoItems,
-            educationItems:educationItems,
+            educationItems: educationItems,
             cvInfo: cvInfo
         )
     }
