@@ -24,8 +24,7 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
     private lazy var editProfileButton: UIButton = {
         let action = UIAction { _ in
             let editProfileVM: EditProfileViewModel = .init(userInfo: self.viewModel.userInfo)
-            let editProfileVC: EditProfileViewController = .init()
-            editProfileVC.viewModel = editProfileVM
+            let editProfileVC: EditProfileViewController = .init(viewModel: editProfileVM)
             self.navigationController?.pushViewController(editProfileVC, animated: true)
         }
         
