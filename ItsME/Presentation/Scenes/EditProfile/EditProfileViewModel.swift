@@ -12,6 +12,7 @@ final class EditProfileViewModel: ViewModelType {
     
     struct Input {
         let tapEditingCompleteButton: Signal<Void>
+        let userName: Driver<String>
     }
     
     struct Output {
@@ -32,7 +33,11 @@ final class EditProfileViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let userInfoDriver = userInfoRelay.asDriver()
         
-        let userName = userInfoDriver.map { $0.name }
+        let userName = Driver.merge(input.userName.skip(1),
+                                    userInfoDriver.map { $0.name })
+            .do(onNext: { userName in
+                self.userInfoRelay.value.name = userName
+            })
         let userInfoItems = userInfoDriver.map { $0.defaultItems + $0.otherItems }
         let educationItems = userInfoDriver.map { $0.educationItems }
         let tappedEditingCompleteButton = input.tapEditingCompleteButton

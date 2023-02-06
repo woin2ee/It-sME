@@ -8,7 +8,7 @@
 import Foundation
 
 final class UserInfo: Decodable {
-    let name: String
+    var name: String
     let profileImageURL: String
     let birthday: UserInfoItem
     let address: UserInfoItem
