@@ -39,7 +39,7 @@ final class OtherItemEditingViewController: UIViewController {
     }
     
     private lazy var completeButton: UIBarButtonItem = .init().then {
-        $0.primaryAction = .init(title: "완료", handler: { [weak self] _ in
+        $0.primaryAction = .init(title: "추가", handler: { [weak self] _ in
             guard let self = self else { return }
             self.navigationController?.popViewController(animated: true)
             let emojiName = self.iconButton.titleLabel?.text ?? UserInfoItemIcon.default.toEmoji
