@@ -14,8 +14,8 @@ final class UserInfo: Decodable {
     let address: UserInfoItem
     let phoneNumber: UserInfoItem
     let email: UserInfoItem
-    let otherItems: [UserInfoItem]
-    let educationItems: [EducationItem]
+    var otherItems: [UserInfoItem]
+    var educationItems: [EducationItem]
 
     var defaultItems: [UserInfoItem] {
         [birthday, address, phoneNumber, email]
