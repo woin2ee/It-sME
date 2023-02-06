@@ -58,8 +58,9 @@ final class EditProfileViewController: UIViewController {
     
     private lazy var userInfoItemAddButton: ItemAddButton = .init().then {
         let action: UIAction = .init(handler: { [weak self] _ in
-            let otherItemEditingVC: OtherItemEditingViewController = .init()
-            self?.navigationController?.pushViewController(otherItemEditingVC, animated: true)
+            guard let self = self else { return }
+            let otherItemEditingVC: OtherItemEditingViewController = .init(viewModel: self.viewModel)
+            self.navigationController?.pushViewController(otherItemEditingVC, animated: true)
         })
         $0.addAction(action, for: .touchUpInside)
     }

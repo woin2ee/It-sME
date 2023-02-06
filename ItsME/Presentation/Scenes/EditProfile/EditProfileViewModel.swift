@@ -72,4 +72,22 @@ extension EditProfileViewModel {
         )
         userInfoRelay.accept(newUserInfo)
     }
+    
+    func addUserInfoItem(_ userInfoItem: UserInfoItem) {
+        let userInfo = userInfoRelay.value
+        var otherItems = userInfo.otherItems
+        otherItems.append(userInfoItem)
+        
+        let newUserInfo: UserInfo = .init(
+            name: userInfo.name,
+            profileImageURL: userInfo.profileImageURL,
+            birthday: userInfo.birthday,
+            address: userInfo.address,
+            phoneNumber: userInfo.phoneNumber,
+            email: userInfo.email,
+            otherItems: otherItems,
+            educationItems: userInfo.educationItems
+        )
+        userInfoRelay.accept(newUserInfo)
+    }
 }

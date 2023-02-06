@@ -11,6 +11,8 @@ import UIKit
 
 final class OtherItemEditingViewController: UIViewController {
     
+    private let viewModel: EditProfileViewModel
+    
     private lazy var iconButton: UIButton = .init().then {
         $0.setTitle(UserInfoItemIcon.default.toEmoji, for: .normal)
         let action: UIAction = .init { _ in
@@ -37,10 +39,31 @@ final class OtherItemEditingViewController: UIViewController {
     }
     
     private lazy var completeButton: UIBarButtonItem = .init().then {
-        $0.primaryAction = .init(title: "완료", handler: { _ in
+        $0.primaryAction = .init(title: "완료", handler: { [weak self] _ in
+            guard let self = self else { return }
             self.navigationController?.popViewController(animated: true)
+            let emojiName = self.iconButton.titleLabel?.text ?? UserInfoItemIcon.default.toEmoji
+            let icon: UserInfoItemIcon = .init(rawValue: emojiName) ?? .default
+            let newItem: UserInfoItem = .init(
+                icon: icon,
+                contents: self.contentsTextField.text!
+            )
+            self.viewModel.addUserInfoItem(newItem)
         })
     }
+    
+    // MARK: - Initializer
+    
+    init(viewModel: EditProfileViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
