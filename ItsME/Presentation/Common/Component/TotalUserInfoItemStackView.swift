@@ -12,6 +12,12 @@ typealias UserInfoItemStackView = TotalUserInfoItemStackView
 
 final class TotalUserInfoItemStackView: UIStackView {
     
+    private var separatorLayers: [CALayer] = []
+    
+    var hasSeparator: Bool = false {
+        didSet { self.setNeedsLayout() }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -30,6 +36,15 @@ final class TotalUserInfoItemStackView: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if hasSeparator {
+            setSeparator()
+        } else {
+            removeAllSeparator()
+        }
+    }
+    
     func bind(userInfoItems: [UserInfoItem]) {
         self.removeAllArrangedSubviews()
         
@@ -37,5 +52,31 @@ final class TotalUserInfoItemStackView: UIStackView {
             let component = ProfileInfoComponent.init(userInfoItem: userInfoItem)
             self.addArrangedSubview(component)
         }
+    }
+}
+
+// MARK: - Private Functions
+
+private extension TotalUserInfoItemStackView {
+    
+    /// ArrangedSubviews 사이에 같은 간격으로 Separator 를 추가합니다.
+    func setSeparator() {
+        removeAllSeparator()
+        
+        let count = self.arrangedSubviews.count
+        guard count > 0 else { return }
+        
+        for i in 0..<count - 1 {
+            let separatorLayer = self.arrangedSubviews[i].addBottomBorder(offset: self.spacing / 2)
+            separatorLayers.append(separatorLayer)
+        }
+    }
+    
+    /// 모든 Separator 를 삭제합니다.
+    func removeAllSeparator() {
+        self.separatorLayers.forEach { layer in
+            layer.removeFromSuperlayer()
+        }
+        self.separatorLayers.removeAll()
     }
 }
