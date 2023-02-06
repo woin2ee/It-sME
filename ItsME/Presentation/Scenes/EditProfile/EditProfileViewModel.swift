@@ -11,7 +11,7 @@ import RxCocoa
 final class EditProfileViewModel: ViewModelType {
     
     struct Input {
-        let tapEditingCompleteButton: Signal<UserInfo>
+        let tapEditingCompleteButton: Signal<Void>
     }
     
     struct Output {
@@ -36,6 +36,7 @@ final class EditProfileViewModel: ViewModelType {
         let userInfoItems = userInfoDriver.map { $0.defaultItems + $0.otherItems }
         let educationItems = userInfoDriver.map { $0.educationItems }
         let tappedEditingCompleteButton = input.tapEditingCompleteButton
+            .withLatestFrom(userInfoDriver)
             .do(onNext: { userInfo in
                 // TODO: 유저 정보 저장
                 print(userInfo)

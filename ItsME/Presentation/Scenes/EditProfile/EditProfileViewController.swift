@@ -121,8 +121,6 @@ private extension EditProfileViewController {
     func bindViewModel() {
         let input = EditProfileViewModel.Input.init(
             tapEditingCompleteButton: editingCompleteButton.rx.tap.asSignal()
-                .withUnretained(self)
-                .map { (owner, _) in owner.makeCurrentUserInfo() }
         )
         let output = viewModel.transform(input: input)
         
@@ -149,20 +147,6 @@ private extension EditProfileViewController {
                 owner.navigationController?.popViewController(animated: true)
             })
             .disposed(by: disposeBag)
-    }
-    
-    func makeCurrentUserInfo() -> UserInfo {
-        // FIXME: 현재 수정된 유저 정보로 생성해야함
-        return .init(
-            name: "A",
-            profileImageURL: "B",
-            birthday: .init(icon: .default, contents: "C"),
-            address: .init(icon: .default, contents: "C"),
-            phoneNumber: .init(icon: .default, contents: "C"),
-            email: .init(icon: .default, contents: "C"),
-            otherItems: [.init(icon: .default, contents: "C")],
-            educationItems: [.init(period: "1", title: "2", description: "3")]
-        )
     }
 }
 
