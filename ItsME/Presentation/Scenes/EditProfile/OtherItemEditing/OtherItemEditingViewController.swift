@@ -29,6 +29,7 @@ final class OtherItemEditingViewController: UIViewController {
         $0.autocorrectionType = .no
         $0.keyboardType = .URL
         $0.autocapitalizationType = .none
+        $0.clearButtonMode = .whileEditing
     }
     
     private lazy var containerStackView: UIStackView = .init().then {
@@ -74,6 +75,11 @@ final class OtherItemEditingViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureNavigationBar()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        contentsTextField.becomeFirstResponder()
     }
 }
 
