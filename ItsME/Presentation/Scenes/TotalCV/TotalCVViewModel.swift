@@ -24,10 +24,14 @@ final class TotalCVViewModel: ViewModelType {
     private let userRepository: UserRepository = .init()
     private let cvRepository: CVRepository = .init()
     
-    private let behaviorSubject: BehaviorSubject<CVInfo>
+    private let behaviorRelay: BehaviorRelay<CVInfo>
+    
+    var resumeCategory: [ResumeCategory] {
+        behaviorRelay.value.resume.category
+    }
     
     init(cvInfo: CVInfo) {
-        self.behaviorSubject = .init(value: cvInfo)
+        self.behaviorRelay = .init(value: cvInfo)
     }
     
     func transform(input: Input) -> Output {
@@ -37,8 +41,7 @@ final class TotalCVViewModel: ViewModelType {
                     .asDriver(onErrorDriveWith: .empty())
             }
         
-        let cvInfo = behaviorSubject.asDriver(onErrorDriveWith: .empty())
-        
+        let cvInfo = behaviorRelay.asDriver()
         let userInfoItems = userInfo.map { $0.defaultItems + $0.otherItems }
         
         let educationItems = userInfo.map { $0.educationItems }

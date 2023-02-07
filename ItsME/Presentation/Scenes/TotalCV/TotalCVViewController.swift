@@ -51,6 +51,7 @@ class TotalCVViewController: UIViewController {
     
     private lazy var categoryTableView: IntrinsicHeightTableView = .init().then {
         $0.delegate = self
+        $0.dataSource = self
         $0.backgroundColor = .systemBackground
         $0.isScrollEnabled = false
         $0.separatorInset = .zero
@@ -144,6 +145,11 @@ private extension TotalCVViewController {
         }
     }
     
+    var resumeCategoryBinding: Binder<[ResumeCategory]> {
+        return .init(self) { viewController, resumeCategory in
+        }
+    }
+    
     var cvsInfoBinding: Binder<CVInfo> {
         return .init(self) { viewController, cvInfo in
             self.navigationItem.title = cvInfo.title
@@ -196,10 +202,16 @@ private extension TotalCVViewController {
             make.leading.trailing.equalToSuperview().inset(24)
         }
         
+        self.contentView.addSubview(categoryTableView)
+        categoryTableView.snp.makeConstraints { make in
+            make.top.equalTo(educationTableView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview().inset(24)
+        }
+        
         self.contentView.addSubview(coverLetterLabel)
         coverLetterLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
-            make.top.equalTo(educationTableView.snp.bottom).offset(30)
+            make.top.equalTo(categoryTableView.snp.bottom).offset(30)
         }
         
         self.contentView.addSubview(label)
@@ -212,8 +224,27 @@ private extension TotalCVViewController {
 }
 
 // MARK: - UITableViewDelegate
-extension TotalCVViewController: UITableViewDelegate {
+extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.resumeCategory[section].items.count
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.resumeCategory.count
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let resumeCategory = viewModel.resumeCategory
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as! CategoryCell
+        
+        cell.bind(resumeItem: resumeCategory[indexPath.section].items[indexPath.row])
+        
+        return cell
+    }
 }
 
 
