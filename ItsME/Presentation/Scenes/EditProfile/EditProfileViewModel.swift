@@ -11,7 +11,6 @@ import RxCocoa
 final class EditProfileViewModel: ViewModelType {
     
     struct Input {
-        let viewDidLoad: Signal<Void>
         let tapEditingCompleteButton: Signal<UserInfo>
     }
     
@@ -24,19 +23,18 @@ final class EditProfileViewModel: ViewModelType {
     
     private let userRepository: UserRepository = .init()
     
-    private let educationItemsSubject: BehaviorSubject<[EducationItem]> = .init(value: [])
+    private let userInfoRelay: BehaviorRelay<UserInfo>
+    
+    init(userInfo: UserInfo) {
+        self.userInfoRelay = .init(value: userInfo)
+    }
     
     func transform(input: Input) -> Output {
-        let userInfo = input.viewDidLoad
-            .flatMapLatest { _ -> Driver<UserInfo> in
-                self.userRepository.getUserInfo(byUID: "testUser") // FIXME: 유저 고유 ID 저장 방안 필요
-                    .asDriverOnErrorJustComplete()
-            }
-            .do(onNext: initializeEducationItemsSubject)
-        let userName = userInfo.map { $0.name }
-        let userInfoItems = userInfo.map { $0.defaultItems + $0.otherItems }
-        let educationItems = educationItemsSubject.asDriver(onErrorDriveWith: .empty())
+        let userInfoDriver = userInfoRelay.asDriver()
         
+        let userName = userInfoDriver.map { $0.name }
+        let userInfoItems = userInfoDriver.map { $0.defaultItems + $0.otherItems }
+        let educationItems = userInfoDriver.map { $0.educationItems }
         let tappedEditingCompleteButton = input.tapEditingCompleteButton
             .do(onNext: { userInfo in
                 // TODO: 유저 정보 저장
@@ -57,18 +55,20 @@ final class EditProfileViewModel: ViewModelType {
 extension EditProfileViewModel {
     
     func deleteEducationItem(at indexPath: IndexPath) {
-        guard var educationItems = try? educationItemsSubject.value() else { return }
-        
+        let userInfo = userInfoRelay.value
+        var educationItems = userInfo.educationItems
         educationItems.remove(at: indexPath.row)
-        educationItemsSubject.onNext(educationItems)
-    }
-}
-
-// MARK: - Private Functions
-
-private extension EditProfileViewModel {
-    
-    func initializeEducationItemsSubject(_ userInfo: UserInfo) {
-        educationItemsSubject.onNext(userInfo.educationItems)
+        
+        let newUserInfo: UserInfo = .init(
+            name: userInfo.name,
+            profileImageURL: userInfo.profileImageURL,
+            birthday: userInfo.birthday,
+            address: userInfo.address,
+            phoneNumber: userInfo.phoneNumber,
+            email: userInfo.email,
+            otherItems: userInfo.otherItems,
+            educationItems: educationItems
+        )
+        userInfoRelay.accept(newUserInfo)
     }
 }

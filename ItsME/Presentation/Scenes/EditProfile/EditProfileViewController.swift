@@ -14,7 +14,7 @@ final class EditProfileViewController: UIViewController {
     
     private let disposeBag: DisposeBag = .init()
     
-    private let viewModel: EditProfileViewModel = .init()
+    private let viewModel: EditProfileViewModel
     
     // MARK: - UI Components
     
@@ -83,6 +83,17 @@ final class EditProfileViewController: UIViewController {
     
     private lazy var editingCompleteButton: UIBarButtonItem = .init(title: "수정완료")
     
+    // MARK: - Initializer
+    
+    init(viewModel: EditProfileViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -109,7 +120,6 @@ private extension EditProfileViewController {
     
     func bindViewModel() {
         let input = EditProfileViewModel.Input.init(
-            viewDidLoad: .just(()),
             tapEditingCompleteButton: editingCompleteButton.rx.tap.asSignal()
                 .withUnretained(self)
                 .map { (owner, _) in owner.makeCurrentUserInfo() }
@@ -117,14 +127,12 @@ private extension EditProfileViewController {
         let output = viewModel.transform(input: input)
         
         output.userName
-            .drive(with: self, onNext: { (owner, userName) in
-                owner.nameTextField.text = userName
-            })
+            .drive(nameTextField.rx.text)
             .disposed(by: disposeBag)
         
         output.userInfoItems
-            .drive(onNext: { userInfoItems in
-                self.totalUserInfoItemStackView.bind(userInfoItems: userInfoItems)
+            .drive(with: self, onNext: { owner, userInfoItems in
+                owner.totalUserInfoItemStackView.bind(userInfoItems: userInfoItems)
             })
             .disposed(by: disposeBag)
         
@@ -290,7 +298,8 @@ struct EditProfileViewControllerRepresenter: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> UIViewController {
         let navigationController: UINavigationController = .init(rootViewController: .init())
-        let editProfileViewController: EditProfileViewController = .init()
+        let editProfileViewModel: EditProfileViewModel = .init(userInfo: .empty)
+        let editProfileViewController: EditProfileViewController = .init(viewModel: editProfileViewModel)
         navigationController.pushViewController(editProfileViewController, animated: false)
         return navigationController
     }

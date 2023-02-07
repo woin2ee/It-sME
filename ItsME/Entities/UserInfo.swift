@@ -69,3 +69,19 @@ extension UserInfo {
         case educationItems
     }
 }
+
+extension UserInfo {
+    
+    static var empty: UserInfo {
+        .init(
+            name: "",
+            profileImageURL: "",
+            birthday: .empty,
+            address: .empty,
+            phoneNumber: .empty,
+            email: .empty,
+            otherItems: [],
+            educationItems: []
+        )
+    }
+}
