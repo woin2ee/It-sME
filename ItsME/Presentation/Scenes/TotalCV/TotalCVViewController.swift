@@ -45,6 +45,7 @@ class TotalCVViewController: UIViewController {
         $0.isScrollEnabled = false
         $0.separatorInset = .zero
         $0.isUserInteractionEnabled = false
+        $0.sectionHeaderHeight = 0
         let cellType = EducationCell.self
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
     }
@@ -58,6 +59,9 @@ class TotalCVViewController: UIViewController {
         $0.isUserInteractionEnabled = false
         let cellType = CategoryCell.self
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
+        let sectionType = CategoryTitle.self
+        $0.register(sectionType, forHeaderFooterViewReuseIdentifier: sectionType.reuseIdentifier)
+        $0.sectionHeaderHeight = 45
     }
     
     private lazy var coverLetterLabel: UILabel = .init().then {
@@ -65,12 +69,7 @@ class TotalCVViewController: UIViewController {
         $0.font = .boldSystemFont(ofSize: 26)
         $0.textColor = .systemBlue
     }
-    
-    let label = UILabel().then {
-        $0.textAlignment = .center
-        $0.textColor = .systemBlue
-        $0.text = "Hello, World!"
-    }
+
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -212,14 +211,9 @@ private extension TotalCVViewController {
         coverLetterLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
             make.top.equalTo(categoryTableView.snp.bottom).offset(30)
-        }
-        
-        self.contentView.addSubview(label)
-        label.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(totalUserInfoItemStackView.snp.bottom).offset(1200)
             make.bottom.equalToSuperview()
         }
+        
     }
 }
 
@@ -234,12 +228,25 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
         return viewModel.resumeCategory.count
     }
     
+    func tableView(_ tableView: UITableView,
+                   viewForHeaderInSection section: Int) -> UIView? {
+        
+        guard let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: CategoryTitle.reuseIdentifier) as? CategoryTitle else {
+            return UIView()
+        }
+        
+        view.bind(resumeCategory: viewModel.resumeCategory[section])
+        
+        return view
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let resumeCategory = viewModel.resumeCategory
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as! CategoryCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as? CategoryCell else {
+            return UITableViewCell()
+        }
         
         cell.bind(resumeItem: resumeCategory[indexPath.section].items[indexPath.row])
         
