@@ -60,9 +60,7 @@ final class EditProfileViewController: UIViewController {
     
     private lazy var userInfoItemAddButton: ItemAddButton = .init().then {
         let action: UIAction = .init(handler: { [weak self] _ in
-            guard let self = self else { return }
-            let otherItemEditingVC: OtherItemEditingViewController = .init(viewModel: self.viewModel)
-            self.navigationController?.pushViewController(otherItemEditingVC, animated: true)
+            self?.presentOtherItemEditingView()
         })
         $0.addAction(action, for: .touchUpInside)
     }
@@ -135,6 +133,13 @@ private extension EditProfileViewController {
         output.userInfoItems
             .drive(with: self, onNext: { owner, userInfoItems in
                 owner.totalUserInfoItemStackView.bind(userInfoItems: userInfoItems)
+                
+                zip(owner.totalUserInfoItemStackView.arrangedSubviews, userInfoItems)
+                    .forEach { (subview, userInfoItem) in
+                        let action = owner.decideEditingView(by: userInfoItem)
+                        let tapGestureRecognizer: UITapGestureRecognizer = .init(target: owner, action: action)
+                        subview.addGestureRecognizer(tapGestureRecognizer)
+                    }
             })
             .disposed(by: disposeBag)
         
@@ -229,6 +234,47 @@ private extension EditProfileViewController {
         self.navigationItem.rightBarButtonItem = editingCompleteButton
         self.navigationController?.navigationBar.prefersLargeTitles = false
         self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
+    @objc func presentDatePickerView() {
+        let viewController: BirthdayEditingViewController = .init(viewModel: viewModel)
+        viewController.modalPresentationStyle = .overCurrentContext
+        self.navigationController?.present(viewController, animated: false)
+    }
+    
+    @objc func presentAddressEditingView() {
+        let viewController: AddressEditingViewController
+        print(#function)
+    }
+    
+    @objc func presentPhoneNumberEditingView() {
+        let viewController: PhoneNumberEditingViewController
+        print(#function)
+    }
+    
+    @objc func presentEmailEditingView() {
+        let viewController: EmailEditingViewController
+        print(#function)
+    }
+    
+    @objc func presentOtherItemEditingView() {
+        let viewController: OtherItemEditingViewController = .init(viewModel: viewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func decideEditingView(by userInfoItem: UserInfoItem) -> Selector {
+        switch userInfoItem.icon {
+        case .cake:
+            return #selector(presentDatePickerView)
+        case .house:
+            return #selector(presentAddressEditingView)
+        case .phone:
+            return #selector(presentPhoneNumberEditingView)
+        case .letter:
+            return #selector(presentEmailEditingView)
+        default:
+            return #selector(presentOtherItemEditingView)
+        }
     }
 }
 
