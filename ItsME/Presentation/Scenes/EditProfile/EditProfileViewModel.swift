@@ -7,6 +7,7 @@
 
 import RxSwift
 import RxCocoa
+import Then
 
 final class EditProfileViewModel: ViewModelType {
     
@@ -25,6 +26,14 @@ final class EditProfileViewModel: ViewModelType {
     private let userRepository: UserRepository = .init()
     
     private let userInfoRelay: BehaviorRelay<UserInfo>
+    
+    var currentBirthday: Date {
+        let birthday = userInfoRelay.value.birthday.contents
+        let dateFormatter = DateFormatter.init().then {
+            $0.dateFormat = "yyyy.MM.dd."
+        }
+        return dateFormatter.date(from: birthday) ?? .now
+    }
     
     init(userInfo: UserInfo) {
         self.userInfoRelay = .init(value: userInfo)
@@ -69,6 +78,12 @@ extension EditProfileViewModel {
     func addUserInfoItem(_ userInfoItem: UserInfoItem) {
         let userInfo = userInfoRelay.value
         userInfo.otherItems.append(userInfoItem)
+        userInfoRelay.accept(userInfo)
+    }
+    
+    func updateBirthday(_ userInfoItem: UserInfoItem) {
+        let userInfo = userInfoRelay.value
+        userInfo.birthday = userInfoItem
         userInfoRelay.accept(userInfo)
     }
 }
