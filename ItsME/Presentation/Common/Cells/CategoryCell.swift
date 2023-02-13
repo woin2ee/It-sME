@@ -28,7 +28,7 @@ class CategoryCell: UITableViewCell {
     
     private lazy var secondTitleLabel = UILabel().then {
         $0.text = "부제목"
-        $0.textColor = .label
+        $0.textColor = .gray
         $0.font = .systemFont(ofSize: 15, weight: .light)
     }
     
@@ -75,31 +75,33 @@ private extension CategoryCell {
         
         self.contentView.addSubview(periodLabel)
         periodLabel.snp.makeConstraints { make in
-            make.top.leading.bottom.equalToSuperview()
+            make.leading.bottom.equalToSuperview()
+            make.top.equalToSuperview().offset(10)
         }
         
         self.contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.top.trailing.equalToSuperview()
+            make.trailing.equalToSuperview()
             make.leading.equalTo(periodLabel.snp.trailing).offset(15)
             make.width.equalTo(periodLabel.snp.width).multipliedBy(2.5)
-            make.width.equalTo(secondTitleLabel.snp.width)
-            make.width.equalTo(descriptionLabel.snp.width)
-            
+            make.top.equalToSuperview().offset(10)
         }
         
         self.contentView.addSubview(secondTitleLabel)
         secondTitleLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview()
             make.leading.equalTo(periodLabel.snp.trailing).offset(15)
-            make.top.equalTo(titleLabel.snp.bottom).offset(10)
+            make.top.equalTo(titleLabel.snp.bottom).offset(5)
+            make.width.equalTo(titleLabel.snp.width)
         }
         
         self.contentView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { make in
-            make.trailing.bottom.equalToSuperview()
+            make.trailing.equalToSuperview()
             make.leading.equalTo(periodLabel.snp.trailing).offset(15)
             make.top.equalTo(secondTitleLabel.snp.bottom).offset(10)
+            make.width.equalTo(titleLabel.snp.width)
+            make.bottom.equalToSuperview().offset(-10)
         }
     }
 }
