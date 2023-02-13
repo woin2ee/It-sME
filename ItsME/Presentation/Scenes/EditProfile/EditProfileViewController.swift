@@ -136,7 +136,7 @@ private extension EditProfileViewController {
                 
                 zip(owner.totalUserInfoItemStackView.arrangedSubviews, userInfoItems)
                     .forEach { (subview, userInfoItem) in
-                        let action = owner.decideEditingView(by: userInfoItem)
+                        let action = owner.decideTransitionAction(by: userInfoItem)
                         let tapGestureRecognizer: UITapGestureRecognizer = .init(target: owner, action: action)
                         subview.addGestureRecognizer(tapGestureRecognizer)
                     }
@@ -268,7 +268,7 @@ private extension EditProfileViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func decideEditingView(by userInfoItem: UserInfoItem) -> Selector {
+    func decideTransitionAction(by userInfoItem: UserInfoItem) -> Selector {
         switch userInfoItem.icon {
         case .cake:
             return #selector(presentDatePickerView)
