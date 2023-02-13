@@ -18,3 +18,14 @@ final class EducationItem: Decodable {
         self.description = description
     }
 }
+
+// MARK: - Equatable
+
+extension EducationItem: Equatable {
+    
+    static func == (lhs: EducationItem, rhs: EducationItem) -> Bool {
+        lhs.period == rhs.period &&
+        lhs.title == rhs.title &&
+        lhs.description == rhs.description
+    }
+}

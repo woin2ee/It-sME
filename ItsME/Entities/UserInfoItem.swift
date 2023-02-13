@@ -60,6 +60,16 @@ extension UserInfoItem {
     }
 }
 
+// MARK: - Equatable
+
+extension UserInfoItem: Equatable {
+    
+    static func == (lhs: UserInfoItem, rhs: UserInfoItem) -> Bool {
+        lhs.icon == rhs.icon &&
+        lhs.contents == rhs.contents
+    }
+}
+
 extension UserInfoItem {
     
     static var empty: UserInfoItem {

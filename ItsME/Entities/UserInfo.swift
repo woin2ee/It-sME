@@ -70,6 +70,22 @@ extension UserInfo {
     }
 }
 
+// MARK: - Equatable
+
+extension UserInfo: Equatable {
+    
+    static func == (lhs: UserInfo, rhs: UserInfo) -> Bool {
+        lhs.name == rhs.name &&
+        lhs.profileImageURL == rhs.profileImageURL &&
+        lhs.birthday == rhs.birthday &&
+        lhs.address == rhs.address &&
+        lhs.phoneNumber == rhs.phoneNumber &&
+        lhs.email == rhs.email &&
+        lhs.otherItems == rhs.otherItems &&
+        lhs.educationItems == rhs.educationItems
+    }
+}
+
 extension UserInfo {
     
     static var empty: UserInfo {

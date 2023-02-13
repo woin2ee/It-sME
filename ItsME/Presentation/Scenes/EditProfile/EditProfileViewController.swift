@@ -128,9 +128,14 @@ private extension EditProfileViewController {
     func bindViewModel() {
         let input = EditProfileViewModel.Input.init(
             tapEditingCompleteButton: editingCompleteButton.rx.tap.asSignal(),
-            userName: nameTextField.rx.text.orEmpty.asDriver()
+            userName: nameTextField.rx.text.orEmpty.asDriver(),
+            viewDidLoad: .just(())
         )
         let output = viewModel.transform(input: input)
+        
+        output.viewDidLoad
+            .drive()
+            .disposed(by: disposeBag)
         
         output.userName
             .drive(nameTextField.rx.text)
