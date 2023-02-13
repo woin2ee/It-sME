@@ -109,6 +109,11 @@ final class EditProfileViewController: UIViewController {
         configureNavigationBar()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        nameTextField.resignFirstResponder()
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         profileImageView.circular()
