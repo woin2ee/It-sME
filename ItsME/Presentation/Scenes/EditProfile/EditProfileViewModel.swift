@@ -35,6 +35,10 @@ final class EditProfileViewModel: ViewModelType {
         return dateFormatter.date(from: birthday) ?? .now
     }
     
+    var currentOtherItems: [UserInfoItem] {
+        userInfoRelay.value.otherItems
+    }
+    
     init(userInfo: UserInfo) {
         self.userInfoRelay = .init(value: userInfo)
     }
@@ -75,7 +79,7 @@ extension EditProfileViewModel {
         userInfoRelay.accept(userInfo)
     }
     
-    func addUserInfoItem(_ userInfoItem: UserInfoItem) {
+    func appendUserInfoItem(_ userInfoItem: UserInfoItem) {
         let userInfo = userInfoRelay.value
         userInfo.otherItems.append(userInfoItem)
         userInfoRelay.accept(userInfo)
@@ -85,5 +89,13 @@ extension EditProfileViewModel {
         let userInfo = userInfoRelay.value
         userInfo.birthday = userInfoItem
         userInfoRelay.accept(userInfo)
+    }
+    
+    func updateUserInfoItem(_ userInfoItem: UserInfoItem, at index: IndexPath.Index) {
+        let userInfo = userInfoRelay.value
+        if userInfo.otherItems.indices ~= index {
+            userInfo.otherItems[index] = userInfoItem
+            userInfoRelay.accept(userInfo)
+        }
     }
 }

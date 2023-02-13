@@ -60,7 +60,7 @@ final class EditProfileViewController: UIViewController {
     
     private lazy var userInfoItemAddButton: ItemAddButton = .init().then {
         let action: UIAction = .init(handler: { [weak self] _ in
-            self?.presentOtherItemEditingView()
+            self?.presentNewOtherItemView()
         })
         $0.addAction(action, for: .touchUpInside)
     }
@@ -257,8 +257,14 @@ private extension EditProfileViewController {
         print(#function)
     }
     
-    @objc func presentOtherItemEditingView() {
-        let viewController: OtherItemEditingViewController = .init(viewModel: viewModel)
+    @objc func presentOtherItemEditingView(_ sender: UITapGestureRecognizer) {
+        guard let userInfoItem = (sender.view as? ProfileInfoComponent)?.userInfoItem,
+              let indexOfItem = viewModel.currentOtherItems.firstIndex(where: { $0 === userInfoItem })
+        else {
+            return
+        }
+        
+        let viewController: OtherItemEditingViewController = .init(viewModel: viewModel, indexOfItem: indexOfItem)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -275,6 +281,11 @@ private extension EditProfileViewController {
         default:
             return #selector(presentOtherItemEditingView)
         }
+    }
+    
+    func presentNewOtherItemView() {
+        let viewController: NewOtherItemViewController = .init(viewModel: viewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
 

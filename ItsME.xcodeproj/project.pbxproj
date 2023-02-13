@@ -51,6 +51,8 @@
 		DAA5B9652938825A00BAB04E /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA5B9642938825A00BAB04E /* EditProfileViewController.swift */; };
 		DAA5B9672938827200BAB04E /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA5B9662938827200BAB04E /* EditProfileViewModel.swift */; };
 		DAAC7A5C29715C0A0083A8E9 /* Rx+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAC7A5B29715C0A0083A8E9 /* Rx+Ext.swift */; };
+		DAAF1BD7299A0E1100728376 /* NewOtherItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF1BD6299A0E1100728376 /* NewOtherItemViewController.swift */; };
+		DAAF1BDC299A11F400728376 /* UserInfoItemInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF1BDB299A11F400728376 /* UserInfoItemInputView.swift */; };
 		DAAF1BDF299A1E8100728376 /* Array+SafeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF1BDE299A1E8100728376 /* Array+SafeIndex.swift */; };
 		DAAFB2532918EE5A007A8DF0 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAFB2522918EE5A007A8DF0 /* UserInfo.swift */; };
 		DAB06A3D291BA5B400E86163 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06A3C291BA5B400E86163 /* HomeViewModel.swift */; };
@@ -137,6 +139,8 @@
 		DAA5B9642938825A00BAB04E /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		DAA5B9662938827200BAB04E /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		DAAC7A5B29715C0A0083A8E9 /* Rx+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx+Ext.swift"; sourceTree = "<group>"; };
+		DAAF1BD6299A0E1100728376 /* NewOtherItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewOtherItemViewController.swift; sourceTree = "<group>"; };
+		DAAF1BDB299A11F400728376 /* UserInfoItemInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoItemInputView.swift; sourceTree = "<group>"; };
 		DAAF1BDE299A1E8100728376 /* Array+SafeIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+SafeIndex.swift"; sourceTree = "<group>"; };
 		DAAFB2522918EE5A007A8DF0 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		DAB06A3C291BA5B400E86163 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -373,9 +377,35 @@
 				DA018804296D10B5002C5CB0 /* AddressEditing */,
 				DA018805296D10BD002C5CB0 /* PhoneNumberEditing */,
 				DA018806296D10F8002C5CB0 /* EmailEditing */,
-				DA018807296D1201002C5CB0 /* OtherItemEditing */,
+				DAAF1BD8299A0F8000728376 /* OtherItem */,
 			);
 			path = EditProfile;
+			sourceTree = "<group>";
+		};
+		DAAF1BD5299A0DF300728376 /* NewOtherItem */ = {
+			isa = PBXGroup;
+			children = (
+				DAAF1BD6299A0E1100728376 /* NewOtherItemViewController.swift */,
+			);
+			path = NewOtherItem;
+			sourceTree = "<group>";
+		};
+		DAAF1BD8299A0F8000728376 /* OtherItem */ = {
+			isa = PBXGroup;
+			children = (
+				DAAF1BDD299A11FE00728376 /* CommonView */,
+				DA018807296D1201002C5CB0 /* OtherItemEditing */,
+				DAAF1BD5299A0DF300728376 /* NewOtherItem */,
+			);
+			path = OtherItem;
+			sourceTree = "<group>";
+		};
+		DAAF1BDD299A11FE00728376 /* CommonView */ = {
+			isa = PBXGroup;
+			children = (
+				DAAF1BDB299A11F400728376 /* UserInfoItemInputView.swift */,
+			);
+			path = CommonView;
 			sourceTree = "<group>";
 		};
 		DAAFB2492918E43B007A8DF0 /* Application */ = {
@@ -755,9 +785,11 @@
 				D09AC9752918DE8B0081C0EC /* AppDelegate.swift in Sources */,
 				DA739DE42924FE54003AEE4C /* CommonAlertViewController.swift in Sources */,
 				DA6BCE5E292F04910059E95D /* DatabaseReferenceManager.swift in Sources */,
+				DAAF1BD7299A0E1100728376 /* NewOtherItemViewController.swift in Sources */,
 				DAFCFB63294A9CD0006B287A /* EducationItem.swift in Sources */,
 				DA7201F22931F21100A69519 /* ResumeCategory.swift in Sources */,
 				DA018809296D146A002C5CB0 /* BirthdayEditingViewController.swift in Sources */,
+				DAAF1BDC299A11F400728376 /* UserInfoItemInputView.swift in Sources */,
 				DAB06A3D291BA5B400E86163 /* HomeViewModel.swift in Sources */,
 				DA7201F82931F8EB00A69519 /* CoverLetter.swift in Sources */,
 				DA7201F42931F25500A69519 /* CoverLetterItem.swift in Sources */,
