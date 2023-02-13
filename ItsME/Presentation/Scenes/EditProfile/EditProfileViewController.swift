@@ -22,6 +22,7 @@ final class EditProfileViewController: UIViewController {
         $0.backgroundColor = .systemBackground
         $0.showsVerticalScrollIndicator = true
         $0.showsHorizontalScrollIndicator = false
+        $0.delegate = self
     }
     
     private lazy var contentView: UIView = .init().then {
@@ -327,6 +328,15 @@ extension EditProfileViewController: UIImagePickerControllerDelegate {
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension EditProfileViewController: UIScrollViewDelegate {
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        nameTextField.resignFirstResponder()
     }
 }
 
