@@ -93,9 +93,9 @@ class TotalCVViewController: UIViewController {
     
     func configureNavigationBar() {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.largeTitleDisplayMode = .always
-        UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).adjustsFontSizeToFitWidth = true
+        //FIXME: - 화면을 끝까지 내렸을 때 자동으로 Large title로 변경되는 오류를 해결해줘야 함
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//        UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).adjustsFontSizeToFitWidth = true
         
     }
 }
@@ -141,11 +141,6 @@ private extension TotalCVViewController {
     var educationBinding: Binder<[EducationItem]> {
         return .init(self) { viewController, education in
             
-        }
-    }
-    
-    var resumeCategoryBinding: Binder<[ResumeCategory]> {
-        return .init(self) { viewController, resumeCategory in
         }
     }
     
