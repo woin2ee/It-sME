@@ -11,7 +11,7 @@
 		42E57E1A42C7717FCEB57FF8 /* Pods_ItsMETests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 489042DDCCFB086C484717E5 /* Pods_ItsMETests.framework */; };
 		D0472F07296406BC00E83F61 /* TotalCVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0472F06296406BC00E83F61 /* TotalCVViewController.swift */; };
 		D0472F09296406CF00E83F61 /* TotalCVViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0472F08296406CF00E83F61 /* TotalCVViewModel.swift */; };
-		D06CD86B29936BBC005DFB3B /* CategoryTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06CD86A29936BBC005DFB3B /* CategoryTitle.swift */; };
+		D06CD86B29936BBC005DFB3B /* CategoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06CD86A29936BBC005DFB3B /* CategoryHeaderView.swift */; };
 		D09AC9752918DE8B0081C0EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9742918DE8B0081C0EC /* AppDelegate.swift */; };
 		D09AC9772918DE8B0081C0EC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9762918DE8B0081C0EC /* SceneDelegate.swift */; };
 		D09AC9792918DE8B0081C0EC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9782918DE8B0081C0EC /* HomeViewController.swift */; };
@@ -92,7 +92,7 @@
 		8904753F2E4045FB9A598F17 /* Pods-ItsME-ItsMEUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME-ItsMEUITests.release.xcconfig"; path = "Target Support Files/Pods-ItsME-ItsMEUITests/Pods-ItsME-ItsMEUITests.release.xcconfig"; sourceTree = "<group>"; };
 		D0472F06296406BC00E83F61 /* TotalCVViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalCVViewController.swift; sourceTree = "<group>"; };
 		D0472F08296406CF00E83F61 /* TotalCVViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalCVViewModel.swift; sourceTree = "<group>"; };
-		D06CD86A29936BBC005DFB3B /* CategoryTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTitle.swift; sourceTree = "<group>"; };
+		D06CD86A29936BBC005DFB3B /* CategoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryHeaderView.swift; sourceTree = "<group>"; };
 		D0903D68B0FDB23EBEECD6C2 /* Pods-ItsMETests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsMETests.release.xcconfig"; path = "Target Support Files/Pods-ItsMETests/Pods-ItsMETests.release.xcconfig"; sourceTree = "<group>"; };
 		D09AC9712918DE8B0081C0EC /* ItsME.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ItsME.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09AC9742918DE8B0081C0EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -213,7 +213,7 @@
 		D06CD86929936B36005DFB3B /* TableSection */ = {
 			isa = PBXGroup;
 			children = (
-				D06CD86A29936BBC005DFB3B /* CategoryTitle.swift */,
+				D06CD86A29936BBC005DFB3B /* CategoryHeaderView.swift */,
 			);
 			path = TableSection;
 			sourceTree = "<group>";
@@ -760,7 +760,7 @@
 				DA01880F296D147D002C5CB0 /* EmailEditingViewController.swift in Sources */,
 				D0472F09296406CF00E83F61 /* TotalCVViewModel.swift in Sources */,
 				D09AC9752918DE8B0081C0EC /* AppDelegate.swift in Sources */,
-				D06CD86B29936BBC005DFB3B /* CategoryTitle.swift in Sources */,
+				D06CD86B29936BBC005DFB3B /* CategoryHeaderView.swift in Sources */,
 				DA739DE42924FE54003AEE4C /* CommonAlertViewController.swift in Sources */,
 				DA6BCE5E292F04910059E95D /* DatabaseReferenceManager.swift in Sources */,
 				DAFCFB63294A9CD0006B287A /* EducationItem.swift in Sources */,

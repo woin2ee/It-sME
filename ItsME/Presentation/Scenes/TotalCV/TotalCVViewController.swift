@@ -35,7 +35,7 @@ class TotalCVViewController: UIViewController {
     
     private lazy var educationHeaderLabel: UILabel = .init().then {
         $0.text = "학력"
-        $0.font = .boldSystemFont(ofSize: 26)
+        $0.font = .boldSystemFont(ofSize: 30)
         $0.textColor = .systemBlue
     }
     
@@ -59,14 +59,14 @@ class TotalCVViewController: UIViewController {
         $0.isUserInteractionEnabled = false
         let cellType = CategoryCell.self
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
-        let sectionType = CategoryTitle.self
+        let sectionType = CategoryHeaderView.self
         $0.register(sectionType, forHeaderFooterViewReuseIdentifier: sectionType.reuseIdentifier)
         $0.sectionHeaderHeight = 45
     }
     
     private lazy var coverLetterLabel: UILabel = .init().then {
         $0.text = "자기소개서"
-        $0.font = .boldSystemFont(ofSize: 26)
+        $0.font = .boldSystemFont(ofSize: 30)
         $0.textColor = .systemBlue
     }
 
@@ -226,11 +226,11 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView,
                    viewForHeaderInSection section: Int) -> UIView? {
         
-        guard let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: CategoryTitle.reuseIdentifier) as? CategoryTitle else {
+        guard let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: CategoryHeaderView.reuseIdentifier) as? CategoryHeaderView else {
             return UIView()
         }
         
-        view.bind(resumeCategory: viewModel.resumeCategory[section])
+        view.titleLabel.text = viewModel.resumeCategory[section].title
         
         return view
     }

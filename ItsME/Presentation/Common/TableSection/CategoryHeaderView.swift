@@ -1,5 +1,5 @@
 //
-//  CategoryTitle.swift
+//  CategoryHeaderView.swift
 //  ItsME
 //
 //  Created by MacBook Air on 2023/02/08.
@@ -9,9 +9,9 @@ import SnapKit
 import Then
 import UIKit
 
-class CategoryTitle: UITableViewHeaderFooterView {
+class CategoryHeaderView: UITableViewHeaderFooterView {
     
-    static let reuseIdentifier: String = .init(describing: CategoryTitle.self)
+    static let reuseIdentifier: String = .init(describing: CategoryHeaderView.self)
     
     //MARK: - UI Component
     
@@ -36,13 +36,10 @@ class CategoryTitle: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func bind(resumeCategory: ResumeCategory) {
-        titleLabel.text = resumeCategory.title
-    }
 }
 
 // MARK: - Private Functions
-private extension CategoryTitle {
+private extension CategoryHeaderView {
     
     func configureSubviews() {
         
