@@ -9,6 +9,7 @@ import SnapKit
 import Then
 import UIKit
 
+/// deprecated
 final class UserInfoItemInputView: UIStackView {
     
     lazy var iconButton: UIButton = .init().then {
