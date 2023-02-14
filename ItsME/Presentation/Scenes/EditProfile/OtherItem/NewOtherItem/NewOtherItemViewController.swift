@@ -58,6 +58,7 @@ private extension NewOtherItemViewController {
     func configureNavigationBar() {
         self.navigationItem.title = "새 항목"
         self.navigationItem.rightBarButtonItem = completeButton
+        self.navigationItem.rightBarButtonItem?.style = .done
     }
     
     func saveUserInfoItem() {

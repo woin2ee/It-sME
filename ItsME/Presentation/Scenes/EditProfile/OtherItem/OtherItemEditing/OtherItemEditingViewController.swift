@@ -65,6 +65,7 @@ private extension OtherItemEditingViewController {
     func configureNavigationBar() {
         self.navigationItem.title = "항목 편집"
         self.navigationItem.rightBarButtonItem = completeButton
+        self.navigationItem.rightBarButtonItem?.style = .done
     }
     
     func updateUserInfoItem() {
