@@ -132,41 +132,33 @@ private extension EditProfileViewController {
             viewDidLoad: .just(())
         )
         let output = viewModel.transform(input: input)
-        
-        output.viewDidLoad
-            .drive()
-            .disposed(by: disposeBag)
-        
-        output.userName
-            .drive(nameTextField.rx.text)
-            .disposed(by: disposeBag)
-        
-        output.userInfoItems
-            .drive(with: self, onNext: { owner, userInfoItems in
-                owner.totalUserInfoItemStackView.bind(userInfoItems: userInfoItems)
-                
-                zip(owner.totalUserInfoItemStackView.arrangedSubviews, userInfoItems)
-                    .forEach { (subview, userInfoItem) in
-                        let action = owner.decideTransitionAction(by: userInfoItem)
-                        let tapGestureRecognizer: UITapGestureRecognizer = .init(target: owner, action: action)
-                        subview.addGestureRecognizer(tapGestureRecognizer)
-                    }
-            })
-            .disposed(by: disposeBag)
-        
-        output.educationItems
-            .drive(
-                educationTableView.rx.items(cellIdentifier: EducationCell.reuseIdentifier, cellType: EducationCell.self)
-            ) { (index, educationItem, cell) in
-                cell.bind(educationItem: educationItem)
-            }
-            .disposed(by: disposeBag)
-        
-        output.tappedEditingCompleteButton
-            .emit(with: self, onNext: { owner, userInfo in
-                owner.navigationController?.popViewController(animated: true)
-            })
-            .disposed(by: disposeBag)
+        [
+            output.viewDidLoad
+                .drive(),
+            output.userName
+                .drive(nameTextField.rx.text),
+            output.userInfoItems
+                .drive(with: self, onNext: { owner, userInfoItems in
+                    owner.totalUserInfoItemStackView.bind(userInfoItems: userInfoItems)
+                    zip(owner.totalUserInfoItemStackView.arrangedSubviews, userInfoItems)
+                        .forEach { (subview, userInfoItem) in
+                            let action = owner.decideTransitionAction(by: userInfoItem)
+                            let tapGestureRecognizer: UITapGestureRecognizer = .init(target: owner, action: action)
+                            subview.addGestureRecognizer(tapGestureRecognizer)
+                        }
+                }),
+            output.educationItems
+                .drive(
+                    educationTableView.rx.items(cellIdentifier: EducationCell.reuseIdentifier, cellType: EducationCell.self)
+                ) { (index, educationItem, cell) in
+                    cell.bind(educationItem: educationItem)
+                },
+            output.tappedEditingCompleteButton
+                .emit(with: self, onNext: { owner, userInfo in
+                    owner.navigationController?.popViewController(animated: true)
+                }),
+        ]
+            .forEach { $0.disposed(by: disposeBag) }
     }
 }
 
