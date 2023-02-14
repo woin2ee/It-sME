@@ -11,8 +11,6 @@ import UIKit
 
 final class EducationCell: UITableViewCell {
 
-    static let reuseIdentifier: String = .init(describing: EducationCell.self)
-    
     // MARK: - UI Components
     
     private lazy var periodLabel: UILabel = {
