@@ -14,6 +14,7 @@ final class EditProfileViewModel: ViewModelType {
     struct Input {
         let tapEditingCompleteButton: Signal<Void>
         let userName: Driver<String>
+        let viewDidLoad: Driver<Void>
     }
     
     struct Output {
@@ -21,6 +22,7 @@ final class EditProfileViewModel: ViewModelType {
         let userInfoItems: Driver<[UserInfoItem]>
         let educationItems: Driver<[EducationItem]>
         let tappedEditingCompleteButton: Signal<UserInfo>
+        let viewDidLoad: Driver<Void>
     }
     
     private let userRepository: UserRepository = .init()
@@ -46,6 +48,17 @@ final class EditProfileViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let userInfoDriver = userInfoRelay.asDriver()
         
+        let viewDidLoad = input.viewDidLoad
+            .filter { self.userInfoRelay.value == .empty }
+            .flatMapLatest { _ -> Driver<Void> in
+                self.userRepository.getUserInfo(byUID: "testUser")
+                    .do(onNext: { userInfo in
+                        self.userInfoRelay.accept(userInfo)
+                    })
+                    .mapToVoid()
+                    .asDriverOnErrorJustComplete()
+            }
+        
         let userName = Driver.merge(input.userName.skip(1),
                                     userInfoDriver.map { $0.name })
             .do(onNext: { userName in
@@ -64,7 +77,8 @@ final class EditProfileViewModel: ViewModelType {
             userName: userName,
             userInfoItems: userInfoItems,
             educationItems: educationItems,
-            tappedEditingCompleteButton: tappedEditingCompleteButton
+            tappedEditingCompleteButton: tappedEditingCompleteButton,
+            viewDidLoad: viewDidLoad
         )
     }
 }
