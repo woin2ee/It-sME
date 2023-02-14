@@ -15,7 +15,7 @@ final class IconInputCell: UITableViewCell {
         $0.text = "아이콘"
     }
     
-    private lazy var iconLabel: UILabel = .init().then {
+    lazy var iconLabel: UILabel = .init().then {
         $0.text = UserInfoItemIcon.default.toEmoji
     }
     

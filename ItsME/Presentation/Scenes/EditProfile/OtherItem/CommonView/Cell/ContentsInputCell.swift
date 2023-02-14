@@ -15,7 +15,7 @@ final class ContentsInputCell: UITableViewCell {
         $0.text = "URL"
     }
     
-    private lazy var contentsTextField: UITextField = .init().then {
+    lazy var contentsTextField: UITextField = .init().then {
         $0.font = .systemFont(ofSize: 16.0)
         $0.placeholder = "http://example.com"
         $0.autocorrectionType = .no

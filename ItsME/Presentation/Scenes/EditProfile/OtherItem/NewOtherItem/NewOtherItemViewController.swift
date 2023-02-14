@@ -19,15 +19,7 @@ final class NewOtherItemViewController: UIViewController {
         $0.primaryAction = .init(title: "추가", handler: { [weak self] _ in
             guard let self = self else { return }
             self.navigationController?.popViewController(animated: true)
-            
-//            let emojiName = self.userInfoItemInputView.iconButton.titleLabel?.text ?? UserInfoItemIcon.default.toEmoji
-//            let icon: UserInfoItemIcon = .init(rawValue: emojiName) ?? .default
-//            let contents = self.userInfoItemInputView.contentsTextField.text!
-//            let newItem: UserInfoItem = .init(
-//                icon: icon,
-//                contents: contents
-//            )
-//            self.viewModel.appendUserInfoItem(newItem)
+            self.saveUserInfoItem()
         })
     }
     
@@ -66,5 +58,17 @@ private extension NewOtherItemViewController {
     func configureNavigationBar() {
         self.navigationItem.title = "새 항목"
         self.navigationItem.rightBarButtonItem = completeButton
+    }
+    
+    func saveUserInfoItem() {
+        let emojiName = (userInfoItemInputTableView.inputCells[0] as? IconInputCell)?.iconLabel.text ?? UserInfoItemIcon.default.toEmoji
+        let icon: UserInfoItemIcon = .init(rawValue: emojiName) ?? .default
+        let contents = (userInfoItemInputTableView.inputCells[1] as? ContentsInputCell)?.contentsTextField.text ?? ""
+
+        let newItem: UserInfoItem = .init(
+            icon: icon,
+            contents: contents
+        )
+        self.viewModel.appendUserInfoItem(newItem)
     }
 }
