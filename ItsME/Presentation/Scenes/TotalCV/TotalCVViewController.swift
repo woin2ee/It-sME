@@ -35,7 +35,7 @@ class TotalCVViewController: UIViewController {
     
     private lazy var educationHeaderLabel: UILabel = .init().then {
         $0.text = "학력"
-        $0.font = .boldSystemFont(ofSize: 26)
+        $0.font = .boldSystemFont(ofSize: 30)
         $0.textColor = .systemBlue
     }
     
@@ -45,6 +45,7 @@ class TotalCVViewController: UIViewController {
         $0.isScrollEnabled = false
         $0.separatorInset = .zero
         $0.isUserInteractionEnabled = false
+        $0.sectionHeaderHeight = 0
         let cellType = EducationCell.self
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
     }
@@ -58,19 +59,17 @@ class TotalCVViewController: UIViewController {
         $0.isUserInteractionEnabled = false
         let cellType = CategoryCell.self
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
+        let sectionType = CategoryHeaderView.self
+        $0.register(sectionType, forHeaderFooterViewReuseIdentifier: sectionType.reuseIdentifier)
+        $0.sectionHeaderHeight = 45
     }
     
     private lazy var coverLetterLabel: UILabel = .init().then {
         $0.text = "자기소개서"
-        $0.font = .boldSystemFont(ofSize: 26)
+        $0.font = .boldSystemFont(ofSize: 30)
         $0.textColor = .systemBlue
     }
-    
-    let label = UILabel().then {
-        $0.textAlignment = .center
-        $0.textColor = .systemBlue
-        $0.text = "Hello, World!"
-    }
+
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -94,9 +93,9 @@ class TotalCVViewController: UIViewController {
     
     func configureNavigationBar() {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.largeTitleDisplayMode = .always
-        UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).adjustsFontSizeToFitWidth = true
+        //FIXME: - 화면을 끝까지 내렸을 때 자동으로 Large title로 변경되는 오류를 해결해줘야 함
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//        UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).adjustsFontSizeToFitWidth = true
         
     }
 }
@@ -142,11 +141,6 @@ private extension TotalCVViewController {
     var educationBinding: Binder<[EducationItem]> {
         return .init(self) { viewController, education in
             
-        }
-    }
-    
-    var resumeCategoryBinding: Binder<[ResumeCategory]> {
-        return .init(self) { viewController, resumeCategory in
         }
     }
     
@@ -212,14 +206,9 @@ private extension TotalCVViewController {
         coverLetterLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
             make.top.equalTo(categoryTableView.snp.bottom).offset(30)
-        }
-        
-        self.contentView.addSubview(label)
-        label.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(totalUserInfoItemStackView.snp.bottom).offset(1200)
             make.bottom.equalToSuperview()
         }
+        
     }
 }
 
@@ -234,12 +223,25 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
         return viewModel.resumeCategory.count
     }
     
+    func tableView(_ tableView: UITableView,
+                   viewForHeaderInSection section: Int) -> UIView? {
+        
+        guard let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: CategoryHeaderView.reuseIdentifier) as? CategoryHeaderView else {
+            return UIView()
+        }
+        
+        view.titleLabel.text = viewModel.resumeCategory[section].title
+        
+        return view
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let resumeCategory = viewModel.resumeCategory
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as! CategoryCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as? CategoryCell else {
+            return UITableViewCell()
+        }
         
         cell.bind(resumeItem: resumeCategory[indexPath.section].items[indexPath.row])
         
