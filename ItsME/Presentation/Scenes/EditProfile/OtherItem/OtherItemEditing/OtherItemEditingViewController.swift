@@ -80,7 +80,7 @@ private extension OtherItemEditingViewController {
     }
     
     func configureNavigationBar() {
-        self.navigationItem.title = "항목 수정"
+        self.navigationItem.title = "항목 편집"
         self.navigationItem.rightBarButtonItem = completeButton
     }
 }
