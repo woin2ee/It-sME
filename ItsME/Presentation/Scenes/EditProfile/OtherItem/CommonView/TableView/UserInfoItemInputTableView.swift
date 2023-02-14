@@ -11,10 +11,15 @@ import UIKit
 
 final class UserInfoItemInputTableView: IntrinsicHeightTableView {
     
-    lazy var inputCells: [UITableViewCell] = [
-        IconInputCell.init(style: .default, reuseIdentifier: IconInputCell.reuseIdentifier),
-        ContentsInputCell.init(style: .default, reuseIdentifier: ContentsInputCell.reuseIdentifier),
-    ]
+    lazy var iconInputCell: IconInputCell = .init(style: .default, reuseIdentifier: IconInputCell.reuseIdentifier)
+    lazy var contentsInputCell: ContentsInputCell = .init(style: .default, reuseIdentifier: ContentsInputCell.reuseIdentifier)
+    
+    var inputCells: [UITableViewCell] {
+        [
+            iconInputCell,
+            contentsInputCell,
+        ]
+    }
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)

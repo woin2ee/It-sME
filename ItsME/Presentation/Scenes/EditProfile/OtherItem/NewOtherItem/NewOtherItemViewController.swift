@@ -61,9 +61,9 @@ private extension NewOtherItemViewController {
     }
     
     func saveUserInfoItem() {
-        let emojiName = (userInfoItemInputTableView.inputCells[0] as? IconInputCell)?.iconLabel.text ?? UserInfoItemIcon.default.toEmoji
-        let icon: UserInfoItemIcon = .init(rawValue: emojiName) ?? .default
-        let contents = (userInfoItemInputTableView.inputCells[1] as? ContentsInputCell)?.contentsTextField.text ?? ""
+        let emoji = userInfoItemInputTableView.iconInputCell.iconLabel.text ?? UserInfoItemIcon.default.toEmoji
+        let icon: UserInfoItemIcon = .init(rawValue: emoji) ?? .default
+        let contents = userInfoItemInputTableView.contentsInputCell.contentsTextField.text ?? ""
 
         let newItem: UserInfoItem = .init(
             icon: icon,
