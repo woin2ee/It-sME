@@ -21,6 +21,13 @@ final class UserInfoItemInputTableView: IntrinsicHeightTableView {
         ]
     }
     
+    var currentInputUserInfoItem: UserInfoItem {
+        let emoji = iconInputCell.iconLabel.text ?? UserInfoItemIcon.default.toEmoji
+        let icon: UserInfoItemIcon = .init(rawValue: emoji) ?? .default
+        let contents = contentsInputCell.contentsTextField.text ?? ""
+        return .init(icon: icon, contents: contents)
+    }
+    
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         self.register(IconInputCell.self, forCellReuseIdentifier: IconInputCell.reuseIdentifier)
