@@ -57,6 +57,9 @@ final class EditProfileViewController: UIViewController {
     
     private lazy var totalUserInfoItemStackView: UserInfoItemStackView = .init().then {
         $0.hasSeparator = true
+        $0.backgroundColor = .systemBackground
+        $0.layer.masksToBounds = true
+        $0.layer.cornerRadius = 12.0
     }
     
     private lazy var userInfoItemAddButton: ItemAddButton = .init().then {
@@ -199,7 +202,7 @@ private extension EditProfileViewController {
         self.contentView.addSubview(totalUserInfoItemStackView)
         totalUserInfoItemStackView.snp.makeConstraints { make in
             make.top.equalTo(nameTextField.snp.bottom).offset(25)
-            make.left.right.equalToSuperview().inset(30)
+            make.left.right.equalToSuperview().inset(16)
         }
         
         self.contentView.addSubview(userInfoItemAddButton)
