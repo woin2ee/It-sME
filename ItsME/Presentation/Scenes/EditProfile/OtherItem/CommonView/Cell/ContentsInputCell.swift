@@ -22,6 +22,7 @@ final class ContentsInputCell: UITableViewCell {
         $0.keyboardType = .URL
         $0.autocapitalizationType = .none
         $0.clearButtonMode = .whileEditing
+        $0.delegate = self
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -51,5 +52,14 @@ final class ContentsInputCell: UITableViewCell {
             make.top.trailing.bottom.equalToSuperview()
             make.leading.equalTo(titleLabel.snp.trailing).offset(20)
         }
+    }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension ContentsInputCell: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return textField.resignFirstResponder()
     }
 }
