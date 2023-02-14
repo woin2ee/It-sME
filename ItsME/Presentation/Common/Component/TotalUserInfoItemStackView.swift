@@ -24,10 +24,12 @@ final class TotalUserInfoItemStackView: UIStackView {
         self.backgroundColor = .clear
         
         self.axis = .vertical
-        self.spacing = 8
+        let spacing: CGFloat = 8.0
+        self.spacing = spacing
         self.alignment = .fill
         self.distribution = .equalSpacing
-        
+        self.directionalLayoutMargins = .init(top: spacing / 2, leading: spacing / 2, bottom: spacing / 2, trailing: spacing / 2)
+        self.isLayoutMarginsRelativeArrangement = true
         
         bind(userInfoItems: [])
     }
