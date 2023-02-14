@@ -19,14 +19,14 @@ final class EditProfileViewController: UIViewController {
     // MARK: - UI Components
     
     private lazy var containerScrollView: UIScrollView = .init().then {
-        $0.backgroundColor = .systemBackground
+        $0.backgroundColor = .clear
         $0.showsVerticalScrollIndicator = true
         $0.showsHorizontalScrollIndicator = false
         $0.delegate = self
     }
     
     private lazy var contentView: UIView = .init().then {
-        $0.backgroundColor = .systemBackground
+        $0.backgroundColor = .clear
     }
     
     private lazy var profileImageView: UIImageView = .init(image: .init(named: "테스트이미지")).then {
@@ -102,7 +102,7 @@ final class EditProfileViewController: UIViewController {
         super.viewDidLoad()
         bindViewModel()
         configureSubviews()
-        self.view.backgroundColor = .systemBackground
+        self.view.backgroundColor = .secondarySystemBackground
     }
     
     override func viewWillAppear(_ animated: Bool) {
