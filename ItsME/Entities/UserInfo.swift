@@ -8,14 +8,14 @@
 import Foundation
 
 final class UserInfo: Decodable {
-    let name: String
+    var name: String
     let profileImageURL: String
-    let birthday: UserInfoItem
+    var birthday: UserInfoItem
     let address: UserInfoItem
     let phoneNumber: UserInfoItem
     let email: UserInfoItem
-    let otherItems: [UserInfoItem]
-    let educationItems: [EducationItem]
+    var otherItems: [UserInfoItem]
+    var educationItems: [EducationItem]
 
     var defaultItems: [UserInfoItem] {
         [birthday, address, phoneNumber, email]

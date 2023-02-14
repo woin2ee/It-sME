@@ -34,6 +34,7 @@ final class ProfileInfoComponent: UIStackView {
         return label
     }()
     
+    /// 안쓰임
     private lazy var iconTextField: UITextField = {
         let textField: UITextField = .init()
         textField.text = userInfoItem.icon.toEmoji
@@ -42,6 +43,7 @@ final class ProfileInfoComponent: UIStackView {
         return textField
     }()
     
+    /// 안쓰임
     private lazy var contentsTextField: UITextField = {
         let textField: UITextField = .init()
         textField.text = userInfoItem.contents

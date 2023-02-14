@@ -22,6 +22,7 @@ final class EditProfileViewController: UIViewController {
         $0.backgroundColor = .systemBackground
         $0.showsVerticalScrollIndicator = true
         $0.showsHorizontalScrollIndicator = false
+        $0.delegate = self
     }
     
     private lazy var contentView: UIView = .init().then {
@@ -54,12 +55,13 @@ final class EditProfileViewController: UIViewController {
         $0.autocorrectionType = .no
     }
     
-    private lazy var totalUserInfoItemStackView: UserInfoItemStackView = .init()
+    private lazy var totalUserInfoItemStackView: UserInfoItemStackView = .init().then {
+        $0.hasSeparator = true
+    }
     
     private lazy var userInfoItemAddButton: ItemAddButton = .init().then {
         let action: UIAction = .init(handler: { [weak self] _ in
-            let otherItemEditingVC: OtherItemEditingViewController = .init()
-            self?.navigationController?.pushViewController(otherItemEditingVC, animated: true)
+            self?.presentNewOtherItemView()
         })
         $0.addAction(action, for: .touchUpInside)
     }
@@ -108,6 +110,11 @@ final class EditProfileViewController: UIViewController {
         configureNavigationBar()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        nameTextField.resignFirstResponder()
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         profileImageView.circular()
@@ -120,9 +127,8 @@ private extension EditProfileViewController {
     
     func bindViewModel() {
         let input = EditProfileViewModel.Input.init(
-            tapEditingCompleteButton: editingCompleteButton.rx.tap.asSignal()
-                .withUnretained(self)
-                .map { (owner, _) in owner.makeCurrentUserInfo() }
+            tapEditingCompleteButton: editingCompleteButton.rx.tap.asSignal(),
+            userName: nameTextField.rx.text.orEmpty.asDriver()
         )
         let output = viewModel.transform(input: input)
         
@@ -133,6 +139,13 @@ private extension EditProfileViewController {
         output.userInfoItems
             .drive(with: self, onNext: { owner, userInfoItems in
                 owner.totalUserInfoItemStackView.bind(userInfoItems: userInfoItems)
+                
+                zip(owner.totalUserInfoItemStackView.arrangedSubviews, userInfoItems)
+                    .forEach { (subview, userInfoItem) in
+                        let action = owner.decideTransitionAction(by: userInfoItem)
+                        let tapGestureRecognizer: UITapGestureRecognizer = .init(target: owner, action: action)
+                        subview.addGestureRecognizer(tapGestureRecognizer)
+                    }
             })
             .disposed(by: disposeBag)
         
@@ -149,20 +162,6 @@ private extension EditProfileViewController {
                 owner.navigationController?.popViewController(animated: true)
             })
             .disposed(by: disposeBag)
-    }
-    
-    func makeCurrentUserInfo() -> UserInfo {
-        // FIXME: 현재 수정된 유저 정보로 생성해야함
-        return .init(
-            name: "A",
-            profileImageURL: "B",
-            birthday: .init(icon: .default, contents: "C"),
-            address: .init(icon: .default, contents: "C"),
-            phoneNumber: .init(icon: .default, contents: "C"),
-            email: .init(icon: .default, contents: "C"),
-            otherItems: [.init(icon: .default, contents: "C")],
-            educationItems: [.init(period: "1", title: "2", description: "3")]
-        )
     }
 }
 
@@ -242,6 +241,58 @@ private extension EditProfileViewController {
         self.navigationController?.navigationBar.prefersLargeTitles = false
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
+    
+    @objc func presentDatePickerView() {
+        let viewController: BirthdayEditingViewController = .init(viewModel: viewModel)
+        viewController.modalPresentationStyle = .overCurrentContext
+        self.navigationController?.present(viewController, animated: false)
+    }
+    
+    @objc func presentAddressEditingView() {
+        let viewController: AddressEditingViewController
+        print(#function)
+    }
+    
+    @objc func presentPhoneNumberEditingView() {
+        let viewController: PhoneNumberEditingViewController
+        print(#function)
+    }
+    
+    @objc func presentEmailEditingView() {
+        let viewController: EmailEditingViewController
+        print(#function)
+    }
+    
+    @objc func presentOtherItemEditingView(_ sender: UITapGestureRecognizer) {
+        guard let userInfoItem = (sender.view as? ProfileInfoComponent)?.userInfoItem,
+              let indexOfItem = viewModel.currentOtherItems.firstIndex(where: { $0 === userInfoItem })
+        else {
+            return
+        }
+        
+        let viewController: OtherItemEditingViewController = .init(viewModel: viewModel, indexOfItem: indexOfItem)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func decideTransitionAction(by userInfoItem: UserInfoItem) -> Selector {
+        switch userInfoItem.icon {
+        case .cake:
+            return #selector(presentDatePickerView)
+        case .house:
+            return #selector(presentAddressEditingView)
+        case .phone:
+            return #selector(presentPhoneNumberEditingView)
+        case .letter:
+            return #selector(presentEmailEditingView)
+        default:
+            return #selector(presentOtherItemEditingView)
+        }
+    }
+    
+    func presentNewOtherItemView() {
+        let viewController: NewOtherItemViewController = .init(viewModel: viewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
 // MARK: - UITableViewDelegate
@@ -277,6 +328,15 @@ extension EditProfileViewController: UIImagePickerControllerDelegate {
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension EditProfileViewController: UIScrollViewDelegate {
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        nameTextField.resignFirstResponder()
     }
 }
 

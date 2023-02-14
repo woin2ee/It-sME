@@ -7,11 +7,13 @@
 
 import RxSwift
 import RxCocoa
+import Then
 
 final class EditProfileViewModel: ViewModelType {
     
     struct Input {
-        let tapEditingCompleteButton: Signal<UserInfo>
+        let tapEditingCompleteButton: Signal<Void>
+        let userName: Driver<String>
     }
     
     struct Output {
@@ -25,6 +27,18 @@ final class EditProfileViewModel: ViewModelType {
     
     private let userInfoRelay: BehaviorRelay<UserInfo>
     
+    var currentBirthday: Date {
+        let birthday = userInfoRelay.value.birthday.contents
+        let dateFormatter = DateFormatter.init().then {
+            $0.dateFormat = "yyyy.MM.dd."
+        }
+        return dateFormatter.date(from: birthday) ?? .now
+    }
+    
+    var currentOtherItems: [UserInfoItem] {
+        userInfoRelay.value.otherItems
+    }
+    
     init(userInfo: UserInfo) {
         self.userInfoRelay = .init(value: userInfo)
     }
@@ -32,10 +46,15 @@ final class EditProfileViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let userInfoDriver = userInfoRelay.asDriver()
         
-        let userName = userInfoDriver.map { $0.name }
+        let userName = Driver.merge(input.userName.skip(1),
+                                    userInfoDriver.map { $0.name })
+            .do(onNext: { userName in
+                self.userInfoRelay.value.name = userName
+            })
         let userInfoItems = userInfoDriver.map { $0.defaultItems + $0.otherItems }
         let educationItems = userInfoDriver.map { $0.educationItems }
         let tappedEditingCompleteButton = input.tapEditingCompleteButton
+            .withLatestFrom(userInfoDriver)
             .do(onNext: { userInfo in
                 // TODO: 유저 정보 저장
                 print(userInfo)
@@ -56,19 +75,27 @@ extension EditProfileViewModel {
     
     func deleteEducationItem(at indexPath: IndexPath) {
         let userInfo = userInfoRelay.value
-        var educationItems = userInfo.educationItems
-        educationItems.remove(at: indexPath.row)
-        
-        let newUserInfo: UserInfo = .init(
-            name: userInfo.name,
-            profileImageURL: userInfo.profileImageURL,
-            birthday: userInfo.birthday,
-            address: userInfo.address,
-            phoneNumber: userInfo.phoneNumber,
-            email: userInfo.email,
-            otherItems: userInfo.otherItems,
-            educationItems: educationItems
-        )
-        userInfoRelay.accept(newUserInfo)
+        userInfo.educationItems.remove(at: indexPath.row)
+        userInfoRelay.accept(userInfo)
+    }
+    
+    func appendUserInfoItem(_ userInfoItem: UserInfoItem) {
+        let userInfo = userInfoRelay.value
+        userInfo.otherItems.append(userInfoItem)
+        userInfoRelay.accept(userInfo)
+    }
+    
+    func updateBirthday(_ userInfoItem: UserInfoItem) {
+        let userInfo = userInfoRelay.value
+        userInfo.birthday = userInfoItem
+        userInfoRelay.accept(userInfo)
+    }
+    
+    func updateUserInfoItem(_ userInfoItem: UserInfoItem, at index: IndexPath.Index) {
+        let userInfo = userInfoRelay.value
+        if userInfo.otherItems.indices ~= index {
+            userInfo.otherItems[index] = userInfoItem
+            userInfoRelay.accept(userInfo)
+        }
     }
 }
