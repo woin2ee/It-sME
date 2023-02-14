@@ -15,6 +15,7 @@ class TotalCVViewController: UIViewController {
     private let disposeBag: DisposeBag = .init()
     
     var viewModel: TotalCVViewModel!
+    let headerFont: UIFont = .systemFont(ofSize: 30, weight: .bold)
     
     private var fullScrollView: UIScrollView = .init().then {
         $0.backgroundColor = .systemBackground
@@ -35,7 +36,7 @@ class TotalCVViewController: UIViewController {
     
     private lazy var educationHeaderLabel: UILabel = .init().then {
         $0.text = "학력"
-        $0.font = .boldSystemFont(ofSize: 30)
+        $0.font = headerFont
         $0.textColor = .systemBlue
     }
     
@@ -66,10 +67,10 @@ class TotalCVViewController: UIViewController {
     
     private lazy var coverLetterLabel: UILabel = .init().then {
         $0.text = "자기소개서"
-        $0.font = .boldSystemFont(ofSize: 30)
+        $0.font = headerFont
         $0.textColor = .systemBlue
     }
-
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -94,8 +95,8 @@ class TotalCVViewController: UIViewController {
     func configureNavigationBar() {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         //FIXME: - 화면을 끝까지 내렸을 때 자동으로 Large title로 변경되는 오류를 해결해줘야 함
-//        navigationController?.navigationBar.prefersLargeTitles = true
-//        UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).adjustsFontSizeToFitWidth = true
+        //        navigationController?.navigationBar.prefersLargeTitles = true
+        //        UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).adjustsFontSizeToFitWidth = true
         
     }
 }
@@ -225,12 +226,9 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView,
                    viewForHeaderInSection section: Int) -> UIView? {
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: CategoryHeaderView.reuseIdentifier) as? CategoryHeaderView
         
-        guard let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: CategoryHeaderView.reuseIdentifier) as? CategoryHeaderView else {
-            return UIView()
-        }
-        
-        view.titleLabel.text = viewModel.resumeCategory[section].title
+        view?.titleLabel.text = viewModel.resumeCategory[section].title
         
         return view
     }
