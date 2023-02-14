@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class IntrinsicHeightTableView: UITableView {
+class IntrinsicHeightTableView: UITableView {
     
     override var intrinsicContentSize: CGSize {
         return .init(
