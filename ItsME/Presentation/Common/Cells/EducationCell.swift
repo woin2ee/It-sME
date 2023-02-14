@@ -67,20 +67,26 @@ private extension EducationCell {
         self.contentView.addSubview(titleLabel)
         self.contentView.addSubview(descriptionLabel)
         
+        let verticalInsetValue = 4
+        let horizontalInsetValue = 12
+        
         periodLabel.snp.makeConstraints { make in
-            make.top.left.bottom.equalToSuperview()
+            make.top.bottom.equalToSuperview().inset(verticalInsetValue)
+            make.leading.equalToSuperview().inset(horizontalInsetValue)
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.right.equalToSuperview()
-            make.left.equalTo(periodLabel.snp.right).offset(12)
+            make.leading.trailing.equalTo(descriptionLabel)
+            make.top.equalToSuperview().inset(verticalInsetValue)
+            make.trailing.equalToSuperview().inset(horizontalInsetValue)
             make.bottom.equalTo(descriptionLabel.snp.top)
-            make.width.equalTo(descriptionLabel.snp.width)
-            make.width.equalTo(periodLabel.snp.width).multipliedBy(2.5)
+            make.leading.equalTo(periodLabel.snp.trailing).offset(14)
+            make.width.equalTo(periodLabel).multipliedBy(2.3)
         }
         
         descriptionLabel.snp.makeConstraints { make in
-            make.right.bottom.equalToSuperview()
+            make.bottom.equalToSuperview().inset(verticalInsetValue)
+            make.trailing.equalToSuperview().inset(horizontalInsetValue)
         }
     }
 }

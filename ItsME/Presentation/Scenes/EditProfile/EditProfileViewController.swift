@@ -75,11 +75,10 @@ final class EditProfileViewController: UIViewController {
         $0.textColor = .systemBlue
     }
     
-    private lazy var educationTableView: IntrinsicHeightTableView = .init().then {
+    private lazy var educationTableView: IntrinsicHeightTableView = .init(frame: .zero, style: .insetGrouped).then {
         $0.delegate = self
-        $0.backgroundColor = .systemBackground
+        $0.backgroundColor = .clear
         $0.isScrollEnabled = false
-        $0.separatorInset = .zero
         let cellType = EducationCell.self
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
     }
@@ -202,7 +201,7 @@ private extension EditProfileViewController {
         self.contentView.addSubview(totalUserInfoItemStackView)
         totalUserInfoItemStackView.snp.makeConstraints { make in
             make.top.equalTo(nameTextField.snp.bottom).offset(25)
-            make.left.right.equalToSuperview().inset(16)
+            make.left.right.equalToSuperview().inset(20)
         }
         
         self.contentView.addSubview(userInfoItemAddButton)
@@ -215,19 +214,19 @@ private extension EditProfileViewController {
         
         self.contentView.addSubview(educationHeaderLabel)
         educationHeaderLabel.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(20)
+            make.left.right.equalToSuperview().inset(26)
             make.top.equalTo(userInfoItemAddButton.snp.bottom).offset(20)
         }
         
         self.contentView.addSubview(educationTableView)
         educationTableView.snp.makeConstraints { make in
-            make.top.equalTo(educationHeaderLabel.snp.bottom).offset(10)
-            make.left.right.equalToSuperview().inset(24)
+            make.top.equalTo(educationHeaderLabel.snp.bottom).offset(-26)
+            make.left.right.equalToSuperview()
         }
         
         self.contentView.addSubview(educationItemAddButton)
         educationItemAddButton.snp.makeConstraints { make in
-            make.top.equalTo(educationTableView.snp.bottom).offset(10)
+            make.top.equalTo(educationTableView.snp.bottom).offset(-25)
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-20)
             make.leading.trailing.equalToSuperview().inset(30)
