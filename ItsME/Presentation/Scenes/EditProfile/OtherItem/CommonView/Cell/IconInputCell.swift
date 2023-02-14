@@ -28,6 +28,10 @@ final class IconInputCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(false, animated: false)
+    }
+    
     private func configureSubviews() {
         self.contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
