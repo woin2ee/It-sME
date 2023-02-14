@@ -38,6 +38,11 @@ final class UserInfoItemInputTableView: IntrinsicHeightTableView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func bind(userInfoItem: UserInfoItem) {
+        iconInputCell.iconLabel.text = userInfoItem.icon.toEmoji
+        contentsInputCell.contentsTextField.text = userInfoItem.contents
+    }
 }
 
 // MARK: - UITableViewDataSource
