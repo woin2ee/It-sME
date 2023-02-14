@@ -11,6 +11,11 @@ import UIKit
 
 final class UserInfoItemInputTableView: IntrinsicHeightTableView {
     
+    lazy var inputCells: [UITableViewCell] = [
+        IconInputCell.init(style: .default, reuseIdentifier: IconInputCell.reuseIdentifier),
+        ContentsInputCell.init(style: .default, reuseIdentifier: ContentsInputCell.reuseIdentifier),
+    ]
+    
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         self.register(IconInputCell.self, forCellReuseIdentifier: IconInputCell.reuseIdentifier)
@@ -28,18 +33,10 @@ final class UserInfoItemInputTableView: IntrinsicHeightTableView {
 extension UserInfoItemInputTableView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return inputCells.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            let cell: IconInputCell = .init(style: .default, reuseIdentifier: IconInputCell.reuseIdentifier)
-            
-            return cell
-        } else {
-            let cell: ContentsInputCell = .init(style: .default, reuseIdentifier: ContentsInputCell.reuseIdentifier)
-            
-            return cell
-        }
+        return inputCells[indexPath.row]
     }
 }
