@@ -172,7 +172,7 @@ private extension HomeViewController {
 private extension HomeViewController {
     
     func configureAppearance() {
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .systemBackground
     }
     
     func configureSubviews() {
