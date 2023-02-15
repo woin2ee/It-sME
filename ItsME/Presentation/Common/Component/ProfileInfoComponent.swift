@@ -26,7 +26,7 @@ final class ProfileInfoComponent: UIStackView {
     private lazy var contents: UILabel = {
         var label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        label.textColor = .black
+        label.textColor = .label
         label.textAlignment = .left
         label.text = userInfoItem.contents
         label.numberOfLines = 0
