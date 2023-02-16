@@ -69,7 +69,7 @@ private extension OtherItemEditingViewController {
     }
     
     func updateUserInfoItem() {
-        let item = userInfoItemInputTableView.currentInputUserInfoItem
+        let item = userInfoItemInputTableView.currentUserInfoItem
         self.viewModel.updateUserInfoItem(item, at: indexOfItem)
     }
 }

@@ -62,7 +62,7 @@ private extension NewOtherItemViewController {
     }
     
     func saveUserInfoItem() {
-        let newItem = userInfoItemInputTableView.currentInputUserInfoItem
+        let newItem = userInfoItemInputTableView.currentUserInfoItem
         self.viewModel.appendUserInfoItem(newItem)
     }
 }
