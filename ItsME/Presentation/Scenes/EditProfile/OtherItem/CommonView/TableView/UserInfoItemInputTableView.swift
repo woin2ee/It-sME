@@ -28,8 +28,8 @@ final class UserInfoItemInputTableView: IntrinsicHeightTableView {
         return .init(icon: icon, contents: contents)
     }
     
-    override init(frame: CGRect, style: UITableView.Style) {
-        super.init(frame: frame, style: style)
+    init(style: UITableView.Style) {
+        super.init(frame: .zero, style: style)
         self.register(IconInputCell.self, forCellReuseIdentifier: IconInputCell.reuseIdentifier)
         self.register(ContentsInputCell.self, forCellReuseIdentifier: ContentsInputCell.reuseIdentifier)
         self.dataSource = self

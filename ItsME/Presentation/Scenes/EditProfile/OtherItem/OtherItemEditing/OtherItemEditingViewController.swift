@@ -15,7 +15,7 @@ final class OtherItemEditingViewController: UIViewController {
     
     private var indexOfItem: IndexPath.Index
     
-    private lazy var userInfoItemInputTableView: UserInfoItemInputTableView = .init(frame: .zero, style: .insetGrouped)
+    private lazy var userInfoItemInputTableView: UserInfoItemInputTableView = .init(style: .insetGrouped)
         .then {
             let userInfoItem: UserInfoItem = viewModel.currentOtherItems[ifExists: indexOfItem] ?? .empty
             $0.bind(userInfoItem: userInfoItem)
