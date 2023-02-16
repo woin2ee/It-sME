@@ -36,6 +36,7 @@
 		DA018811296D1483002C5CB0 /* OtherItemEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA018810296D1483002C5CB0 /* OtherItemEditingViewController.swift */; };
 		DA0A88692921245000E9AE43 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0A88682921245000E9AE43 /* UserRepository.swift */; };
 		DA26989C298A4709008A5D30 /* DefaultJsonDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA26989B298A4709008A5D30 /* DefaultJsonDecoder.swift */; };
+		DA481D78299E085700C8C734 /* IconInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D77299E085700C8C734 /* IconInputViewModel.swift */; };
 		DA6BCE5E292F04910059E95D /* DatabaseReferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */; };
 		DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */; };
 		DA7201EA29309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */; };
@@ -130,6 +131,7 @@
 		DA018810296D1483002C5CB0 /* OtherItemEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherItemEditingViewController.swift; sourceTree = "<group>"; };
 		DA0A88682921245000E9AE43 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		DA26989B298A4709008A5D30 /* DefaultJsonDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultJsonDecoder.swift; sourceTree = "<group>"; };
+		DA481D77299E085700C8C734 /* IconInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconInputViewModel.swift; sourceTree = "<group>"; };
 		DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseReferenceManager.swift; sourceTree = "<group>"; };
 		DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseReference+Rx.swift"; sourceTree = "<group>"; };
 		DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASAuthorizationControllerDelegateProxy.swift; sourceTree = "<group>"; };
@@ -429,6 +431,7 @@
 			children = (
 				DAAB20C4299B7A1000D5338D /* IconInputCell.swift */,
 				DAAB20C6299B7A5600D5338D /* ContentsInputCell.swift */,
+				DA481D77299E085700C8C734 /* IconInputViewModel.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -839,6 +842,7 @@
 				DAFCFB63294A9CD0006B287A /* EducationItem.swift in Sources */,
 				DA7201F22931F21100A69519 /* ResumeCategory.swift in Sources */,
 				DA018809296D146A002C5CB0 /* BirthdayEditingViewController.swift in Sources */,
+				DA481D78299E085700C8C734 /* IconInputViewModel.swift in Sources */,
 				DAAF1BDC299A11F400728376 /* UserInfoItemInputView.swift in Sources */,
 				DAB06A3D291BA5B400E86163 /* HomeViewModel.swift in Sources */,
 				DA7201F82931F8EB00A69519 /* CoverLetter.swift in Sources */,
