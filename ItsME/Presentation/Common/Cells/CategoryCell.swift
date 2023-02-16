@@ -11,8 +11,6 @@ import UIKit
 
 class CategoryCell: UITableViewCell {
     
-    static let reuseIdentifier: String = .init(describing: CategoryCell.self)
-    
     //MARK: - UI Component
     private lazy var periodLabel = UILabel().then {
         $0.text = "기간"

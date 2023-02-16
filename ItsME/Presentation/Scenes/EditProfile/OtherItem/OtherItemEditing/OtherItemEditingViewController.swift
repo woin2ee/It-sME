@@ -15,26 +15,17 @@ final class OtherItemEditingViewController: UIViewController {
     
     private var indexOfItem: IndexPath.Index
     
-    private lazy var userInfoItemInputView: UserInfoItemInputView = .init().then {
-        $0.contentsTextField.delegate = self
-        let userInfoItem = viewModel.currentOtherItems[ifExists: indexOfItem]
-        $0.iconButton.setTitle(userInfoItem?.icon.toEmoji, for: .normal)
-        $0.contentsTextField.text = userInfoItem?.contents
-    }
+    private lazy var userInfoItemInputTableView: UserInfoItemInputTableView = .init(frame: .zero, style: .insetGrouped)
+        .then {
+            let userInfoItem: UserInfoItem = viewModel.currentOtherItems[ifExists: indexOfItem] ?? .empty
+            $0.bind(userInfoItem: userInfoItem)
+        }
     
     private lazy var completeButton: UIBarButtonItem = .init().then {
         $0.primaryAction = .init(title: "완료", handler: { [weak self] _ in
             guard let self = self else { return }
             self.navigationController?.popViewController(animated: true)
-            
-            let emojiName = self.userInfoItemInputView.iconButton.titleLabel?.text ?? UserInfoItemIcon.default.toEmoji
-            let icon: UserInfoItemIcon = .init(rawValue: emojiName) ?? .default
-            let contents = self.userInfoItemInputView.contentsTextField.text!
-            let item: UserInfoItem = .init(
-                icon: icon,
-                contents: contents
-            )
-            self.viewModel.updateUserInfoItem(item, at: self.indexOfItem)
+            self.updateUserInfoItem()
         })
     }
     
@@ -54,14 +45,9 @@ final class OtherItemEditingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .systemBackground
+        self.view.backgroundColor = .secondarySystemBackground
         configureSubviews()
         configureNavigationBar()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        userInfoItemInputView.contentsTextField.becomeFirstResponder()
     }
 }
 
@@ -70,26 +56,20 @@ final class OtherItemEditingViewController: UIViewController {
 private extension OtherItemEditingViewController {
     
     func configureSubviews() {
-        let safeArea = self.view.safeAreaLayoutGuide
-        
-        self.view.addSubview(userInfoItemInputView)
-        userInfoItemInputView.snp.makeConstraints { make in
-            make.top.equalTo(safeArea).offset(10)
-            make.leading.trailing.equalTo(safeArea).inset(10)
+        self.view.addSubview(userInfoItemInputTableView)
+        userInfoItemInputTableView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
     
     func configureNavigationBar() {
-        self.navigationItem.title = "항목 수정"
+        self.navigationItem.title = "항목 편집"
         self.navigationItem.rightBarButtonItem = completeButton
+        self.navigationItem.rightBarButtonItem?.style = .done
     }
-}
-
-// MARK: - UITextFieldDelegate
-
-extension OtherItemEditingViewController: UITextFieldDelegate {
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+    func updateUserInfoItem() {
+        let item = userInfoItemInputTableView.currentInputUserInfoItem
+        self.viewModel.updateUserInfoItem(item, at: indexOfItem)
     }
 }

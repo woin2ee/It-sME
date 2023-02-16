@@ -19,14 +19,14 @@ final class EditProfileViewController: UIViewController {
     // MARK: - UI Components
     
     private lazy var containerScrollView: UIScrollView = .init().then {
-        $0.backgroundColor = .systemBackground
+        $0.backgroundColor = .clear
         $0.showsVerticalScrollIndicator = true
         $0.showsHorizontalScrollIndicator = false
         $0.delegate = self
     }
     
     private lazy var contentView: UIView = .init().then {
-        $0.backgroundColor = .systemBackground
+        $0.backgroundColor = .clear
     }
     
     private lazy var profileImageView: UIImageView = .init(image: .init(named: "테스트이미지")).then {
@@ -57,6 +57,9 @@ final class EditProfileViewController: UIViewController {
     
     private lazy var totalUserInfoItemStackView: UserInfoItemStackView = .init().then {
         $0.hasSeparator = true
+        $0.backgroundColor = .systemBackground
+        $0.layer.masksToBounds = true
+        $0.layer.cornerRadius = 12.0
     }
     
     private lazy var userInfoItemAddButton: ItemAddButton = .init().then {
@@ -72,11 +75,10 @@ final class EditProfileViewController: UIViewController {
         $0.textColor = .systemBlue
     }
     
-    private lazy var educationTableView: IntrinsicHeightTableView = .init().then {
+    private lazy var educationTableView: IntrinsicHeightTableView = .init(frame: .zero, style: .insetGrouped).then {
         $0.delegate = self
-        $0.backgroundColor = .systemBackground
+        $0.backgroundColor = .clear
         $0.isScrollEnabled = false
-        $0.separatorInset = .zero
         let cellType = EducationCell.self
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
     }
@@ -102,7 +104,7 @@ final class EditProfileViewController: UIViewController {
         super.viewDidLoad()
         bindViewModel()
         configureSubviews()
-        self.view.backgroundColor = .systemBackground
+        self.view.backgroundColor = .secondarySystemBackground
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -199,7 +201,7 @@ private extension EditProfileViewController {
         self.contentView.addSubview(totalUserInfoItemStackView)
         totalUserInfoItemStackView.snp.makeConstraints { make in
             make.top.equalTo(nameTextField.snp.bottom).offset(25)
-            make.left.right.equalToSuperview().inset(30)
+            make.left.right.equalToSuperview().inset(20)
         }
         
         self.contentView.addSubview(userInfoItemAddButton)
@@ -212,19 +214,19 @@ private extension EditProfileViewController {
         
         self.contentView.addSubview(educationHeaderLabel)
         educationHeaderLabel.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(20)
+            make.left.right.equalToSuperview().inset(26)
             make.top.equalTo(userInfoItemAddButton.snp.bottom).offset(20)
         }
         
         self.contentView.addSubview(educationTableView)
         educationTableView.snp.makeConstraints { make in
-            make.top.equalTo(educationHeaderLabel.snp.bottom).offset(10)
-            make.left.right.equalToSuperview().inset(24)
+            make.top.equalTo(educationHeaderLabel.snp.bottom).offset(-26)
+            make.left.right.equalToSuperview()
         }
         
         self.contentView.addSubview(educationItemAddButton)
         educationItemAddButton.snp.makeConstraints { make in
-            make.top.equalTo(educationTableView.snp.bottom).offset(10)
+            make.top.equalTo(educationTableView.snp.bottom).offset(-25)
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-20)
             make.leading.trailing.equalToSuperview().inset(30)
@@ -233,7 +235,7 @@ private extension EditProfileViewController {
     }
     
     func configureNavigationBar() {
-        self.navigationItem.title = "Edit Profile"
+        self.navigationItem.title = "프로필 수정"
         self.navigationItem.rightBarButtonItem = editingCompleteButton
         self.navigationController?.navigationBar.prefersLargeTitles = false
         self.navigationController?.setNavigationBarHidden(false, animated: false)

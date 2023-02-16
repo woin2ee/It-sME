@@ -13,23 +13,13 @@ final class NewOtherItemViewController: UIViewController {
     
     private let viewModel: EditProfileViewModel
     
-    private lazy var userInfoItemInputView: UserInfoItemInputView = .init().then {
-        $0.contentsTextField.delegate = self
-    }
+    private lazy var userInfoItemInputTableView: UserInfoItemInputTableView = .init(frame: .zero, style: .insetGrouped)
     
     private lazy var completeButton: UIBarButtonItem = .init().then {
         $0.primaryAction = .init(title: "추가", handler: { [weak self] _ in
             guard let self = self else { return }
             self.navigationController?.popViewController(animated: true)
-            
-            let emojiName = self.userInfoItemInputView.iconButton.titleLabel?.text ?? UserInfoItemIcon.default.toEmoji
-            let icon: UserInfoItemIcon = .init(rawValue: emojiName) ?? .default
-            let contents = self.userInfoItemInputView.contentsTextField.text!
-            let newItem: UserInfoItem = .init(
-                icon: icon,
-                contents: contents
-            )
-            self.viewModel.appendUserInfoItem(newItem)
+            self.saveUserInfoItem()
         })
     }
     
@@ -37,14 +27,9 @@ final class NewOtherItemViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .systemBackground
+        self.view.backgroundColor = .secondarySystemBackground
         configureSubviews()
         configureNavigationBar()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        userInfoItemInputView.contentsTextField.becomeFirstResponder()
     }
     
     // MARK: - Initializer
@@ -64,26 +49,20 @@ final class NewOtherItemViewController: UIViewController {
 private extension NewOtherItemViewController {
     
     func configureSubviews() {
-        let safeArea = self.view.safeAreaLayoutGuide
-        
-        self.view.addSubview(userInfoItemInputView)
-        userInfoItemInputView.snp.makeConstraints { make in
-            make.top.equalTo(safeArea).offset(10)
-            make.leading.trailing.equalTo(safeArea).inset(10)
+        self.view.addSubview(userInfoItemInputTableView)
+        userInfoItemInputTableView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
     
     func configureNavigationBar() {
         self.navigationItem.title = "새 항목"
         self.navigationItem.rightBarButtonItem = completeButton
+        self.navigationItem.rightBarButtonItem?.style = .done
     }
-}
-
-// MARK: - UITextFieldDelegate
-
-extension NewOtherItemViewController: UITextFieldDelegate {
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+    func saveUserInfoItem() {
+        let newItem = userInfoItemInputTableView.currentInputUserInfoItem
+        self.viewModel.appendUserInfoItem(newItem)
     }
 }
