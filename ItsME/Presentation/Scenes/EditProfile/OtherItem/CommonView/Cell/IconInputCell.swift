@@ -31,8 +31,13 @@ final class IconInputCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(false, animated: false)
     }
+}
+
+// MARK: - Private Functions
+
+private extension IconInputCell {
     
-    private func configureSubviews() {
+    func configureSubviews() {
         self.contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(12)
