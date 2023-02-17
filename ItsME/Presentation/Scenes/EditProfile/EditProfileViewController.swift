@@ -55,6 +55,8 @@ final class EditProfileViewController: UIViewController {
         $0.autocorrectionType = .no
     }
     
+    private lazy var totalUserInfoItemHeaderLabel: HeaderLabel = .init(title: "기본정보")
+    
     private lazy var totalUserInfoItemStackView: UserInfoItemStackView = .init().then {
         $0.hasSeparator = true
         $0.backgroundColor = .systemBackground
@@ -69,11 +71,7 @@ final class EditProfileViewController: UIViewController {
         $0.addAction(action, for: .touchUpInside)
     }
     
-    private lazy var educationHeaderLabel: UILabel = .init().then {
-        $0.text = "학력"
-        $0.font = .boldSystemFont(ofSize: 26)
-        $0.textColor = .systemBlue
-    }
+    private lazy var educationHeaderLabel: HeaderLabel = .init(title: "학력")
     
     private lazy var educationTableView: IntrinsicHeightTableView = .init(frame: .zero, style: .insetGrouped).then {
         $0.delegate = self
@@ -169,6 +167,8 @@ private extension EditProfileViewController {
 private extension EditProfileViewController {
     
     func configureSubviews() {
+        let headerHorizontalInsetValue = 26
+        
         self.view.addSubview(containerScrollView)
         containerScrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -198,9 +198,15 @@ private extension EditProfileViewController {
             make.leading.trailing.equalToSuperview().inset(30)
         }
         
+        self.contentView.addSubview(totalUserInfoItemHeaderLabel)
+        totalUserInfoItemHeaderLabel.snp.makeConstraints { make in
+            make.top.equalTo(nameTextField.snp.bottom).offset(25)
+            make.leading.trailing.equalToSuperview().inset(headerHorizontalInsetValue)
+        }
+        
         self.contentView.addSubview(totalUserInfoItemStackView)
         totalUserInfoItemStackView.snp.makeConstraints { make in
-            make.top.equalTo(nameTextField.snp.bottom).offset(25)
+            make.top.equalTo(totalUserInfoItemHeaderLabel.snp.bottom).offset(10)
             make.left.right.equalToSuperview().inset(20)
         }
         
@@ -214,7 +220,7 @@ private extension EditProfileViewController {
         
         self.contentView.addSubview(educationHeaderLabel)
         educationHeaderLabel.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(26)
+            make.leading.trailing.equalToSuperview().inset(headerHorizontalInsetValue)
             make.top.equalTo(userInfoItemAddButton.snp.bottom).offset(20)
         }
         
