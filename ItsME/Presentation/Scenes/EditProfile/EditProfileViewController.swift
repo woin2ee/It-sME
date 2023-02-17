@@ -83,7 +83,9 @@ final class EditProfileViewController: UIViewController {
     
     private lazy var educationItemAddButton: ItemAddButton = .init()
     
-    private lazy var editingCompleteButton: UIBarButtonItem = .init(title: "수정완료")
+    private lazy var editingCompleteButton: UIBarButtonItem = .init(title: "수정완료").then {
+        $0.style = .done
+    }
     
     // MARK: - Initializer
     
