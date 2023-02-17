@@ -10,8 +10,6 @@
 		5D34E748BE07C3739BACA806 /* Pods_ItsME.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79DB6EAAD98C3A88A0E390C0 /* Pods_ItsME.framework */; };
 		9C753ED40D8C7EC4EDE650E5 /* Pods_ItsMETests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1EDCC83099B6A5D906235F /* Pods_ItsMETests.framework */; };
 		AC6E4433AD5E963B8B402292 /* Pods_ItsME_ItsMEUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C283B58A3D26F3028495FF4 /* Pods_ItsME_ItsMEUITests.framework */; };
-		D00175DA299F51820006A9CD /* CVEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00175D9299F51820006A9CD /* CVEditingViewController.swift */; };
-		D00175DC299F51C80006A9CD /* CVEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00175DB299F51C80006A9CD /* CVEditingViewModel.swift */; };
 		D0472F07296406BC00E83F61 /* TotalCVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0472F06296406BC00E83F61 /* TotalCVViewController.swift */; };
 		D0472F09296406CF00E83F61 /* TotalCVViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0472F08296406CF00E83F61 /* TotalCVViewModel.swift */; };
 		D04FAF95299CB3F60049DBAA /* CoverLetterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04FAF94299CB3F60049DBAA /* CoverLetterCell.swift */; };
@@ -100,8 +98,6 @@
 		9D1FF711D8AA629A2A13206D /* Pods-ItsME.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME.release.xcconfig"; path = "Target Support Files/Pods-ItsME/Pods-ItsME.release.xcconfig"; sourceTree = "<group>"; };
 		B13FABEAA2ED6062ECBD573A /* Pods-ItsME-ItsMEUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME-ItsMEUITests.release.xcconfig"; path = "Target Support Files/Pods-ItsME-ItsMEUITests/Pods-ItsME-ItsMEUITests.release.xcconfig"; sourceTree = "<group>"; };
 		BF1EDCC83099B6A5D906235F /* Pods_ItsMETests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ItsMETests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D00175D9299F51820006A9CD /* CVEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVEditingViewController.swift; sourceTree = "<group>"; };
-		D00175DB299F51C80006A9CD /* CVEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVEditingViewModel.swift; sourceTree = "<group>"; };
 		D0472F06296406BC00E83F61 /* TotalCVViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalCVViewController.swift; sourceTree = "<group>"; };
 		D0472F08296406CF00E83F61 /* TotalCVViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalCVViewModel.swift; sourceTree = "<group>"; };
 		D04FAF94299CB3F60049DBAA /* CoverLetterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverLetterCell.swift; sourceTree = "<group>"; };
@@ -221,15 +217,6 @@
 				BF1EDCC83099B6A5D906235F /* Pods_ItsMETests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		D00175D8299F51120006A9CD /* CVEditing */ = {
-			isa = PBXGroup;
-			children = (
-				D00175D9299F51820006A9CD /* CVEditingViewController.swift */,
-				D00175DB299F51C80006A9CD /* CVEditingViewModel.swift */,
-			);
-			path = CVEditing;
 			sourceTree = "<group>";
 		};
 		D0472F012964054400E83F61 /* TotalCV */ = {
@@ -530,7 +517,6 @@
 		DAB06A3A291BA5A300E86163 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				D00175D8299F51120006A9CD /* CVEditing */,
 				D0472F012964054400E83F61 /* TotalCV */,
 				DAA5B9632938760900BAB04E /* EditProfile */,
 				DA739DD82923989A003AEE4C /* Login */,
@@ -831,7 +817,6 @@
 				D09AC9792918DE8B0081C0EC /* HomeViewController.swift in Sources */,
 				DA7201F02931EEE600A69519 /* CVInfo.swift in Sources */,
 				DAB06A40291BA61100E86163 /* ViewModelType.swift in Sources */,
-				D00175DA299F51820006A9CD /* CVEditingViewController.swift in Sources */,
 				DAAC7A5C29715C0A0083A8E9 /* Rx+Ext.swift in Sources */,
 				DAFCFB67294AC00C006B287A /* UIStackView+.swift in Sources */,
 				DA7201FA2931F90900A69519 /* Resume.swift in Sources */,
@@ -856,7 +841,6 @@
 				DA018809296D146A002C5CB0 /* BirthdayEditingViewController.swift in Sources */,
 				DAAF1BDC299A11F400728376 /* UserInfoItemInputView.swift in Sources */,
 				DAB06A3D291BA5B400E86163 /* HomeViewModel.swift in Sources */,
-				D00175DC299F51C80006A9CD /* CVEditingViewModel.swift in Sources */,
 				DA7201F82931F8EB00A69519 /* CoverLetter.swift in Sources */,
 				DA7201F42931F25500A69519 /* CoverLetterItem.swift in Sources */,
 				D04FAF95299CB3F60049DBAA /* CoverLetterCell.swift in Sources */,
