@@ -43,6 +43,7 @@ final class EditProfileViewController: UIViewController {
         }
         $0.addAction(action, for: .touchUpInside)
         $0.setTitle("프로필 사진 변경하기", for: .normal)
+        $0.configuration = .borderless()
     }
     
     private lazy var nameTextField: UITextField = .init().then {
