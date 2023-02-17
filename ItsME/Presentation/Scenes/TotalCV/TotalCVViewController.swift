@@ -42,9 +42,8 @@ class TotalCVViewController: UIViewController {
     
     private lazy var educationTableView: IntrinsicHeightTableView = .init().then {
         $0.delegate = self
-        $0.backgroundColor = .systemBackground
         $0.isScrollEnabled = false
-        $0.separatorInset = .zero
+        $0.separatorStyle = .none
         $0.isUserInteractionEnabled = false
         $0.sectionHeaderHeight = 0
         let cellType = EducationCell.self
@@ -56,7 +55,7 @@ class TotalCVViewController: UIViewController {
         $0.dataSource = self
         $0.backgroundColor = .systemBackground
         $0.isScrollEnabled = false
-        $0.separatorInset = .zero
+        $0.separatorStyle = .none
         $0.isUserInteractionEnabled = false
         let cellType = CategoryCell.self
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
@@ -71,16 +70,16 @@ class TotalCVViewController: UIViewController {
         $0.textColor = .systemBlue
     }
     
-    private lazy var CVTableView: IntrinsicHeightTableView = .init().then {
+    private lazy var coverLetterTableView: IntrinsicHeightTableView = .init().then {
         $0.delegate = self
         $0.dataSource = self
         $0.backgroundColor = .systemBackground
         $0.isScrollEnabled = false
-        $0.separatorInset = .zero
+        $0.separatorStyle = .none
         $0.isUserInteractionEnabled = false
-        let cellType = CVLettersCell.self
+        let cellType = CoverLettersCell.self
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
-        let sectionType = CVLettersHeaderFooterView.self
+        let sectionType = CoverLettersHeaderView.self
         $0.register(sectionType, forHeaderFooterViewReuseIdentifier: sectionType.reuseIdentifier)
         $0.sectionHeaderHeight = 25
     }
@@ -223,8 +222,8 @@ private extension TotalCVViewController {
             make.top.equalTo(categoryTableView.snp.bottom).offset(30)
         }
         
-        self.contentView.addSubview(CVTableView)
-        CVTableView.snp.makeConstraints { make in
+        self.contentView.addSubview(coverLetterTableView)
+        coverLetterTableView.snp.makeConstraints { make in
             make.top.equalTo(coverLetterLabel.snp.bottom).offset(10)
             make.bottom.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(24)
@@ -250,7 +249,7 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
         if tableView == categoryTableView {
             return viewModel.resumeCategory.count
         } else {
-            return viewModel.coverLetterItem.count
+            return viewModel.coverLetterItems.count
         }
     }
     
@@ -263,8 +262,8 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
             
             return categoryView
         } else {
-            let cvView = tableView.dequeueReusableHeaderFooterView(withIdentifier:CVLettersHeaderFooterView.reuseIdentifier) as? CVLettersHeaderFooterView
-            cvView?.titleLabel.text = viewModel.coverLetterItem[ifExists: section]?.title
+            let cvView = tableView.dequeueReusableHeaderFooterView(withIdentifier:CoverLettersHeaderView.reuseIdentifier) as? CoverLettersHeaderView
+            cvView?.titleLabel.text = viewModel.coverLetterItems[ifExists: section]?.title
             
             return cvView
         }
@@ -278,16 +277,15 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
             guard let categoryCell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as? CategoryCell else {
                 return UITableViewCell()
             }
-            
             categoryCell.bind(resumeItem: resumeCategory[indexPath.section].items[indexPath.row])
             
             return categoryCell
             
         } else {
-            guard let cvCell = tableView.dequeueReusableCell(withIdentifier: CVLettersCell.reuseIdentifier, for: indexPath) as? CVLettersCell else {
+            guard let cvCell = tableView.dequeueReusableCell(withIdentifier: CoverLettersCell.reuseIdentifier, for: indexPath) as? CoverLettersCell else {
                 return UITableViewCell()
             }
-            cvCell.content.text = viewModel.coverLetterItem[ifExists: indexPath.section]?.contents
+            cvCell.contents.text = viewModel.coverLetterItems[ifExists: indexPath.section]?.contents
             
             return cvCell
         }

@@ -1,5 +1,5 @@
 //
-//  CVLettersCell.swift
+//  CoverLettersCell.swift
 //  ItsME
 //
 //  Created by MacBook Air on 2023/02/15.
@@ -9,10 +9,10 @@ import SnapKit
 import Then
 import UIKit
 
-class CVLettersCell: UITableViewCell {
+class CoverLettersCell: UITableViewCell {
     
     //MARK: - UI Component
-    lazy var content = UILabel().then {
+    lazy var contents = UILabel().then {
         $0.text = "내용"
         $0.numberOfLines = 0
         $0.textColor = .label
@@ -43,12 +43,13 @@ class CVLettersCell: UITableViewCell {
 
 // MARK: - Private Functions
 
-private extension CVLettersCell {
+private extension CoverLettersCell {
     
     func configureSubviews() {
-        self.contentView.addSubview(content)
-        content.snp.makeConstraints { make in
-            make.leading.trailing.bottom.top.equalToSuperview()
+        self.contentView.addSubview(contents)
+        contents.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.bottom.top.equalToSuperview().inset(10)
         }
     }
     

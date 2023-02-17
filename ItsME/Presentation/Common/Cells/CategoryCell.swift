@@ -14,8 +14,9 @@ class CategoryCell: UITableViewCell {
     //MARK: - UI Component
     private lazy var periodLabel = UILabel().then {
         $0.text = "기간"
-        $0.numberOfLines = 2
+        $0.numberOfLines = 0
         $0.textColor = .label
+        $0.sizeToFit()
     }
     
     private lazy var titleLabel = UILabel().then {
@@ -73,7 +74,8 @@ private extension CategoryCell {
         
         self.contentView.addSubview(periodLabel)
         periodLabel.snp.makeConstraints { make in
-            make.leading.bottom.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.bottom.lessThanOrEqualToSuperview()
             make.top.equalToSuperview().offset(10)
         }
         

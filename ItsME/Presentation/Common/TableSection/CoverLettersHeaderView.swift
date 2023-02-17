@@ -1,5 +1,5 @@
 //
-//  CVLettersHeaderFooterView.swift
+//  CoverLettersHeaderFooterView.swift
 //  ItsME
 //
 //  Created by MacBook Air on 2023/02/15.
@@ -9,9 +9,9 @@ import SnapKit
 import Then
 import UIKit
 
-class CVLettersHeaderFooterView: UITableViewHeaderFooterView {
+class CoverLettersHeaderView: UITableViewHeaderFooterView {
 
-    static let reuseIdentifier: String = .init(describing: CVLettersHeaderFooterView.self)
+    static let reuseIdentifier: String = .init(describing: CoverLettersHeaderView.self)
     
     //MARK: - UI Component
     
@@ -39,14 +39,15 @@ class CVLettersHeaderFooterView: UITableViewHeaderFooterView {
 }
 
 // MARK: - Private Functions
-private extension CVLettersHeaderFooterView {
+private extension CoverLettersHeaderView {
     
     func configureSubviews() {
         
         self.contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.leading.trailing.top.bottom.equalToSuperview()
-            make.height.equalTo(25)
+            make.leading.trailing.top.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-15)
+            make.height.equalTo(30)
         }
     }
 }
