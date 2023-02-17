@@ -16,7 +16,6 @@ class CategoryCell: UITableViewCell {
         $0.text = "기간"
         $0.numberOfLines = 0
         $0.textColor = .label
-        $0.sizeToFit()
     }
     
     private lazy var titleLabel = UILabel().then {

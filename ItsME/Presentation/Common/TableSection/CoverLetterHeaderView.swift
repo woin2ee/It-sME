@@ -1,5 +1,5 @@
 //
-//  CoverLettersHeaderFooterView.swift
+//  CoverLetterHeaderFooterView.swift
 //  ItsME
 //
 //  Created by MacBook Air on 2023/02/15.
@@ -9,9 +9,9 @@ import SnapKit
 import Then
 import UIKit
 
-class CoverLettersHeaderView: UITableViewHeaderFooterView {
+class CoverLetterHeaderView: UITableViewHeaderFooterView {
 
-    static let reuseIdentifier: String = .init(describing: CoverLettersHeaderView.self)
+    static let reuseIdentifier: String = .init(describing: CoverLetterHeaderView.self)
     
     //MARK: - UI Component
     
@@ -39,7 +39,7 @@ class CoverLettersHeaderView: UITableViewHeaderFooterView {
 }
 
 // MARK: - Private Functions
-private extension CoverLettersHeaderView {
+private extension CoverLetterHeaderView {
     
     func configureSubviews() {
         

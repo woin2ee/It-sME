@@ -77,12 +77,14 @@ class TotalCVViewController: UIViewController {
         $0.isScrollEnabled = false
         $0.separatorStyle = .none
         $0.isUserInteractionEnabled = false
-        let cellType = CoverLettersCell.self
+        let cellType = CoverLetterCell.self
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
-        let sectionType = CoverLettersHeaderView.self
+        let sectionType = CoverLetterHeaderView.self
         $0.register(sectionType, forHeaderFooterViewReuseIdentifier: sectionType.reuseIdentifier)
         $0.sectionHeaderHeight = 25
     }
+    
+    private lazy var editModeButton: UIBarButtonItem = .init(image: UIImage(systemName: "wrench.and.screwdriver.fill"), style: .plain, target: nil, action: nil)
     
     // MARK: - Life Cycle
     
@@ -107,6 +109,7 @@ class TotalCVViewController: UIViewController {
     
     func configureNavigationBar() {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationItem.rightBarButtonItem = editModeButton
         //FIXME: - 화면을 끝까지 내렸을 때 자동으로 Large title로 변경되는 오류를 해결해줘야 함
         //        navigationController?.navigationBar.prefersLargeTitles = true
         //        UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).adjustsFontSizeToFitWidth = true
@@ -262,7 +265,7 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
             
             return categoryView
         } else {
-            let cvView = tableView.dequeueReusableHeaderFooterView(withIdentifier:CoverLettersHeaderView.reuseIdentifier) as? CoverLettersHeaderView
+            let cvView = tableView.dequeueReusableHeaderFooterView(withIdentifier:CoverLetterHeaderView.reuseIdentifier) as? CoverLetterHeaderView
             cvView?.titleLabel.text = viewModel.coverLetterItems[ifExists: section]?.title
             
             return cvView
@@ -272,7 +275,7 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let resumeCategory = viewModel.resumeCategory
-       
+        
         if tableView == categoryTableView {
             guard let categoryCell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as? CategoryCell else {
                 return UITableViewCell()
@@ -282,7 +285,7 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
             return categoryCell
             
         } else {
-            guard let cvCell = tableView.dequeueReusableCell(withIdentifier: CoverLettersCell.reuseIdentifier, for: indexPath) as? CoverLettersCell else {
+            guard let cvCell = tableView.dequeueReusableCell(withIdentifier: CoverLetterCell.reuseIdentifier, for: indexPath) as? CoverLetterCell else {
                 return UITableViewCell()
             }
             cvCell.contents.text = viewModel.coverLetterItems[ifExists: indexPath.section]?.contents

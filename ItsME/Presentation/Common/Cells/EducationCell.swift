@@ -17,7 +17,6 @@ final class EducationCell: UITableViewCell {
         let label: UILabel = .init()
         label.text = "Period"
         label.numberOfLines = 0
-        label.sizeToFit()
         label.textColor = .label
         return label
     }()

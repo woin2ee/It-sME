@@ -1,5 +1,5 @@
 //
-//  CoverLettersCell.swift
+//  CoverLetterCell.swift
 //  ItsME
 //
 //  Created by MacBook Air on 2023/02/15.
@@ -9,7 +9,7 @@ import SnapKit
 import Then
 import UIKit
 
-class CoverLettersCell: UITableViewCell {
+class CoverLetterCell: UITableViewCell {
     
     //MARK: - UI Component
     lazy var contents = UILabel().then {
@@ -43,7 +43,7 @@ class CoverLettersCell: UITableViewCell {
 
 // MARK: - Private Functions
 
-private extension CoverLettersCell {
+private extension CoverLetterCell {
     
     func configureSubviews() {
         self.contentView.addSubview(contents)
