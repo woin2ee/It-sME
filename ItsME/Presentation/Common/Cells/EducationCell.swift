@@ -10,13 +10,13 @@ import Then
 import UIKit
 
 final class EducationCell: UITableViewCell {
-
+    
     // MARK: - UI Components
     
     private lazy var periodLabel: UILabel = {
         let label: UILabel = .init()
         label.text = "Period"
-        label.numberOfLines = 2
+        label.numberOfLines = 0
         label.textColor = .label
         return label
     }()
@@ -47,7 +47,7 @@ final class EducationCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(false, animated: false)
-
+        
         // Configure the view for the selected state
     }
     
@@ -63,12 +63,13 @@ final class EducationCell: UITableViewCell {
 private extension EducationCell {
     
     func configureSubviews() {
+        
         self.contentView.addSubview(periodLabel)
         self.contentView.addSubview(titleLabel)
         self.contentView.addSubview(descriptionLabel)
         
-        let verticalInsetValue = 4
-        let horizontalInsetValue = 12
+        let verticalInsetValue = 5
+        let horizontalInsetValue = 15
         
         periodLabel.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().inset(verticalInsetValue)

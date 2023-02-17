@@ -42,9 +42,8 @@ class TotalCVViewController: UIViewController {
     
     private lazy var educationTableView: IntrinsicHeightTableView = .init().then {
         $0.delegate = self
-        $0.backgroundColor = .systemBackground
         $0.isScrollEnabled = false
-        $0.separatorInset = .zero
+        $0.separatorStyle = .none
         $0.isUserInteractionEnabled = false
         $0.sectionHeaderHeight = 0
         let cellType = EducationCell.self
@@ -56,7 +55,7 @@ class TotalCVViewController: UIViewController {
         $0.dataSource = self
         $0.backgroundColor = .systemBackground
         $0.isScrollEnabled = false
-        $0.separatorInset = .zero
+        $0.separatorStyle = .none
         $0.isUserInteractionEnabled = false
         let cellType = CategoryCell.self
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
@@ -70,6 +69,22 @@ class TotalCVViewController: UIViewController {
         $0.font = headerFont
         $0.textColor = .systemBlue
     }
+    
+    private lazy var coverLetterTableView: IntrinsicHeightTableView = .init().then {
+        $0.delegate = self
+        $0.dataSource = self
+        $0.backgroundColor = .systemBackground
+        $0.isScrollEnabled = false
+        $0.separatorStyle = .none
+        $0.isUserInteractionEnabled = false
+        let cellType = CoverLetterCell.self
+        $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
+        let sectionType = CoverLetterHeaderView.self
+        $0.register(sectionType, forHeaderFooterViewReuseIdentifier: sectionType.reuseIdentifier)
+        $0.sectionHeaderHeight = 25
+    }
+    
+    private lazy var editModeButton: UIBarButtonItem = .init(image: UIImage(systemName: "wrench.and.screwdriver.fill"), style: .plain, target: nil, action: nil)
     
     // MARK: - Life Cycle
     
@@ -94,6 +109,7 @@ class TotalCVViewController: UIViewController {
     
     func configureNavigationBar() {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationItem.rightBarButtonItem = editModeButton
         //FIXME: - 화면을 끝까지 내렸을 때 자동으로 Large title로 변경되는 오류를 해결해줘야 함
         //        navigationController?.navigationBar.prefersLargeTitles = true
         //        UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).adjustsFontSizeToFitWidth = true
@@ -207,7 +223,13 @@ private extension TotalCVViewController {
         coverLetterLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
             make.top.equalTo(categoryTableView.snp.bottom).offset(30)
+        }
+        
+        self.contentView.addSubview(coverLetterTableView)
+        coverLetterTableView.snp.makeConstraints { make in
+            make.top.equalTo(coverLetterLabel.snp.bottom).offset(10)
             make.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(24)
         }
         
     }
@@ -217,36 +239,58 @@ private extension TotalCVViewController {
 extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.resumeCategory[section].items.count
+        
+        if tableView == categoryTableView {
+            return viewModel.resumeCategory[section].items.count
+        } else {
+            return 1
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.resumeCategory.count
+        
+        if tableView == categoryTableView {
+            return viewModel.resumeCategory.count
+        } else {
+            return viewModel.coverLetterItems.count
+        }
     }
     
     func tableView(_ tableView: UITableView,
                    viewForHeaderInSection section: Int) -> UIView? {
-        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: CategoryHeaderView.reuseIdentifier) as? CategoryHeaderView
         
-        view?.titleLabel.text = viewModel.resumeCategory[section].title
-        
-        return view
+        if tableView == categoryTableView {
+            let categoryView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CategoryHeaderView.reuseIdentifier) as? CategoryHeaderView
+            categoryView?.titleLabel.text = viewModel.resumeCategory[section].title
+            
+            return categoryView
+        } else {
+            let cvView = tableView.dequeueReusableHeaderFooterView(withIdentifier:CoverLetterHeaderView.reuseIdentifier) as? CoverLetterHeaderView
+            cvView?.titleLabel.text = viewModel.coverLetterItems[ifExists: section]?.title
+            
+            return cvView
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let resumeCategory = viewModel.resumeCategory
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as? CategoryCell else {
-            return UITableViewCell()
+        if tableView == categoryTableView {
+            guard let categoryCell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as? CategoryCell else {
+                return UITableViewCell()
+            }
+            categoryCell.bind(resumeItem: resumeCategory[indexPath.section].items[indexPath.row])
+            
+            return categoryCell
+            
+        } else {
+            guard let cvCell = tableView.dequeueReusableCell(withIdentifier: CoverLetterCell.reuseIdentifier, for: indexPath) as? CoverLetterCell else {
+                return UITableViewCell()
+            }
+            cvCell.contents.text = viewModel.coverLetterItems[ifExists: indexPath.section]?.contents
+            
+            return cvCell
         }
-        
-        cell.bind(resumeItem: resumeCategory[indexPath.section].items[indexPath.row])
-        
-        return cell
     }
 }
-
-
-
-
