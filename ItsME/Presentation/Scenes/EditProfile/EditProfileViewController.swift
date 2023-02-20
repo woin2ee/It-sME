@@ -287,6 +287,23 @@ private extension EditProfileViewController {
         let viewController: NewOtherItemViewController = .init(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
+    
+    func presentUserInfoItemInputView(by indexPath: IndexPath) {
+        switch viewModel.currentAllItems[ifExists: indexPath.row]?.icon {
+        case .cake:
+            presentDatePickerView()
+        case .house:
+            presentAddressEditingView()
+        case .phone:
+            presentPhoneNumberEditingView()
+        case .letter:
+            presentEmailEditingView()
+        default:
+            if let otherItem = viewModel.currentAllItems[ifExists: indexPath.row] {
+                presentOtherItemEditingView(with: otherItem)
+            }
+        }
+    }
 }
 
 // MARK: - UITableViewDelegate
@@ -311,20 +328,7 @@ extension EditProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch tableView {
         case userInfoItemTableView:
-            switch viewModel.currentAllItems[ifExists: indexPath.row]?.icon {
-            case .cake:
-                presentDatePickerView()
-            case .house:
-                presentAddressEditingView()
-            case .phone:
-                presentPhoneNumberEditingView()
-            case .letter:
-                presentEmailEditingView()
-            default:
-                if let otherItem = viewModel.currentAllItems[ifExists: indexPath.row] {
-                    presentOtherItemEditingView(with: otherItem)
-                }
-            }
+            presentUserInfoItemInputView(by: indexPath)
         case educationTableView:
             return
         default:
