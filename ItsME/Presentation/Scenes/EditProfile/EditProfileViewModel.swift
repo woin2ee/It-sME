@@ -67,8 +67,9 @@ final class EditProfileViewModel: ViewModelType {
                     .asDriverOnErrorJustComplete()
             }
         
-        let userName = Driver.merge(input.userName.skip(1),
+        let userName = Driver.merge(input.userName,
                                     userInfoDriver.map { $0.name })
+            .startWith(userInfoRelay.value.name)
             .do(onNext: { userName in
                 self.userInfoRelay.value.name = userName
             })
