@@ -58,11 +58,10 @@ final class EditProfileViewController: UIViewController {
     
     private lazy var totalUserInfoItemHeaderLabel: HeaderLabel = .init(title: "기본정보")
     
-    private lazy var totalUserInfoItemStackView: UserInfoItemStackView = .init().then {
-        $0.hasSeparator = true
-        $0.backgroundColor = .systemBackground
-        $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = 12.0
+    private lazy var userInfoItemTableView: IntrinsicHeightTableView = .init(style: .insetGrouped).then {
+        $0.delegate = self
+        $0.register(UserInfoItemCell.self, forCellReuseIdentifier: UserInfoItemCell.reuseIdentifier)
+        $0.backgroundColor = .clear
     }
     
     private lazy var userInfoItemAddButton: ItemAddButton = .init().then {
@@ -141,15 +140,15 @@ private extension EditProfileViewController {
             output.userName
                 .drive(nameTextField.rx.text),
             output.userInfoItems
-                .drive(with: self, onNext: { owner, userInfoItems in
-                    owner.totalUserInfoItemStackView.bind(userInfoItems: userInfoItems)
-                    zip(owner.totalUserInfoItemStackView.arrangedSubviews, userInfoItems)
-                        .forEach { (subview, userInfoItem) in
-                            let action = owner.decideTransitionAction(by: userInfoItem)
-                            let tapGestureRecognizer: UITapGestureRecognizer = .init(target: owner, action: action)
-                            subview.addGestureRecognizer(tapGestureRecognizer)
-                        }
-                }),
+                .drive(
+                    userInfoItemTableView.rx.items(
+                        cellIdentifier: UserInfoItemCell.reuseIdentifier,
+                        cellType: UserInfoItemCell.self
+                    )
+                ) { (index, userInfoItem, cell) in
+                    cell.bind(userInfoItem: userInfoItem)
+                    cell.accessoryType = .disclosureIndicator
+                },
             output.educationItems
                 .drive(
                     educationTableView.rx.items(cellIdentifier: EducationCell.reuseIdentifier, cellType: EducationCell.self)
@@ -207,17 +206,22 @@ private extension EditProfileViewController {
             make.leading.trailing.equalToSuperview().inset(headerHorizontalInsetValue)
         }
         
-        self.contentView.addSubview(totalUserInfoItemStackView)
-        totalUserInfoItemStackView.snp.makeConstraints { make in
-            make.top.equalTo(totalUserInfoItemHeaderLabel.snp.bottom).offset(10)
-            make.left.right.equalToSuperview().inset(20)
+        let headerLabelToTableViewOffset = -26
+        
+        self.contentView.addSubview(userInfoItemTableView)
+        userInfoItemTableView.snp.makeConstraints { make in
+            make.top.equalTo(totalUserInfoItemHeaderLabel.snp.bottom).offset(headerLabelToTableViewOffset)
+            make.left.right.equalToSuperview()
         }
+        
+        let tableViewToAdditionButtonOffset = -25
+        let additionButtonHorizontalInset = 30
         
         self.contentView.addSubview(userInfoItemAddButton)
         userInfoItemAddButton.snp.makeConstraints { make in
-            make.top.equalTo(totalUserInfoItemStackView.snp.bottom).offset(10)
+            make.top.equalTo(userInfoItemTableView.snp.bottom).offset(tableViewToAdditionButtonOffset)
             make.centerX.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(30)
+            make.leading.trailing.equalToSuperview().inset(additionButtonHorizontalInset)
             make.height.equalTo(36)
         }
         
@@ -229,16 +233,16 @@ private extension EditProfileViewController {
         
         self.contentView.addSubview(educationTableView)
         educationTableView.snp.makeConstraints { make in
-            make.top.equalTo(educationHeaderLabel.snp.bottom).offset(-26)
+            make.top.equalTo(educationHeaderLabel.snp.bottom).offset(headerLabelToTableViewOffset)
             make.left.right.equalToSuperview()
         }
         
         self.contentView.addSubview(educationItemAddButton)
         educationItemAddButton.snp.makeConstraints { make in
-            make.top.equalTo(educationTableView.snp.bottom).offset(-25)
+            make.top.equalTo(educationTableView.snp.bottom).offset(tableViewToAdditionButtonOffset)
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-20)
-            make.leading.trailing.equalToSuperview().inset(30)
+            make.leading.trailing.equalToSuperview().inset(additionButtonHorizontalInset)
             make.height.equalTo(42)
         }
     }
@@ -250,51 +254,33 @@ private extension EditProfileViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
-    @objc func presentDatePickerView() {
+    func presentDatePickerView() {
         let viewController: BirthdayEditingViewController = .init(viewModel: viewModel)
         viewController.modalPresentationStyle = .overCurrentContext
         self.navigationController?.present(viewController, animated: false)
     }
     
-    @objc func presentAddressEditingView() {
+    func presentAddressEditingView() {
         let viewController: AddressEditingViewController
         print(#function)
     }
     
-    @objc func presentPhoneNumberEditingView() {
+    func presentPhoneNumberEditingView() {
         let viewController: PhoneNumberEditingViewController
         print(#function)
     }
     
-    @objc func presentEmailEditingView() {
+    func presentEmailEditingView() {
         let viewController: EmailEditingViewController
         print(#function)
     }
     
-    @objc func presentOtherItemEditingView(_ sender: UITapGestureRecognizer) {
-        guard let userInfoItem = (sender.view as? ProfileInfoComponent)?.userInfoItem,
-              let indexOfItem = viewModel.currentOtherItems.firstIndex(where: { $0 === userInfoItem })
-        else {
+    func presentOtherItemEditingView(with Item: UserInfoItem) {
+        guard let indexOfItem = viewModel.currentOtherItems.firstIndex(where: { $0 === Item }) else {
             return
         }
-        
         let viewController: OtherItemEditingViewController = .init(viewModel: viewModel, indexOfItem: indexOfItem)
         self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    func decideTransitionAction(by userInfoItem: UserInfoItem) -> Selector {
-        switch userInfoItem.icon {
-        case .cake:
-            return #selector(presentDatePickerView)
-        case .house:
-            return #selector(presentAddressEditingView)
-        case .phone:
-            return #selector(presentPhoneNumberEditingView)
-        case .letter:
-            return #selector(presentEmailEditingView)
-        default:
-            return #selector(presentOtherItemEditingView)
-        }
     }
     
     func presentNewOtherItemView() {
@@ -308,14 +294,42 @@ private extension EditProfileViewController {
 extension EditProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let removeAction: UIContextualAction = .init(style: .destructive, title: "삭제") { (action, view, completionHandler) in
-            self.viewModel.deleteEducationItem(at: indexPath)
-            completionHandler(true)
+        switch tableView {
+        case educationTableView:
+            let removeAction: UIContextualAction = .init(style: .destructive, title: "삭제") { (action, view, completionHandler) in
+                self.viewModel.deleteEducationItem(at: indexPath)
+                completionHandler(true)
+            }
+            let config: UIImage.SymbolConfiguration = .init(pointSize: 24.0, weight: .semibold, scale: .default)
+            removeAction.image = .init(systemName: "minus.circle", withConfiguration: config)
+            return .init(actions: [removeAction])
+        default:
+            return nil
         }
-        let config: UIImage.SymbolConfiguration = .init(pointSize: 24.0, weight: .semibold, scale: .default)
-        removeAction.image = .init(systemName: "minus.circle", withConfiguration: config)
-        
-        return .init(actions: [removeAction])
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch tableView {
+        case userInfoItemTableView:
+            switch viewModel.currentAllItems[ifExists: indexPath.row]?.icon {
+            case .cake:
+                presentDatePickerView()
+            case .house:
+                presentAddressEditingView()
+            case .phone:
+                presentPhoneNumberEditingView()
+            case .letter:
+                presentEmailEditingView()
+            default:
+                if let otherItem = viewModel.currentAllItems[ifExists: indexPath.row] {
+                    presentOtherItemEditingView(with: otherItem)
+                }
+            }
+        case educationTableView:
+            return
+        default:
+            return
+        }
     }
 }
 
