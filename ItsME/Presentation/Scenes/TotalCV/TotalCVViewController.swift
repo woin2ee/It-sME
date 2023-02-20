@@ -17,6 +17,8 @@ class TotalCVViewController: UIViewController {
     var viewModel: TotalCVViewModel!
     let headerFont: UIFont = .systemFont(ofSize: 30, weight: .bold)
     
+    private var isEditingMode: Bool = false
+    
     private var fullScrollView: UIScrollView = .init().then {
         $0.backgroundColor = .systemBackground
         $0.showsVerticalScrollIndicator = true
@@ -84,8 +86,42 @@ class TotalCVViewController: UIViewController {
         $0.sectionHeaderHeight = 25
     }
     
-    private lazy var editModeButton: UIBarButtonItem = .init(image: UIImage(systemName: "wrench.and.screwdriver.fill"), style: .plain, target: nil, action: nil)
+    private lazy var editModeButton: UIBarButtonItem = .init().then {
+        $0.primaryAction = UIAction(image: UIImage(systemName: "wrench.and.screwdriver.fill"), handler: { _ in
+            self.isEditingMode.toggle()
+            self.changeButton()
+            self.changeMode()
+        })
+    }
     
+    func changeButton() {
+        if isEditingMode {
+            self.editModeButton.image = nil
+            self.editModeButton.title = "수정 완료"
+        } else {
+            self.editModeButton.image = UIImage(systemName: "wrench.and.screwdriver.fill")
+        }
+    }
+    
+    func changeMode() {
+        if isEditingMode {
+            profileImageView.removeFromSuperview()
+            totalUserInfoItemStackView.removeFromSuperview()
+            educationHeaderLabel.removeFromSuperview()
+            educationTableView.removeFromSuperview()
+            categoryTableView.snp.makeConstraints { make in
+                make.top.equalToSuperview().offset(20)
+                make.leading.trailing.equalToSuperview().inset(24)
+            }
+            self.view.layoutIfNeeded()
+        } else {
+            categoryTableView.removeFromSuperview()
+            coverLetterLabel.removeFromSuperview()
+            coverLetterTableView.removeFromSuperview()
+            configureSubviews()
+            self.view.layoutIfNeeded()
+        }
+    }
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
