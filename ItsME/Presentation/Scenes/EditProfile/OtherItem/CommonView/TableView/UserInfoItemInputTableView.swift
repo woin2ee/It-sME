@@ -11,8 +11,15 @@ import UIKit
 
 final class UserInfoItemInputTableView: IntrinsicHeightTableView {
     
-    lazy var iconInputCell: IconInputCell = .init(style: .default, reuseIdentifier: IconInputCell.reuseIdentifier)
-    lazy var contentsInputCell: ContentsInputCell = .init(style: .default, reuseIdentifier: ContentsInputCell.reuseIdentifier)
+    private lazy var iconInputCell: IconInputCell = .init(
+        style: .default,
+        reuseIdentifier: IconInputCell.reuseIdentifier,
+        viewModel: .init(icon: .default)
+    )
+    private lazy var contentsInputCell: ContentsInputCell = .init(
+        style: .default,
+        reuseIdentifier: ContentsInputCell.reuseIdentifier
+    )
     
     var inputCells: [UITableViewCell] {
         [
@@ -21,15 +28,15 @@ final class UserInfoItemInputTableView: IntrinsicHeightTableView {
         ]
     }
     
-    var currentInputUserInfoItem: UserInfoItem {
-        let emoji = iconInputCell.iconLabel.text ?? UserInfoItemIcon.default.toEmoji
-        let icon: UserInfoItemIcon = .init(rawValue: emoji) ?? .default
-        let contents = contentsInputCell.contentsTextField.text ?? ""
-        return .init(icon: icon, contents: contents)
+    var currentUserInfoItem: UserInfoItem {
+        .init(
+            icon: iconInputCell.viewModel.currentIcon,
+            contents: contentsInputCell.contentsTextField.text ?? ""
+        )
     }
     
-    override init(frame: CGRect, style: UITableView.Style) {
-        super.init(frame: frame, style: style)
+    init(style: UITableView.Style) {
+        super.init(frame: .zero, style: style)
         self.register(IconInputCell.self, forCellReuseIdentifier: IconInputCell.reuseIdentifier)
         self.register(ContentsInputCell.self, forCellReuseIdentifier: ContentsInputCell.reuseIdentifier)
         self.dataSource = self
@@ -40,7 +47,7 @@ final class UserInfoItemInputTableView: IntrinsicHeightTableView {
     }
     
     func bind(userInfoItem: UserInfoItem) {
-        iconInputCell.iconLabel.text = userInfoItem.icon.toEmoji
+        iconInputCell.viewModel.updateIcon(userInfoItem.icon)
         contentsInputCell.contentsTextField.text = userInfoItem.contents
     }
 }

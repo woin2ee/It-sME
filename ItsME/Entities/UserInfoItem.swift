@@ -32,6 +32,7 @@ enum UserInfoItemIcon: String {
     case phone = "phone"
     case letter = "letter"
     
+    /// 현재 인스턴스에 할당된 이모지입니다.
     var toEmoji: String {
         switch self {
         case .`default`:

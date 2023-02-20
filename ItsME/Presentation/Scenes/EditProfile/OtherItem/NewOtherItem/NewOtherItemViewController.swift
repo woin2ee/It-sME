@@ -13,7 +13,7 @@ final class NewOtherItemViewController: UIViewController {
     
     private let viewModel: EditProfileViewModel
     
-    private lazy var userInfoItemInputTableView: UserInfoItemInputTableView = .init(frame: .zero, style: .insetGrouped)
+    private lazy var userInfoItemInputTableView: UserInfoItemInputTableView = .init(style: .insetGrouped)
     
     private lazy var completeButton: UIBarButtonItem = .init().then {
         $0.primaryAction = .init(title: "추가", handler: { [weak self] _ in
@@ -62,7 +62,7 @@ private extension NewOtherItemViewController {
     }
     
     func saveUserInfoItem() {
-        let newItem = userInfoItemInputTableView.currentInputUserInfoItem
+        let newItem = userInfoItemInputTableView.currentUserInfoItem
         self.viewModel.appendUserInfoItem(newItem)
     }
 }
