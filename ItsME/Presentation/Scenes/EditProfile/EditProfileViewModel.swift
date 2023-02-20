@@ -37,6 +37,10 @@ final class EditProfileViewModel: ViewModelType {
         return dateFormatter.date(from: birthday) ?? .now
     }
     
+    var currentEmail: String {
+        userInfoRelay.value.email.contents
+    }
+    
     var currentOtherItems: [UserInfoItem] {
         userInfoRelay.value.otherItems
     }
@@ -106,6 +110,12 @@ extension EditProfileViewModel {
     func updateBirthday(_ userInfoItem: UserInfoItem) {
         let userInfo = userInfoRelay.value
         userInfo.birthday = userInfoItem
+        userInfoRelay.accept(userInfo)
+    }
+    
+    func updateEmail(_ email: String) {
+        let userInfo = userInfoRelay.value
+        userInfo.email.contents = email
         userInfoRelay.accept(userInfo)
     }
     

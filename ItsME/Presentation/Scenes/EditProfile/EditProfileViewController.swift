@@ -271,8 +271,8 @@ private extension EditProfileViewController {
     }
     
     func presentEmailEditingView() {
-        let viewController: EmailEditingViewController
-        print(#function)
+        let viewController: EmailEditingViewController = .init(viewModel: viewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func presentOtherItemEditingView(with Item: UserInfoItem) {
