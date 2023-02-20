@@ -109,7 +109,7 @@ extension EditProfileViewModel {
         userInfoRelay.accept(userInfo)
     }
     
-    func updateUserInfoItem(_ userInfoItem: UserInfoItem, at index: IndexPath.Index) {
+    func updateOtherUserInfoItem(_ userInfoItem: UserInfoItem, at index: IndexPath.Index) {
         let userInfo = userInfoRelay.value
         if userInfo.otherItems.indices ~= index {
             userInfo.otherItems[index] = userInfoItem
