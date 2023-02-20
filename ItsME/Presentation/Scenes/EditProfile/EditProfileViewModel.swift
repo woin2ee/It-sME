@@ -41,6 +41,10 @@ final class EditProfileViewModel: ViewModelType {
         userInfoRelay.value.otherItems
     }
     
+    var currentAllItems: [UserInfoItem] {
+        userInfoRelay.value.allItems
+    }
+    
     init(userInfo: UserInfo) {
         self.userInfoRelay = .init(value: userInfo)
     }
@@ -64,7 +68,7 @@ final class EditProfileViewModel: ViewModelType {
             .do(onNext: { userName in
                 self.userInfoRelay.value.name = userName
             })
-        let userInfoItems = userInfoDriver.map { $0.defaultItems + $0.otherItems }
+        let userInfoItems = userInfoDriver.map { $0.allItems }
         let educationItems = userInfoDriver.map { $0.educationItems }
         let tappedEditingCompleteButton = input.tapEditingCompleteButton
             .withLatestFrom(userInfoDriver)
