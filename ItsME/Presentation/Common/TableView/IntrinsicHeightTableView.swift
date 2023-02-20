@@ -14,6 +14,10 @@ class IntrinsicHeightTableView: UITableView {
         self.isScrollEnabled = false
     }
     
+    convenience init(style: UITableView.Style) {
+        self.init(frame: .zero, style: style)
+    }
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.isScrollEnabled = false
