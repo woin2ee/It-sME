@@ -26,7 +26,15 @@ class TotalCVViewController: UIViewController {
     }
     
     private var contentView: UIView = .init().then {
-        $0.backgroundColor = .systemBackground
+        $0.backgroundColor = .clear
+    }
+    
+    private var justCVView: UIView = .init().then {
+        $0.backgroundColor = .clear
+    }
+    
+    private var bothView: UIView = .init().then {
+        $0.backgroundColor = .clear
     }
     
     private lazy var profileImageView =  UIImageView().then {
@@ -48,6 +56,7 @@ class TotalCVViewController: UIViewController {
         $0.separatorStyle = .none
         $0.isUserInteractionEnabled = false
         $0.sectionHeaderHeight = 0
+        $0.backgroundColor = .clear
         let cellType = EducationCell.self
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
     }
@@ -55,7 +64,7 @@ class TotalCVViewController: UIViewController {
     private lazy var categoryTableView: IntrinsicHeightTableView = .init().then {
         $0.delegate = self
         $0.dataSource = self
-        $0.backgroundColor = .systemBackground
+        $0.backgroundColor = .clear
         $0.isScrollEnabled = false
         $0.separatorStyle = .none
         $0.isUserInteractionEnabled = false
@@ -75,7 +84,7 @@ class TotalCVViewController: UIViewController {
     private lazy var coverLetterTableView: IntrinsicHeightTableView = .init().then {
         $0.delegate = self
         $0.dataSource = self
-        $0.backgroundColor = .systemBackground
+        $0.backgroundColor = .clear
         $0.isScrollEnabled = false
         $0.separatorStyle = .none
         $0.isUserInteractionEnabled = false
@@ -105,21 +114,27 @@ class TotalCVViewController: UIViewController {
     
     func changeMode() {
         if isEditingMode {
-            profileImageView.removeFromSuperview()
-            totalUserInfoItemStackView.removeFromSuperview()
-            educationHeaderLabel.removeFromSuperview()
-            educationTableView.removeFromSuperview()
-            categoryTableView.snp.makeConstraints { make in
-                make.top.equalToSuperview().offset(20)
-                make.leading.trailing.equalToSuperview().inset(24)
-            }
-            self.view.layoutIfNeeded()
+            
+            UIView.animate(withDuration: 0.5, animations: {
+                self.justCVView.alpha = 0
+                self.bothView.snp.makeConstraints { make in
+                    make.top.equalToSuperview().offset(10)
+                }
+                self.fullScrollView.backgroundColor = .secondarySystemBackground
+                self.view.layoutIfNeeded()
+            })
         } else {
-            categoryTableView.removeFromSuperview()
-            coverLetterLabel.removeFromSuperview()
-            coverLetterTableView.removeFromSuperview()
-            configureSubviews()
-            self.view.layoutIfNeeded()
+            UIView.animate(withDuration: 0.5, animations: {
+                self.bothView.removeFromSuperview()
+                self.contentView.addSubview(self.bothView)
+                self.bothView.snp.makeConstraints { make in
+                    make.top.equalTo(self.justCVView.snp.bottom).offset(10)
+                }
+                self.fullScrollView.backgroundColor = .systemBackground
+                self.justCVView.alpha = 1
+                
+                self.view.layoutIfNeeded()
+            })
         }
     }
     // MARK: - Life Cycle
@@ -223,49 +238,61 @@ private extension TotalCVViewController {
             make.top.bottom.width.equalToSuperview()
         }
         
-        self.contentView.addSubview(profileImageView)
+        self.contentView.addSubview(justCVView)
+        justCVView.snp.makeConstraints { make in
+            make.top.left.right.equalToSuperview()
+        }
+        
+        self.contentView.addSubview(bothView)
+        bothView.snp.makeConstraints { make in
+            make.bottom.left.right.equalToSuperview()
+            make.top.equalTo(justCVView.snp.bottom).offset(10)
+        }
+        
+        self.justCVView.addSubview(profileImageView)
         profileImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(20)
             make.width.height.equalTo(self.view.frame.width * 0.35)
             make.trailing.equalToSuperview().offset(-20)
         }
         
-        self.contentView.addSubview(totalUserInfoItemStackView)
+        self.justCVView.addSubview(totalUserInfoItemStackView)
         totalUserInfoItemStackView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.trailing.equalTo(profileImageView.snp.leading).offset(-10)
             make.leading.equalToSuperview().offset(10)
         }
         
-        self.contentView.addSubview(educationHeaderLabel)
+        self.justCVView.addSubview(educationHeaderLabel)
         educationHeaderLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
             make.top.equalTo(totalUserInfoItemStackView.snp.bottom).offset(30)
         }
         
-        self.contentView.addSubview(educationTableView)
+        self.justCVView.addSubview(educationTableView)
         educationTableView.snp.makeConstraints { make in
-            make.top.equalTo(educationHeaderLabel.snp.bottom).offset(10)
+            make.top.equalTo(educationHeaderLabel.snp.bottom)
+            make.bottom.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(24)
         }
         
-        self.contentView.addSubview(categoryTableView)
+        self.bothView.addSubview(categoryTableView)
         categoryTableView.snp.makeConstraints { make in
-            make.top.equalTo(educationTableView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview().inset(24)
+            make.top.equalToSuperview().offset(10)
+            make.leading.trailing.equalToSuperview().inset(15)
         }
         
-        self.contentView.addSubview(coverLetterLabel)
+        self.bothView.addSubview(coverLetterLabel)
         coverLetterLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
             make.top.equalTo(categoryTableView.snp.bottom).offset(30)
         }
         
-        self.contentView.addSubview(coverLetterTableView)
+        self.bothView.addSubview(coverLetterTableView)
         coverLetterTableView.snp.makeConstraints { make in
             make.top.equalTo(coverLetterLabel.snp.bottom).offset(10)
             make.bottom.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(24)
+            make.leading.trailing.equalToSuperview().inset(15)
         }
         
     }
@@ -298,12 +325,13 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
         if tableView == categoryTableView {
             let categoryView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CategoryHeaderView.reuseIdentifier) as? CategoryHeaderView
             categoryView?.titleLabel.text = viewModel.resumeCategory[section].title
+            categoryView?.backgroundColor = .clear
             
             return categoryView
         } else {
             let cvView = tableView.dequeueReusableHeaderFooterView(withIdentifier:CoverLetterHeaderView.reuseIdentifier) as? CoverLetterHeaderView
             cvView?.titleLabel.text = viewModel.coverLetterItems[ifExists: section]?.title
-            
+            cvView?.backgroundColor = .clear
             return cvView
         }
     }
