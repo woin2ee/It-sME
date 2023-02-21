@@ -9,13 +9,9 @@ import UIKit
 
 class IntrinsicHeightTableView: UITableView {
     
-    override init(frame: CGRect, style: UITableView.Style) {
+    override init(frame: CGRect = .zero, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         self.isScrollEnabled = false
-    }
-    
-    convenience init(style: UITableView.Style) {
-        self.init(frame: .zero, style: style)
     }
     
     required init?(coder: NSCoder) {
