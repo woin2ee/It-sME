@@ -38,6 +38,7 @@
 		DA26989C298A4709008A5D30 /* DefaultJsonDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA26989B298A4709008A5D30 /* DefaultJsonDecoder.swift */; };
 		DA481D78299E085700C8C734 /* IconInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D77299E085700C8C734 /* IconInputViewModel.swift */; };
 		DA481D7F299F5DAD00C8C734 /* EditProfileViewController+HeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D7E299F5DAD00C8C734 /* EditProfileViewController+HeaderLabel.swift */; };
+		DA481D87299F735E00C8C734 /* UserInfoItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */; };
 		DA6BCE5E292F04910059E95D /* DatabaseReferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */; };
 		DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */; };
 		DA7201EA29309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */; };
@@ -134,6 +135,7 @@
 		DA26989B298A4709008A5D30 /* DefaultJsonDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultJsonDecoder.swift; sourceTree = "<group>"; };
 		DA481D77299E085700C8C734 /* IconInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconInputViewModel.swift; sourceTree = "<group>"; };
 		DA481D7E299F5DAD00C8C734 /* EditProfileViewController+HeaderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditProfileViewController+HeaderLabel.swift"; sourceTree = "<group>"; };
+		DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoItemCell.swift; sourceTree = "<group>"; };
 		DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseReferenceManager.swift; sourceTree = "<group>"; };
 		DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseReference+Rx.swift"; sourceTree = "<group>"; };
 		DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASAuthorizationControllerDelegateProxy.swift; sourceTree = "<group>"; };
@@ -372,6 +374,7 @@
 			isa = PBXGroup;
 			children = (
 				DA481D7E299F5DAD00C8C734 /* EditProfileViewController+HeaderLabel.swift */,
+				DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */,
 			);
 			path = CommonView;
 			sourceTree = "<group>";
@@ -832,6 +835,7 @@
 				DA7201F02931EEE600A69519 /* CVInfo.swift in Sources */,
 				DAB06A40291BA61100E86163 /* ViewModelType.swift in Sources */,
 				DAAC7A5C29715C0A0083A8E9 /* Rx+Ext.swift in Sources */,
+				DA481D87299F735E00C8C734 /* UserInfoItemCell.swift in Sources */,
 				DAFCFB67294AC00C006B287A /* UIStackView+.swift in Sources */,
 				DA7201FA2931F90900A69519 /* Resume.swift in Sources */,
 				DAAB20BF299B682900D5338D /* UserInfoItemInputTableView.swift in Sources */,
