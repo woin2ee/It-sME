@@ -266,8 +266,8 @@ private extension EditProfileViewController {
     }
     
     func presentPhoneNumberEditingView() {
-        let viewController: PhoneNumberEditingViewController
-        print(#function)
+        let viewController: PhoneNumberEditingViewController = .init(viewModel: viewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func presentEmailEditingView() {
