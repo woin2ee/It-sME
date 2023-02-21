@@ -11,7 +11,17 @@ import SnapKit
 
 final class ProfileInfoComponent: UIStackView {
     
-    var userInfoItem: UserInfoItem
+    /**
+     `ProfileInfoComponent` 가 현재 보여주고 있는 `UserInfoItem` 객체입니다.
+     
+     Component 의 내용을 변경하고 싶다면 이 프로퍼티에 새 객체를 할당하십시오.
+     */
+    var userInfoItem: UserInfoItem {
+        didSet {
+            icon.text = userInfoItem.icon.toEmoji
+            contents.text = userInfoItem.contents
+        }
+    }
     
     // MARK: - UI Components
     

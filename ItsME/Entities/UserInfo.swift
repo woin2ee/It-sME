@@ -21,6 +21,10 @@ final class UserInfo: Decodable {
         [birthday, address, phoneNumber, email]
     }
     
+    var allItems: [UserInfoItem] {
+        defaultItems + otherItems
+    }
+    
     init(
         name: String,
         profileImageURL: String,
