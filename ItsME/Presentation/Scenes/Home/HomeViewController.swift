@@ -25,7 +25,10 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
         let action = UIAction { _ in
             let editProfileVM: EditProfileViewModel = .init(userInfo: self.viewModel.userInfo)
             let editProfileVC: EditProfileViewController = .init(viewModel: editProfileVM)
-            self.navigationController?.pushViewController(editProfileVC, animated: true)
+            let profileEditingNavigationController: UINavigationController = .init(rootViewController: editProfileVC)
+            profileEditingNavigationController.modalTransitionStyle = .coverVertical
+            profileEditingNavigationController.modalPresentationStyle = .fullScreen
+            self.present(profileEditingNavigationController, animated: true)
         }
         
         let button = UIButton(type: .system, primaryAction: action)
