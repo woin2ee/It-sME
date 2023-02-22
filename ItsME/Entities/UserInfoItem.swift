@@ -9,7 +9,7 @@ import Foundation
 
 final class UserInfoItem: Decodable {
     let icon: UserInfoItemIcon
-    let contents: String
+    var contents: String
     
     init(icon: UserInfoItemIcon, contents: String) {
         self.icon = icon

@@ -37,6 +37,10 @@ final class EditProfileViewModel: ViewModelType {
         return dateFormatter.date(from: birthday) ?? .now
     }
     
+    var currentEmail: String {
+        userInfoRelay.value.email.contents
+    }
+    
     var currentOtherItems: [UserInfoItem] {
         userInfoRelay.value.otherItems
     }
@@ -63,8 +67,9 @@ final class EditProfileViewModel: ViewModelType {
                     .asDriverOnErrorJustComplete()
             }
         
-        let userName = Driver.merge(input.userName.skip(1),
+        let userName = Driver.merge(input.userName,
                                     userInfoDriver.map { $0.name })
+            .startWith(userInfoRelay.value.name)
             .do(onNext: { userName in
                 self.userInfoRelay.value.name = userName
             })
@@ -106,6 +111,12 @@ extension EditProfileViewModel {
     func updateBirthday(_ userInfoItem: UserInfoItem) {
         let userInfo = userInfoRelay.value
         userInfo.birthday = userInfoItem
+        userInfoRelay.accept(userInfo)
+    }
+    
+    func updateEmail(_ email: String) {
+        let userInfo = userInfoRelay.value
+        userInfo.email.contents = email
         userInfoRelay.accept(userInfo)
     }
     

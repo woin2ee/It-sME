@@ -11,7 +11,7 @@ import UIKit
 
 final class ContentsInputCell: UITableViewCell {
     
-    private lazy var titleLabel: UILabel = .init().then {
+    lazy var titleLabel: UILabel = .init().then {
         $0.text = "URL"
     }
     
