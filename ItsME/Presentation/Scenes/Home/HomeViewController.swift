@@ -21,11 +21,11 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
         return profileImageView
     }()
     
-    private lazy var editProfileButton: UIButton = {
+    private lazy var profileEditingButton: UIButton = {
         let action = UIAction { _ in
-            let editProfileVM: EditProfileViewModel = .init(userInfo: self.viewModel.userInfo)
-            let editProfileVC: EditProfileViewController = .init(viewModel: editProfileVM)
-            let profileEditingNavigationController: UINavigationController = .init(rootViewController: editProfileVC)
+            let profileEditingViewModel: ProfileEditingViewModel = .init(userInfo: self.viewModel.userInfo)
+            let profileEditingViewController: ProfileEditingViewController = .init(viewModel: profileEditingViewModel)
+            let profileEditingNavigationController: UINavigationController = .init(rootViewController: profileEditingViewController)
             profileEditingNavigationController.modalTransitionStyle = .coverVertical
             profileEditingNavigationController.modalPresentationStyle = .fullScreen
             self.present(profileEditingNavigationController, animated: true)
@@ -179,7 +179,7 @@ private extension HomeViewController {
     }
     
     func configureSubviews() {
-        self.view.addSubview(editProfileButton)
+        self.view.addSubview(profileEditingButton)
         self.view.addSubview(profileImageView)
         self.view.addSubview(vStackLayout)
         cardScrollView.addSubview(hStackLayout)
@@ -211,7 +211,7 @@ private extension HomeViewController {
         pageController.currentPageIndicatorTintColor = .black
         pageController.backgroundColor = .mainColor
         
-        editProfileButton.snp.makeConstraints { make in
+        profileEditingButton.snp.makeConstraints { make in
             make.width.equalTo(100)
             make.height.equalTo(40)
             make.trailing.equalTo(-30)
@@ -221,7 +221,7 @@ private extension HomeViewController {
         profileImageView.snp.makeConstraints { make in
             make.width.height.equalTo(self.view.snp.width).multipliedBy(0.4)
             make.centerX.equalTo(self.view)
-            make.top.equalTo(editProfileButton.snp.bottom).offset(20)
+            make.top.equalTo(profileEditingButton.snp.bottom).offset(20)
         }
         
         vStackLayout.snp.makeConstraints { make in
