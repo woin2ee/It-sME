@@ -16,8 +16,8 @@ class TotalCVViewController: UIViewController {
     
     var viewModel: TotalCVViewModel!
     let headerFont: UIFont = .systemFont(ofSize: 30, weight: .bold)
-    
     private var isEditingMode: Bool = false
+    let navigationBarHeight = 91
     
     private var fullScrollView: UIScrollView = .init().then {
         $0.backgroundColor = .systemBackground
@@ -121,7 +121,7 @@ class TotalCVViewController: UIViewController {
                 }
                 self.justCVView.alpha = 0
                 self.fullScrollView.backgroundColor = .secondarySystemBackground
-                self.fullScrollView.setContentOffset(CGPoint(x: 0, y: -91), animated: true)
+                self.fullScrollView.setContentOffset(CGPoint(x: 0, y: -self.navigationBarHeight), animated: true)
                 self.view.layoutIfNeeded()
             }, completion: { _ in
                 self.justCVView.removeFromSuperview()
@@ -132,7 +132,7 @@ class TotalCVViewController: UIViewController {
                 self.configureSubviews()
                 self.justCVView.alpha = 1
                 self.fullScrollView.backgroundColor = .systemBackground
-                self.fullScrollView.setContentOffset(CGPoint(x: 0, y: -91), animated: true)
+                self.fullScrollView.setContentOffset(CGPoint(x: 0, y: -self.navigationBarHeight), animated: true)
                 self.view.layoutIfNeeded()
             })
         }
