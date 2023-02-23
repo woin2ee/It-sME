@@ -428,7 +428,7 @@
 			path = AlertViewController;
 			sourceTree = "<group>";
 		};
-		DAA5B9632938760900BAB04E /* EditProfile */ = {
+		DAA5B9632938760900BAB04E /* ProfileEditing */ = {
 			isa = PBXGroup;
 			children = (
 				DA481D7D299F5D7900C8C734 /* CommonView */,
@@ -440,7 +440,7 @@
 				DA018806296D10F8002C5CB0 /* EmailEditing */,
 				DAAF1BD8299A0F8000728376 /* OtherItem */,
 			);
-			path = EditProfile;
+			path = ProfileEditing;
 			sourceTree = "<group>";
 		};
 		DAAB20C2299B79E400D5338D /* TableView */ = {
@@ -546,7 +546,7 @@
 			isa = PBXGroup;
 			children = (
 				D0472F012964054400E83F61 /* TotalCV */,
-				DAA5B9632938760900BAB04E /* EditProfile */,
+				DAA5B9632938760900BAB04E /* ProfileEditing */,
 				DA739DD82923989A003AEE4C /* Login */,
 				DAAFB24D2918EC38007A8DF0 /* Home */,
 			);
