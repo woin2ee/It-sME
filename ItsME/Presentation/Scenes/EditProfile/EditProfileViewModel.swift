@@ -36,11 +36,18 @@ final class EditProfileViewModel: ViewModelType {
         }
         return dateFormatter.date(from: birthday) ?? .now
     }
-    
+    var currentEmail: String {
+        userInfoRelay.value.email.contents
+    }
+    var currentPhoneNumber: String {
+        userInfoRelay.value.phoneNumber.contents
+    }
+    var currentAddress: String {
+        userInfoRelay.value.address.contents
+    }
     var currentOtherItems: [UserInfoItem] {
         userInfoRelay.value.otherItems
     }
-    
     var currentAllItems: [UserInfoItem] {
         userInfoRelay.value.allItems
     }
@@ -63,8 +70,9 @@ final class EditProfileViewModel: ViewModelType {
                     .asDriverOnErrorJustComplete()
             }
         
-        let userName = Driver.merge(input.userName.skip(1),
+        let userName = Driver.merge(input.userName,
                                     userInfoDriver.map { $0.name })
+            .startWith(userInfoRelay.value.name)
             .do(onNext: { userName in
                 self.userInfoRelay.value.name = userName
             })
@@ -109,11 +117,29 @@ extension EditProfileViewModel {
         userInfoRelay.accept(userInfo)
     }
     
+    func updateEmail(_ email: String) {
+        let userInfo = userInfoRelay.value
+        userInfo.email.contents = email
+        userInfoRelay.accept(userInfo)
+    }
+    
     func updateOtherUserInfoItem(_ userInfoItem: UserInfoItem, at index: IndexPath.Index) {
         let userInfo = userInfoRelay.value
         if userInfo.otherItems.indices ~= index {
             userInfo.otherItems[index] = userInfoItem
             userInfoRelay.accept(userInfo)
         }
+    }
+    
+    func updatePhoneNumber(_ phoneNumber: String) {
+        let userInfo = userInfoRelay.value
+        userInfo.phoneNumber.contents = phoneNumber
+        userInfoRelay.accept(userInfo)
+    }
+    
+    func updateAddress(_ address: String) {
+        let userInfo = userInfoRelay.value
+        userInfo.address.contents = address
+        userInfoRelay.accept(userInfo)
     }
 }

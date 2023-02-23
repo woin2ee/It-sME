@@ -87,6 +87,17 @@ final class EditProfileViewController: UIViewController {
         $0.style = .done
     }
     
+    private lazy var backButton: UIBarButtonItem = .init(systemItem: .cancel).then {
+        $0.primaryAction = .init(handler: { [weak self] _ in
+            let title = "정말로 뒤로 가시겠습니까?"
+            let message = "소중한 회원님의 정보는 되돌릴 수 없습니다. 이 사실을 인지하고 뒤로 가시겠습니까?"
+            let alertVC = CommonAlertViewController(title: title, message: message, style: .confirm, okHandler: {
+                self?.dismiss(animated: true)
+            })
+            self?.present(alertVC, animated: true)
+        })
+    }
+    
     // MARK: - Initializer
     
     init(viewModel: EditProfileViewModel) {
@@ -157,7 +168,7 @@ private extension EditProfileViewController {
                 },
             output.tappedEditingCompleteButton
                 .emit(with: self, onNext: { owner, userInfo in
-                    owner.navigationController?.popViewController(animated: true)
+                    owner.dismiss(animated: true)
                 }),
         ]
             .forEach { $0.disposed(by: disposeBag) }
@@ -252,6 +263,7 @@ private extension EditProfileViewController {
         self.navigationItem.rightBarButtonItem = editingCompleteButton
         self.navigationController?.navigationBar.prefersLargeTitles = false
         self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationItem.leftBarButtonItem = backButton
     }
     
     func presentDatePickerView() {
@@ -261,18 +273,18 @@ private extension EditProfileViewController {
     }
     
     func presentAddressEditingView() {
-        let viewController: AddressEditingViewController
-        print(#function)
+        let viewController: AddressEditingViewController = .init(viewModel: viewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func presentPhoneNumberEditingView() {
-        let viewController: PhoneNumberEditingViewController
-        print(#function)
+        let viewController: PhoneNumberEditingViewController = .init(viewModel: viewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func presentEmailEditingView() {
-        let viewController: EmailEditingViewController
-        print(#function)
+        let viewController: EmailEditingViewController = .init(viewModel: viewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func presentOtherItemEditingView(with Item: UserInfoItem) {

@@ -1,29 +1,27 @@
 //
-//  IntrinsicHeightTableView.swift
+//  IntrinsicHeightTextView.swift
 //  ItsME
 //
-//  Created by Jaewon Yun on 2022/12/19.
+//  Created by Jaewon Yun on 2023/02/21.
 //
 
 import UIKit
 
-class IntrinsicHeightTableView: UITableView {
-    
-    override init(frame: CGRect = .zero, style: UITableView.Style) {
-        super.init(frame: frame, style: style)
-        self.isScrollEnabled = false
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        self.isScrollEnabled = false
-    }
+class IntrinsicHeightTextView: UITextView {
     
     override var intrinsicContentSize: CGSize {
         return .init(
             width: self.contentSize.width + self.contentInset.left + self.contentInset.right,
             height: self.contentSize.height + self.contentInset.top + self.contentInset.bottom
         )
+    }
+    
+    override init(frame: CGRect, textContainer: NSTextContainer?) {
+        super.init(frame: frame, textContainer: textContainer)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
     
     override func layoutSubviews() {

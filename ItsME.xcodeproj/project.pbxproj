@@ -38,6 +38,7 @@
 		DA481D78299E085700C8C734 /* IconInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D77299E085700C8C734 /* IconInputViewModel.swift */; };
 		DA481D7F299F5DAD00C8C734 /* EditProfileViewController+HeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D7E299F5DAD00C8C734 /* EditProfileViewController+HeaderLabel.swift */; };
 		DA481D87299F735E00C8C734 /* UserInfoItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */; };
+		DA481D8929A4BFE500C8C734 /* IntrinsicHeightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */; };
 		DA6BCE5E292F04910059E95D /* DatabaseReferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */; };
 		DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */; };
 		DA7201EA29309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */; };
@@ -136,6 +137,7 @@
 		DA481D77299E085700C8C734 /* IconInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconInputViewModel.swift; sourceTree = "<group>"; };
 		DA481D7E299F5DAD00C8C734 /* EditProfileViewController+HeaderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditProfileViewController+HeaderLabel.swift"; sourceTree = "<group>"; };
 		DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoItemCell.swift; sourceTree = "<group>"; };
+		DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrinsicHeightTextView.swift; sourceTree = "<group>"; };
 		DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseReferenceManager.swift; sourceTree = "<group>"; };
 		DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseReference+Rx.swift"; sourceTree = "<group>"; };
 		DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASAuthorizationControllerDelegateProxy.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 		D0CCF4E429260AF300AD4AE6 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				DA481D8A29A4BFF100C8C734 /* TextView */,
 				D06CD86929936B36005DFB3B /* TableSection */,
 				DAFCFB6D295068EE006B287A /* TableView */,
 				DAFCFB6A294C3622006B287A /* Cells */,
@@ -377,6 +380,14 @@
 				DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */,
 			);
 			path = CommonView;
+			sourceTree = "<group>";
+		};
+		DA481D8A29A4BFF100C8C734 /* TextView */ = {
+			isa = PBXGroup;
+			children = (
+				DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */,
+			);
+			path = TextView;
 			sourceTree = "<group>";
 		};
 		DA6BCE5F292F04930059E95D /* Firebase */ = {
@@ -843,6 +854,7 @@
 				D0CCF4E12925FB0100AD4AE6 /* UIView+.swift in Sources */,
 				D0CCF4E629260C2B00AD4AE6 /* ProfileInfoComponent.swift in Sources */,
 				DA7201EA29309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift in Sources */,
+				DA481D8929A4BFE500C8C734 /* IntrinsicHeightTextView.swift in Sources */,
 				DA26989C298A4709008A5D30 /* DefaultJsonDecoder.swift in Sources */,
 				DA01880B296D1471002C5CB0 /* AddressEditingViewController.swift in Sources */,
 				D0472F07296406BC00E83F61 /* TotalCVViewController.swift in Sources */,
