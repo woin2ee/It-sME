@@ -119,9 +119,13 @@ class TotalCVViewController: UIViewController {
                 self.bothView.snp.makeConstraints { make in
                     make.top.equalToSuperview()
                 }
+                
                 self.justCVView.alpha = 0
                 self.fullScrollView.backgroundColor = .secondarySystemBackground
                 self.fullScrollView.setContentOffset(CGPoint(x: 0, y: -self.navigationBarHeight), animated: true)
+                self.categoryTableView.setEditing(true, animated: true)
+                self.coverLetterTableView.setEditing(true, animated: true)
+                
                 self.view.layoutIfNeeded()
             }, completion: { _ in
                 self.justCVView.removeFromSuperview()
@@ -133,6 +137,9 @@ class TotalCVViewController: UIViewController {
                 self.justCVView.alpha = 1
                 self.fullScrollView.backgroundColor = .systemBackground
                 self.fullScrollView.setContentOffset(CGPoint(x: 0, y: -self.navigationBarHeight), animated: true)
+                self.categoryTableView.setEditing(false, animated: true)
+                self.coverLetterTableView.setEditing(false, animated: true)
+                
                 self.view.layoutIfNeeded()
             })
         }
@@ -326,13 +333,12 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
             let categoryView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CategoryHeaderView.reuseIdentifier) as? CategoryHeaderView
             categoryView?.titleLabel.text = viewModel.resumeCategory[section].title
             categoryView?.backgroundColor = .clear
-            
             return categoryView
         } else {
-            let cvView = tableView.dequeueReusableHeaderFooterView(withIdentifier:CoverLetterHeaderView.reuseIdentifier) as? CoverLetterHeaderView
-            cvView?.titleLabel.text = viewModel.coverLetterItems[ifExists: section]?.title
-            cvView?.backgroundColor = .clear
-            return cvView
+            let coverLetterView = tableView.dequeueReusableHeaderFooterView(withIdentifier:CoverLetterHeaderView.reuseIdentifier) as? CoverLetterHeaderView
+            coverLetterView?.titleLabel.text = viewModel.coverLetterItems[ifExists: section]?.title
+            coverLetterView?.backgroundColor = .clear
+            return coverLetterView
         }
     }
     
@@ -349,12 +355,12 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
             return categoryCell
             
         } else {
-            guard let cvCell = tableView.dequeueReusableCell(withIdentifier: CoverLetterCell.reuseIdentifier, for: indexPath) as? CoverLetterCell else {
+            guard let coverLetterCell = tableView.dequeueReusableCell(withIdentifier: CoverLetterCell.reuseIdentifier, for: indexPath) as? CoverLetterCell else {
                 return UITableViewCell()
             }
-            cvCell.contents.text = viewModel.coverLetterItems[ifExists: indexPath.section]?.contents
+            coverLetterCell.contents.text = viewModel.coverLetterItems[ifExists: indexPath.section]?.contents
             
-            return cvCell
+            return coverLetterCell
         }
     }
 }
