@@ -431,9 +431,9 @@
 		DAA5B9632938760900BAB04E /* ProfileEditing */ = {
 			isa = PBXGroup;
 			children = (
-				DA481D7D299F5D7900C8C734 /* CommonView */,
 				DAA5B9642938825A00BAB04E /* ProfileEditingViewController.swift */,
 				DAA5B9662938827200BAB04E /* ProfileEditingViewModel.swift */,
+				DA481D7D299F5D7900C8C734 /* CommonView */,
 				DA018803296D0E39002C5CB0 /* BirthdayEditing */,
 				DA018804296D10B5002C5CB0 /* AddressEditing */,
 				DA018805296D10BD002C5CB0 /* PhoneNumberEditing */,
