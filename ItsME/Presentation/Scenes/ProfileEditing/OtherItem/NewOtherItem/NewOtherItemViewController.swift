@@ -13,7 +13,9 @@ final class NewOtherItemViewController: UIViewController {
     
     private let viewModel: ProfileEditingViewModel
     
-    private lazy var userInfoItemInputTableView: UserInfoItemInputTableView = .init(style: .insetGrouped)
+    private lazy var userInfoItemInputTableView: UserInfoItemInputTableView = .init(style: .insetGrouped).then {
+        $0.backgroundColor = .clear
+    }
     
     private lazy var completeButton: UIBarButtonItem = .init().then {
         $0.primaryAction = .init(title: "추가", handler: { [weak self] _ in
