@@ -16,10 +16,10 @@ class CoverLetterHeaderView: UITableViewHeaderFooterView {
     //MARK: - UI Component
     
     lazy var titleLabel = UILabel().then {
-        $0.text = "제목"
+        $0.text = "자기소개서"
         $0.numberOfLines = 0
         $0.textColor = .systemBlue
-        $0.font = .systemFont(ofSize: 20, weight: .bold)
+        $0.font = .systemFont(ofSize: 30, weight: .bold)
     }
     
     override func awakeFromNib() {
@@ -46,8 +46,7 @@ private extension CoverLetterHeaderView {
         self.contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.leading.trailing.top.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-15)
-            make.height.equalTo(30)
+            make.height.equalTo(40)
         }
     }
 }

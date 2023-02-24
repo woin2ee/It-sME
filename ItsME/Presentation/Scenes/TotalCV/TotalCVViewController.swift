@@ -75,12 +75,6 @@ class TotalCVViewController: UIViewController {
         $0.sectionHeaderHeight = 45
     }
     
-    private lazy var coverLetterLabel: UILabel = .init().then {
-        $0.text = "자기소개서"
-        $0.font = headerFont
-        $0.textColor = .systemBlue
-    }
-    
     private lazy var coverLetterTableView: IntrinsicHeightTableView = .init().then {
         $0.delegate = self
         $0.dataSource = self
@@ -92,7 +86,7 @@ class TotalCVViewController: UIViewController {
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
         let sectionType = CoverLetterHeaderView.self
         $0.register(sectionType, forHeaderFooterViewReuseIdentifier: sectionType.reuseIdentifier)
-        $0.sectionHeaderHeight = 25
+        $0.sectionHeaderHeight = 45
     }
     
     private lazy var editModeButton: UIBarButtonItem = .init().then {
@@ -100,6 +94,18 @@ class TotalCVViewController: UIViewController {
             self.isEditingMode.toggle()
             self.changeButton()
             self.changeMode()
+        })
+        $0.style = .done
+    }
+    
+    private lazy var backButton: UIBarButtonItem = .init(systemItem: .cancel).then {
+        $0.primaryAction = .init(handler: { [weak self] _ in
+            let title = "정말로 뒤로 가시겠습니까?"
+            let message = "소중한 회원님의 정보는 되돌릴 수 없습니다. 이 사실을 인지하고 뒤로 가시겠습니까?"
+            let alertVC = CommonAlertViewController(title: title, message: message, style: .confirm, okHandler: {
+                self?.navigationController?.popViewController(animated: true)
+            })
+            self?.present(alertVC, animated: true)
         })
     }
     
@@ -121,13 +127,21 @@ class TotalCVViewController: UIViewController {
                 }
                 
                 self.justCVView.alpha = 0
-                self.fullScrollView.backgroundColor = .secondarySystemBackground
-                self.fullScrollView.setContentOffset(CGPoint(x: 0, y: -self.navigationBarHeight), animated: true)
+                self.categoryTableView.backgroundColor = .systemGray5
+                self.categoryTableView.layer.cornerRadius = 10
+                self.categoryTableView.layer.masksToBounds = true
                 self.categoryTableView.setEditing(true, animated: true)
+                
+                self.coverLetterTableView.backgroundColor = .systemGray5
+                self.coverLetterTableView.layer.cornerRadius = 10
+                self.coverLetterTableView.layer.masksToBounds = true
                 self.coverLetterTableView.setEditing(true, animated: true)
                 
+                self.fullScrollView.backgroundColor = .secondarySystemBackground
+                self.fullScrollView.setContentOffset(CGPoint(x: 0, y: -self.navigationBarHeight), animated: true)
+                
                 self.view.layoutIfNeeded()
-            }, completion: { _ in
+                self.navigationItem.leftBarButtonItem = self.backButton
                 self.justCVView.removeFromSuperview()
             })
         } else {
@@ -135,11 +149,18 @@ class TotalCVViewController: UIViewController {
                 self.bothView.removeFromSuperview()
                 self.configureSubviews()
                 self.justCVView.alpha = 1
+                
+                self.categoryTableView.backgroundColor = .clear
+                self.categoryTableView.layer.masksToBounds = false
+                
+                self.coverLetterTableView.backgroundColor = .clear
+                self.coverLetterTableView.layer.masksToBounds = false
+                
                 self.fullScrollView.backgroundColor = .systemBackground
                 self.fullScrollView.setContentOffset(CGPoint(x: 0, y: -self.navigationBarHeight), animated: true)
                 self.categoryTableView.setEditing(false, animated: true)
                 self.coverLetterTableView.setEditing(false, animated: true)
-                
+                self.navigationItem.leftBarButtonItem = nil
                 self.view.layoutIfNeeded()
             })
         }
@@ -168,6 +189,7 @@ class TotalCVViewController: UIViewController {
     func configureNavigationBar() {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationItem.rightBarButtonItem = editModeButton
+        
         //FIXME: - 화면을 끝까지 내렸을 때 자동으로 Large title로 변경되는 오류를 해결해줘야 함
         //        navigationController?.navigationBar.prefersLargeTitles = true
         //        UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).adjustsFontSizeToFitWidth = true
@@ -278,26 +300,20 @@ private extension TotalCVViewController {
         
         self.justCVView.addSubview(educationTableView)
         educationTableView.snp.makeConstraints { make in
-            make.top.equalTo(educationHeaderLabel.snp.bottom)
+            make.top.equalTo(educationHeaderLabel.snp.bottom).offset(5)
             make.bottom.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(24)
         }
         
         self.bothView.addSubview(categoryTableView)
         categoryTableView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
+            make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(15)
-        }
-        
-        self.bothView.addSubview(coverLetterLabel)
-        coverLetterLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.top.equalTo(categoryTableView.snp.bottom).offset(30)
         }
         
         self.bothView.addSubview(coverLetterTableView)
         coverLetterTableView.snp.makeConstraints { make in
-            make.top.equalTo(coverLetterLabel.snp.bottom).offset(10)
+            make.top.equalTo(categoryTableView.snp.bottom).offset(15)
             make.bottom.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(15)
         }
@@ -313,7 +329,7 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
         if tableView == categoryTableView {
             return viewModel.resumeCategory[section].items.count
         } else {
-            return 1
+            return viewModel.coverLetterItems.count
         }
     }
     
@@ -322,7 +338,7 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
         if tableView == categoryTableView {
             return viewModel.resumeCategory.count
         } else {
-            return viewModel.coverLetterItems.count
+            return 1
         }
     }
     
@@ -336,7 +352,6 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
             return categoryView
         } else {
             let coverLetterView = tableView.dequeueReusableHeaderFooterView(withIdentifier:CoverLetterHeaderView.reuseIdentifier) as? CoverLetterHeaderView
-            coverLetterView?.titleLabel.text = viewModel.coverLetterItems[ifExists: section]?.title
             coverLetterView?.backgroundColor = .clear
             return coverLetterView
         }
@@ -345,6 +360,7 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let resumeCategory = viewModel.resumeCategory
+        let coverLetterItem = viewModel.coverLetterItems
         
         if tableView == categoryTableView {
             guard let categoryCell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as? CategoryCell else {
@@ -358,7 +374,7 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
             guard let coverLetterCell = tableView.dequeueReusableCell(withIdentifier: CoverLetterCell.reuseIdentifier, for: indexPath) as? CoverLetterCell else {
                 return UITableViewCell()
             }
-            coverLetterCell.contents.text = viewModel.coverLetterItems[ifExists: indexPath.section]?.contents
+            coverLetterCell.bind(coverLetterItem: coverLetterItem[indexPath.section])
             
             return coverLetterCell
         }

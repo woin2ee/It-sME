@@ -89,14 +89,15 @@ private extension CategoryCell {
         
         self.addSubview(customBackgroundView)
         customBackgroundView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(5)
             make.bottom.equalToSuperview().offset(-cellBottomPadding)
         }
         
         self.contentView.addSubview(coverView)
         coverView.snp.makeConstraints { make in
-            make.top.trailing.equalToSuperview()
-            make.leading.equalToSuperview().offset(5)
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(5)
             make.bottom.equalToSuperview().offset(-cellBottomPadding)
         }
         
