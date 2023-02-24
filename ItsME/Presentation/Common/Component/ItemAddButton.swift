@@ -62,7 +62,7 @@ private extension ItemAddButton {
     
     func configureBorder() {
         borderLayer.fillColor = UIColor.clear.cgColor
-        borderLayer.strokeColor = UIColor.label.cgColor
+        borderLayer.strokeColor = UIColor.secondaryLabel.cgColor
         borderLayer.lineDashPattern = [2, 2]
         borderLayer.lineWidth = 1.0
         borderLayer.path = UIBezierPath.init(roundedRect: self.bounds, cornerRadius: cornerRadius).cgPath
