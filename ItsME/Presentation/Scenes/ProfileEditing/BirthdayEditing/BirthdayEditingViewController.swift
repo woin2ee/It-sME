@@ -20,22 +20,18 @@ final class BirthdayEditingViewController: UIViewController {
         $0.datePickerMode = .date
         $0.date = viewModel.currentBirthday
         $0.backgroundColor = .systemBackground
+        let action: UIAction = .init { [weak self] _ in
+            guard let self = self else { return }
+            self.updateBirthday(by: self.datePickerView.date)
+        }
+        $0.addAction(action, for: .valueChanged)
     }
     
     private lazy var completeButton: UIBarButtonItem = .init().then {
         $0.primaryAction = .init(title: "완료", handler: { [weak self] _ in
             guard let self = self else { return }
             self.dismiss(animated: false)
-            
-            let dateFormatter: DateFormatter = .init().then {
-                $0.dateFormat = "yyyy.MM.dd."
-            }
-            let birthday: String = dateFormatter.string(from: self.datePickerView.date)
-            let newItem: UserInfoItem = .init(
-                icon: .cake,
-                contents: birthday
-            )
-            self.viewModel.updateBirthday(newItem)
+            self.updateBirthday(by: self.datePickerView.date)
         })
     }
     
@@ -105,5 +101,17 @@ private extension BirthdayEditingViewController {
             make.width.equalToSuperview()
             make.bottom.equalTo(datePickerView.snp.top)
         }
+    }
+    
+    func updateBirthday(by date: Date) {
+        let dateFormatter: DateFormatter = .init().then {
+            $0.dateFormat = "yyyy.MM.dd."
+        }
+        let birthday: String = dateFormatter.string(from: date)
+        let newItem: UserInfoItem = .init(
+            icon: .cake,
+            contents: birthday
+        )
+        self.viewModel.updateBirthday(newItem)
     }
 }
