@@ -46,9 +46,15 @@ class CoverLetterCell: UITableViewCell {
 private extension CoverLetterCell {
     
     func configureSubviews() {
+        
+        self.backgroundColor = .systemBackground
+        self.layer.cornerRadius = 10
+        self.layer.masksToBounds = true
+        
         self.contentView.addSubview(contents)
         contents.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.leading.equalToSuperview().offset(10)
             make.bottom.top.equalToSuperview().inset(10)
         }
     }

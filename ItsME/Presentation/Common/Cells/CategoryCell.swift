@@ -11,6 +11,8 @@ import UIKit
 
 class CategoryCell: UITableViewCell {
     
+    private let cellBottomPadding = 5
+    
     //MARK: - UI Component
     private lazy var periodLabel = UILabel().then {
         $0.text = "기간"
@@ -35,6 +37,18 @@ class CategoryCell: UITableViewCell {
         $0.numberOfLines = 0
         $0.textColor = .label
         $0.font = .boldSystemFont(ofSize: 15)
+    }
+    
+    private var customBackgroundView: UIView = .init().then {
+        $0.backgroundColor = .systemBackground
+        $0.layer.cornerRadius = 10
+        $0.layer.masksToBounds = true
+    }
+    
+    private var coverView: UIView = .init().then {
+        $0.backgroundColor = .systemBackground
+        $0.layer.cornerRadius = 10
+        $0.layer.masksToBounds = true
     }
     
     override func awakeFromNib() {
@@ -71,14 +85,29 @@ private extension CategoryCell {
     
     func configureSubviews() {
         
-        self.contentView.addSubview(periodLabel)
+        self.backgroundColor = .clear
+        
+        self.addSubview(customBackgroundView)
+        customBackgroundView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-cellBottomPadding)
+        }
+        
+        self.contentView.addSubview(coverView)
+        coverView.snp.makeConstraints { make in
+            make.top.trailing.equalToSuperview()
+            make.leading.equalToSuperview().offset(5)
+            make.bottom.equalToSuperview().offset(-cellBottomPadding)
+        }
+        
+        self.coverView.addSubview(periodLabel)
         periodLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview()
+            make.leading.equalToSuperview().offset(10)
             make.bottom.lessThanOrEqualToSuperview()
             make.top.equalToSuperview().offset(10)
         }
         
-        self.contentView.addSubview(titleLabel)
+        self.coverView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview()
             make.leading.equalTo(periodLabel.snp.trailing).offset(15)
@@ -86,7 +115,7 @@ private extension CategoryCell {
             make.top.equalToSuperview().offset(10)
         }
         
-        self.contentView.addSubview(secondTitleLabel)
+        self.coverView.addSubview(secondTitleLabel)
         secondTitleLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview()
             make.leading.equalTo(periodLabel.snp.trailing).offset(15)
@@ -94,7 +123,7 @@ private extension CategoryCell {
             make.width.equalTo(titleLabel.snp.width)
         }
         
-        self.contentView.addSubview(descriptionLabel)
+        self.coverView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview()
             make.leading.equalTo(periodLabel.snp.trailing).offset(15)
