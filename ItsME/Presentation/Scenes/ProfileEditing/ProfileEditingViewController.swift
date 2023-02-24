@@ -346,6 +346,7 @@ extension ProfileEditingViewController: UITableViewDelegate {
         default:
             return
         }
+        tableView.cellForRow(at: indexPath)?.setSelected(false, animated: true)
     }
 }
 
