@@ -17,7 +17,7 @@ final class AddressEditingViewController: UIViewController {
     
     private lazy var addressTextView: IntrinsicHeightTextView = .init().then {
         $0.text = viewModel.currentAddress
-        $0.backgroundColor = .systemBackground
+        $0.backgroundColor = .secondarySystemGroupedBackground
         $0.textContainerInset = .init(top: 10, left: 10, bottom: 10, right: 10)
         $0.font = .systemFont(ofSize: 17)
         $0.keyboardType = .twitter
@@ -46,7 +46,7 @@ final class AddressEditingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .secondarySystemBackground
+        self.view.backgroundColor = .systemGroupedBackground
         configureSubviews()
         configureNavigationBar()
     }

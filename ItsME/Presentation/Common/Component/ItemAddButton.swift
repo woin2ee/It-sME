@@ -42,7 +42,7 @@ final class ItemAddButton: UIButton {
 private extension ItemAddButton {
     
     func configureColor() {
-        setBackgroundColor(.systemBackground, for: .normal)
+        setBackgroundColor(.secondarySystemGroupedBackground, for: .normal)
         setBackgroundColor(.systemGray4, for: .highlighted)
         self.tintColor = mainColor
     }

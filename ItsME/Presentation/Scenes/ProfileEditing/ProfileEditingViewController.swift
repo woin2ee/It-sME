@@ -53,7 +53,7 @@ final class ProfileEditingViewController: UIViewController {
         $0.placeholder = "이름"
         $0.keyboardType = .namePhonePad
         $0.autocorrectionType = .no
-        $0.backgroundColor = .systemBackground
+        $0.backgroundColor = .secondarySystemGroupedBackground
         $0.layer.cornerRadius = 16
         $0.layer.masksToBounds = true
         $0.layer.borderColor = UIColor.tertiaryLabel.cgColor
@@ -119,7 +119,7 @@ final class ProfileEditingViewController: UIViewController {
         super.viewDidLoad()
         bindViewModel()
         configureSubviews()
-        self.view.backgroundColor = .secondarySystemBackground
+        self.view.backgroundColor = .systemGroupedBackground
     }
     
     override func viewWillAppear(_ animated: Bool) {
