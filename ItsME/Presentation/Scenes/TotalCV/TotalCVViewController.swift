@@ -95,6 +95,18 @@ class TotalCVViewController: UIViewController {
             self.changeButton()
             self.changeMode()
         })
+        $0.style = .done
+    }
+    
+    private lazy var backButton: UIBarButtonItem = .init(systemItem: .cancel).then {
+        $0.primaryAction = .init(handler: { [weak self] _ in
+            let title = "정말로 뒤로 가시겠습니까?"
+            let message = "소중한 회원님의 정보는 되돌릴 수 없습니다. 이 사실을 인지하고 뒤로 가시겠습니까?"
+            let alertVC = CommonAlertViewController(title: title, message: message, style: .confirm, okHandler: {
+                self?.navigationController?.popViewController(animated: true)
+            })
+            self?.present(alertVC, animated: true)
+        })
     }
     
     func changeButton() {
@@ -118,18 +130,18 @@ class TotalCVViewController: UIViewController {
                 self.categoryTableView.backgroundColor = .systemGray5
                 self.categoryTableView.layer.cornerRadius = 10
                 self.categoryTableView.layer.masksToBounds = true
+                self.categoryTableView.setEditing(true, animated: true)
                 
                 self.coverLetterTableView.backgroundColor = .systemGray5
                 self.coverLetterTableView.layer.cornerRadius = 10
                 self.coverLetterTableView.layer.masksToBounds = true
+                self.coverLetterTableView.setEditing(true, animated: true)
                 
                 self.fullScrollView.backgroundColor = .secondarySystemBackground
                 self.fullScrollView.setContentOffset(CGPoint(x: 0, y: -self.navigationBarHeight), animated: true)
-                self.categoryTableView.setEditing(true, animated: true)
-                self.coverLetterTableView.setEditing(true, animated: true)
                 
                 self.view.layoutIfNeeded()
-            }, completion: { _ in
+                self.navigationItem.leftBarButtonItem = self.backButton
                 self.justCVView.removeFromSuperview()
             })
         } else {
@@ -148,7 +160,7 @@ class TotalCVViewController: UIViewController {
                 self.fullScrollView.setContentOffset(CGPoint(x: 0, y: -self.navigationBarHeight), animated: true)
                 self.categoryTableView.setEditing(false, animated: true)
                 self.coverLetterTableView.setEditing(false, animated: true)
-                
+                self.navigationItem.leftBarButtonItem = nil
                 self.view.layoutIfNeeded()
             })
         }
@@ -177,6 +189,7 @@ class TotalCVViewController: UIViewController {
     func configureNavigationBar() {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationItem.rightBarButtonItem = editModeButton
+        
         //FIXME: - 화면을 끝까지 내렸을 때 자동으로 Large title로 변경되는 오류를 해결해줘야 함
         //        navigationController?.navigationBar.prefersLargeTitles = true
         //        UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).adjustsFontSizeToFitWidth = true
