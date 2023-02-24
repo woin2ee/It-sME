@@ -12,7 +12,7 @@ import UIKit
 
 final class PhoneNumberEditingViewController: UIViewController {
     
-    private let viewModel: EditProfileViewModel
+    private let viewModel: ProfileEditingViewModel
     
     // MARK: - UI Components
     
@@ -33,7 +33,7 @@ final class PhoneNumberEditingViewController: UIViewController {
     
     // MARK: - Initalizer
     
-    init(viewModel: EditProfileViewModel) {
+    init(viewModel: ProfileEditingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

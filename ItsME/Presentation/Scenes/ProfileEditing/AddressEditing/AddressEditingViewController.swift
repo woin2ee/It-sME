@@ -11,7 +11,7 @@ import UIKit
 
 final class AddressEditingViewController: UIViewController {
     
-    private let viewModel: EditProfileViewModel
+    private let viewModel: ProfileEditingViewModel
     
     // MARK: - UI Components
     
@@ -33,7 +33,7 @@ final class AddressEditingViewController: UIViewController {
     
     // MARK: - Initializer
     
-    init(viewModel: EditProfileViewModel) {
+    init(viewModel: ProfileEditingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
