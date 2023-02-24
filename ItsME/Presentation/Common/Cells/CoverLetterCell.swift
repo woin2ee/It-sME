@@ -11,12 +11,33 @@ import UIKit
 
 class CoverLetterCell: UITableViewCell {
     
+    private let cellBottomPadding = 5
+    
     //MARK: - UI Component
+    
+    lazy var titleLabel = UILabel().then {
+        $0.text = "제목"
+        $0.numberOfLines = 0
+        $0.textColor = .systemBlue
+        $0.font = .boldSystemFont(ofSize: 20)
+    }
     lazy var contents = UILabel().then {
         $0.text = "내용"
         $0.numberOfLines = 0
         $0.textColor = .label
         $0.font = .boldSystemFont(ofSize: 15)
+    }
+    
+    private var customBackgroundView: UIView = .init().then {
+        $0.backgroundColor = .systemBackground
+        $0.layer.cornerRadius = 10
+        $0.layer.masksToBounds = true
+    }
+    
+    private var coverView: UIView = .init().then {
+        $0.backgroundColor = .systemBackground
+        $0.layer.cornerRadius = 10
+        $0.layer.masksToBounds = true
     }
     
     override func awakeFromNib() {
@@ -39,6 +60,11 @@ class CoverLetterCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func bind(coverLetterItem: CoverLetterItem) {
+        titleLabel.text = coverLetterItem.title
+        contents.text = coverLetterItem.contents
+    }
+    
 }
 
 // MARK: - Private Functions
@@ -47,15 +73,33 @@ private extension CoverLetterCell {
     
     func configureSubviews() {
         
-        self.backgroundColor = .systemBackground
-        self.layer.cornerRadius = 10
-        self.layer.masksToBounds = true
+        self.backgroundColor = .clear
         
-        self.contentView.addSubview(contents)
+        self.addSubview(customBackgroundView)
+        customBackgroundView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(5)
+            make.bottom.equalToSuperview().offset(-cellBottomPadding)
+        }
+        
+        self.contentView.addSubview(coverView)
+        coverView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(5)
+            make.bottom.equalToSuperview().offset(-cellBottomPadding)
+        }
+        
+        self.coverView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview().offset(10)
+        }
+        
+        self.coverView.addSubview(contents)
         contents.snp.makeConstraints { make in
-            make.trailing.equalToSuperview()
-            make.leading.equalToSuperview().offset(10)
-            make.bottom.top.equalToSuperview().inset(10)
+            make.top.equalTo(titleLabel.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview().offset(10)
+            make.bottom.equalToSuperview()
         }
     }
     
