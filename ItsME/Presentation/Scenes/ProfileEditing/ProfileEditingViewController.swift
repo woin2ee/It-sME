@@ -46,14 +46,18 @@ final class ProfileEditingViewController: UIViewController {
         $0.configuration = .borderless()
     }
     
-    private lazy var nameTextField: UITextField = .init().then {
-        $0.borderStyle = .line
+    private lazy var nameTextField: InsetTextField = .init().then {
         $0.textColor = .label
         $0.font = .systemFont(ofSize: 20)
         $0.textAlignment = .center
         $0.placeholder = "이름"
         $0.keyboardType = .namePhonePad
         $0.autocorrectionType = .no
+        $0.backgroundColor = .systemBackground
+        $0.layer.cornerRadius = 16
+        $0.layer.masksToBounds = true
+        $0.layer.borderColor = UIColor.tertiaryLabel.cgColor
+        $0.layer.borderWidth = 1.0
     }
     
     private lazy var totalUserInfoItemHeaderLabel: HeaderLabel = .init(title: "기본정보")
@@ -208,12 +212,12 @@ private extension ProfileEditingViewController {
         self.contentView.addSubview(nameTextField)
         nameTextField.snp.makeConstraints { make in
             make.top.equalTo(profileEditButton.snp.bottom).offset(20)
-            make.leading.trailing.equalToSuperview().inset(30)
+            make.leading.trailing.equalToSuperview().inset(50)
         }
         
         self.contentView.addSubview(totalUserInfoItemHeaderLabel)
         totalUserInfoItemHeaderLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameTextField.snp.bottom).offset(25)
+            make.top.equalTo(nameTextField.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview().inset(headerHorizontalInsetValue)
         }
         
