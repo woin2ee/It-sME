@@ -1,5 +1,5 @@
 //
-//  EditProfileViewController.swift
+//  ProfileEditingViewController.swift
 //  ItsME
 //
 //  Created by Jaewon Yun on 2022/12/01.
@@ -10,11 +10,11 @@ import SnapKit
 import Then
 import UIKit
 
-final class EditProfileViewController: UIViewController {
+final class ProfileEditingViewController: UIViewController {
     
     private let disposeBag: DisposeBag = .init()
     
-    private let viewModel: EditProfileViewModel
+    private let viewModel: ProfileEditingViewModel
     
     // MARK: - UI Components
     
@@ -100,7 +100,7 @@ final class EditProfileViewController: UIViewController {
     
     // MARK: - Initializer
     
-    init(viewModel: EditProfileViewModel) {
+    init(viewModel: ProfileEditingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -136,10 +136,10 @@ final class EditProfileViewController: UIViewController {
 
 // MARK: - Binding ViewModel
 
-private extension EditProfileViewController {
+private extension ProfileEditingViewController {
     
     func bindViewModel() {
-        let input = EditProfileViewModel.Input.init(
+        let input = ProfileEditingViewModel.Input.init(
             tapEditingCompleteButton: editingCompleteButton.rx.tap.asSignal(),
             userName: nameTextField.rx.text.orEmpty.asDriver(),
             viewDidLoad: .just(())
@@ -177,7 +177,7 @@ private extension EditProfileViewController {
 
 // MARK: - Private functions
 
-private extension EditProfileViewController {
+private extension ProfileEditingViewController {
     
     func configureSubviews() {
         let headerHorizontalInsetValue = 26
@@ -320,7 +320,7 @@ private extension EditProfileViewController {
 
 // MARK: - UITableViewDelegate
 
-extension EditProfileViewController: UITableViewDelegate {
+extension ProfileEditingViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         switch tableView {
@@ -351,7 +351,7 @@ extension EditProfileViewController: UITableViewDelegate {
 
 // MARK: - UIImagePickerControllerDelegate
 
-extension EditProfileViewController: UIImagePickerControllerDelegate {
+extension ProfileEditingViewController: UIImagePickerControllerDelegate {
     
     func imagePickerController(
         _ picker: UIImagePickerController,
@@ -371,7 +371,7 @@ extension EditProfileViewController: UIImagePickerControllerDelegate {
 
 // MARK: - UIScrollViewDelegate
 
-extension EditProfileViewController: UIScrollViewDelegate {
+extension ProfileEditingViewController: UIScrollViewDelegate {
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         nameTextField.resignFirstResponder()
@@ -380,7 +380,7 @@ extension EditProfileViewController: UIScrollViewDelegate {
 
 // MARK: - UINavigationControllerDelegate
 
-extension EditProfileViewController: UINavigationControllerDelegate {
+extension ProfileEditingViewController: UINavigationControllerDelegate {
 }
 
 #if DEBUG
@@ -390,15 +390,15 @@ extension EditProfileViewController: UINavigationControllerDelegate {
 import SwiftUI
 
 @available(iOS 13.0, *)
-struct EditProfileViewControllerRepresenter: UIViewControllerRepresentable {
+struct ProfileEditingViewControllerRepresenter: UIViewControllerRepresentable {
     
     typealias UIViewControllerType = UIViewController
     
     func makeUIViewController(context: Context) -> UIViewController {
         let navigationController: UINavigationController = .init(rootViewController: .init())
-        let editProfileViewModel: EditProfileViewModel = .init(userInfo: .empty)
-        let editProfileViewController: EditProfileViewController = .init(viewModel: editProfileViewModel)
-        navigationController.pushViewController(editProfileViewController, animated: false)
+        let profileEditingViewModel: ProfileEditingViewModel = .init(userInfo: .empty)
+        let profileEditingViewController: ProfileEditingViewController = .init(viewModel: profileEditingViewModel)
+        navigationController.pushViewController(profileEditingViewController, animated: false)
         return navigationController
     }
     
@@ -407,10 +407,10 @@ struct EditProfileViewControllerRepresenter: UIViewControllerRepresentable {
 }
 
 @available(iOS 13.0, *)
-struct EditProfileViewControllerPreview: PreviewProvider {
+struct ProfileEditingViewControllerPreview: PreviewProvider {
     
     static var previews: some View {
-        EditProfileViewControllerRepresenter()
+        ProfileEditingViewControllerRepresenter()
     }
 }
 

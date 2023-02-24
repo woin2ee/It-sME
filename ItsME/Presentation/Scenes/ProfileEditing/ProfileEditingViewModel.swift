@@ -1,5 +1,5 @@
 //
-//  EditProfileViewModel.swift
+//  ProfileEditingViewModel.swift
 //  ItsME
 //
 //  Created by Jaewon Yun on 2022/12/01.
@@ -9,7 +9,7 @@ import RxSwift
 import RxCocoa
 import Then
 
-final class EditProfileViewModel: ViewModelType {
+final class ProfileEditingViewModel: ViewModelType {
     
     struct Input {
         let tapEditingCompleteButton: Signal<Void>
@@ -97,7 +97,7 @@ final class EditProfileViewModel: ViewModelType {
 
 // MARK: - Internal Functions
 
-extension EditProfileViewModel {
+extension ProfileEditingViewModel {
     
     func deleteEducationItem(at indexPath: IndexPath) {
         let userInfo = userInfoRelay.value

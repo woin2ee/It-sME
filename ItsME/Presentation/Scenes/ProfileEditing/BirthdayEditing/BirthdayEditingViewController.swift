@@ -11,7 +11,7 @@ import UIKit
 
 final class BirthdayEditingViewController: UIViewController {
     
-    private let viewModel: EditProfileViewModel
+    private let viewModel: ProfileEditingViewModel
     
     // MARK: - UI Components
     
@@ -41,7 +41,7 @@ final class BirthdayEditingViewController: UIViewController {
     
     // MARK: - Initializer
     
-    init(viewModel: EditProfileViewModel) {
+    init(viewModel: ProfileEditingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

@@ -1,5 +1,5 @@
 //
-//  EditProfileViewController+HeaderLabel.swift
+//  ProfileEditingViewController+HeaderLabel.swift
 //  ItsME
 //
 //  Created by Jaewon Yun on 2023/02/17.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension EditProfileViewController {
+extension ProfileEditingViewController {
     
     final class HeaderLabel: UILabel {
         

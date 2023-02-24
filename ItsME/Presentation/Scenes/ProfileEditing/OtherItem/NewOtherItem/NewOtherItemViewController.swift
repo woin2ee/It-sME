@@ -11,7 +11,7 @@ import UIKit
 
 final class NewOtherItemViewController: UIViewController {
     
-    private let viewModel: EditProfileViewModel
+    private let viewModel: ProfileEditingViewModel
     
     private lazy var userInfoItemInputTableView: UserInfoItemInputTableView = .init(style: .insetGrouped)
     
@@ -34,7 +34,7 @@ final class NewOtherItemViewController: UIViewController {
     
     // MARK: - Initializer
     
-    init(viewModel: EditProfileViewModel) {
+    init(viewModel: ProfileEditingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

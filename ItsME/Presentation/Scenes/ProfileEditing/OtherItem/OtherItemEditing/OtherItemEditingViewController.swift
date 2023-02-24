@@ -11,7 +11,7 @@ import UIKit
 
 final class OtherItemEditingViewController: UIViewController {
     
-    private let viewModel: EditProfileViewModel
+    private let viewModel: ProfileEditingViewModel
     
     private var indexOfItem: IndexPath.Index
     
@@ -31,7 +31,7 @@ final class OtherItemEditingViewController: UIViewController {
     
     // MARK: - Initializer
     
-    init(viewModel: EditProfileViewModel, indexOfItem: IndexPath.Index) {
+    init(viewModel: ProfileEditingViewModel, indexOfItem: IndexPath.Index) {
         self.viewModel = viewModel
         self.indexOfItem = indexOfItem
         super.init(nibName: nil, bundle: nil)
