@@ -19,6 +19,7 @@ final class OtherItemEditingViewController: UIViewController {
         .then {
             let userInfoItem: UserInfoItem = viewModel.currentOtherItems[ifExists: indexOfItem] ?? .empty
             $0.bind(userInfoItem: userInfoItem)
+            $0.backgroundColor = .clear
         }
     
     private lazy var completeButton: UIBarButtonItem = .init().then {

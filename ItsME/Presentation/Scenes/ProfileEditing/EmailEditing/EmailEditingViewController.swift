@@ -17,6 +17,7 @@ final class EmailEditingViewController: UIViewController {
     
     private lazy var inputTableView: IntrinsicHeightTableView = .init(style: .insetGrouped).then {
         $0.dataSource = self
+        $0.backgroundColor = .clear
     }
     
     var inputCell: ContentsInputCell? {
