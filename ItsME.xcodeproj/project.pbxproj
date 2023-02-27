@@ -22,6 +22,7 @@
 		D09AC98C2918DE8C0081C0EC /* ItsMETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC98B2918DE8C0081C0EC /* ItsMETests.swift */; };
 		D09AC9982918DE8C0081C0EC /* ItsMEUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9972918DE8C0081C0EC /* ItsMEUITestsLaunchTests.swift */; };
 		D0B1BA862988DA75003ACD41 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B1BA852988DA75003ACD41 /* CategoryCell.swift */; };
+		D0C755B629AC889F0070FC08 /* EditModeAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C755B529AC889F0070FC08 /* EditModeAddButton.swift */; };
 		D0CCF4E12925FB0100AD4AE6 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E02925FB0100AD4AE6 /* UIView+.swift */; };
 		D0CCF4E3292604BE00AD4AE6 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E2292604BE00AD4AE6 /* UIColor+.swift */; };
 		D0CCF4E629260C2B00AD4AE6 /* ProfileInfoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E529260C2B00AD4AE6 /* ProfileInfoComponent.swift */; };
@@ -121,6 +122,7 @@
 		D09AC9952918DE8C0081C0EC /* ItsMEUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMEUITests.swift; sourceTree = "<group>"; };
 		D09AC9972918DE8C0081C0EC /* ItsMEUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMEUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D0B1BA852988DA75003ACD41 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		D0C755B529AC889F0070FC08 /* EditModeAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModeAddButton.swift; sourceTree = "<group>"; };
 		D0CCF4E02925FB0100AD4AE6 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		D0CCF4E2292604BE00AD4AE6 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		D0CCF4E529260C2B00AD4AE6 /* ProfileInfoComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoComponent.swift; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 				D0CCF503292CCB4C00AD4AE6 /* CVCard.swift */,
 				DAE6090A2942095400481742 /* TotalUserInfoItemStackView.swift */,
 				DAE6090C29420D9900481742 /* ItemAddButton.swift */,
+				D0C755B529AC889F0070FC08 /* EditModeAddButton.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -859,6 +862,7 @@
 				DA01880B296D1471002C5CB0 /* AddressEditingViewController.swift in Sources */,
 				D0472F07296406BC00E83F61 /* TotalCVViewController.swift in Sources */,
 				DA739DDA292398BE003AEE4C /* LoginViewController.swift in Sources */,
+				D0C755B629AC889F0070FC08 /* EditModeAddButton.swift in Sources */,
 				DA01880F296D147D002C5CB0 /* EmailEditingViewController.swift in Sources */,
 				D0472F09296406CF00E83F61 /* TotalCVViewModel.swift in Sources */,
 				D09AC9752918DE8B0081C0EC /* AppDelegate.swift in Sources */,
