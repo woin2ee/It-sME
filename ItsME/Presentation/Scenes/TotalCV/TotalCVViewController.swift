@@ -20,6 +20,7 @@ class TotalCVViewController: UIViewController {
     let navigationBarHeight = 91
     let editModeInset = 15
     let commonOffset = 15
+    let addButtonSize = 120
     
     private var fullScrollView: UIScrollView = .init().then {
         $0.backgroundColor = .systemBackground
@@ -124,6 +125,20 @@ class TotalCVViewController: UIViewController {
     }
     
     private lazy var categoryAddButton: EditModeAddButton = .init().then {
+        var config = UIButton.Configuration.filled()
+        let title: NSAttributedString = .init(string: "카테고리를 더 추가하시겠습니까?", attributes: [.font: UIFont.systemFont(ofSize: 20, weight: .heavy)])
+        $0.setAttributedTitle(title, for: .normal)
+        config.titleAlignment = .center
+        config.background.backgroundColor = .clear
+        config.baseForegroundColor = .mainColor
+        config.image = UIImage(systemName: "plus.rectangle.fill", withConfiguration: UIImage.SymbolConfiguration.init(pointSize: 30, weight: .heavy, scale: .large))
+        config.imagePlacement = .bottom
+        config.imagePadding = 10
+        $0.setBackgroundColor(.systemBackground, for: .normal)
+        $0.setBackgroundColor(.systemGray4, for: .highlighted)
+        
+        $0.configuration = config
+        
         let action: UIAction = .init(handler: { [weak self] _ in
             print("PRESS categoryAddButton!!!!")
         })
@@ -131,6 +146,19 @@ class TotalCVViewController: UIViewController {
     }
     
     private lazy var coverLetterAddButton: EditModeAddButton = .init().then {
+        var config = UIButton.Configuration.filled()
+        let title: NSAttributedString = .init(string: "항목을 더 추가하시겠습니까?", attributes: [.font: UIFont.systemFont(ofSize: 20, weight: .heavy)])
+        $0.setAttributedTitle(title, for: .normal)
+        config.titleAlignment = .center
+        config.background.backgroundColor = .systemBackground
+        config.baseForegroundColor = .mainColor
+        config.image = UIImage(systemName: "plus.rectangle.fill", withConfiguration: UIImage.SymbolConfiguration.init(pointSize: 30, weight: .heavy, scale: .large))
+        config.imagePlacement = .bottom
+        config.imagePadding = 10
+        $0.setBackgroundColor(.systemGray4, for: .normal)
+        $0.setBackgroundColor(.systemBackground, for: .highlighted)
+        
+        $0.configuration = config
         let action: UIAction = .init(handler: { [weak self] _ in
             print("PRESS coverLetterAddButton!!!!")
         })
@@ -169,7 +197,7 @@ class TotalCVViewController: UIViewController {
                 self.categoryEditingView.addSubview(self.categoryAddButton)
                 self.categoryAddButton.snp.makeConstraints { make in
                     make.top.equalTo(self.categoryTableView.snp.bottom).offset(self.commonOffset)
-                    make.height.equalTo(70)
+                    make.height.equalTo(self.addButtonSize)
                     make.leading.trailing.equalToSuperview().inset(self.editModeInset)
                     make.bottom.equalToSuperview().offset(-self.commonOffset)
                 }
@@ -177,7 +205,7 @@ class TotalCVViewController: UIViewController {
                 self.coverLetterEditingView.addSubview(self.coverLetterAddButton)
                 self.coverLetterAddButton.snp.makeConstraints{ make in
                     make.top.equalTo(self.coverLetterTableView.snp.bottom).offset(self.commonOffset)
-                    make.height.equalTo(70)
+                    make.height.equalTo(self.addButtonSize)
                     make.bottom.equalToSuperview().offset(-self.commonOffset)
                     make.leading.trailing.equalToSuperview().inset(self.editModeInset)
                 }
