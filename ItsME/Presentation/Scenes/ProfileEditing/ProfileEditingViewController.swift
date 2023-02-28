@@ -46,14 +46,18 @@ final class ProfileEditingViewController: UIViewController {
         $0.configuration = .borderless()
     }
     
-    private lazy var nameTextField: UITextField = .init().then {
-        $0.borderStyle = .line
+    private lazy var nameTextField: InsetTextField = .init().then {
         $0.textColor = .label
         $0.font = .systemFont(ofSize: 20)
         $0.textAlignment = .center
         $0.placeholder = "이름"
         $0.keyboardType = .namePhonePad
         $0.autocorrectionType = .no
+        $0.backgroundColor = .secondarySystemGroupedBackground
+        $0.layer.cornerRadius = 16
+        $0.layer.masksToBounds = true
+        $0.layer.borderColor = UIColor.tertiaryLabel.cgColor
+        $0.layer.borderWidth = 1.0
     }
     
     private lazy var totalUserInfoItemHeaderLabel: HeaderLabel = .init(title: "기본정보")
@@ -64,7 +68,7 @@ final class ProfileEditingViewController: UIViewController {
         $0.backgroundColor = .clear
     }
     
-    private lazy var userInfoItemAddButton: ItemAddButton = .init().then {
+    private lazy var userInfoItemAdditionButton: ItemAddButton = .init().then {
         let action: UIAction = .init(handler: { [weak self] _ in
             self?.presentNewOtherItemView()
         })
@@ -115,7 +119,7 @@ final class ProfileEditingViewController: UIViewController {
         super.viewDidLoad()
         bindViewModel()
         configureSubviews()
-        self.view.backgroundColor = .secondarySystemBackground
+        self.view.backgroundColor = .systemGroupedBackground
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -208,12 +212,12 @@ private extension ProfileEditingViewController {
         self.contentView.addSubview(nameTextField)
         nameTextField.snp.makeConstraints { make in
             make.top.equalTo(profileEditButton.snp.bottom).offset(20)
-            make.leading.trailing.equalToSuperview().inset(30)
+            make.leading.trailing.equalToSuperview().inset(50)
         }
         
         self.contentView.addSubview(totalUserInfoItemHeaderLabel)
         totalUserInfoItemHeaderLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameTextField.snp.bottom).offset(25)
+            make.top.equalTo(nameTextField.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview().inset(headerHorizontalInsetValue)
         }
         
@@ -225,11 +229,11 @@ private extension ProfileEditingViewController {
             make.left.right.equalToSuperview()
         }
         
-        let tableViewToAdditionButtonOffset = -25
-        let additionButtonHorizontalInset = 30
+        let tableViewToAdditionButtonOffset = -28
+        let additionButtonHorizontalInset = 20
         
-        self.contentView.addSubview(userInfoItemAddButton)
-        userInfoItemAddButton.snp.makeConstraints { make in
+        self.contentView.addSubview(userInfoItemAdditionButton)
+        userInfoItemAdditionButton.snp.makeConstraints { make in
             make.top.equalTo(userInfoItemTableView.snp.bottom).offset(tableViewToAdditionButtonOffset)
             make.centerX.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(additionButtonHorizontalInset)
@@ -239,7 +243,7 @@ private extension ProfileEditingViewController {
         self.contentView.addSubview(educationHeaderLabel)
         educationHeaderLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(headerHorizontalInsetValue)
-            make.top.equalTo(userInfoItemAddButton.snp.bottom).offset(20)
+            make.top.equalTo(userInfoItemAdditionButton.snp.bottom).offset(20)
         }
         
         self.contentView.addSubview(educationTableView)
@@ -346,6 +350,7 @@ extension ProfileEditingViewController: UITableViewDelegate {
         default:
             return
         }
+        tableView.cellForRow(at: indexPath)?.setSelected(false, animated: true)
     }
 }
 

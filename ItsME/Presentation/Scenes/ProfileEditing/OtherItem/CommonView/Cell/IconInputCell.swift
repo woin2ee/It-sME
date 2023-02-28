@@ -31,7 +31,7 @@ final class IconInputCell: UITableViewCell {
     init(style: UITableViewCell.CellStyle, reuseIdentifier: String?, viewModel: IconInputViewModel) {
         self.viewModel = viewModel
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = .systemBackground
+        self.backgroundColor = .secondarySystemGroupedBackground
         configureSubviews()
         bindViewModel()
     }

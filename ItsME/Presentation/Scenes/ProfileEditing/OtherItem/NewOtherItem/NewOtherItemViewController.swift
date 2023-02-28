@@ -29,7 +29,7 @@ final class NewOtherItemViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .secondarySystemBackground
+        self.view.backgroundColor = .systemGroupedBackground
         configureSubviews()
         configureNavigationBar()
     }
