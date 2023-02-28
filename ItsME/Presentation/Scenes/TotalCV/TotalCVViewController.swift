@@ -18,6 +18,8 @@ class TotalCVViewController: UIViewController {
     let headerFont: UIFont = .systemFont(ofSize: 30, weight: .bold)
     private var isEditingMode: Bool = false
     let navigationBarHeight = 91
+    let editModeInset = 15
+    let commonOffset = 15
     
     private var fullScrollView: UIScrollView = .init().then {
         $0.backgroundColor = .systemBackground
@@ -35,6 +37,18 @@ class TotalCVViewController: UIViewController {
     
     private var bothView: UIView = .init().then {
         $0.backgroundColor = .clear
+    }
+    
+    private var categoryEditingView: UIView = .init().then {
+        $0.backgroundColor = .clear
+        $0.layer.cornerRadius = 10
+        $0.layer.masksToBounds = true
+    }
+    
+    private var coverLetterEditingView: UIView = .init().then {
+        $0.backgroundColor = .clear
+        $0.layer.cornerRadius = 10
+        $0.layer.masksToBounds = true
     }
     
     private lazy var profileImageView =  UIImageView().then {
@@ -109,6 +123,20 @@ class TotalCVViewController: UIViewController {
         })
     }
     
+    private lazy var categoryAddButton: EditModeAddButton = .init().then {
+        let action: UIAction = .init(handler: { [weak self] _ in
+            print("PRESS categoryAddButton!!!!")
+        })
+        $0.addAction(action, for: .touchUpInside)
+    }
+    
+    private lazy var coverLetterAddButton: EditModeAddButton = .init().then {
+        let action: UIAction = .init(handler: { [weak self] _ in
+            print("PRESS coverLetterAddButton!!!!")
+        })
+        $0.addAction(action, for: .touchUpInside)
+    }
+    
     func changeButton() {
         if isEditingMode {
             self.editModeButton.image = nil
@@ -125,16 +153,40 @@ class TotalCVViewController: UIViewController {
                 self.bothView.snp.makeConstraints { make in
                     make.top.equalToSuperview()
                 }
+                self.categoryTableView.snp.removeConstraints()
+                self.coverLetterTableView.snp.removeConstraints()
+                
+                self.categoryTableView.snp.makeConstraints { make in
+                    make.top.equalToSuperview()
+                    make.leading.trailing.equalToSuperview().inset(self.editModeInset)
+                }
+                
+                self.coverLetterTableView.snp.makeConstraints { make in
+                    make.top.equalToSuperview().offset(self.commonOffset)
+                    make.leading.trailing.equalToSuperview().inset(self.editModeInset)
+                }
+                
+                self.categoryEditingView.addSubview(self.categoryAddButton)
+                self.categoryAddButton.snp.makeConstraints { make in
+                    make.top.equalTo(self.categoryTableView.snp.bottom).offset(self.commonOffset)
+                    make.height.equalTo(70)
+                    make.leading.trailing.equalToSuperview().inset(self.editModeInset)
+                    make.bottom.equalToSuperview().offset(-self.commonOffset)
+                }
+                
+                self.coverLetterEditingView.addSubview(self.coverLetterAddButton)
+                self.coverLetterAddButton.snp.makeConstraints{ make in
+                    make.top.equalTo(self.coverLetterTableView.snp.bottom).offset(self.commonOffset)
+                    make.height.equalTo(70)
+                    make.bottom.equalToSuperview().offset(-self.commonOffset)
+                    make.leading.trailing.equalToSuperview().inset(self.editModeInset)
+                }
                 
                 self.justCVView.alpha = 0
-                self.categoryTableView.backgroundColor = .systemGray5
-                self.categoryTableView.layer.cornerRadius = 10
-                self.categoryTableView.layer.masksToBounds = true
+                self.categoryEditingView.backgroundColor = .systemGray5
                 self.categoryTableView.setEditing(true, animated: true)
                 
-                self.coverLetterTableView.backgroundColor = .systemGray5
-                self.coverLetterTableView.layer.cornerRadius = 10
-                self.coverLetterTableView.layer.masksToBounds = true
+                self.coverLetterEditingView.backgroundColor = .systemGray5
                 self.coverLetterTableView.setEditing(true, animated: true)
                 
                 self.fullScrollView.backgroundColor = .secondarySystemBackground
@@ -146,20 +198,28 @@ class TotalCVViewController: UIViewController {
             })
         } else {
             UIView.animate(withDuration: 0.5, animations: {
+                
+                self.categoryEditingView.backgroundColor = .clear
+                self.categoryAddButton.removeFromSuperview()
+                self.categoryTableView.setEditing(false, animated: true)
+                self.categoryTableView.snp.makeConstraints { make in
+                    make.bottom.equalToSuperview().offset(self.commonOffset)
+                }
+                
+                self.coverLetterEditingView.backgroundColor = .clear
+                self.coverLetterAddButton.removeFromSuperview()
+                self.coverLetterTableView.setEditing(false, animated: true)
+                self.coverLetterTableView.snp.makeConstraints { make in
+                    make.bottom.equalToSuperview().offset(self.commonOffset)
+                }
+                
                 self.bothView.removeFromSuperview()
                 self.configureSubviews()
                 self.justCVView.alpha = 1
                 
-                self.categoryTableView.backgroundColor = .clear
-                self.categoryTableView.layer.masksToBounds = false
-                
-                self.coverLetterTableView.backgroundColor = .clear
-                self.coverLetterTableView.layer.masksToBounds = false
-                
                 self.fullScrollView.backgroundColor = .systemBackground
                 self.fullScrollView.setContentOffset(CGPoint(x: 0, y: -self.navigationBarHeight), animated: true)
-                self.categoryTableView.setEditing(false, animated: true)
-                self.coverLetterTableView.setEditing(false, animated: true)
+                
                 self.navigationItem.leftBarButtonItem = nil
                 self.view.layoutIfNeeded()
             })
@@ -305,18 +365,34 @@ private extension TotalCVViewController {
             make.leading.trailing.equalToSuperview().inset(24)
         }
         
-        self.bothView.addSubview(categoryTableView)
-        categoryTableView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(15)
+        self.bothView.addSubview(categoryEditingView)
+        categoryEditingView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(commonOffset)
+            make.leading.trailing.equalToSuperview().inset(editModeInset)
         }
         
-        self.bothView.addSubview(coverLetterTableView)
-        coverLetterTableView.snp.makeConstraints { make in
-            make.top.equalTo(categoryTableView.snp.bottom).offset(15)
-            make.bottom.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(15)
+        self.categoryEditingView.addSubview(categoryTableView)
+        categoryTableView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(editModeInset)
+            make.bottom.equalToSuperview().offset(-commonOffset)
         }
+        
+        self.bothView.addSubview(coverLetterEditingView)
+        coverLetterEditingView.snp.makeConstraints { make in
+            make.top.equalTo(categoryEditingView.snp.bottom).offset(commonOffset)
+            make.leading.trailing.equalToSuperview().inset(editModeInset)
+            make.bottom.equalToSuperview()
+        }
+        
+        self.coverLetterEditingView.addSubview(coverLetterTableView)
+        coverLetterTableView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(commonOffset)
+            make.leading.trailing.equalToSuperview().inset(editModeInset)
+            make.bottom.equalToSuperview().offset(-commonOffset)
+        }
+        
+        
         
     }
 }
