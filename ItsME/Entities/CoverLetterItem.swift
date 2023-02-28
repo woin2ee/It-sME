@@ -8,8 +8,8 @@
 import Foundation
 
 final class CoverLetterItem: Decodable {
-    let title: String
-    let contents: String
+    var title: String
+    var contents: String
     
     init(title: String, contents: String) {
         self.title = title

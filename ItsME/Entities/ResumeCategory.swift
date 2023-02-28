@@ -8,8 +8,8 @@
 import Foundation
 
 final class ResumeCategory: Decodable {
-    let title: String
-    let items: [ResumeItem]
+    var title: String
+    var items: [ResumeItem]
     
     init(title: String, items: [ResumeItem]) {
         self.title = title

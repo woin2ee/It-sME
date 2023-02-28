@@ -30,8 +30,8 @@ final class TotalCVViewModel: ViewModelType {
         behaviorRelay.value.resume.category
     }
     
-    var coverLetterItems: [CoverLetterItem] {
-        behaviorRelay.value.coverLetter.items
+    var coverLetter: CoverLetter {
+        behaviorRelay.value.coverLetter
     }
     
     init(cvInfo: CVInfo) {

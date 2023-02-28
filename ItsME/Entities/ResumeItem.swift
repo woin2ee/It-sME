@@ -8,10 +8,10 @@
 import Foundation
 
 final class ResumeItem: Decodable {
-    let period: String
-    let title: String
-    let secondTitle: String
-    let description: String
+    var period: String
+    var title: String
+    var secondTitle: String
+    var description: String
     
     init(period: String, title: String, secondTitle: String, description: String) {
         self.period = period

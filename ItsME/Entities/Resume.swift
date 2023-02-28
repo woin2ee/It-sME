@@ -8,7 +8,7 @@
 import Foundation
 
 final class Resume: Decodable {
-    let category: [ResumeCategory]
+    var category: [ResumeCategory]
     
     init(category: [ResumeCategory]) {
         self.category = category
