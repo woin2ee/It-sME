@@ -213,9 +213,11 @@ class TotalCVViewController: UIViewController {
                 self.justCVView.alpha = 0
                 self.categoryEditingView.backgroundColor = .systemGray5
                 self.categoryTableView.setEditing(true, animated: true)
+                self.categoryTableView.isUserInteractionEnabled = true
                 
                 self.coverLetterEditingView.backgroundColor = .systemGray5
                 self.coverLetterTableView.setEditing(true, animated: true)
+                self.coverLetterTableView.isUserInteractionEnabled = true
                 
                 self.fullScrollView.backgroundColor = .secondarySystemBackground
                 self.fullScrollView.setContentOffset(CGPoint(x: 0, y: -self.navigationBarHeight), animated: true)
@@ -230,6 +232,7 @@ class TotalCVViewController: UIViewController {
                 self.categoryEditingView.backgroundColor = .clear
                 self.categoryAddButton.removeFromSuperview()
                 self.categoryTableView.setEditing(false, animated: true)
+                self.categoryTableView.isUserInteractionEnabled = false
                 self.categoryTableView.snp.makeConstraints { make in
                     make.bottom.equalToSuperview().offset(self.commonOffset)
                 }
@@ -237,6 +240,7 @@ class TotalCVViewController: UIViewController {
                 self.coverLetterEditingView.backgroundColor = .clear
                 self.coverLetterAddButton.removeFromSuperview()
                 self.coverLetterTableView.setEditing(false, animated: true)
+                self.coverLetterTableView.isUserInteractionEnabled = false
                 self.coverLetterTableView.snp.makeConstraints { make in
                     make.bottom.equalToSuperview().offset(self.commonOffset)
                 }
@@ -433,7 +437,7 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
         if tableView == categoryTableView {
             return viewModel.resumeCategory[section].items.count
         } else {
-            return viewModel.coverLetterItems.count
+            return viewModel.coverLetter.items.count
         }
     }
     
@@ -464,7 +468,7 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let resumeCategory = viewModel.resumeCategory
-        let coverLetterItem = viewModel.coverLetterItems
+        let coverLetter = viewModel.coverLetter
         
         if tableView == categoryTableView {
             guard let categoryCell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as? CategoryCell else {
@@ -478,9 +482,44 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
             guard let coverLetterCell = tableView.dequeueReusableCell(withIdentifier: CoverLetterCell.reuseIdentifier, for: indexPath) as? CoverLetterCell else {
                 return UITableViewCell()
             }
-            coverLetterCell.bind(coverLetterItem: coverLetterItem[indexPath.section])
+            coverLetterCell.bind(coverLetterItem: coverLetter.items[indexPath.row])
             
             return coverLetterCell
         }
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        let resumeCategory = viewModel.resumeCategory
+        let coverLetter = viewModel.coverLetter
+        
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            if tableView == categoryTableView {
+                print("categoryTableView delete")
+                resumeCategory[indexPath.section].items.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+            
+            if tableView == coverLetterTableView {
+                print("coverLetterTableView delete")
+                coverLetter.items.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+        } else if editingStyle == UITableViewCell.EditingStyle.insert {
+            if tableView == categoryTableView {
+                print("categoryTableView insert")
+                tableView.insertRows(at: [indexPath], with: .automatic)
+            }
+            
+            if tableView == coverLetterTableView {
+                print("coverLetterTableView insert")
+                tableView.insertRows(at: [indexPath], with: .automatic)
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        
+//FIXME: - 선택한 셀이 섹션이 넘어가지 않게끔, 데이터 처리
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 final class CoverLetter: Decodable {
-    let items: [CoverLetterItem]
+    var items: [CoverLetterItem]
     
     init(items: [CoverLetterItem]) {
         self.items = items
