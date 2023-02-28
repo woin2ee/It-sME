@@ -11,16 +11,11 @@ import SnapKit
 
 class EditModeAddButton: UIButton {
     
-    let fontSize: CGFloat = 30
-    let mainColor: UIColor = .mainColor
     let borderLayer = CAShapeLayer()
     let cornerRadius: CGFloat = 10.0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        configureSymbolImage()
-        configureTitle()
         
         self.layer.cornerRadius = cornerRadius
         self.clipsToBounds = true
@@ -35,33 +30,10 @@ class EditModeAddButton: UIButton {
         configureBorder()
     }
     
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
-        configureColor()
-    }
 }
 
 // MARK: - Private Functions
 private extension EditModeAddButton {
-    
-    func configureColor() {
-        setBackgroundColor(.systemBackground, for: .normal)
-        setBackgroundColor(.systemGray4, for: .highlighted)
-        self.tintColor = mainColor
-    }
-    
-    func configureSymbolImage() {
-        let configuration: UIImage.SymbolConfiguration = .init(pointSize: fontSize, weight: .heavy, scale: .default)
-        let symbolImage: UIImage? = .init(systemName: "plus.rectangle.fill", withConfiguration: configuration)
-        self.setImage(symbolImage, for: .normal)
-        self.setImage(symbolImage, for: .highlighted)
-    }
-    
-    func configureTitle() {
-        let title: NSAttributedString = .init(string: "항목 추가", attributes: [.font: UIFont.systemFont(ofSize: fontSize, weight: .heavy)])
-        self.setAttributedTitle(title, for: .normal)
-        self.setTitleColor(mainColor, for: .normal)
-    }
     
     func configureBorder() {
         borderLayer.fillColor = UIColor.clear.cgColor
@@ -72,4 +44,3 @@ private extension EditModeAddButton {
         self.layer.addSublayer(borderLayer)
     }
 }
-
