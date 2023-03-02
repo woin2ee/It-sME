@@ -12,6 +12,13 @@ final class EducationItem: Decodable {
     let title: String
     let description: String
     
+    var entranceDate: String? {
+        period.components(separatedBy: "-")[ifExists: 0]?.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    var graduateDate: String? {
+        period.components(separatedBy: "-")[ifExists: 1]?.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
     init(period: String, title: String, description: String) {
         self.period = period
         self.title = title
@@ -27,5 +34,12 @@ extension EducationItem: Equatable {
         lhs.period == rhs.period &&
         lhs.title == rhs.title &&
         lhs.description == rhs.description
+    }
+}
+
+extension EducationItem {
+    
+    static var empty: EducationItem {
+        .init(period: "", title: "", description: "")
     }
 }
