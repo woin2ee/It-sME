@@ -43,6 +43,7 @@
 		DA481D8929A4BFE500C8C734 /* IntrinsicHeightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */; };
 		DA6B3CDB29ADEE33002BB159 /* UIEdgeInsets+All.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B3CDA29ADEE33002BB159 /* UIEdgeInsets+All.swift */; };
 		DA6B3CE229B08E95002BB159 /* SnapKit+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B3CE129B08E95002BB159 /* SnapKit+.swift */; };
+		DA6B3CE529B09D99002BB159 /* YearMonthPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B3CE429B09D99002BB159 /* YearMonthPickerView.swift */; };
 		DA6BCE5E292F04910059E95D /* DatabaseReferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */; };
 		DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */; };
 		DA7201EA29309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */; };
@@ -147,6 +148,7 @@
 		DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrinsicHeightTextView.swift; sourceTree = "<group>"; };
 		DA6B3CDA29ADEE33002BB159 /* UIEdgeInsets+All.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+All.swift"; sourceTree = "<group>"; };
 		DA6B3CE129B08E95002BB159 /* SnapKit+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SnapKit+.swift"; sourceTree = "<group>"; };
+		DA6B3CE429B09D99002BB159 /* YearMonthPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearMonthPickerView.swift; sourceTree = "<group>"; };
 		DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseReferenceManager.swift; sourceTree = "<group>"; };
 		DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseReference+Rx.swift"; sourceTree = "<group>"; };
 		DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASAuthorizationControllerDelegateProxy.swift; sourceTree = "<group>"; };
@@ -312,6 +314,7 @@
 		D0CCF4E429260AF300AD4AE6 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				DA6B3CE329B09D86002BB159 /* PickerView */,
 				DADDEEA729A8B3D100D31B02 /* TextField */,
 				DA481D8A29A4BFF100C8C734 /* TextView */,
 				D06CD86929936B36005DFB3B /* TableSection */,
@@ -400,6 +403,14 @@
 				DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */,
 			);
 			path = TextView;
+			sourceTree = "<group>";
+		};
+		DA6B3CE329B09D86002BB159 /* PickerView */ = {
+			isa = PBXGroup;
+			children = (
+				DA6B3CE429B09D99002BB159 /* YearMonthPickerView.swift */,
+			);
+			path = PickerView;
 			sourceTree = "<group>";
 		};
 		DA6BCE5F292F04930059E95D /* Firebase */ = {
@@ -914,6 +925,7 @@
 				DA7201EE2931E7BB00A69519 /* CVRepository.swift in Sources */,
 				DAFCFB7529543D3B006B287A /* UIButton+.swift in Sources */,
 				DAA5B9672938827200BAB04E /* ProfileEditingViewModel.swift in Sources */,
+				DA6B3CE529B09D99002BB159 /* YearMonthPickerView.swift in Sources */,
 				DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */,
 				DA739DDC292398C3003AEE4C /* LoginViewModel.swift in Sources */,
 				DAE6090B2942095400481742 /* TotalUserInfoItemStackView.swift in Sources */,
