@@ -21,8 +21,8 @@ class IntrinsicHeightTableView: UITableView {
     
     override var intrinsicContentSize: CGSize {
         return .init(
-            width: self.contentSize.width + self.contentInset.left + self.contentInset.right,
-            height: self.contentSize.height + self.contentInset.top + self.contentInset.bottom
+            width: self.contentSize.width + self.adjustedContentInset.left + self.adjustedContentInset.right,
+            height: self.contentSize.height + self.adjustedContentInset.top + self.adjustedContentInset.bottom
         )
     }
     

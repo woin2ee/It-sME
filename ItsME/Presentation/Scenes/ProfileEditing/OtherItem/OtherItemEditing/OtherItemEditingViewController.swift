@@ -22,6 +22,10 @@ final class OtherItemEditingViewController: UIViewController {
             $0.backgroundColor = .clear
         }
     
+    var contentsInputCell: ContentsInputCell? {
+        userInfoItemInputTableView.visibleCells[ifExists: 1] as? ContentsInputCell
+    }
+    
     private lazy var completeButton: UIBarButtonItem = .init().then {
         $0.primaryAction = .init(title: "완료", handler: { [weak self] _ in
             guard let self = self else { return }
@@ -49,6 +53,11 @@ final class OtherItemEditingViewController: UIViewController {
         self.view.backgroundColor = .systemGroupedBackground
         configureSubviews()
         configureNavigationBar()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        contentsInputCell?.contentsTextField.becomeFirstResponder()
     }
 }
 
