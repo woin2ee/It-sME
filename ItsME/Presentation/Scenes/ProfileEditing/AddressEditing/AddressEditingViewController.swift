@@ -50,7 +50,14 @@ final class AddressEditingViewController: UIViewController {
         configureSubviews()
         configureNavigationBar()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        addressTextView.becomeFirstResponder()
+    }
 }
+
+// MARK: - Private Functions
 
 private extension AddressEditingViewController {
     
