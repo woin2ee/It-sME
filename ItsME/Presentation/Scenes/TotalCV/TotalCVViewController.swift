@@ -518,8 +518,38 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    
+    func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        
+        if tableView == categoryTableView {
+            if sourceIndexPath.section != proposedDestinationIndexPath.section {
+                return sourceIndexPath
+            } else {
+                return proposedDestinationIndexPath
+            }
+        } else {
+            return proposedDestinationIndexPath
+        }
+    }
+    
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
+        let resumeCategory = viewModel.resumeCategory
+        let coverLetter = viewModel.coverLetter
+        
+        if tableView == categoryTableView {
+            print("\(resumeCategory[sourceIndexPath.section].items) from: \(sourceIndexPath.row) -> to: \(destinationIndexPath.row)")
+            let targetItem = resumeCategory[sourceIndexPath.section].items[sourceIndexPath.row]
+            resumeCategory[sourceIndexPath.section].items.remove(at: sourceIndexPath.row)
+            resumeCategory[destinationIndexPath.section].items.insert(targetItem, at: destinationIndexPath.row)
+        }
+        
+        if tableView == coverLetterTableView {
+            print("\(coverLetter.items) from: \(sourceIndexPath.row) -> to: \(destinationIndexPath.row)")
+            let targetItem = coverLetter.items[sourceIndexPath.row]
+            coverLetter.items.remove(at: sourceIndexPath.row)
+            coverLetter.items.insert(targetItem, at: destinationIndexPath.row)
+        }
 //FIXME: - 선택한 셀이 섹션이 넘어가지 않게끔, 데이터 처리
     }
 }
