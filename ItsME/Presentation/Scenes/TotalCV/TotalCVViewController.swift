@@ -518,6 +518,20 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    
+    func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        
+        if tableView == categoryTableView {
+            if sourceIndexPath.section != proposedDestinationIndexPath.section {
+                return sourceIndexPath
+            } else {
+                return proposedDestinationIndexPath
+            }
+        } else {
+            return proposedDestinationIndexPath
+        }
+    }
+    
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
         let resumeCategory = viewModel.resumeCategory
