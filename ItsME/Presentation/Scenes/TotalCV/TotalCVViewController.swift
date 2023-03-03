@@ -541,7 +541,7 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
             print("\(resumeCategory[sourceIndexPath.section].items) from: \(sourceIndexPath.row) -> to: \(destinationIndexPath.row)")
             let targetItem = resumeCategory[sourceIndexPath.section].items[sourceIndexPath.row]
             resumeCategory[sourceIndexPath.section].items.remove(at: sourceIndexPath.row)
-            resumeCategory[sourceIndexPath.section].items.insert(targetItem, at: destinationIndexPath.row)
+            resumeCategory[destinationIndexPath.section].items.insert(targetItem, at: destinationIndexPath.row)
         }
         
         if tableView == coverLetterTableView {
