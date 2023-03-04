@@ -12,11 +12,27 @@ final class EducationItem: Decodable {
     let title: String
     let description: String
     
-    var entranceDate: String? {
-        period.components(separatedBy: "-")[ifExists: 0]?.trimmingCharacters(in: .whitespacesAndNewlines)
+    var entranceDate: String {
+        period.components(separatedBy: "-")[ifExists: 0]?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
     }
-    var graduateDate: String? {
-        period.components(separatedBy: "-")[ifExists: 1]?.trimmingCharacters(in: .whitespacesAndNewlines)
+    var entranceYear: Int {
+        guard let year = entranceDate.components(separatedBy: ".")[ifExists: 0] else { return 0 }
+        return Int.init(year) ?? 0
+    }
+    var entranceMonth: Int {
+        guard let month = entranceDate.components(separatedBy: ".")[ifExists: 1] else { return 0 }
+        return Int.init(month) ?? 0
+    }
+    var graduateDate: String {
+        period.components(separatedBy: "-")[ifExists: 1]?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+    }
+    var graduateYear: Int {
+        guard let year = graduateDate.components(separatedBy: ".")[ifExists: 0] else { return 0 }
+        return Int.init(year) ?? 0
+    }
+    var graduateMonth: Int {
+        guard let month = graduateDate.components(separatedBy: ".")[ifExists: 1] else { return 0 }
+        return Int.init(month) ?? 0
     }
     
     init(period: String, title: String, description: String) {
