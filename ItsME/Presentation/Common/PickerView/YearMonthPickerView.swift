@@ -17,6 +17,7 @@ class YearMonthPickerView: UIPickerView {
 
     // MARK: - DataSource
     
+    /// 선택할 수 있는 `year` 의 범위입니다.
     let availableYears: [Int] = {
         guard let currentYear = Calendar.current.dateComponents([.year], from: .now).year else {
             #if DEBUG
@@ -27,8 +28,11 @@ class YearMonthPickerView: UIPickerView {
         let lastYear = currentYear - 100
         return (lastYear...currentYear).map { $0 }.reversed()
     }()
+    
+    /// 선택할 수 있는 `month` 의 범위입니다.
     let availableMonths: [Int] = (1...12).map { $0 }
-    var yearMonthPickerViewDataSource: [[Int]] {
+    
+    private var yearMonthPickerViewDataSource: [[Int]] {
         [availableYears, availableMonths]
     }
     
@@ -47,7 +51,6 @@ class YearMonthPickerView: UIPickerView {
         super.init(frame: frame)
         self.dataSource = self
         self.delegate = self
-        
     }
     
     required init?(coder: NSCoder) {
@@ -61,6 +64,9 @@ class YearMonthPickerView: UIPickerView {
 
 extension YearMonthPickerView {
     
+    /// `PickerView` 의 현재 날짜를 주어진 `year`, `month` 에 맞게 설정합니다.
+    ///
+    /// `PickerView` 로 선택할 수 있는 범위를 벗어난 날짜를 지정했을 경우 맨 위의 `year` 또는 `month` 로 설정됩니다.
     func setDate(year: Int, month: Int, animated: Bool) {
         let yearRow = availableYears.firstIndex(of: year) ?? 0
         let monthRow = availableMonths.firstIndex(of: month) ?? 0
