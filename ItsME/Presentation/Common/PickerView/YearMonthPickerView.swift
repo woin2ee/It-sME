@@ -18,7 +18,9 @@ class YearMonthPickerView: UIPickerView {
     // MARK: - DataSource
     
     /// 선택할 수 있는 `year` 의 범위입니다.
-    let availableYears: [Int] = {
+    ///
+    /// 기본값은 현재 년도부터 100년전까지의 범위입니다.
+    var availableYears: [Int] = {
         guard let currentYear = Calendar.current.dateComponents([.year], from: .now).year else {
             #if DEBUG
             debugPrint("현재 연도를 추출하지 못했습니다. \(#file) \(#line)")
@@ -30,7 +32,9 @@ class YearMonthPickerView: UIPickerView {
     }()
     
     /// 선택할 수 있는 `month` 의 범위입니다.
-    let availableMonths: [Int] = (1...12).map { $0 }
+    ///
+    /// 기본값은 1월~12월까지 입니다.
+    var availableMonths: [Int] = (1...12).map { $0 }
     
     private var yearMonthPickerViewDataSource: [[Int]] {
         [availableYears, availableMonths]
