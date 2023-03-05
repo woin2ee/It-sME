@@ -346,7 +346,16 @@ extension ProfileEditingViewController: UITableViewDelegate {
         case userInfoItemTableView:
             presentUserInfoItemInputView(by: indexPath)
         case educationTableView:
-            return
+            guard let educationItem = viewModel.currentEducationItems[ifExists: indexPath.row] else {
+                return
+            }
+            let viewModel: EducationEditingViewModel = .init(
+                educationItem: educationItem,
+                editingType: .edit(indexPath: indexPath),
+                delegate: viewModel
+            )
+            let viewController: EducationEditingViewController = .init(viewModel: viewModel)
+            self.navigationController?.pushViewController(viewController, animated: true)
         default:
             return
         }
