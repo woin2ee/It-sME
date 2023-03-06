@@ -19,6 +19,7 @@ final class EducationEditingViewController: UIViewController {
     
     private lazy var inputTableView: IntrinsicHeightTableView = .init(style: .insetGrouped).then {
         $0.dataSource = self
+        $0.delegate = self
         $0.backgroundColor = .clear
         $0.register(TextFieldCell.self, forCellReuseIdentifier: TextFieldCell.reuseIdentifier)
     }
@@ -52,6 +53,11 @@ final class EducationEditingViewController: UIViewController {
         $0.layer.zPosition = -1
     }
     
+    private lazy var schoolEnrollmentStatusCell: SchoolEnrollmentStatusCell = .init().then {
+        let interaction: UIContextMenuInteraction = .init(delegate: self)
+        $0.addInteraction(interaction)
+    }
+    
     private lazy var graduateDateInputCell: PeriodInputCell = .init(title: "졸업일").then {
         let action: UIAction = .init { [weak self] _ in
             self?.toggleGraduateDatePickerCell()
@@ -67,7 +73,7 @@ final class EducationEditingViewController: UIViewController {
     
     private(set) lazy var inputTableViewDataSource: [[UITableViewCell]] = [
         [titleInputCell, descriptionInputCell],
-        [entranceDateInputCell, graduateDateInputCell]
+        [entranceDateInputCell, schoolEnrollmentStatusCell, graduateDateInputCell]
     ]
     
     private lazy var completeButton: UIBarButtonItem = .init(title: "완료").then {
@@ -193,7 +199,7 @@ private extension EducationEditingViewController {
 
 // MARK: - UITableViewDataSource
 
-extension EducationEditingViewController: UITableViewDataSource {
+extension EducationEditingViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         inputTableViewDataSource.count
@@ -206,4 +212,50 @@ extension EducationEditingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return inputTableViewDataSource[indexPath.section][indexPath.row]
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let commonHeightCells = [entranceDateInputCell, schoolEnrollmentStatusCell, graduateDateInputCell]
+        if commonHeightCells.contains(inputTableViewDataSource[indexPath.section][indexPath.row]) {
+            return 44
+        }
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let menu: UIMenu = .init(children: [
+            UIAction.init(title: "졸업", handler: { [weak self] _ in
+                print("졸업")
+            }),
+            UIAction.init(title: "재학중", handler: { [weak self] _ in
+                print("재학중")
+            })
+        ])
+        
+//        if inputTableViewDataSource[indexPath.section][indexPath.row] == schoolEnrollmentStatusCell {
+//            let tapGestureRecognizer: UITapGestureRecognizer = .init(target: <#T##Any?#>, action: <#T##Selector?#>)
+//            UIMenuController()
+//            schoolEnrollmentStatusCell.addGestureRecognizer(<#T##gestureRecognizer: UIGestureRecognizer##UIGestureRecognizer#>)
+//
+//            schoolEnrollmentStatusCell
+//        }
+        
+    }
+}
+
+extension EducationEditingViewController: UIContextMenuInteractionDelegate {
+    
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        return .init { _ in
+            return .init(children: [
+                UIAction.init(title: "졸업", handler: { [weak self] _ in
+                    print("졸업")
+                }),
+                UIAction.init(title: "재학중", handler: { [weak self] _ in
+                    print("재학중")
+                })
+            ])
+        }
+    }
+    
+    
 }
