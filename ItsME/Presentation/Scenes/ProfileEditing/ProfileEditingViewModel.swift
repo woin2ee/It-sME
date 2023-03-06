@@ -51,6 +51,9 @@ final class ProfileEditingViewModel: ViewModelType {
     var currentAllItems: [UserInfoItem] {
         userInfoRelay.value.allItems
     }
+    var currentEducationItems: [EducationItem] {
+        userInfoRelay.value.educationItems
+    }
     
     init(userInfo: UserInfo) {
         self.userInfoRelay = .init(value: userInfo)
@@ -140,6 +143,25 @@ extension ProfileEditingViewModel {
     func updateAddress(_ address: String) {
         let userInfo = userInfoRelay.value
         userInfo.address.contents = address
+        userInfoRelay.accept(userInfo)
+    }
+}
+
+// MARK: - EducationEditingViewModelDelegate
+
+extension ProfileEditingViewModel: EducationEditingViewModelDelegate {
+    
+    func educationEditingViewModelDidEndEditing(with educationItem: EducationItem, at indexPath: IndexPath?) {
+        let userInfo = userInfoRelay.value
+        if let indexPath = indexPath, userInfo.educationItems.indices ~= indexPath.row {
+            userInfo.educationItems[indexPath.row] = educationItem
+            userInfoRelay.accept(userInfo)
+        }
+    }
+    
+    func educationEditingViewModelDidAppend(educationItem: EducationItem) {
+        let userInfo = userInfoRelay.value
+        userInfo.educationItems.append(educationItem)
         userInfoRelay.accept(userInfo)
     }
 }
