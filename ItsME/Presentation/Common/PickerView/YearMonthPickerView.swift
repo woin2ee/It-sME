@@ -21,12 +21,7 @@ class YearMonthPickerView: UIPickerView {
     ///
     /// 기본값은 현재 년도부터 100년전까지의 범위입니다.
     var availableYears: [Int] = {
-        guard let currentYear = Calendar.current.dateComponents([.year], from: .now).year else {
-            #if DEBUG
-            debugPrint("현재 연도를 추출하지 못했습니다. \(#file) \(#line)")
-            #endif
-            return []
-        }
+        let currentYear = Calendar.current.component(.year, from: .now)
         let lastYear = currentYear - 100
         return (lastYear...currentYear).map { $0 }.reversed()
     }()
