@@ -15,6 +15,8 @@ final class EducationEditingViewController: UIViewController {
     private let disposeBag: DisposeBag = .init()
     private let viewModel: EducationEditingViewModel
     
+    let presentTitle = "재학중"
+    
     // MARK: - UI Components
     
     private lazy var inputTableView: IntrinsicHeightTableView = .init(style: .insetGrouped).then {
@@ -53,16 +55,10 @@ final class EducationEditingViewController: UIViewController {
     }
     
     private lazy var graduateDateInputCell: PeriodInputCell = .init(title: "졸업일").then {
-        let presentTitle = "재학중"
-        let selectPresentAction: UIAction = .init(title: presentTitle) { [weak self] _ in
-            self?.graduateDateInputCell.dateSelectionButton.setTitle(presentTitle, for: .normal)
+        let action: UIAction = .init { [weak self] _ in
+            self?.toggleGraduateDatePickerCell()
         }
-        let selectPeriodAction: UIAction = .init(title: "날짜 선택") { [weak self] _ in
-            
-        }
-        let menu: UIMenu = .init(children: [selectPresentAction, selectPeriodAction])
-        $0.dateSelectionButton.menu = menu
-        $0.dateSelectionButton.showsMenuAsPrimaryAction = true
+        $0.dateSelectionButton.addAction(action, for: .touchUpInside)
         $0.backgroundColor = .secondarySystemGroupedBackground
     }
     
@@ -140,7 +136,23 @@ private extension EducationEditingViewController {
     }
     
     func toggleGraduateDatePickerCell() {
-        
+        let section = 1
+        let row = inputTableViewDataSource[section].endIndex
+        let animationDuration: TimeInterval = 0.3
+        let isShowingDatePickerCell: Bool = inputTableViewDataSource[section].contains(graduateDatePickerCell)
+        if isShowingDatePickerCell {
+            UIView.animate(withDuration: animationDuration, animations: {
+                self.inputTableViewDataSource[section].removeAll { $0 == self.graduateDatePickerCell }
+                self.inputTableView.deleteRows(at: [.init(row: row - 1, section: section)], with: .fade)
+                self.view.layoutIfNeeded()
+            })
+        } else {
+            UIView.animate(withDuration: animationDuration, animations: {
+                self.inputTableViewDataSource[section].insert(self.graduateDatePickerCell, at: row)
+                self.inputTableView.insertRows(at: [.init(row: row, section: section)], with: .fade)
+                self.view.layoutIfNeeded()
+            })
+        }
     }
 }
 
@@ -152,8 +164,8 @@ private extension EducationEditingViewController {
         let input: EducationEditingViewModel.Input = .init(
             title: titleInputCell.textField.rx.text.orEmpty.asDriver(),
             description: descriptionInputCell.textField.rx.text.orEmpty.asDriver(),
-            entranceDate: entranceDatePickerCell.yearMonthPickerView.rx.dateSelected.asDriver(),
-            graduateDate: graduateDatePickerCell.yearMonthPickerView.rx.dateSelected.asDriver(),
+            entranceDate: entranceDatePickerCell.yearMonthPickerView.rx.dateSelected.asDriver().map { return "\($0.year).\($0.month.toLeadingZero(digit: 2))" },
+            graduateDate: graduateDatePickerCell.yearMonthPickerView.rx.dateSelected.asDriver().map { return "\($0.year).\($0.month.toLeadingZero(digit: 2))" },
             doneTrigger: completeButton.rx.tap.asSignal()
         )
         let output = viewModel.transform(input: input)
@@ -174,9 +186,9 @@ private extension EducationEditingViewController {
             vc.titleInputCell.textField.text = educationItem.title
             vc.descriptionInputCell.textField.text = educationItem.description
             vc.entranceDateInputCell.dateSelectionButton.setTitle(educationItem.entranceDate, for: .normal)
-            vc.entranceDatePickerCell.yearMonthPickerView.setDate(year: educationItem.entranceYear, month: educationItem.entranceMonth, animated: false)
+            vc.entranceDatePickerCell.yearMonthPickerView.setDate(year: educationItem.entranceYear ?? 0, month: educationItem.entranceMonth ?? 0, animated: false)
             vc.graduateDateInputCell.dateSelectionButton.setTitle(educationItem.graduateDate, for: .normal)
-            vc.graduateDatePickerCell.yearMonthPickerView.setDate(year: educationItem.graduateYear, month: educationItem.graduateMonth, animated: false)
+            vc.graduateDatePickerCell.yearMonthPickerView.setDate(year: educationItem.graduateYear ?? 0, month: educationItem.graduateMonth ?? 0, animated: false)
         }
     }
 }
