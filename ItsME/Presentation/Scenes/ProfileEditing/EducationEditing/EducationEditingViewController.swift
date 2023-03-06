@@ -50,7 +50,6 @@ final class EducationEditingViewController: UIViewController {
     private lazy var entranceDatePickerCell: YearMonthPickerCell = .init().then {
         $0.backgroundColor = .secondarySystemGroupedBackground
         $0.layer.zPosition = -1
-        $0.yearMonthPickerView.yearMonthPickerViewDelegate = self
     }
     
     private lazy var graduateDateInputCell: PeriodInputCell = .init(title: "졸업일").then {
@@ -196,14 +195,5 @@ extension EducationEditingViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return inputTableViewDataSource[indexPath.section][indexPath.row]
-    }
-}
-
-// MARK: - YearMonthPickerViewDelegate
-
-extension EducationEditingViewController: YearMonthPickerViewDelegate {
-    
-    func yearMonthPickerViewDidSelect(year: Int, month: Int) {
-        print("\(year), \(month)")
     }
 }
