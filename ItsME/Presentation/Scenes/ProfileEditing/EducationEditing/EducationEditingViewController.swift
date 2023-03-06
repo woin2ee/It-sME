@@ -15,8 +15,6 @@ final class EducationEditingViewController: UIViewController {
     private let disposeBag: DisposeBag = .init()
     private let viewModel: EducationEditingViewModel
     
-    let presentTitle = "재학중"
-    
     // MARK: - UI Components
     
     private lazy var inputTableView: IntrinsicHeightTableView = .init(style: .insetGrouped).then {
