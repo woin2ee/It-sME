@@ -16,7 +16,7 @@ final class SchoolEnrollmentStatusCell: UITableViewCell {
         $0.setContentHuggingPriority(.init(rawValue: 249), for: .horizontal)
     }
     
-    private lazy var menuLabel: UILabel = .init().then {
+    lazy var menuLabel: UILabel = .init().then {
         $0.text = "재학중"
         $0.textColor = .systemGray
     }
@@ -29,17 +29,17 @@ final class SchoolEnrollmentStatusCell: UITableViewCell {
     
     private lazy var wrappingButton: UIButton = .init().then {
         $0.backgroundColor = .clear
-        $0.menu = .init(children: [
-            UIAction.init(title: "졸업", handler: { [weak self] _ in
-                print("졸업")
-            }),
-            UIAction.init(title: "재학중", handler: { [weak self] _ in
-                print("재학중")
-            })
-        ])
         $0.showsMenuAsPrimaryAction = true
     }
     
+    var menu: UIMenu? {
+        get {
+            wrappingButton.menu
+        }
+        set {
+            wrappingButton.menu = newValue
+        }
+    }
     
     override init(style: UITableViewCell.CellStyle = .default, reuseIdentifier: String? = nil) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

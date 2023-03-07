@@ -21,7 +21,6 @@ final class EducationEditingViewController: UIViewController {
         $0.dataSource = self
         $0.delegate = self
         $0.backgroundColor = .clear
-        $0.register(TextFieldCell.self, forCellReuseIdentifier: TextFieldCell.reuseIdentifier)
     }
     
     private lazy var titleInputCell: TextFieldCell = .init().then {
@@ -50,12 +49,20 @@ final class EducationEditingViewController: UIViewController {
     
     private lazy var entranceDatePickerCell: YearMonthPickerCell = .init().then {
         $0.backgroundColor = .secondarySystemGroupedBackground
-        $0.layer.zPosition = -1
     }
     
     private lazy var schoolEnrollmentStatusCell: SchoolEnrollmentStatusCell = .init().then {
-        let interaction: UIContextMenuInteraction = .init(delegate: self)
-        $0.addInteraction(interaction)
+        $0.menu = .init(children: [
+            UIAction.init(title: "재학중", handler: { [weak self] _ in
+                self?.hideGraduateDateInputCells()
+                self?.schoolEnrollmentStatusCell.menuLabel.text = "재학중"
+            }),
+            UIAction.init(title: "졸업", handler: { [weak self] _ in
+                self?.showGraduateDateInputCells()
+                self?.schoolEnrollmentStatusCell.menuLabel.text = "졸업"
+            }),
+        ])
+        $0.backgroundColor = .secondarySystemGroupedBackground
     }
     
     private lazy var graduateDateInputCell: PeriodInputCell = .init(title: "졸업일").then {
@@ -68,12 +75,11 @@ final class EducationEditingViewController: UIViewController {
     
     private lazy var graduateDatePickerCell: YearMonthPickerCell = .init().then {
         $0.backgroundColor = .secondarySystemGroupedBackground
-        $0.layer.zPosition = -1
     }
     
     private(set) lazy var inputTableViewDataSource: [[UITableViewCell]] = [
         [titleInputCell, descriptionInputCell],
-        [entranceDateInputCell, schoolEnrollmentStatusCell, graduateDateInputCell]
+        [entranceDateInputCell, schoolEnrollmentStatusCell]
     ]
     
     private lazy var completeButton: UIBarButtonItem = .init(title: "완료").then {
@@ -97,7 +103,7 @@ final class EducationEditingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemGroupedBackground
-        layoutSubviews()
+        configureSubviews()
         configureNavigationBar()
     }
 }
@@ -106,7 +112,7 @@ final class EducationEditingViewController: UIViewController {
 
 private extension EducationEditingViewController {
     
-    func layoutSubviews() {
+    func configureSubviews() {
         self.view.addSubview(inputTableView)
         inputTableView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
@@ -126,7 +132,7 @@ private extension EducationEditingViewController {
         let isShowingDatePickerCell: Bool = inputTableViewDataSource[section].contains(entranceDatePickerCell)
         if isShowingDatePickerCell {
             UIView.animate(withDuration: animationDuration, animations: {
-                self.inputTableViewDataSource[section].removeAll { $0 == self.entranceDatePickerCell }
+                self.inputTableViewDataSource[section].removeAll { $0 === self.entranceDatePickerCell }
                 self.inputTableView.deleteRows(at: [indexPath], with: .fade)
                 self.view.layoutIfNeeded()
             })
@@ -146,7 +152,7 @@ private extension EducationEditingViewController {
         let isShowingDatePickerCell: Bool = inputTableViewDataSource[section].contains(graduateDatePickerCell)
         if isShowingDatePickerCell {
             UIView.animate(withDuration: animationDuration, animations: {
-                self.inputTableViewDataSource[section].removeAll { $0 == self.graduateDatePickerCell }
+                self.inputTableViewDataSource[section].removeAll { $0 === self.graduateDatePickerCell }
                 self.inputTableView.deleteRows(at: [.init(row: row - 1, section: section)], with: .fade)
                 self.view.layoutIfNeeded()
             })
@@ -156,6 +162,35 @@ private extension EducationEditingViewController {
                 self.inputTableView.insertRows(at: [.init(row: row, section: section)], with: .fade)
                 self.view.layoutIfNeeded()
             })
+        }
+    }
+    
+    func hideGraduateDateInputCells() {
+        inputTableView.beginUpdates()
+        defer { inputTableView.endUpdates() }
+        
+        let section = 1
+        let graduateDateInputCellRow = inputTableViewDataSource[section].firstIndex(of: graduateDateInputCell)
+        let graduateDatePickerCellRow = inputTableViewDataSource[section].firstIndex(of: graduateDatePickerCell)
+        
+        if let row = graduateDateInputCellRow {
+            inputTableViewDataSource[section].removeAll(where: { $0 === graduateDateInputCell })
+            inputTableView.deleteRows(at: [.init(row: row, section: section)], with: .fade)
+        }
+        if let row = graduateDatePickerCellRow {
+            inputTableViewDataSource[section].removeAll(where: { $0 === graduateDatePickerCell })
+            inputTableView.deleteRows(at: [.init(row: row, section: section)], with: .fade)
+        }
+    }
+    
+    func showGraduateDateInputCells() {
+        let section = 1
+        if inputTableViewDataSource[section].contains(graduateDateInputCell) { return }
+        
+        if let row = inputTableViewDataSource[section].firstIndex(of: schoolEnrollmentStatusCell) {
+            let nextRow = row + 1
+            inputTableViewDataSource[section].insert(graduateDateInputCell, at: nextRow)
+            inputTableView.insertRows(at: [.init(row: nextRow, section: section)], with: .fade)
         }
     }
 }
@@ -197,7 +232,7 @@ private extension EducationEditingViewController {
     }
 }
 
-// MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource, UITableViewDelegate
 
 extension EducationEditingViewController: UITableViewDataSource, UITableViewDelegate {
     
@@ -220,42 +255,4 @@ extension EducationEditingViewController: UITableViewDataSource, UITableViewDele
         }
         return UITableView.automaticDimension
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let menu: UIMenu = .init(children: [
-            UIAction.init(title: "졸업", handler: { [weak self] _ in
-                print("졸업")
-            }),
-            UIAction.init(title: "재학중", handler: { [weak self] _ in
-                print("재학중")
-            })
-        ])
-        
-//        if inputTableViewDataSource[indexPath.section][indexPath.row] == schoolEnrollmentStatusCell {
-//            let tapGestureRecognizer: UITapGestureRecognizer = .init(target: <#T##Any?#>, action: <#T##Selector?#>)
-//            UIMenuController()
-//            schoolEnrollmentStatusCell.addGestureRecognizer(<#T##gestureRecognizer: UIGestureRecognizer##UIGestureRecognizer#>)
-//
-//            schoolEnrollmentStatusCell
-//        }
-        
-    }
-}
-
-extension EducationEditingViewController: UIContextMenuInteractionDelegate {
-    
-    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
-        return .init { _ in
-            return .init(children: [
-                UIAction.init(title: "졸업", handler: { [weak self] _ in
-                    print("졸업")
-                }),
-                UIAction.init(title: "재학중", handler: { [weak self] _ in
-                    print("재학중")
-                })
-            ])
-        }
-    }
-    
-    
 }
