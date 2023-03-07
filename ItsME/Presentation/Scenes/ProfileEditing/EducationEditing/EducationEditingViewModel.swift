@@ -39,16 +39,30 @@ final class EducationEditingViewModel: ViewModelType {
     }
     
     func transform(input: Input) -> Output {
+        let graduateDateString = Driver.merge(
+            input.graduateDate
+                .startWith((year: educationItem.graduateYear ?? 0, month: educationItem.graduateMonth ?? 0))
+                .map { return "\($0.year).\($0.month.toLeadingZero(digit: 2))" },
+            input.EnrollmentSelection
+                .startWith(()) // 초기 상태 지정
+                .map { return "재학중" },
+            input.graduateSelection
+                .map {
+                    let year = Calendar.current.component(.year, from: .now)
+                    let month = Calendar.current.component(.month, from: .now)
+                    return "\(year).\(month.toLeadingZero(digit: 2))"
+                }
+        )
+        
         let educationItem = Driver.combineLatest(
             input.title,
             input.description,
             input.entranceDate
-                .startWith(educationItem.entranceDate ?? ""),
-            input.graduateDate
-                .startWith(educationItem.graduateDate ?? "")
+                .startWith((year: educationItem.entranceYear ?? 0, month: educationItem.entranceMonth ?? 0)),
+            graduateDateString
         ) {
             (title, description, entranceDate, graduateDate) -> EducationItem in
-            let period = "\(entranceDate) - \(graduateDate)"
+            let period = "\(entranceDate.year).\(entranceDate.month.toLeadingZero(digit: 2)) - \(graduateDate)"
             return .init(period: period, title: title, description: description)
         }
             .startWith(educationItem)
@@ -81,9 +95,11 @@ extension EducationEditingViewModel {
     struct Input {
         let title: Driver<String>
         let description: Driver<String>
-        let entranceDate: Driver<String>
-        let graduateDate: Driver<String>
+        let entranceDate: Driver<(year: Int, month: Int)>
+        let graduateDate: Driver<(year: Int, month: Int)>
         let doneTrigger: Signal<Void>
+        let EnrollmentSelection: Driver<Void>
+        let graduateSelection: Driver<Void>
     }
     
     struct Output {
