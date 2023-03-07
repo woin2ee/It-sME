@@ -40,13 +40,13 @@ class TotalCVViewController: UIViewController {
         $0.backgroundColor = .clear
     }
     
-    private var categoryEditingView: UIView = .init().then {
+    private var categoryEditingBackgroundView: UIView = .init().then {
         $0.backgroundColor = .clear
         $0.layer.cornerRadius = 10
         $0.layer.masksToBounds = true
     }
     
-    private var coverLetterEditingView: UIView = .init().then {
+    private var coverLetterEditingBackgroundView: UIView = .init().then {
         $0.backgroundColor = .clear
         $0.layer.cornerRadius = 10
         $0.layer.masksToBounds = true
@@ -83,6 +83,7 @@ class TotalCVViewController: UIViewController {
         $0.isScrollEnabled = false
         $0.separatorStyle = .none
         $0.isUserInteractionEnabled = false
+        $0.allowsSelectionDuringEditing = true
         let cellType = CategoryCell.self
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
         let sectionType = CategoryHeaderView.self
@@ -141,6 +142,10 @@ class TotalCVViewController: UIViewController {
         
         let action: UIAction = .init(handler: { [weak self] _ in
             print("PRESS categoryAddButton!!!!")
+            
+            //            let viewModel: CategoryEditingViewModel = .init(resumeItem:)
+            //            let viewController: CategoryEditingViewController = .init(viewModel: viewModel)
+            //            self?.navigationController?.pushViewController(viewController, animated: true)
         })
         $0.addAction(action, for: .touchUpInside)
     }
@@ -194,7 +199,7 @@ class TotalCVViewController: UIViewController {
                     make.leading.trailing.equalToSuperview().inset(self.editModeInset)
                 }
                 
-                self.categoryEditingView.addSubview(self.categoryAddButton)
+                self.categoryEditingBackgroundView.addSubview(self.categoryAddButton)
                 self.categoryAddButton.snp.makeConstraints { make in
                     make.top.equalTo(self.categoryTableView.snp.bottom).offset(self.commonOffset)
                     make.height.equalTo(self.addButtonSize)
@@ -202,7 +207,7 @@ class TotalCVViewController: UIViewController {
                     make.bottom.equalToSuperview().offset(-self.commonOffset)
                 }
                 
-                self.coverLetterEditingView.addSubview(self.coverLetterAddButton)
+                self.coverLetterEditingBackgroundView.addSubview(self.coverLetterAddButton)
                 self.coverLetterAddButton.snp.makeConstraints{ make in
                     make.top.equalTo(self.coverLetterTableView.snp.bottom).offset(self.commonOffset)
                     make.height.equalTo(self.addButtonSize)
@@ -211,11 +216,11 @@ class TotalCVViewController: UIViewController {
                 }
                 
                 self.justCVView.alpha = 0
-                self.categoryEditingView.backgroundColor = .systemGray5
+                self.categoryEditingBackgroundView.backgroundColor = .systemGray5
                 self.categoryTableView.setEditing(true, animated: true)
                 self.categoryTableView.isUserInteractionEnabled = true
                 
-                self.coverLetterEditingView.backgroundColor = .systemGray5
+                self.coverLetterEditingBackgroundView.backgroundColor = .systemGray5
                 self.coverLetterTableView.setEditing(true, animated: true)
                 self.coverLetterTableView.isUserInteractionEnabled = true
                 
@@ -229,7 +234,7 @@ class TotalCVViewController: UIViewController {
         } else {
             UIView.animate(withDuration: 0.5, animations: {
                 
-                self.categoryEditingView.backgroundColor = .clear
+                self.categoryEditingBackgroundView.backgroundColor = .clear
                 self.categoryAddButton.removeFromSuperview()
                 self.categoryTableView.setEditing(false, animated: true)
                 self.categoryTableView.isUserInteractionEnabled = false
@@ -237,7 +242,7 @@ class TotalCVViewController: UIViewController {
                     make.bottom.equalToSuperview().offset(self.commonOffset)
                 }
                 
-                self.coverLetterEditingView.backgroundColor = .clear
+                self.coverLetterEditingBackgroundView.backgroundColor = .clear
                 self.coverLetterAddButton.removeFromSuperview()
                 self.coverLetterTableView.setEditing(false, animated: true)
                 self.coverLetterTableView.isUserInteractionEnabled = false
@@ -397,36 +402,49 @@ private extension TotalCVViewController {
             make.leading.trailing.equalToSuperview().inset(24)
         }
         
-        self.bothView.addSubview(categoryEditingView)
-        categoryEditingView.snp.makeConstraints { make in
+        self.bothView.addSubview(categoryEditingBackgroundView)
+        categoryEditingBackgroundView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(commonOffset)
             make.leading.trailing.equalToSuperview().inset(editModeInset)
         }
         
-        self.categoryEditingView.addSubview(categoryTableView)
+        self.categoryEditingBackgroundView.addSubview(categoryTableView)
         categoryTableView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(editModeInset)
             make.bottom.equalToSuperview().offset(-commonOffset)
         }
         
-        self.bothView.addSubview(coverLetterEditingView)
-        coverLetterEditingView.snp.makeConstraints { make in
-            make.top.equalTo(categoryEditingView.snp.bottom).offset(commonOffset)
+        self.bothView.addSubview(coverLetterEditingBackgroundView)
+        coverLetterEditingBackgroundView.snp.makeConstraints { make in
+            make.top.equalTo(categoryEditingBackgroundView.snp.bottom).offset(commonOffset)
             make.leading.trailing.equalToSuperview().inset(editModeInset)
             make.bottom.equalToSuperview()
         }
         
-        self.coverLetterEditingView.addSubview(coverLetterTableView)
+        self.coverLetterEditingBackgroundView.addSubview(coverLetterTableView)
         coverLetterTableView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(commonOffset)
             make.leading.trailing.equalToSuperview().inset(editModeInset)
             make.bottom.equalToSuperview().offset(-commonOffset)
         }
-        
-        
-        
     }
+    
+    func pushCategoryEditingView(indexPath: IndexPath) {
+        let CategoryEditingviewModel: CategoryEditingViewModel = .init(resumeItem: self.viewModel.resumeCategory[ifExists: indexPath.section]!.items[indexPath.row])
+        
+        let viewController: CategoryEditingViewController = .init(viewModel: CategoryEditingviewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func pushCoverLetterEditingView() {
+        //        let viewController: CategoryEditingViewController = .init(viewModel: viewModel)
+        //        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    //        func presentCategoryItemEditingView(by indexPath: IndexPath) {
+    //            coverLetterEditingView()
+    //        }
 }
 
 // MARK: - UITableViewDelegate
@@ -485,6 +503,16 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
             coverLetterCell.bind(coverLetterItem: coverLetter.items[indexPath.row])
             
             return coverLetterCell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if tableView == categoryTableView {
+            pushCategoryEditingView(indexPath: indexPath)
+            print("ASDASDASDASDASDASD")
+        } else {
+            pushCoverLetterEditingView()
         }
     }
     

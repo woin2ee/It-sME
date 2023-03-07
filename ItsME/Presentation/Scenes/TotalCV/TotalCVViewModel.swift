@@ -57,6 +57,17 @@ final class TotalCVViewModel: ViewModelType {
             cvInfo: cvInfo
         )
     }
-    
-    
 }
+
+// MARK: - International Function
+extension TotalCVViewModel {
+    func updateItems(_ item: [ResumeCategory]) {
+        let itemsInfo = behaviorRelay.value
+        itemsInfo.resume.category = item
+        behaviorRelay.accept(itemsInfo)
+    //    let userInfo = userInfoRelay.value
+    //    userInfo.email.contents = email
+    //    userInfoRelay.accept(userInfo)
+    }
+}
+
