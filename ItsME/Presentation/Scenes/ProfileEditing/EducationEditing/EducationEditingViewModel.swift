@@ -44,12 +44,12 @@ final class EducationEditingViewModel: ViewModelType {
                 .startWith((year: educationItem.graduateYear ?? 0, month: educationItem.graduateMonth ?? 0))
                 .map { return "\($0.year).\($0.month.toLeadingZero(digit: 2))" },
             input.EnrollmentSelection
-                .startWith(()) // 초기 상태 지정
+                .startWith(()) // 졸업일 초기 상태 지정
                 .map { return "재학중" },
             input.graduateSelection
                 .map {
-                    let year = Calendar.current.component(.year, from: .now)
-                    let month = Calendar.current.component(.month, from: .now)
+                    let year = Calendar.current.currentYear
+                    let month = Calendar.current.currentMonth
                     return "\(year).\(month.toLeadingZero(digit: 2))"
                 }
         )
@@ -58,7 +58,10 @@ final class EducationEditingViewModel: ViewModelType {
             input.title,
             input.description,
             input.entranceDate
-                .startWith((year: educationItem.entranceYear ?? 0, month: educationItem.entranceMonth ?? 0)),
+                .startWith((
+                    year: educationItem.entranceYear ?? Calendar.current.currentYear,
+                    month: educationItem.entranceMonth ?? Calendar.current.currentMonth
+                )), // 입학일 초기 상태 지정
             graduateDateString
         ) {
             (title, description, entranceDate, graduateDate) -> EducationItem in
