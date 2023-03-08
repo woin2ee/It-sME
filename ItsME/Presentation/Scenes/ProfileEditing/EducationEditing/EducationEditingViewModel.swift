@@ -43,12 +43,12 @@ final class EducationEditingViewModel: ViewModelType {
             input.title,
             input.description,
             input.entranceDate
-                .startWith((year: educationItem.entranceYear, month: educationItem.entranceMonth)),
+                .startWith(educationItem.entranceDate ?? ""),
             input.graduateDate
-                .startWith((year: educationItem.graduateYear, month: educationItem.graduateMonth))
+                .startWith(educationItem.graduateDate ?? "")
         ) {
             (title, description, entranceDate, graduateDate) -> EducationItem in
-            let period = "\(entranceDate.year).\(entranceDate.month) - \(graduateDate.year).\(graduateDate.month)"
+            let period = "\(entranceDate) - \(graduateDate)"
             return .init(period: period, title: title, description: description)
         }
             .startWith(educationItem)
@@ -81,8 +81,8 @@ extension EducationEditingViewModel {
     struct Input {
         let title: Driver<String>
         let description: Driver<String>
-        let entranceDate: Driver<(year: Int, month: Int)>
-        let graduateDate: Driver<(year: Int, month: Int)>
+        let entranceDate: Driver<String>
+        let graduateDate: Driver<String>
         let doneTrigger: Signal<Void>
     }
     
