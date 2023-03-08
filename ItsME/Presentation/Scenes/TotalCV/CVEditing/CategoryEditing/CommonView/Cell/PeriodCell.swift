@@ -11,20 +11,26 @@ import SnapKit
 
 class PeriodCell: UITableViewCell {
     
-    // MARK: - UI Components
-    
-    lazy var periodLabel: UILabel = .init().then {
-        $0.text = "기간"
-        $0.textColor = .label
-        $0.font = .systemFont(ofSize: 15, weight: .regular)
+    // MARK: - UI Components    
+    private lazy var titleLabel: UILabel = .init().then {
+        $0.setContentHuggingPriority(.init(rawValue: 249), for: .horizontal)
     }
     
-    lazy var periodTextField: UITextField = .init().then {
-        $0.text = "눌러보세요"
-        $0.textColor = .label
-        $0.font = .systemFont(ofSize: 20, weight: .regular)
+    lazy var dateSelectionButton: UIButton = .init(configuration: .gray()).then {
+        let dateFormatter: DateFormatter = .init().then {
+            $0.dateFormat = "yyyy.MM"
+        }
+        let title = dateFormatter.string(from: .now)
+        $0.setTitle(title, for: .normal)
+        $0.setTitleColor(.label, for: .normal)
     }
     
+    init(title: String) {
+        super.init(style: .default, reuseIdentifier: nil)
+        titleLabel.text = title
+        configureSubviews()
+        
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,6 +40,7 @@ class PeriodCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureSubviews()
+        self.selectionStyle = .none
     }
     
     required init?(coder: NSCoder) {
@@ -41,34 +48,23 @@ class PeriodCell: UITableViewCell {
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
+        super.setSelected(false, animated: false)
     }
-
-}
-
-// MARK: - Private Functions
-
-private extension PeriodCell {
     
-    func configureSubviews() {
-        
-        let cellSizeInset = 15
-        let cellOffset = 10
-        let contentsOffset = 5
-        
-        self.addSubview(periodLabel)
-        periodLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(cellOffset)
-            make.top.bottom.equalToSuperview().inset(cellSizeInset)
+    private func configureSubviews() {
+        let stackView: UIStackView = .init().then {
+            $0.addArrangedSubview(titleLabel)
+            $0.addArrangedSubview(dateSelectionButton)
+            $0.distribution = .fill
+            $0.spacing = 10.0
+            $0.axis = .horizontal
+            $0.alignment = .center
         }
         
-        self.addSubview(periodTextField)
-        periodTextField.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(-cellOffset)
-            make.top.bottom.equalToSuperview().inset(cellSizeInset)
-            make.leading.equalTo(periodLabel.snp.trailing).offset(contentsOffset)
+        self.contentView.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(10)
+            make.top.bottom.equalToSuperview().inset(5)
         }
     }
 }

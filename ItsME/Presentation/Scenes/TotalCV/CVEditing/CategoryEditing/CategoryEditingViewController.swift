@@ -9,7 +9,7 @@ import UIKit
 import Then
 import SnapKit
 
-class CategoryEditingViewController: UIViewController, UITableViewDataSource {
+class CategoryEditingViewController: UIViewController, UITableViewDataSource, UITextFieldDelegate {
     
     private let viewModel: CategoryEditingViewModel
     
@@ -20,7 +20,6 @@ class CategoryEditingViewController: UIViewController, UITableViewDataSource {
         $0.isScrollEnabled = false
         $0.backgroundColor = .clear
         $0.sectionHeaderHeight = 0
-        $0.isUserInteractionEnabled = false
         let cellType = CategoryItemsCell.self
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
     }
@@ -30,7 +29,6 @@ class CategoryEditingViewController: UIViewController, UITableViewDataSource {
         $0.isScrollEnabled = false
         $0.backgroundColor = .clear
         $0.sectionHeaderHeight = 0
-        $0.isUserInteractionEnabled = false
         let cellType = PeriodCell.self
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
     }
@@ -46,7 +44,6 @@ class CategoryEditingViewController: UIViewController, UITableViewDataSource {
     private lazy var completeBarButton: UIBarButtonItem = .init().then {
         $0.primaryAction = .init(title: "완료", handler: { [weak self] _ in
             self?.navigationController?.popViewController(animated: true)
-            
         })
     }
     
@@ -65,6 +62,7 @@ class CategoryEditingViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureAppearance()
         configureNavigationBar()
         configureSubviews()
     }
@@ -72,6 +70,10 @@ class CategoryEditingViewController: UIViewController, UITableViewDataSource {
 
 // MARK: - Private Functions
 extension CategoryEditingViewController {
+    
+    func configureAppearance() {
+        self.view.backgroundColor = .systemGroupedBackground
+    }
     
     func configureNavigationBar() {
         self.navigationItem.title = "카테고리 편집"
@@ -96,8 +98,6 @@ extension CategoryEditingViewController {
             make.top.equalTo(periodInputTableView.snp.bottom).offset(tableOffset)
             
         }
-        
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -117,20 +117,45 @@ extension CategoryEditingViewController {
             
             let cell: CategoryItemsCell = .init()
             
+            cell.contentsTextField.delegate = self
+            
             let placeholderArray = ["제목", "부제목", "설명"]
             cell.contentsTextField.placeholder = placeholderArray[indexPath.row]
-            let contents = [resumeItem.item.title, resumeItem.item.secondTitle, resumeItem.item.description]
-            cell.contentsTextField.text = contents[indexPath.row]
+            
+            if indexPath.row == 2 {
+                cell.contentsTextField.removeFromSuperview()
+                
+                lazy var contentsTextView: UITextView = .init().then {
+                    $0.layer.cornerRadius = 10
+                    $0.layer.masksToBounds = true
+                    $0.isUserInteractionEnabled = true
+                    $0.allowsEditingTextAttributes = true
+                    $0.backgroundColor = .systemGray5
+                    $0.textColor = .label
+                    $0.text = resumeItem.item.description
+                    $0.font = .systemFont(ofSize: 15, weight: .regular)
+                    $0.autocorrectionType = .no
+                    $0.autocapitalizationType = .none
+                }
+
+                cell.contentView.addSubview(contentsTextView)
+                contentsTextView.snp.makeConstraints { make in
+                    make.leading.trailing.top.bottom.equalToSuperview().inset(15)
+                    make.height.equalTo(150)
+                }
+                
+            } else {
+                let contents = [resumeItem.item.title, resumeItem.item.secondTitle]
+                cell.contentsTextField.text = contents[indexPath.row]
+            }
+            
             return cell
         } else {
-            
-            let cell: PeriodCell = .init()
             let periodTitleArray = ["시작", "종료"]
-            
             let periodContentsArray = [resumeItem.item.entranceDate, resumeItem.item.endDate]
             
-            cell.periodLabel.text = periodTitleArray[indexPath.row]
-            cell.periodTextField.text = periodContentsArray[ifExists: indexPath.row]
+            let cell: PeriodCell = .init(title: periodTitleArray[indexPath.row])
+            //            cell.dateSelectionButton.text = periodContentsArray[ifExists: indexPath.row]
             
             return cell
         }

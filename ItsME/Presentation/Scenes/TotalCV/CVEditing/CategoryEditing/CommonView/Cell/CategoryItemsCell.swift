@@ -12,11 +12,14 @@ import SnapKit
 class CategoryItemsCell: UITableViewCell {
     
     // MARK: - UI Components
-    lazy var contentsTextField = UITextField().then {
+    lazy var contentsTextField: UITextField = .init().then {
         $0.textColor = .label
         $0.font = .systemFont(ofSize: 15, weight: .regular)
         $0.autocorrectionType = .no
         $0.clearButtonMode = .whileEditing
+        $0.autocapitalizationType = .none
+        $0.isUserInteractionEnabled = true
+        $0.allowsEditingTextAttributes = true
     }
     
     override func awakeFromNib() {
@@ -27,6 +30,7 @@ class CategoryItemsCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureSubviews()
+        self.selectionStyle = .none
     }
     
     required init?(coder: NSCoder) {
@@ -44,18 +48,17 @@ class CategoryItemsCell: UITableViewCell {
 
 private extension CategoryItemsCell {
     
-    func bind(resumeItem: ResumeItem) {
-        
-    }
-    
     func configureSubviews() {
         
         let cellSizeInset = 15
         let cellOffset = 20
         
-        self.addSubview(contentsTextField)
+        self.contentView.isUserInteractionEnabled = true
+        
+        self.contentView.addSubview(contentsTextField)
         contentsTextField.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(cellOffset)
+            make.width.equalToSuperview().inset(cellSizeInset)
             make.top.bottom.equalToSuperview().inset(cellSizeInset)
         }
     }
