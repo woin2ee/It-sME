@@ -11,7 +11,9 @@ import UIKit
 
 final class PeriodInputCell: UITableViewCell {
     
-    private lazy var titleLabel: UILabel = .init()
+    private lazy var titleLabel: UILabel = .init().then {
+        $0.setContentHuggingPriority(.init(rawValue: 249), for: .horizontal)
+    }
     
     lazy var dateSelectionButton: UIButton = .init(configuration: .gray()).then {
         let dateFormatter: DateFormatter = .init().then {

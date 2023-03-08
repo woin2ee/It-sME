@@ -43,6 +43,9 @@
 		DA481D7F299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D7E299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift */; };
 		DA481D87299F735E00C8C734 /* UserInfoItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */; };
 		DA481D8929A4BFE500C8C734 /* IntrinsicHeightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */; };
+		DA53B73829B5BDA1000BBB26 /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53B73729B5BDA1000BBB26 /* Int+.swift */; };
+		DA53B73A29B5C304000BBB26 /* ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53B73929B5C304000BBB26 /* ExtensionTests.swift */; };
+		DA53B73E29B5DB55000BBB26 /* SchoolEnrollmentStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53B73D29B5DB55000BBB26 /* SchoolEnrollmentStatusCell.swift */; };
 		DA6B3CD929ADE36B002BB159 /* PeriodInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B3CD829ADE36B002BB159 /* PeriodInputCell.swift */; };
 		DA6B3CDB29ADEE33002BB159 /* UIEdgeInsets+All.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B3CDA29ADEE33002BB159 /* UIEdgeInsets+All.swift */; };
 		DA6B3CE029B06738002BB159 /* YearMonthPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B3CDF29B06738002BB159 /* YearMonthPickerCell.swift */; };
@@ -154,6 +157,9 @@
 		DA481D7E299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileEditingViewController+HeaderLabel.swift"; sourceTree = "<group>"; };
 		DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoItemCell.swift; sourceTree = "<group>"; };
 		DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrinsicHeightTextView.swift; sourceTree = "<group>"; };
+		DA53B73729B5BDA1000BBB26 /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
+		DA53B73929B5C304000BBB26 /* ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionTests.swift; sourceTree = "<group>"; };
+		DA53B73D29B5DB55000BBB26 /* SchoolEnrollmentStatusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolEnrollmentStatusCell.swift; sourceTree = "<group>"; };
 		DA6B3CD829ADE36B002BB159 /* PeriodInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodInputCell.swift; sourceTree = "<group>"; };
 		DA6B3CDA29ADEE33002BB159 /* UIEdgeInsets+All.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+All.swift"; sourceTree = "<group>"; };
 		DA6B3CDF29B06738002BB159 /* YearMonthPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearMonthPickerCell.swift; sourceTree = "<group>"; };
@@ -310,6 +316,7 @@
 			isa = PBXGroup;
 			children = (
 				D09AC98B2918DE8C0081C0EC /* ItsMETests.swift */,
+				DA53B73929B5C304000BBB26 /* ExtensionTests.swift */,
 			);
 			path = ItsMETests;
 			sourceTree = "<group>";
@@ -415,6 +422,7 @@
 			children = (
 				DA6B3CD829ADE36B002BB159 /* PeriodInputCell.swift */,
 				DA6B3CDF29B06738002BB159 /* YearMonthPickerCell.swift */,
+				DA53B73D29B5DB55000BBB26 /* SchoolEnrollmentStatusCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -464,6 +472,7 @@
 				DA6B3CDA29ADEE33002BB159 /* UIEdgeInsets+All.swift */,
 				DA6B3CE129B08E95002BB159 /* SnapKit+.swift */,
 				DA6B3CEA29B1CCD9002BB159 /* YearMonthPickerView+Rx.swift */,
+				DA53B73729B5BDA1000BBB26 /* Int+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -904,6 +913,7 @@
 				DAAB20C1299B6AEF00D5338D /* Reusable.swift in Sources */,
 				DAE6090D29420D9900481742 /* ItemAddButton.swift in Sources */,
 				DAAF1BDF299A1E8100728376 /* Array+SafeIndex.swift in Sources */,
+				DA53B73E29B5DB55000BBB26 /* SchoolEnrollmentStatusCell.swift in Sources */,
 				DAAB20C5299B7A1000D5338D /* IconInputCell.swift in Sources */,
 				DAA5B9652938825A00BAB04E /* ProfileEditingViewController.swift in Sources */,
 				DAAB20C7299B7A5600D5338D /* ContentsInputCell.swift in Sources */,
@@ -960,6 +970,7 @@
 				DA018811296D1483002C5CB0 /* OtherItemEditingViewController.swift in Sources */,
 				D0CCF4E829260ED200AD4AE6 /* UserInfoItem.swift in Sources */,
 				DA7201F62931F41100A69519 /* ResumeItem.swift in Sources */,
+				DA53B73829B5BDA1000BBB26 /* Int+.swift in Sources */,
 				DAFCFB6F2950693F006B287A /* IntrinsicHeightTableView.swift in Sources */,
 				D09AC9772918DE8B0081C0EC /* SceneDelegate.swift in Sources */,
 				DA7201EE2931E7BB00A69519 /* CVRepository.swift in Sources */,
@@ -980,6 +991,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D09AC98C2918DE8C0081C0EC /* ItsMETests.swift in Sources */,
+				DA53B73A29B5C304000BBB26 /* ExtensionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
