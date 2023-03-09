@@ -98,6 +98,7 @@ class TotalCVViewController: UIViewController {
         $0.isScrollEnabled = false
         $0.separatorStyle = .none
         $0.isUserInteractionEnabled = false
+        $0.allowsSelectionDuringEditing = true
         let cellType = CoverLetterCell.self
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
         let sectionType = CoverLetterHeaderView.self
@@ -142,10 +143,7 @@ class TotalCVViewController: UIViewController {
         
         let action: UIAction = .init(handler: { [weak self] _ in
             print("PRESS categoryAddButton!!!!")
-            
-            //            let viewModel: CategoryEditingViewModel = .init(resumeItem:)
-            //            let viewController: CategoryEditingViewController = .init(viewModel: viewModel)
-            //            self?.navigationController?.pushViewController(viewController, animated: true)
+            self?.pushCategoryAddView()
         })
         $0.addAction(action, for: .touchUpInside)
     }
@@ -166,6 +164,7 @@ class TotalCVViewController: UIViewController {
         $0.configuration = config
         let action: UIAction = .init(handler: { [weak self] _ in
             print("PRESS coverLetterAddButton!!!!")
+            self?.pushCoverLetterAddView()
         })
         $0.addAction(action, for: .touchUpInside)
     }
@@ -437,14 +436,22 @@ private extension TotalCVViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func pushCoverLetterEditingView() {
-        //        let viewController: CategoryEditingViewController = .init(viewModel: viewModel)
-        //        self.navigationController?.pushViewController(viewController, animated: true)
+    func pushCategoryAddView() {
+//        let viewController: CategoryEditingViewController = .init()
+//        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    //        func presentCategoryItemEditingView(by indexPath: IndexPath) {
-    //            coverLetterEditingView()
-    //        }
+    func pushCoverLetterEditingView(indexPath: IndexPath) {
+        let coverLetterEditingViewModel: CoverLetterEditingViewModel = .init(coverLetter: self.viewModel.coverLetter.items[indexPath.row])
+        
+        let viewController: CoverLetterEditingViewController = .init(viewModel: coverLetterEditingViewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func pushCoverLetterAddView() {
+        //        let viewController: CoverLetterEditingViewController = .init()
+        //        self.navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
 // MARK: - UITableViewDelegate
@@ -510,9 +517,8 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
         
         if tableView == categoryTableView {
             pushCategoryEditingView(indexPath: indexPath)
-            print("ASDASDASDASDASDASD")
         } else {
-            pushCoverLetterEditingView()
+            pushCoverLetterEditingView(indexPath: indexPath)
         }
     }
     
@@ -578,6 +584,6 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
             coverLetter.items.remove(at: sourceIndexPath.row)
             coverLetter.items.insert(targetItem, at: destinationIndexPath.row)
         }
-//FIXME: - 선택한 셀이 섹션이 넘어가지 않게끔, 데이터 처리
+        //FIXME: - 선택한 셀이 섹션이 넘어가지 않게끔, 데이터 처리
     }
 }

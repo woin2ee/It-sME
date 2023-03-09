@@ -125,7 +125,7 @@ extension CategoryEditingViewController {
             if indexPath.row == 2 {
                 cell.contentsTextField.removeFromSuperview()
                 
-                lazy var contentsTextView: UITextView = .init().then {
+                lazy var contentTextView: UITextView = .init().then {
                     $0.layer.cornerRadius = 10
                     $0.layer.masksToBounds = true
                     $0.isUserInteractionEnabled = true
@@ -138,8 +138,8 @@ extension CategoryEditingViewController {
                     $0.autocapitalizationType = .none
                 }
 
-                cell.contentView.addSubview(contentsTextView)
-                contentsTextView.snp.makeConstraints { make in
+                cell.contentView.addSubview(contentTextView)
+                contentTextView.snp.makeConstraints { make in
                     make.leading.trailing.top.bottom.equalToSuperview().inset(15)
                     make.height.equalTo(150)
                 }
@@ -152,7 +152,7 @@ extension CategoryEditingViewController {
             return cell
         } else {
             let periodTitleArray = ["시작", "종료"]
-            let periodContentsArray = [resumeItem.item.entranceDate, resumeItem.item.endDate]
+//            let periodContentsArray = [resumeItem.item.entranceDate, resumeItem.item.endDate]
             
             let cell: PeriodCell = .init(title: periodTitleArray[indexPath.row])
             //            cell.dateSelectionButton.text = periodContentsArray[ifExists: indexPath.row]
