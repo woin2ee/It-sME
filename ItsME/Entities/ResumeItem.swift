@@ -17,11 +17,11 @@ final class ResumeItem: Decodable {
         period.components(separatedBy: "-")[ifExists: 0]?.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     var entranceYear: Int? {
-        guard let year = entranceDate?.components(separatedBy: ".")[ifExists: 0] else { return 0 }
+        guard let year = entranceDate?.components(separatedBy: ".")[ifExists: 0] else { return nil }
         return Int.init(year)
     }
     var entranceMonth: Int? {
-        guard let month = entranceDate?.components(separatedBy: ".")[ifExists: 1] else { return 0 }
+        guard let month = entranceDate?.components(separatedBy: ".")[ifExists: 1] else { return nil }
         return Int.init(month)
     }
     var endDate: String? {
