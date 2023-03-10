@@ -56,8 +56,7 @@ private extension CategoryItemsCell {
         
         self.contentView.addSubview(contentsTextField)
         contentsTextField.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(cellSizeInset)
-            make.top.bottom.equalToSuperview().inset(cellSizeInset)
+            make.edges.equalToSuperview().inset(cellSizeInset)
         }
     }
 }
