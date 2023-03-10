@@ -13,27 +13,27 @@ final class ResumeItem: Decodable {
     var secondTitle: String
     var description: String
     
-    var entranceDate: String {
-        period.components(separatedBy: "-")[ifExists: 0]?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+    var entranceDate: String? {
+        period.components(separatedBy: "-")[ifExists: 0]?.trimmingCharacters(in: .whitespacesAndNewlines)
     }
-    var entranceYear: Int {
-        guard let year = entranceDate.components(separatedBy: ".")[ifExists: 0] else { return 0 }
-        return Int.init(year) ?? 0
+    var entranceYear: Int? {
+        guard let year = entranceDate?.components(separatedBy: ".")[ifExists: 0] else { return 0 }
+        return Int.init(year)
     }
-    var entranceMonth: Int {
-        guard let month = entranceDate.components(separatedBy: ".")[ifExists: 1] else { return 0 }
-        return Int.init(month) ?? 0
+    var entranceMonth: Int? {
+        guard let month = entranceDate?.components(separatedBy: ".")[ifExists: 1] else { return 0 }
+        return Int.init(month)
     }
-    var endDate: String {
-        period.components(separatedBy: "-")[ifExists: 1]?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+    var endDate: String? {
+        period.components(separatedBy: "-")[ifExists: 1]?.trimmingCharacters(in: .whitespacesAndNewlines)
     }
-    var endYear: Int {
-        guard let year = endDate.components(separatedBy: ".")[ifExists: 0] else { return 0 }
-        return Int.init(year) ?? 0
+    var endYear: Int? {
+        guard let year = endDate?.components(separatedBy: ".")[ifExists: 0] else { return nil }
+        return Int.init(year)
     }
-    var endMonth: Int {
-        guard let month = endDate.components(separatedBy: ".")[ifExists: 1] else { return 0 }
-        return Int.init(month) ?? 0
+    var endMonth: Int? {
+        guard let month = endDate?.components(separatedBy: ".")[ifExists: 1] else { return nil }
+        return Int.init(month)
     }
     
     init(period: String, title: String, secondTitle: String, description: String) {

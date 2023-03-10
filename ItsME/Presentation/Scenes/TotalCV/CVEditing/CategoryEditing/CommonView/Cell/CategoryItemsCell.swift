@@ -51,14 +51,12 @@ private extension CategoryItemsCell {
     func configureSubviews() {
         
         let cellSizeInset = 15
-        let cellOffset = 20
         
         self.contentView.isUserInteractionEnabled = true
         
         self.contentView.addSubview(contentsTextField)
         contentsTextField.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(cellOffset)
-            make.width.equalToSuperview().inset(cellSizeInset)
+            make.leading.trailing.equalToSuperview().inset(cellSizeInset)
             make.top.bottom.equalToSuperview().inset(cellSizeInset)
         }
     }

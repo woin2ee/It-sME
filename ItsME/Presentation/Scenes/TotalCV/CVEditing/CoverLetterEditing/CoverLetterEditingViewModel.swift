@@ -23,7 +23,7 @@ final class CoverLetterEditingViewModel: ViewModelType {
     
     var totalCVViewModel: TotalCVViewModel
     
-    var item: CoverLetterItem {
+    var coverLetterItem: CoverLetterItem {
         behaviorRelay.value
     }
     

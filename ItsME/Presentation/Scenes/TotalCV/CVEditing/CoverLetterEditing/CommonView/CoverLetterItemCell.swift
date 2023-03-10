@@ -19,7 +19,7 @@ class CoverLetterItemCell: UITableViewCell {
         $0.layer.masksToBounds = true
     }
     
-    lazy var titleTexField = UITextField().then {
+    lazy var titleTextField = UITextField().then {
         $0.placeholder = "항목"
         $0.textColor = .systemBlue
         $0.isUserInteractionEnabled = true
@@ -35,6 +35,7 @@ class CoverLetterItemCell: UITableViewCell {
         $0.isUserInteractionEnabled = true
         $0.allowsEditingTextAttributes = true
         $0.backgroundColor = .systemGray5
+        $0.isScrollEnabled = true
         $0.textColor = .label
         $0.font = .systemFont(ofSize: 15, weight: .regular)
         $0.autocorrectionType = .no
@@ -71,8 +72,8 @@ class CoverLetterItemCell: UITableViewCell {
             make.leading.trailing.equalToSuperview().inset(contentInset)
         }
         
-        self.titleBackgroundView.addSubview(titleTexField)
-        titleTexField.snp.makeConstraints { make in
+        self.titleBackgroundView.addSubview(titleTextField)
+        titleTextField.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalToSuperview().inset(contentInset)
         }
         
@@ -81,7 +82,7 @@ class CoverLetterItemCell: UITableViewCell {
             make.top.equalTo(titleBackgroundView.snp.bottom).offset(contentOffset)
             make.leading.trailing.equalToSuperview().inset(contentInset)
             make.bottom.equalToSuperview().offset(-contentOffset)
-            make.height.equalTo(400)
+            make.height.equalTo(200)
         }
     }
 }

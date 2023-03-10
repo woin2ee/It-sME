@@ -9,7 +9,7 @@ import UIKit
 import Then
 import SnapKit
 
-class CoverLetterEditingViewController: UIViewController, UITableViewDataSource {
+final class CoverLetterEditingViewController: UIViewController {
     
     private let viewModel: CoverLetterEditingViewModel
     
@@ -30,6 +30,10 @@ class CoverLetterEditingViewController: UIViewController, UITableViewDataSource 
         })
     }
     
+    var coverLetterItemCell: CoverLetterItemCell? {
+        coverLetterEditTableView.visibleCells[ifExists: 0] as? CoverLetterItemCell
+    }
+    
     // MARK: - Initializer
     init(viewModel: CoverLetterEditingViewModel) {
         self.viewModel = viewModel
@@ -48,8 +52,18 @@ class CoverLetterEditingViewController: UIViewController, UITableViewDataSource 
         configureNavigationBar()
         configureSubviews()
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        coverLetterItemCell?.titleTextField.becomeFirstResponder()
+    }
 }
 
+//MARK: - Private Function
 extension CoverLetterEditingViewController {
     
     func configureAppearance() {
@@ -70,19 +84,21 @@ extension CoverLetterEditingViewController {
         }
         
     }
-    //MARK: - TableView
+}
+
+//MARK: - TableView
+extension CoverLetterEditingViewController :UITableViewDataSource{
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let coverLetter = viewModel
-        
         let cell: CoverLetterItemCell = .init()
         
-        cell.titleTexField.text = coverLetter.item.title
-        cell.content.text = coverLetter.item.contents
+        cell.titleTextField.text = viewModel.coverLetterItem.title
+        cell.content.text = viewModel.coverLetterItem.contents
         
         return cell
     }

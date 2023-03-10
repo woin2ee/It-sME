@@ -9,7 +9,7 @@ import UIKit
 import Then
 import SnapKit
 
-class CategoryEditingViewController: UIViewController, UITableViewDataSource, UITextFieldDelegate {
+final class CategoryEditingViewController: UIViewController {
     
     private let viewModel: CategoryEditingViewModel
     
@@ -66,11 +66,19 @@ class CategoryEditingViewController: UIViewController, UITableViewDataSource, UI
         configureNavigationBar()
         configureSubviews()
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        categoryItemsCell?.contentsTextField.becomeFirstResponder()
+    }
 }
 
-// MARK: - Private Functions
-extension CategoryEditingViewController {
-    
+//MARK: - Private Function
+private extension CategoryEditingViewController {
     func configureAppearance() {
         self.view.backgroundColor = .systemGroupedBackground
     }
@@ -99,7 +107,11 @@ extension CategoryEditingViewController {
             
         }
     }
-    
+}
+
+// MARK: - TableView
+extension CategoryEditingViewController: UITableViewDataSource, UITextFieldDelegate {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if tableView == categoryInputTableView {
@@ -110,8 +122,6 @@ extension CategoryEditingViewController {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let resumeItem = viewModel
         
         if tableView == categoryInputTableView {
             
@@ -132,12 +142,12 @@ extension CategoryEditingViewController {
                     $0.allowsEditingTextAttributes = true
                     $0.backgroundColor = .systemGray5
                     $0.textColor = .label
-                    $0.text = resumeItem.item.description
+                    $0.text = viewModel.resumeItem.description
                     $0.font = .systemFont(ofSize: 15, weight: .regular)
                     $0.autocorrectionType = .no
                     $0.autocapitalizationType = .none
                 }
-
+                
                 cell.contentView.addSubview(contentTextView)
                 contentTextView.snp.makeConstraints { make in
                     make.leading.trailing.top.bottom.equalToSuperview().inset(15)
@@ -145,17 +155,14 @@ extension CategoryEditingViewController {
                 }
                 
             } else {
-                let contents = [resumeItem.item.title, resumeItem.item.secondTitle]
+                let contents = [viewModel.resumeItem.title, viewModel.resumeItem.secondTitle]
                 cell.contentsTextField.text = contents[indexPath.row]
             }
             
             return cell
         } else {
             let periodTitleArray = ["시작", "종료"]
-//            let periodContentsArray = [resumeItem.item.entranceDate, resumeItem.item.endDate]
-            
             let cell: PeriodCell = .init(title: periodTitleArray[indexPath.row])
-            //            cell.dateSelectionButton.text = periodContentsArray[ifExists: indexPath.row]
             
             return cell
         }

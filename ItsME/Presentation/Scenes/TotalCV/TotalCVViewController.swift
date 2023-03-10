@@ -142,7 +142,6 @@ class TotalCVViewController: UIViewController {
         $0.configuration = config
         
         let action: UIAction = .init(handler: { [weak self] _ in
-            print("PRESS categoryAddButton!!!!")
             self?.pushCategoryAddView()
         })
         $0.addAction(action, for: .touchUpInside)
@@ -163,7 +162,6 @@ class TotalCVViewController: UIViewController {
         
         $0.configuration = config
         let action: UIAction = .init(handler: { [weak self] _ in
-            print("PRESS coverLetterAddButton!!!!")
             self?.pushCoverLetterAddView()
         })
         $0.addAction(action, for: .touchUpInside)
@@ -437,8 +435,8 @@ private extension TotalCVViewController {
     }
     
     func pushCategoryAddView() {
-        let CategoryEditingviewModel: CategoryEditingViewModel = .init(resumeItem: nil, totalCVVM: self.viewModel)
-        let viewController: CategoryEditingViewController = .init(viewModel: CategoryEditingviewModel)
+        let categoryEditingViewModel: CategoryEditingViewModel = .init(resumeItem: nil, totalCVVM: self.viewModel)
+        let viewController: CategoryEditingViewController = .init(viewModel: categoryEditingViewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -531,24 +529,20 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
         
         if editingStyle == UITableViewCell.EditingStyle.delete {
             if tableView == categoryTableView {
-                print("categoryTableView delete")
                 resumeCategory[indexPath.section].items.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             }
             
             if tableView == coverLetterTableView {
-                print("coverLetterTableView delete")
                 coverLetter.items.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             }
         } else if editingStyle == UITableViewCell.EditingStyle.insert {
             if tableView == categoryTableView {
-                print("categoryTableView insert")
                 tableView.insertRows(at: [indexPath], with: .automatic)
             }
             
             if tableView == coverLetterTableView {
-                print("coverLetterTableView insert")
                 tableView.insertRows(at: [indexPath], with: .automatic)
             }
         }
@@ -574,14 +568,12 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
         let coverLetter = viewModel.coverLetter
         
         if tableView == categoryTableView {
-            print("\(resumeCategory[sourceIndexPath.section].items) from: \(sourceIndexPath.row) -> to: \(destinationIndexPath.row)")
             let targetItem = resumeCategory[sourceIndexPath.section].items[sourceIndexPath.row]
             resumeCategory[sourceIndexPath.section].items.remove(at: sourceIndexPath.row)
             resumeCategory[destinationIndexPath.section].items.insert(targetItem, at: destinationIndexPath.row)
         }
         
         if tableView == coverLetterTableView {
-            print("\(coverLetter.items) from: \(sourceIndexPath.row) -> to: \(destinationIndexPath.row)")
             let targetItem = coverLetter.items[sourceIndexPath.row]
             coverLetter.items.remove(at: sourceIndexPath.row)
             coverLetter.items.insert(targetItem, at: destinationIndexPath.row)

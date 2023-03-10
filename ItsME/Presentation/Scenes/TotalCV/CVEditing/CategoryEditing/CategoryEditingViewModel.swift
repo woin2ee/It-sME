@@ -25,7 +25,7 @@ final class CategoryEditingViewModel: ViewModelType {
     
     var totalCVViewModel: TotalCVViewModel
     
-    var item: ResumeItem {
+    var resumeItem: ResumeItem {
         behaviorRelay.value
     }
     
