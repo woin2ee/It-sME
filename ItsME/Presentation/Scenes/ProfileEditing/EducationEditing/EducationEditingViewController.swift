@@ -206,7 +206,7 @@ private extension EducationEditingViewController {
             entranceDate: entranceDatePickerCell.yearMonthPickerView.rx.dateSelected.asDriver(),
             graduateDate: graduateDatePickerCell.yearMonthPickerView.rx.dateSelected.asDriver(),
             doneTrigger: completeButton.rx.tap.asSignal(),
-            EnrollmentSelection: self.rx.methodInvoked(#selector(hideGraduateDateInputCells))
+            enrollmentSelection: self.rx.methodInvoked(#selector(hideGraduateDateInputCells))
                 .mapToVoid()
                 .asDriverOnErrorJustComplete(),
             graduateSelection: self.rx.methodInvoked(#selector(showGraduateDateInputCells))
