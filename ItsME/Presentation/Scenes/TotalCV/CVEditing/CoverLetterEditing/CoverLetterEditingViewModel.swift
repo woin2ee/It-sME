@@ -21,12 +21,15 @@ final class CoverLetterEditingViewModel: ViewModelType {
     
     let behaviorRelay: BehaviorRelay<CoverLetterItem>
     
+    var totalCVViewModel: TotalCVViewModel
+    
     var item: CoverLetterItem {
         behaviorRelay.value
     }
     
-    init(coverLetter: CoverLetterItem) {
-        self.behaviorRelay = .init(value: coverLetter)
+    init(coverLetter: CoverLetterItem?, totalCVVM: TotalCVViewModel) {
+        self.behaviorRelay = .init(value: coverLetter ?? CoverLetterItem(title: "", contents: ""))
+        self.totalCVViewModel = totalCVVM
     }
     
     func transform(input: Input) -> Output {

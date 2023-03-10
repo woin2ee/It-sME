@@ -23,12 +23,15 @@ final class CategoryEditingViewModel: ViewModelType {
     
     let behaviorRelay: BehaviorRelay<ResumeItem>
     
+    var totalCVViewModel: TotalCVViewModel
+    
     var item: ResumeItem {
         behaviorRelay.value
     }
     
-    init(resumeItem: ResumeItem) {
-        self.behaviorRelay = .init(value: resumeItem)
+    init(resumeItem: ResumeItem?, totalCVVM: TotalCVViewModel) {
+        self.behaviorRelay = .init(value: resumeItem ?? ResumeItem(period: "", title: "", secondTitle: "", description: ""))
+        self.totalCVViewModel = totalCVVM
     }
     
     func transform(input: Input) -> Output {

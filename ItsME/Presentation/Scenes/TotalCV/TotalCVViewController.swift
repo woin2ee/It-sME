@@ -430,27 +430,29 @@ private extension TotalCVViewController {
     }
     
     func pushCategoryEditingView(indexPath: IndexPath) {
-        let CategoryEditingviewModel: CategoryEditingViewModel = .init(resumeItem: self.viewModel.resumeCategory[ifExists: indexPath.section]!.items[indexPath.row])
+        let CategoryEditingviewModel: CategoryEditingViewModel = .init(resumeItem: self.viewModel.resumeCategory[ifExists: indexPath.section]!.items[indexPath.row], totalCVVM: self.viewModel)
         
         let viewController: CategoryEditingViewController = .init(viewModel: CategoryEditingviewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func pushCategoryAddView() {
-//        let viewController: CategoryEditingViewController = .init()
-//        self.navigationController?.pushViewController(viewController, animated: true)
+        let CategoryEditingviewModel: CategoryEditingViewModel = .init(resumeItem: nil, totalCVVM: self.viewModel)
+        let viewController: CategoryEditingViewController = .init(viewModel: CategoryEditingviewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func pushCoverLetterEditingView(indexPath: IndexPath) {
-        let coverLetterEditingViewModel: CoverLetterEditingViewModel = .init(coverLetter: self.viewModel.coverLetter.items[indexPath.row])
+        let coverLetterEditingViewModel: CoverLetterEditingViewModel = .init(coverLetter: self.viewModel.coverLetter.items[indexPath.row], totalCVVM: self.viewModel)
         
         let viewController: CoverLetterEditingViewController = .init(viewModel: coverLetterEditingViewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func pushCoverLetterAddView() {
-        //        let viewController: CoverLetterEditingViewController = .init()
-        //        self.navigationController?.pushViewController(viewController, animated: true)
+        let coverLetterEditingViewModel: CoverLetterEditingViewModel = .init(coverLetter: nil, totalCVVM: self.viewModel)
+        let viewController: CoverLetterEditingViewController = .init(viewModel: coverLetterEditingViewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
 

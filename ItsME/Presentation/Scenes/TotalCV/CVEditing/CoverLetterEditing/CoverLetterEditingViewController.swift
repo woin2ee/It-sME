@@ -81,8 +81,8 @@ extension CoverLetterEditingViewController {
         
         let cell: CoverLetterItemCell = .init()
         
-        cell.titleTexField.text = coverLetter.item.title ?? ""
-        cell.content.text = coverLetter.item.contents ?? ""
+        cell.titleTexField.text = coverLetter.item.title
+        cell.content.text = coverLetter.item.contents
         
         return cell
     }
