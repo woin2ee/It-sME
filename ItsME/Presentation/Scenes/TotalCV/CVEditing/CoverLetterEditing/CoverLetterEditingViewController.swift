@@ -20,8 +20,6 @@ final class CoverLetterEditingViewController: UIViewController {
         $0.isScrollEnabled = false
         $0.backgroundColor = .clear
         $0.sectionHeaderHeight = 0
-        let cellType = CoverLetterItemCell.self
-        $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
     }
     
     private lazy var completeBarButton: UIBarButtonItem = .init().then {

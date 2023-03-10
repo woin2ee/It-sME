@@ -20,8 +20,6 @@ final class CategoryEditingViewController: UIViewController {
         $0.isScrollEnabled = false
         $0.backgroundColor = .clear
         $0.sectionHeaderHeight = 0
-        let cellType = CategoryItemsCell.self
-        $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
     }
     
     private lazy var periodInputTableView: IntrinsicHeightTableView = .init(style: .insetGrouped).then {
@@ -29,8 +27,6 @@ final class CategoryEditingViewController: UIViewController {
         $0.isScrollEnabled = false
         $0.backgroundColor = .clear
         $0.sectionHeaderHeight = 0
-        let cellType = PeriodCell.self
-        $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
     }
     
     var categoryItemsCell: CategoryItemsCell? {
@@ -92,7 +88,7 @@ private extension CategoryEditingViewController {
     func configureSubviews() {
         
         let tableInset = 15
-        let tableOffset = 10
+        let tableOffset = 50
         
         self.view.addSubview(periodInputTableView)
         periodInputTableView.snp.makeConstraints { make in
@@ -103,7 +99,7 @@ private extension CategoryEditingViewController {
         self.view.addSubview(categoryInputTableView)
         categoryInputTableView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(tableInset)
-            make.top.equalTo(periodInputTableView.snp.bottom).offset(tableOffset)
+            make.top.equalTo(periodInputTableView.snp.bottom).offset(-tableOffset)
             
         }
     }
