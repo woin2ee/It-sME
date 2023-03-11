@@ -53,8 +53,8 @@
 		DA481D8929A4BFE500C8C734 /* IntrinsicHeightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */; };
 		DA53B73829B5BDA1000BBB26 /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53B73729B5BDA1000BBB26 /* Int+.swift */; };
 		DA53B73A29B5C304000BBB26 /* ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53B73929B5C304000BBB26 /* ExtensionTests.swift */; };
-		DA53B73E29B5DB55000BBB26 /* SchoolEnrollmentStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53B73D29B5DB55000BBB26 /* SchoolEnrollmentStatusCell.swift */; };
-		DA6B3CD929ADE36B002BB159 /* PeriodInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B3CD829ADE36B002BB159 /* PeriodInputCell.swift */; };
+		DA53B73E29B5DB55000BBB26 /* ContextMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53B73D29B5DB55000BBB26 /* ContextMenuCell.swift */; };
+		DA6B3CD929ADE36B002BB159 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B3CD829ADE36B002BB159 /* ButtonCell.swift */; };
 		DA6B3CDB29ADEE33002BB159 /* UIEdgeInsets+All.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B3CDA29ADEE33002BB159 /* UIEdgeInsets+All.swift */; };
 		DA6B3CE029B06738002BB159 /* YearMonthPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B3CDF29B06738002BB159 /* YearMonthPickerCell.swift */; };
 		DA6B3CE229B08E95002BB159 /* SnapKit+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B3CE129B08E95002BB159 /* SnapKit+.swift */; };
@@ -174,8 +174,8 @@
 		DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrinsicHeightTextView.swift; sourceTree = "<group>"; };
 		DA53B73729B5BDA1000BBB26 /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
 		DA53B73929B5C304000BBB26 /* ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionTests.swift; sourceTree = "<group>"; };
-		DA53B73D29B5DB55000BBB26 /* SchoolEnrollmentStatusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolEnrollmentStatusCell.swift; sourceTree = "<group>"; };
-		DA6B3CD829ADE36B002BB159 /* PeriodInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodInputCell.swift; sourceTree = "<group>"; };
+		DA53B73D29B5DB55000BBB26 /* ContextMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuCell.swift; sourceTree = "<group>"; };
+		DA6B3CD829ADE36B002BB159 /* ButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		DA6B3CDA29ADEE33002BB159 /* UIEdgeInsets+All.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+All.swift"; sourceTree = "<group>"; };
 		DA6B3CDF29B06738002BB159 /* YearMonthPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearMonthPickerCell.swift; sourceTree = "<group>"; };
 		DA6B3CE129B08E95002BB159 /* SnapKit+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SnapKit+.swift"; sourceTree = "<group>"; };
@@ -491,19 +491,8 @@
 			children = (
 				DA3302AB29ADCC9F00C36154 /* EducationEditingViewController.swift */,
 				DA3302AD29ADCCA700C36154 /* EducationEditingViewModel.swift */,
-				DA3302AF29ADD0C200C36154 /* Cells */,
 			);
 			path = EducationEditing;
-			sourceTree = "<group>";
-		};
-		DA3302AF29ADD0C200C36154 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				DA6B3CD829ADE36B002BB159 /* PeriodInputCell.swift */,
-				DA6B3CDF29B06738002BB159 /* YearMonthPickerCell.swift */,
-				DA53B73D29B5DB55000BBB26 /* SchoolEnrollmentStatusCell.swift */,
-			);
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		DA481D7D299F5D7900C8C734 /* CommonView */ = {
@@ -738,6 +727,9 @@
 				DAFCFB6B294C3666006B287A /* EducationCell.swift */,
 				D0B1BA852988DA75003ACD41 /* CategoryCell.swift */,
 				D04FAF94299CB3F60049DBAA /* CoverLetterCell.swift */,
+				DA6B3CD829ADE36B002BB159 /* ButtonCell.swift */,
+				DA6B3CDF29B06738002BB159 /* YearMonthPickerCell.swift */,
+				DA53B73D29B5DB55000BBB26 /* ContextMenuCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -994,7 +986,7 @@
 				DAD1D03029B759CE00B12BF8 /* Calendar+Current.swift in Sources */,
 				DAE6090D29420D9900481742 /* ItemAddButton.swift in Sources */,
 				DAAF1BDF299A1E8100728376 /* Array+SafeIndex.swift in Sources */,
-				DA53B73E29B5DB55000BBB26 /* SchoolEnrollmentStatusCell.swift in Sources */,
+				DA53B73E29B5DB55000BBB26 /* ContextMenuCell.swift in Sources */,
 				DAAB20C5299B7A1000D5338D /* IconInputCell.swift in Sources */,
 				DAA5B9652938825A00BAB04E /* ProfileEditingViewController.swift in Sources */,
 				D0E6FF6329B1BA75008CB451 /* CategoryEditingViewController.swift in Sources */,
@@ -1035,7 +1027,7 @@
 				DA6BCE5E292F04910059E95D /* DatabaseReferenceManager.swift in Sources */,
 				DA6B3CDB29ADEE33002BB159 /* UIEdgeInsets+All.swift in Sources */,
 				DAAF1BD7299A0E1100728376 /* NewOtherItemViewController.swift in Sources */,
-				DA6B3CD929ADE36B002BB159 /* PeriodInputCell.swift in Sources */,
+				DA6B3CD929ADE36B002BB159 /* ButtonCell.swift in Sources */,
 				DAFCFB63294A9CD0006B287A /* EducationItem.swift in Sources */,
 				DA7201F22931F21100A69519 /* ResumeCategory.swift in Sources */,
 				DA3302B129ADD36000C36154 /* TextFieldCell.swift in Sources */,
