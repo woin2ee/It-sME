@@ -53,8 +53,12 @@ final class EducationEditingViewController: UIViewController {
     private lazy var schoolEnrollmentStatusCell: ContextMenuCell = .init().then {
         $0.title = "졸업 여부"
         $0.menu = [
-            .init(title: "재학중", handler: hideGraduateDateInputCells),
-            .init(title: "졸업", handler: showGraduateDateInputCells),
+            .init(title: "재학중", handler: { [weak self] in
+                self?.hideGraduateDateInputCells()
+            }),
+            .init(title: "졸업", handler: { [weak self] in
+                self?.showGraduateDateInputCells()
+            }),
         ]
         $0.backgroundColor = .secondarySystemGroupedBackground
     }
