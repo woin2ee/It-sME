@@ -19,24 +19,24 @@ protocol OtherItemEditingViewModelDelegate: AnyObject {
 
 final class OtherItemEditingViewModel: ViewModelType {
     
-    let otherItem: UserInfoItem
+    let initalOtherItem: UserInfoItem
     let editingType: EditingType
     private weak var delegate: OtherItemEditingViewModelDelegate?
     
     init(
-        otherItem: UserInfoItem,
+        initalOtherItem: UserInfoItem,
         editingType: EditingType,
         delegate: OtherItemEditingViewModelDelegate? = nil
     ) {
-        self.otherItem = otherItem
+        self.initalOtherItem = initalOtherItem
         self.editingType = editingType
         self.delegate = delegate
     }
     
     func transform(input: Input) -> Output {
         let userInfoItem = Driver.combineLatest(
-            input.icon.startWith(otherItem.icon),
-            input.contents.startWith(otherItem.contents)
+            input.icon.startWith(initalOtherItem.icon),
+            input.contents.startWith(initalOtherItem.contents)
         ) {
             UserInfoItem.init(icon: $0, contents: $1)
         }

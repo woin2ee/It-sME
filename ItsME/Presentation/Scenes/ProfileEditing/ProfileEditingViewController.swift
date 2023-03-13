@@ -307,7 +307,7 @@ private extension ProfileEditingViewController {
             return
         }
         let viewModel: OtherItemEditingViewModel = .init(
-            otherItem: otherItem,
+            initalOtherItem: otherItem,
             editingType: .edit(index: indexOfItem),
             delegate: viewModel
         )
@@ -317,7 +317,7 @@ private extension ProfileEditingViewController {
     
     func pushOtherItemAdditionViewController() {
         let viewModel: OtherItemEditingViewModel = .init(
-            otherItem: .empty,
+            initalOtherItem: .empty,
             editingType: .new,
             delegate: viewModel
         )
