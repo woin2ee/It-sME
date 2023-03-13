@@ -37,39 +37,34 @@ final class EducationEditingViewController: UIViewController {
         $0.backgroundColor = .secondarySystemGroupedBackground
     }
     
-    private lazy var entranceDateInputCell: PeriodInputCell = {
-        let cell: PeriodInputCell = .init(title: "입학일")
+    private lazy var entranceDateInputCell: ButtonCell = .init(title: "입학일").then {
         let action: UIAction = .init { [weak self] _ in
             self?.toggleEntranceDatePickerCell()
         }
-        cell.dateSelectionButton.addAction(action, for: .touchUpInside)
-        cell.backgroundColor = .secondarySystemGroupedBackground
-        return cell
-    }()
+        $0.trailingButton.addAction(action, for: .touchUpInside)
+        $0.trailingButton.setTitleColor(.label, for: .normal)
+        $0.backgroundColor = .secondarySystemGroupedBackground
+    }
     
     private lazy var entranceDatePickerCell: YearMonthPickerCell = .init().then {
         $0.backgroundColor = .secondarySystemGroupedBackground
     }
     
-    private lazy var schoolEnrollmentStatusCell: SchoolEnrollmentStatusCell = .init().then {
-        $0.menu = .init(children: [
-            UIAction.init(title: "재학중", handler: { [weak self] _ in
-                self?.hideGraduateDateInputCells()
-                self?.schoolEnrollmentStatusCell.menuLabel.text = "재학중"
-            }),
-            UIAction.init(title: "졸업", handler: { [weak self] _ in
-                self?.showGraduateDateInputCells()
-                self?.schoolEnrollmentStatusCell.menuLabel.text = "졸업"
-            }),
-        ])
+    private lazy var schoolEnrollmentStatusCell: ContextMenuCell = .init().then {
+        $0.title = "졸업 여부"
+        $0.menu = [
+            .init(title: "재학중", handler: hideGraduateDateInputCells),
+            .init(title: "졸업", handler: showGraduateDateInputCells),
+        ]
         $0.backgroundColor = .secondarySystemGroupedBackground
     }
     
-    private lazy var graduateDateInputCell: PeriodInputCell = .init(title: "졸업일").then {
+    private lazy var graduateDateInputCell: ButtonCell = .init(title: "졸업일").then {
         let action: UIAction = .init { [weak self] _ in
             self?.toggleGraduateDatePickerCell()
         }
-        $0.dateSelectionButton.addAction(action, for: .touchUpInside)
+        $0.trailingButton.addAction(action, for: .touchUpInside)
+        $0.trailingButton.setTitleColor(.label, for: .normal)
         $0.backgroundColor = .secondarySystemGroupedBackground
     }
     
@@ -165,7 +160,7 @@ private extension EducationEditingViewController {
         }
     }
     
-    func hideGraduateDateInputCells() {
+    @objc dynamic func hideGraduateDateInputCells() {
         inputTableView.beginUpdates()
         defer { inputTableView.endUpdates() }
         
@@ -183,7 +178,7 @@ private extension EducationEditingViewController {
         }
     }
     
-    func showGraduateDateInputCells() {
+    @objc dynamic func showGraduateDateInputCells() {
         let section = 1
         if inputTableViewDataSource[section].contains(graduateDateInputCell) { return }
         
@@ -203,9 +198,15 @@ private extension EducationEditingViewController {
         let input: EducationEditingViewModel.Input = .init(
             title: titleInputCell.textField.rx.text.orEmpty.asDriver(),
             description: descriptionInputCell.textField.rx.text.orEmpty.asDriver(),
-            entranceDate: entranceDatePickerCell.yearMonthPickerView.rx.dateSelected.asDriver().map { return "\($0.year).\($0.month.toLeadingZero(digit: 2))" },
-            graduateDate: graduateDatePickerCell.yearMonthPickerView.rx.dateSelected.asDriver().map { return "\($0.year).\($0.month.toLeadingZero(digit: 2))" },
-            doneTrigger: completeButton.rx.tap.asSignal()
+            entranceDate: entranceDatePickerCell.yearMonthPickerView.rx.dateSelected.asDriver(),
+            graduateDate: graduateDatePickerCell.yearMonthPickerView.rx.dateSelected.asDriver(),
+            doneTrigger: completeButton.rx.tap.asSignal(),
+            enrollmentSelection: self.rx.methodInvoked(#selector(hideGraduateDateInputCells))
+                .mapToVoid()
+                .asDriverOnErrorJustComplete(),
+            graduateSelection: self.rx.methodInvoked(#selector(showGraduateDateInputCells))
+                .mapToVoid()
+                .asDriverOnErrorJustComplete()
         )
         let output = viewModel.transform(input: input)
         
@@ -224,9 +225,9 @@ private extension EducationEditingViewController {
         .init(self) { vc, educationItem in
             vc.titleInputCell.textField.text = educationItem.title
             vc.descriptionInputCell.textField.text = educationItem.description
-            vc.entranceDateInputCell.dateSelectionButton.setTitle(educationItem.entranceDate, for: .normal)
+            vc.entranceDateInputCell.trailingButton.setTitle(educationItem.entranceDate, for: .normal)
             vc.entranceDatePickerCell.yearMonthPickerView.setDate(year: educationItem.entranceYear ?? 0, month: educationItem.entranceMonth ?? 0, animated: false)
-            vc.graduateDateInputCell.dateSelectionButton.setTitle(educationItem.graduateDate, for: .normal)
+            vc.graduateDateInputCell.trailingButton.setTitle(educationItem.graduateDate, for: .normal)
             vc.graduateDatePickerCell.yearMonthPickerView.setDate(year: educationItem.graduateYear ?? 0, month: educationItem.graduateMonth ?? 0, animated: false)
         }
     }

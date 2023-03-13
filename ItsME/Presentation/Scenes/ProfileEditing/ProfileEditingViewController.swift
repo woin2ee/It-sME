@@ -85,7 +85,18 @@ final class ProfileEditingViewController: UIViewController {
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
     }
     
-    private lazy var educationItemAddButton: ItemAddButton = .init()
+    private lazy var educationItemAddButton: ItemAddButton = .init().then {
+        let action: UIAction = .init(handler: { [weak self] _ in
+            let viewModel: EducationEditingViewModel = .init(
+                educationItem: .empty,
+                editingType: .new,
+                delegate: self?.viewModel
+            )
+            let viewController: EducationEditingViewController = .init(viewModel: viewModel)
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        })
+        $0.addAction(action, for: .touchUpInside)
+    }
     
     private lazy var editingCompleteButton: UIBarButtonItem = .init(title: "수정완료").then {
         $0.style = .done
