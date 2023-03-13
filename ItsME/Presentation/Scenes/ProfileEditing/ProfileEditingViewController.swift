@@ -70,7 +70,7 @@ final class ProfileEditingViewController: UIViewController {
     
     private lazy var userInfoItemAdditionButton: ItemAddButton = .init().then {
         let action: UIAction = .init(handler: { [weak self] _ in
-            self?.presentNewOtherItemView()
+            self?.pushOtherItemAdditionViewController()
         })
         $0.addAction(action, for: .touchUpInside)
     }
@@ -306,12 +306,22 @@ private extension ProfileEditingViewController {
         guard let indexOfItem = viewModel.currentOtherItems.firstIndex(where: { $0 === otherItem }) else {
             return
         }
-        let viewController: OtherItemEditingViewController = .init(viewModel: viewModel, indexOfItem: indexOfItem)
+        let viewModel: OtherItemEditingViewModel = .init(
+            otherItem: otherItem,
+            editingType: .edit(index: indexOfItem),
+            delegate: viewModel
+        )
+        let viewController: OtherItemEditingViewController = .init(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func presentNewOtherItemView() {
-        let viewController: NewOtherItemViewController = .init(viewModel: viewModel)
+    func pushOtherItemAdditionViewController() {
+        let viewModel: OtherItemEditingViewModel = .init(
+            otherItem: .empty,
+            editingType: .new,
+            delegate: viewModel
+        )
+        let viewController: OtherItemEditingViewController = .init(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
