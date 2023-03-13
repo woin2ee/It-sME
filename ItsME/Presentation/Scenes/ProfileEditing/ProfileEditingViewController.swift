@@ -302,8 +302,8 @@ private extension ProfileEditingViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func presentOtherItemEditingView(with Item: UserInfoItem) {
-        guard let indexOfItem = viewModel.currentOtherItems.firstIndex(where: { $0 === Item }) else {
+    func pushOtherItemEditingViewController(with otherItem: UserInfoItem) {
+        guard let indexOfItem = viewModel.currentOtherItems.firstIndex(where: { $0 === otherItem }) else {
             return
         }
         let viewController: OtherItemEditingViewController = .init(viewModel: viewModel, indexOfItem: indexOfItem)
@@ -327,7 +327,7 @@ private extension ProfileEditingViewController {
             presentEmailEditingView()
         default:
             if let otherItem = viewModel.currentAllItems[ifExists: indexPath.row] {
-                presentOtherItemEditingView(with: otherItem)
+                pushOtherItemEditingViewController(with: otherItem)
             }
         }
     }
