@@ -115,7 +115,6 @@ private extension EducationEditingViewController {
     }
     
     func configureNavigationBar() {
-        self.navigationItem.title = "학력 편집"
         self.navigationItem.rightBarButtonItem = completeButton
     }
     
@@ -217,6 +216,8 @@ private extension EducationEditingViewController {
                 .emit(with: self, onNext: { owner, _ in
                     owner.navigationController?.popViewController(animated: true)
                 }),
+            output.editingType
+                .drive(editingTypeBinding),
         ]
             .forEach { $0.disposed(by: disposeBag) }
     }
@@ -229,6 +230,19 @@ private extension EducationEditingViewController {
             vc.entranceDatePickerCell.yearMonthPickerView.setDate(year: educationItem.entranceYear ?? 0, month: educationItem.entranceMonth ?? 0, animated: false)
             vc.graduateDateInputCell.trailingButton.setTitle(educationItem.graduateDate, for: .normal)
             vc.graduateDatePickerCell.yearMonthPickerView.setDate(year: educationItem.graduateYear ?? 0, month: educationItem.graduateMonth ?? 0, animated: false)
+        }
+    }
+    
+    var editingTypeBinding: Binder<EducationEditingViewModel.EditingType> {
+        .init(self) { vc, editingType in
+            switch editingType {
+            case .edit:
+                vc.navigationItem.title = "학력 편집"
+                vc.completeButton.title = "완료"
+            case .new:
+                vc.navigationItem.title = "학력 추가"
+                vc.completeButton.title = "추가"
+            }
         }
     }
 }
