@@ -10,7 +10,20 @@ import SnapKit
 
 class TextViewCell: UITableViewCell {
     
-    lazy var textView: UITextView = .init()
+    let textViewPlaceholder: String? = "설명을 입력하세요."
+    
+    lazy var textView: UITextView = .init().then {
+        if $0.text == textViewPlaceholder || $0.text.isEmpty {
+            $0.textColor = .placeholderText
+        } else {
+            $0.textColor = .label
+        }
+        
+        $0.text = textViewPlaceholder
+        
+        $0.delegate = self
+    }
+    
     var textViewHeight = 100 {
         didSet {
             textView.snp.updateConstraints { make in
@@ -38,6 +51,24 @@ class TextViewCell: UITableViewCell {
         textView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(10)
             make.height.equalTo(textViewHeight)
+        }
+    }
+}
+
+//MARK: - Extension Function
+extension TextViewCell: UITextViewDelegate {
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == textViewPlaceholder {
+            textView.text = nil
+            textView.textColor = .label
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            textView.text = textViewPlaceholder
+            textView.textColor = .placeholderText
         }
     }
 }
