@@ -15,29 +15,86 @@ final class CategoryEditingViewController: UIViewController {
     
     // MARK: - UI Components
     
-    private lazy var categoryInputTableView: IntrinsicHeightTableView = .init(style: .insetGrouped).then {
+    private lazy var inputTableView: IntrinsicHeightTableView = .init(style: .insetGrouped).then {
         $0.dataSource = self
-        $0.isScrollEnabled = false
+        $0.delegate = self
         $0.backgroundColor = .clear
-        $0.sectionHeaderHeight = 0
     }
     
-    private lazy var periodInputTableView: IntrinsicHeightTableView = .init(style: .insetGrouped).then {
-        $0.dataSource = self
-        $0.isScrollEnabled = false
-        $0.backgroundColor = .clear
-        $0.sectionHeaderHeight = 0
+    private lazy var titleInputCell: TextFieldCell = .init().then {
+        $0.textField.placeholder = "제목"
+        $0.textField.autocorrectionType = .no
+        $0.textField.clearButtonMode = .whileEditing
+        $0.backgroundColor = .secondarySystemGroupedBackground
+        $0.selectionStyle = .none
     }
     
-    var categoryItemsCell: CategoryItemsCell? {
-        categoryInputTableView.visibleCells[ifExists: 0] as? CategoryItemsCell
+    private lazy var secondTitleInputCell: TextFieldCell = .init().then {
+        $0.textField.placeholder = "부제목"
+        $0.textField.autocorrectionType = .no
+        $0.textField.clearButtonMode = .whileEditing
+        $0.backgroundColor = .secondarySystemGroupedBackground
+        $0.selectionStyle = .none
     }
     
-    var periodCell: PeriodCell? {
-        periodInputTableView.visibleCells[ifExists: 0] as? PeriodCell
+    private lazy var descriptionInputCell: TextViewCell = .init().then {
+        $0.textViewHeight = 120
+        $0.textView.textColor = .label
+        $0.textView.backgroundColor = .clear
+        $0.textView.layer.cornerRadius = 10
+        $0.textView.layer.masksToBounds = true
+        $0.textView.isUserInteractionEnabled = true
+        $0.textView.allowsEditingTextAttributes = true
+        $0.textView.autocorrectionType = .no
+        $0.textView.autocapitalizationType = .none
+        $0.backgroundColor = .secondarySystemGroupedBackground
+        $0.selectionStyle = .none
     }
+    
+    private lazy var entranceDateInputCell: ButtonCell = .init(title: "시작일").then {
+        let action: UIAction = .init { [weak self] _ in
+            self?.toggleEntranceDatePickerCell()
+        }
+        $0.trailingButton.addAction(action, for: .touchUpInside)
+        $0.trailingButton.setTitleColor(.label, for: .normal)
+        $0.backgroundColor = .secondarySystemGroupedBackground
+        $0.selectionStyle = .none
+    }
+    
+    private lazy var entranceDatePickerCell: YearMonthPickerCell = .init().then {
+        $0.backgroundColor = .secondarySystemGroupedBackground
+    }
+    
+    private lazy var endOrNotEnrollmentStatusCell: ContextMenuCell = .init().then {
+        $0.title = "종료 여부"
+        $0.menu = [
+            .init(title: "진행중", handler: hideEndDateInputCells),
+            .init(title: "종료", handler: showEndDateInputCells),
+        ]
+        $0.backgroundColor = .secondarySystemGroupedBackground
+    }
+    
+    private lazy var endDateInputCell: ButtonCell = .init(title: "종료일").then {
+        let action: UIAction = .init { [weak self] _ in
+            self?.toggleEndDatePickerCell()
+        }
+        $0.trailingButton.addAction(action, for: .touchUpInside)
+        $0.trailingButton.setTitleColor(.label, for: .normal)
+        $0.backgroundColor = .secondarySystemGroupedBackground
+        $0.selectionStyle = .none
+    }
+    
+    private lazy var endDatePickerCell: YearMonthPickerCell = .init().then {
+        $0.backgroundColor = .secondarySystemGroupedBackground
+    }
+    
+    private(set) lazy var inputTableViewDataSource: [[UITableViewCell]] = [
+        [titleInputCell, secondTitleInputCell, descriptionInputCell],
+        [entranceDateInputCell, endOrNotEnrollmentStatusCell]
+    ]
     
     private lazy var completeBarButton: UIBarButtonItem = .init().then {
+        $0.style = .done
         $0.primaryAction = .init(title: "완료", handler: { [weak self] _ in
             self?.navigationController?.popViewController(animated: true)
         })
@@ -57,10 +114,9 @@ final class CategoryEditingViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        configureAppearance()
-        configureNavigationBar()
+        self.view.backgroundColor = .systemGroupedBackground
         configureSubviews()
+        configureNavigationBar()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -69,98 +125,116 @@ final class CategoryEditingViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        categoryItemsCell?.contentsTextField.becomeFirstResponder()
+        titleInputCell.textField.becomeFirstResponder()
     }
 }
 
 //MARK: - Private Function
 private extension CategoryEditingViewController {
-    func configureAppearance() {
-        self.view.backgroundColor = .systemGroupedBackground
-    }
     
     func configureNavigationBar() {
         self.navigationItem.title = "카테고리 편집"
         self.navigationItem.rightBarButtonItem = completeBarButton
-        self.navigationItem.rightBarButtonItem?.style = .done
     }
     
     func configureSubviews() {
-        
-        let tableInset = 15
-        let tableOffset = 50
-        
-        self.view.addSubview(periodInputTableView)
-        periodInputTableView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(tableInset)
-            make.top.equalToSuperview().offset(tableOffset)
+        self.view.addSubview(inputTableView)
+        inputTableView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
         }
+    }
+    
+    func toggleEntranceDatePickerCell() {
+        let section = 1
+        let row = 1
+        let indexPath: IndexPath = .init(row: row, section: section)
+        let animationDuration: TimeInterval = 0.3
+        let isShowingDatePickerCell: Bool = inputTableViewDataSource[section].contains(entranceDatePickerCell)
+        if isShowingDatePickerCell {
+            UIView.animate(withDuration: animationDuration, animations: {
+                self.inputTableViewDataSource[section].removeAll { $0 === self.entranceDatePickerCell }
+                self.inputTableView.deleteRows(at: [indexPath], with: .fade)
+                self.view.layoutIfNeeded()
+            })
+        } else {
+            UIView.animate(withDuration: animationDuration, animations: {
+                self.inputTableViewDataSource[section].insert(self.entranceDatePickerCell, at: row)
+                self.inputTableView.insertRows(at: [indexPath], with: .fade)
+                self.view.layoutIfNeeded()
+            })
+        }
+    }
+    
+    func toggleEndDatePickerCell() {
+        let section = 1
+        let row = inputTableViewDataSource[section].endIndex
+        let animationDuration: TimeInterval = 0.3
+        let isShowingDatePickerCell: Bool = inputTableViewDataSource[section].contains(endDatePickerCell)
+        if isShowingDatePickerCell {
+            UIView.animate(withDuration: animationDuration, animations: {
+                self.inputTableViewDataSource[section].removeAll { $0 === self.endDatePickerCell }
+                self.inputTableView.deleteRows(at: [.init(row: row - 1, section: section)], with: .fade)
+                self.view.layoutIfNeeded()
+            })
+        } else {
+            UIView.animate(withDuration: animationDuration, animations: {
+                self.inputTableViewDataSource[section].insert(self.endDatePickerCell, at: row)
+                self.inputTableView.insertRows(at: [.init(row: row, section: section)], with: .fade)
+                self.view.layoutIfNeeded()
+            })
+        }
+    }
+    
+    @objc dynamic func hideEndDateInputCells() {
+        inputTableView.beginUpdates()
+        defer { inputTableView.endUpdates() }
         
-        self.view.addSubview(categoryInputTableView)
-        categoryInputTableView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(tableInset)
-            make.top.equalTo(periodInputTableView.snp.bottom).offset(-tableOffset)
-            
+        let section = 1
+        let graduateDateInputCellRow = inputTableViewDataSource[section].firstIndex(of: endDateInputCell)
+        let graduateDatePickerCellRow = inputTableViewDataSource[section].firstIndex(of: endDatePickerCell)
+        
+        if let row = graduateDateInputCellRow {
+            inputTableViewDataSource[section].removeAll(where: { $0 === endDateInputCell })
+            inputTableView.deleteRows(at: [.init(row: row, section: section)], with: .fade)
+        }
+        if let row = graduateDatePickerCellRow {
+            inputTableViewDataSource[section].removeAll(where: { $0 === endDatePickerCell })
+            inputTableView.deleteRows(at: [.init(row: row, section: section)], with: .fade)
+        }
+    }
+    
+    @objc dynamic func showEndDateInputCells() {
+        let section = 1
+        if inputTableViewDataSource[section].contains(endDateInputCell) { return }
+        
+        if let row = inputTableViewDataSource[section].firstIndex(of: endOrNotEnrollmentStatusCell) {
+            let nextRow = row + 1
+            inputTableViewDataSource[section].insert(endDateInputCell, at: nextRow)
+            inputTableView.insertRows(at: [.init(row: nextRow, section: section)], with: .fade)
         }
     }
 }
 
 // MARK: - TableView
-extension CategoryEditingViewController: UITableViewDataSource, UITextFieldDelegate {
-
+extension CategoryEditingViewController: UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        inputTableViewDataSource.count
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if tableView == categoryInputTableView {
-            return 3
-        } else {
-            return 2
-        }
+        inputTableViewDataSource[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if tableView == categoryInputTableView {
-            
-            let cell: CategoryItemsCell = .init()
-            
-            cell.contentsTextField.delegate = self
-            
-            let placeholderArray = ["제목", "부제목", "설명"]
-            cell.contentsTextField.placeholder = placeholderArray[indexPath.row]
-            
-            if indexPath.row == 2 {
-                cell.contentsTextField.removeFromSuperview()
-                
-                lazy var contentTextView: UITextView = .init().then {
-                    $0.layer.cornerRadius = 10
-                    $0.layer.masksToBounds = true
-                    $0.isUserInteractionEnabled = true
-                    $0.allowsEditingTextAttributes = true
-                    $0.backgroundColor = .systemGray5
-                    $0.textColor = .label
-                    $0.text = viewModel.resumeItem.description
-                    $0.font = .systemFont(ofSize: 15, weight: .regular)
-                    $0.autocorrectionType = .no
-                    $0.autocapitalizationType = .none
-                }
-                
-                cell.contentView.addSubview(contentTextView)
-                contentTextView.snp.makeConstraints { make in
-                    make.leading.trailing.top.bottom.equalToSuperview().inset(15)
-                    make.height.equalTo(150)
-                }
-                
-            } else {
-                let contents = [viewModel.resumeItem.title, viewModel.resumeItem.secondTitle]
-                cell.contentsTextField.text = contents[indexPath.row]
-            }
-            
-            return cell
-        } else {
-            let periodTitleArray = ["시작", "종료"]
-            let cell: PeriodCell = .init(title: periodTitleArray[indexPath.row])
-            
-            return cell
+        return inputTableViewDataSource[indexPath.section][indexPath.row]
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let commonHeightCells = [entranceDateInputCell, endOrNotEnrollmentStatusCell, endDateInputCell]
+        if commonHeightCells.contains(inputTableViewDataSource[indexPath.section][indexPath.row]) {
+            return 44
         }
+        return UITableView.automaticDimension
     }
 }
