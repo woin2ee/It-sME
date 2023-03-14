@@ -25,8 +25,8 @@ final class ContentsInputCell: UITableViewCell {
         $0.delegate = self
     }
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    init() {
+        super.init(style: .default, reuseIdentifier: nil)
         self.backgroundColor = .secondarySystemGroupedBackground
         configureSubviews()
     }

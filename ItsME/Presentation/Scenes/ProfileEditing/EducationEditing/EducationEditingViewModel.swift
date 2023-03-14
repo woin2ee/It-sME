@@ -66,9 +66,12 @@ final class EducationEditingViewModel: ViewModelType {
             .do(onNext: endEditing(with:))
             .mapToVoid()
         
+        let editingType = Driver.just(editingType)
+                
         return .init(
             educationItem: educationItem,
-            doneHandler: doneHandler
+            doneHandler: doneHandler,
+            editingType: editingType
         )
     }
     
@@ -99,6 +102,7 @@ extension EducationEditingViewModel {
     struct Output {
         let educationItem: Driver<EducationItem>
         let doneHandler: Signal<Void>
+        let editingType: Driver<EditingType>
     }
 }
 

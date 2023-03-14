@@ -108,12 +108,6 @@ extension ProfileEditingViewModel {
         userInfoRelay.accept(userInfo)
     }
     
-    func appendUserInfoItem(_ userInfoItem: UserInfoItem) {
-        let userInfo = userInfoRelay.value
-        userInfo.otherItems.append(userInfoItem)
-        userInfoRelay.accept(userInfo)
-    }
-    
     func updateBirthday(_ userInfoItem: UserInfoItem) {
         let userInfo = userInfoRelay.value
         userInfo.birthday = userInfoItem
@@ -124,14 +118,6 @@ extension ProfileEditingViewModel {
         let userInfo = userInfoRelay.value
         userInfo.email.contents = email
         userInfoRelay.accept(userInfo)
-    }
-    
-    func updateOtherUserInfoItem(_ userInfoItem: UserInfoItem, at index: IndexPath.Index) {
-        let userInfo = userInfoRelay.value
-        if userInfo.otherItems.indices ~= index {
-            userInfo.otherItems[index] = userInfoItem
-            userInfoRelay.accept(userInfo)
-        }
     }
     
     func updatePhoneNumber(_ phoneNumber: String) {
@@ -162,6 +148,25 @@ extension ProfileEditingViewModel: EducationEditingViewModelDelegate {
     func educationEditingViewModelDidAppend(educationItem: EducationItem) {
         let userInfo = userInfoRelay.value
         userInfo.educationItems.append(educationItem)
+        userInfoRelay.accept(userInfo)
+    }
+}
+
+// MARK: - OtherItemEditingViewModelDelegate
+
+extension ProfileEditingViewModel: OtherItemEditingViewModelDelegate {
+    
+    func otherItemEditingViewModelDidEndEditing(with otherItem: UserInfoItem, at index: IndexPath.Index?) {
+        let userInfo = userInfoRelay.value
+        if let index = index, userInfo.otherItems.indices ~= index {
+            userInfo.otherItems[index] = otherItem
+            userInfoRelay.accept(userInfo)
+        }
+    }
+    
+    func otherItemeditingViewModelDidAppend(otherItem: UserInfoItem) {
+        let userInfo = userInfoRelay.value
+        userInfo.otherItems.append(otherItem)
         userInfoRelay.accept(userInfo)
     }
 }

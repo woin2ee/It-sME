@@ -70,7 +70,7 @@ final class ProfileEditingViewController: UIViewController {
     
     private lazy var userInfoItemAdditionButton: ItemAddButton = .init().then {
         let action: UIAction = .init(handler: { [weak self] _ in
-            self?.presentNewOtherItemView()
+            self?.pushOtherItemAdditionViewController()
         })
         $0.addAction(action, for: .touchUpInside)
     }
@@ -302,16 +302,26 @@ private extension ProfileEditingViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func presentOtherItemEditingView(with Item: UserInfoItem) {
-        guard let indexOfItem = viewModel.currentOtherItems.firstIndex(where: { $0 === Item }) else {
+    func pushOtherItemEditingViewController(with otherItem: UserInfoItem) {
+        guard let indexOfItem = viewModel.currentOtherItems.firstIndex(where: { $0 === otherItem }) else {
             return
         }
-        let viewController: OtherItemEditingViewController = .init(viewModel: viewModel, indexOfItem: indexOfItem)
+        let viewModel: OtherItemEditingViewModel = .init(
+            initalOtherItem: otherItem,
+            editingType: .edit(index: indexOfItem),
+            delegate: viewModel
+        )
+        let viewController: OtherItemEditingViewController = .init(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func presentNewOtherItemView() {
-        let viewController: NewOtherItemViewController = .init(viewModel: viewModel)
+    func pushOtherItemAdditionViewController() {
+        let viewModel: OtherItemEditingViewModel = .init(
+            initalOtherItem: .empty,
+            editingType: .new,
+            delegate: viewModel
+        )
+        let viewController: OtherItemEditingViewController = .init(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -327,7 +337,7 @@ private extension ProfileEditingViewController {
             presentEmailEditingView()
         default:
             if let otherItem = viewModel.currentAllItems[ifExists: indexPath.row] {
-                presentOtherItemEditingView(with: otherItem)
+                pushOtherItemEditingViewController(with: otherItem)
             }
         }
     }
