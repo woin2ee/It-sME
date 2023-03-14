@@ -9,13 +9,19 @@ import UIKit
 import SnapKit
 
 class TextViewCell: UITableViewCell {
-
+    
     lazy var textView: UITextView = .init()
-    var textViewHeigt = 100
     
     override init(style: UITableViewCell.CellStyle = .default, reuseIdentifier: String? = nil) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureSubviews()
+    }
+    
+    convenience init(textViewHeight: Int) {
+        self.init()
+        textView.snp.makeConstraints { make in
+            make.height.equalTo(textViewHeight)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -30,7 +36,6 @@ class TextViewCell: UITableViewCell {
         self.contentView.addSubview(textView)
         textView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(10)
-            make.height.equalTo(textViewHeigt)
         }
     }
 }

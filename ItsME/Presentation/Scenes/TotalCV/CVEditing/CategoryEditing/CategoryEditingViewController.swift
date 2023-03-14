@@ -37,8 +37,7 @@ final class CategoryEditingViewController: UIViewController {
         $0.selectionStyle = .none
     }
     
-    private lazy var descriptionInputCell: TextViewCell = .init().then {
-        $0.textViewHeigt = 200
+    private lazy var descriptionInputCell: TextViewCell = .init(textViewHeight: 120).then {
         $0.textView.textColor = .label
         $0.textView.backgroundColor = .clear
         $0.textView.layer.cornerRadius = 10
