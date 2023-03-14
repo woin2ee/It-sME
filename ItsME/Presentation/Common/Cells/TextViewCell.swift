@@ -46,11 +46,6 @@ class TextViewCell: UITableViewCell {
         super.setSelected(false, animated: false)
     }
     
-    @objc
-    private func didTapTextView(_ sender: Any) {
-        self.endEditing(true)
-    }
-    
     private func configureSubviews() {
         self.contentView.addSubview(textView)
         textView.snp.makeConstraints { make in
