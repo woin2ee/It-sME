@@ -500,7 +500,7 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
                 return UITableViewCell()
             }
             categoryCell.bind(resumeItem: resumeCategory[indexPath.section].items[indexPath.row])
-            
+            categoryCell.selectionStyle = .none
             return categoryCell
             
         } else {
@@ -508,7 +508,7 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
                 return UITableViewCell()
             }
             coverLetterCell.bind(coverLetterItem: coverLetter.items[indexPath.row])
-            
+            coverLetterCell.selectionStyle = .none
             return coverLetterCell
         }
     }
@@ -578,6 +578,5 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
             coverLetter.items.remove(at: sourceIndexPath.row)
             coverLetter.items.insert(targetItem, at: destinationIndexPath.row)
         }
-        //FIXME: - 선택한 셀이 섹션이 넘어가지 않게끔, 데이터 처리
     }
 }
