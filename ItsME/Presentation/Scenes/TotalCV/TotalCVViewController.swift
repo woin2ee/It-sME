@@ -428,14 +428,19 @@ private extension TotalCVViewController {
     }
     
     func pushCategoryEditingView(indexPath: IndexPath) {
-        let CategoryEditingviewModel: CategoryEditingViewModel = .init(resumeItem: self.viewModel.resumeCategory[ifExists: indexPath.section]!.items[indexPath.row], totalCVVM: self.viewModel)
         
-        let viewController: CategoryEditingViewController = .init(viewModel: CategoryEditingviewModel)
+        guard let resumeItem = self.viewModel.resumeCategory[ifExists: indexPath.section]?.items[indexPath.row] else { return }
+        
+        let categoryEditingViewModel: CategoryEditingViewModel = .init(resumeItem: resumeItem, editingType: .edit(indexPath: indexPath))
+        
+        let viewController: CategoryEditingViewController = .init(viewModel: categoryEditingViewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func pushCategoryAddView() {
-        let categoryEditingViewModel: CategoryEditingViewModel = .init(resumeItem: nil, totalCVVM: self.viewModel)
+        
+        let resumeItem = ResumeItem(period: "", title: "", secondTitle: "", description: "")
+        let categoryEditingViewModel: CategoryEditingViewModel = .init(resumeItem: resumeItem, editingType: .new)
         let viewController: CategoryEditingViewController = .init(viewModel: categoryEditingViewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
