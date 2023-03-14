@@ -39,7 +39,7 @@ final class CategoryEditingViewController: UIViewController {
     
     private lazy var descriptionInputCell: TextViewCell = .init().then {
         $0.textViewHeight = 120
-        $0.textView.textColor = .label
+        $0.textView.font = .systemFont(ofSize: 17, weight: .regular)
         $0.textView.backgroundColor = .clear
         $0.textView.layer.cornerRadius = 10
         $0.textView.layer.masksToBounds = true
