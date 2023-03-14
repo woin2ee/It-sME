@@ -44,6 +44,7 @@ final class EducationEditingViewController: UIViewController {
         $0.trailingButton.addAction(action, for: .touchUpInside)
         $0.trailingButton.setTitleColor(.label, for: .normal)
         $0.backgroundColor = .secondarySystemGroupedBackground
+        $0.selectionStyle = .none
     }
     
     private lazy var entranceDatePickerCell: YearMonthPickerCell = .init().then {
@@ -70,6 +71,7 @@ final class EducationEditingViewController: UIViewController {
         $0.trailingButton.addAction(action, for: .touchUpInside)
         $0.trailingButton.setTitleColor(.label, for: .normal)
         $0.backgroundColor = .secondarySystemGroupedBackground
+        $0.selectionStyle = .none
     }
     
     private lazy var graduateDatePickerCell: YearMonthPickerCell = .init().then {
