@@ -258,6 +258,9 @@ private extension CategoryEditingViewController {
             vc.entranceDatePickerCell.yearMonthPickerView.setDate(year: resumeItem.entranceYear ?? 0, month: resumeItem.entranceMonth ?? 0, animated: false)
             vc.endDateInputCell.trailingButton.setTitle(resumeItem.endDate, for: .normal)
             vc.endDatePickerCell.yearMonthPickerView.setDate(year: resumeItem.endYear ?? 0, month: resumeItem.endMonth ?? 0, animated: false)
+            if resumeItem.description.isEmpty == false {
+                vc.descriptionInputCell.placeholderLabel.removeFromSuperview()
+            }
         }
     }
     
