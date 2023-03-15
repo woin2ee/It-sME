@@ -51,6 +51,24 @@ final class UIDRepositoryTests: XCTestCase {
         XCTAssertEqual(newTestUID, currentUID)
     }
     
+    func testUpdateUIDWhenNotSaved() {
+        // Arrange
+        let newTestUID: String! = "newTestUID"
+        var expectedStatus: OSStatus = errSecSuccess
+        
+        // Act
+        let expectation = expectation(description: "UID update 가 수행된 후 fulfill 됩니다.")
+        sut.updateUID(newTestUID) { status in
+            expectedStatus = status
+            expectation.fulfill()
+        }
+        
+        // Assert
+        waitForExpectations(timeout: .infinity) { _ in
+            XCTAssertNotEqual(expectedStatus, errSecSuccess)
+        }
+    }
+    
     func testSaveOtherUIDWhenAlreadyExistUID() {
         // Arrange
         let testUID: String! = "TestUID"
