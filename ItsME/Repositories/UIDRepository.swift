@@ -111,11 +111,11 @@ extension UIDRepository {
     /// - Parameter completion: 성공적으로 키체인에 `UID Data` 가 업데이트될 경우 매개변수로 `errSecSuccess` 값이 전달됩니다. 업데이트에 실패할 경우 실패 원인에 대한 `OSStatus` 값이 전달됩니다.
     func updateUIDData(_ data: Data, _ completion: ((OSStatus) -> Void)? = nil) {
         let query: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
-                              kSecAttrService: service as Any]
-        let attributes: [CFString: Any] = [kSecAttrAccount: keyOfUID,
-                                             kSecValueData: data]
+                                kSecAttrService: service as Any,
+                                kSecAttrAccount: keyOfUID]
+        let updateAttributes: [CFString: Any] = [kSecValueData: data]
         DispatchQueue.global().async {
-            let status = SecItemUpdate(query as CFDictionary, attributes as CFDictionary)
+            let status = SecItemUpdate(query as CFDictionary, updateAttributes as CFDictionary)
             completion?(status)
         }
     }
