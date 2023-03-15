@@ -37,11 +37,14 @@ final class UIDRepository {
 
 extension UIDRepository {
     
-    /// 키체인에 `UID` 를 저장한 뒤 `completion` 이 호출됩니다.
+    /// 주어진 `UID` 를 키체인에 저장한 뒤 `completion` 이 호출됩니다.
     ///
     /// 이미 키체인에 `UID` 가 존재하는 경우 기존 값을 업데이트한 뒤 `completion` 이 호출됩니다.
     ///
     /// 이 함수는 메인쓰레드에서 실행되지 않습니다.
+    ///
+    /// - Parameter uid: 키체인에 저장할 UID
+    /// - Parameter completion: 성공적으로 키체인에 저장되면 매개변수로 `errSecSuccess` 값이 전달됩니다. 저장에 실패할 경우 실패 원인에 대한 `OSStatus` 값이 전달됩니다.
     func saveUID(_ uid: UID, _ completion: ((OSStatus) -> Void)? = nil) {
         guard let uidData = uid.data(using: dataEncodingType) else {
             completion?(errSecInvalidEncoding)
@@ -64,6 +67,8 @@ extension UIDRepository {
     /// 키체인에 존재하는 `UID` 를 삭제한 뒤 `completion` 이 호출됩니다.
     ///
     /// 이 함수는 메인쓰레드에서 실행되지 않습니다.
+    ///
+    /// - Parameter completion: 성공적으로 키체인에서 UID 가 삭제되면 매개변수로 `errSecSuccess` 값이 전달됩니다. 삭제에 실패할 경우 실패 원인에 대한 `OSStatus` 값이 전달됩니다.
     func removeUID(_ completion: ((OSStatus) -> Void)? = nil) {
         let query: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
                                 kSecAttrService: service as Any,
@@ -98,6 +103,12 @@ extension UIDRepository {
         }
     }
     
+    /// 주어진 `UIDData` 로 키체인 저장된 `UID` 를 업데이트한 뒤 `completion` 이 호출됩니다.
+    ///
+    /// 이 함수는 메인쓰레드에서 실행되지 않습니다.
+    ///
+    /// - Parameter uidData: 키체인에 업데이트할 `UID Data`
+    /// - Parameter completion: 성공적으로 키체인에 `UID Data` 가 업데이트될 경우 매개변수로 `errSecSuccess` 값이 전달됩니다. 업데이트에 실패할 경우 실패 원인에 대한 `OSStatus` 값이 전달됩니다.
     func updateUID(_ uidData: Data, _ completion: ((OSStatus) -> Void)? = nil) {
         let query: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
                               kSecAttrService: service as Any]
@@ -109,6 +120,12 @@ extension UIDRepository {
         }
     }
     
+    /// 주어진 `UID` 로 키체인 저장된 `UID` 를 업데이트한 뒤 `completion` 이 호출됩니다.
+    ///
+    /// 이 함수는 메인쓰레드에서 실행되지 않습니다.
+    ///
+    /// - Parameter uid: 키체인에 업데이트할 `UID`
+    /// - Parameter completion: 성공적으로 키체인에 `UID` 가 업데이트될 경우 매개변수로 `errSecSuccess` 값이 전달됩니다. 업데이트에 실패할 경우 실패 원인에 대한 `OSStatus` 값이 전달됩니다.
     func updateUID(_ uid: UID, _ completion: ((OSStatus) -> Void)? = nil) {
         guard let uidData = uid.data(using: dataEncodingType) else {
             completion?(errSecInvalidEncoding)
