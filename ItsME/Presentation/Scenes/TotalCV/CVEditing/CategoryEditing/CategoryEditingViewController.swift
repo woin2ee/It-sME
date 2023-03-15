@@ -95,11 +95,8 @@ final class CategoryEditingViewController: UIViewController {
         [entranceDateInputCell, endOrNotEnrollmentStatusCell]
     ]
     
-    private lazy var completeBarButton: UIBarButtonItem = .init().then {
+    private lazy var completeBarButton: UIBarButtonItem = .init(title: "완료").then {
         $0.style = .done
-        $0.primaryAction = .init(title: "완료", handler: { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
-        })
     }
     
     // MARK: - Initializer
@@ -107,6 +104,7 @@ final class CategoryEditingViewController: UIViewController {
     init(viewModel: CategoryEditingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        bindViewModel()
     }
     
     required init?(coder: NSCoder) {
@@ -131,61 +129,10 @@ final class CategoryEditingViewController: UIViewController {
     }
 }
 
-//MARK: - Binding ViewModel
-private extension CategoryEditingViewController {
-    
-    func bindViewModel() {
-        
-        let input: CategoryEditingViewModel.Input = .init(
-            title: firstTitleInputCell.textField.rx.text.orEmpty.asDriver(),
-            secondTitle: secondTitleInputCell.textField.rx.text.orEmpty.asDriver(),
-            description: descriptionInputCell.textView.rx.text.orEmpty.asDriver(),
-            entranceDate: entranceDatePickerCell.yearMonthPickerView.rx.dateSelected.asDriver(),
-            endDate: endDatePickerCell.yearMonthPickerView.rx.dateSelected.asDriver(),
-            doneTrigger: completeBarButton.rx.tap.asSignal(),
-            enrollmentSelection: self.rx.methodInvoked(#selector(hideEndDateInputCells))
-                .mapToVoid()
-                .asDriverOnErrorJustComplete(),
-            endSelection: self.rx.methodInvoked(#selector(showEndDateInputCells))
-                .mapToVoid()
-                .asDriverOnErrorJustComplete()
-        )
-        
-        let output = viewModel.transform(input: input)
-        
-        [
-            output.resumeItem
-                .drive(resumeItemBinding),
-            output.doneHandler
-                .emit(with: self, onNext: { owner, _ in
-                    owner.navigationController?.popViewController(animated: true)
-                }),
-        ]
-            .forEach { $0.disposed(by: disposeBag) }
-    }
-    
-    var resumeItemBinding: Binder<ResumeItem> {
-        .init(self) { vc, resumeItem in
-            vc.firstTitleInputCell.textField.text = resumeItem.title
-            vc.secondTitleInputCell.textField.text = resumeItem.secondTitle
-            vc.descriptionInputCell.textView.text = resumeItem.description
-            vc.entranceDateInputCell.trailingButton.setTitle(resumeItem.entranceDate, for: .normal)
-            vc.entranceDatePickerCell.yearMonthPickerView.setDate(year: resumeItem.entranceYear ?? 0,
-                                                                  month: resumeItem.entranceMonth ?? 0,
-                                                                  animated: false)
-            vc.endDateInputCell.trailingButton.setTitle(resumeItem.graduateDate, for: .normal)
-            vc.endDatePickerCell.yearMonthPickerView.setDate(year: resumeItem.endYear ?? 0,
-                                                             month: resumeItem.endMonth ?? 0,
-                                                             animated: false)
-        }
-    }
-}
-
 //MARK: - Private Function
 private extension CategoryEditingViewController {
     
     func configureNavigationBar() {
-        self.navigationItem.title = "카테고리 편집"
         self.navigationItem.rightBarButtonItem = completeBarButton
     }
     
@@ -267,8 +214,69 @@ private extension CategoryEditingViewController {
     }
 }
 
+//MARK: - Binding ViewModel
+private extension CategoryEditingViewController {
+    
+    func bindViewModel() {
+        
+        let input: CategoryEditingViewModel.Input = .init(
+            title: firstTitleInputCell.textField.rx.text.orEmpty.asDriver(),
+            secondTitle: secondTitleInputCell.textField.rx.text.orEmpty.asDriver(),
+            description: descriptionInputCell.textView.rx.text.orEmpty.asDriver(),
+            entranceDate: entranceDatePickerCell.yearMonthPickerView.rx.dateSelected.asDriver(),
+            endDate: endDatePickerCell.yearMonthPickerView.rx.dateSelected.asDriver(),
+            doneTrigger: completeBarButton.rx.tap.asSignal(),
+            enrollmentSelection: self.rx.methodInvoked(#selector(hideEndDateInputCells))
+                .mapToVoid()
+                .asDriverOnErrorJustComplete(),
+            endSelection: self.rx.methodInvoked(#selector(showEndDateInputCells))
+                .mapToVoid()
+                .asDriverOnErrorJustComplete()
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        [
+            output.resumeItem
+                .drive(resumeItemBinding),
+            output.doneHandler
+                .emit(with: self, onNext: { owner, _ in
+                    owner.navigationController?.popViewController(animated: true)
+                }),
+            output.editingType
+                .drive(editingTypeBinding),
+        ]
+            .forEach { $0.disposed(by: disposeBag) }
+    }
+    
+    var resumeItemBinding: Binder<ResumeItem> {
+        .init(self) { vc, resumeItem in
+            vc.firstTitleInputCell.textField.text = resumeItem.title
+            vc.secondTitleInputCell.textField.text = resumeItem.secondTitle
+            vc.descriptionInputCell.textView.text = resumeItem.description
+            vc.entranceDateInputCell.trailingButton.setTitle(resumeItem.entranceDate, for: .normal)
+            vc.entranceDatePickerCell.yearMonthPickerView.setDate(year: resumeItem.entranceYear ?? 0, month: resumeItem.entranceMonth ?? 0, animated: false)
+            vc.endDateInputCell.trailingButton.setTitle(resumeItem.endDate, for: .normal)
+            vc.endDatePickerCell.yearMonthPickerView.setDate(year: resumeItem.endYear ?? 0, month: resumeItem.endMonth ?? 0, animated: false)
+        }
+    }
+    
+    var editingTypeBinding: Binder<CategoryEditingViewModel.EditingType> {
+        .init(self) { vc, editingType in
+            switch editingType {
+            case .edit:
+                vc.navigationItem.title = "편집"
+                vc.completeBarButton.title = "완료"
+            case .new:
+                vc.navigationItem.title = "추가"
+                vc.completeBarButton.title = "추가"
+            }
+        }
+    }
+}
+
 // MARK: - TableView
-extension CategoryEditingViewController: UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
+extension CategoryEditingViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         inputTableViewDataSource.count

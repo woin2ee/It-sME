@@ -13,14 +13,8 @@ class TextViewCell: UITableViewCell {
     let textViewPlaceholder: String? = "설명을 입력하세요."
     
     lazy var textView: UITextView = .init().then {
-        if $0.text == textViewPlaceholder || $0.text.isEmpty {
-            $0.textColor = .placeholderText
-        } else {
-            $0.textColor = .label
-        }
-        
+        $0.textColor = .label
         $0.text = textViewPlaceholder
-        
         $0.delegate = self
     }
     

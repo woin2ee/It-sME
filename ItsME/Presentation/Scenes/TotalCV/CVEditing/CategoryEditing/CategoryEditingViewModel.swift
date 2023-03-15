@@ -57,7 +57,12 @@ final class CategoryEditingViewModel: ViewModelType {
         ) {
             (title, secondTitle, description, entranceDate, endDate) -> ResumeItem in
             let period = "\(entranceDate.year).\(entranceDate.month.toLeadingZero(digit: 2)) - \(endDate)"
-            return .init(period: period, title: title, secondTitle: secondTitle, description: description)
+            return .init(
+                period: period,
+                title: title,
+                secondTitle: secondTitle,
+                description: description
+            )
         }
             .startWith(resumeItem)
         
@@ -66,12 +71,14 @@ final class CategoryEditingViewModel: ViewModelType {
             .do(onNext: endEditing(with:))
             .mapToVoid()
         
+        let editingType = Driver.just(editingType)
+                
         return .init(
             resumeItem: resumeItem,
-            doneHandler: doneHandler
+            doneHandler: doneHandler,
+            editingType: editingType
         )
     }
-    
     
     private func endEditing(with resumeItem: ResumeItem) {
         switch editingType {
@@ -82,24 +89,6 @@ final class CategoryEditingViewModel: ViewModelType {
         }
     }
 }
-
-//    let resumeItem = behaviorRelay.asDriver()
-//    return .init(resumeItem: resumeItem)
-//}
-//
-//let behaviorRelay: BehaviorRelay<ResumeItem>
-//
-//var totalCVViewModel: TotalCVViewModel
-//
-//var resumeItem: ResumeItem {
-//    behaviorRelay.value
-//}
-//
-//init(resumeItem: ResumeItem?, totalCVVM: TotalCVViewModel) {
-//    self.behaviorRelay = .init(value: resumeItem ?? ResumeItem(period: "", title: "", secondTitle: "", description: ""))
-//    self.totalCVViewModel = totalCVVM
-//}
-//}
 
 //MARK: - Input & Output
 extension CategoryEditingViewModel {
@@ -118,6 +107,7 @@ extension CategoryEditingViewModel {
     struct Output {
         let resumeItem: Driver<ResumeItem>
         let doneHandler: Signal<Void>
+        let editingType: Driver<EditingType>
     }
 }
 
