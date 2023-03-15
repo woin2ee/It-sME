@@ -57,7 +57,7 @@ extension UIDRepository {
         DispatchQueue.global().async {
             let status = SecItemAdd(query as CFDictionary, nil)
             if status == errSecDuplicateItem {
-                self.updateUID(uidData, completion)
+                self.updateUIDData(uidData, completion)
                 return
             }
             completion?(status)
@@ -109,11 +109,11 @@ extension UIDRepository {
     ///
     /// - Parameter uidData: 키체인에 업데이트할 `UID Data`
     /// - Parameter completion: 성공적으로 키체인에 `UID Data` 가 업데이트될 경우 매개변수로 `errSecSuccess` 값이 전달됩니다. 업데이트에 실패할 경우 실패 원인에 대한 `OSStatus` 값이 전달됩니다.
-    func updateUID(_ uidData: Data, _ completion: ((OSStatus) -> Void)? = nil) {
+    func updateUIDData(_ data: Data, _ completion: ((OSStatus) -> Void)? = nil) {
         let query: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
                               kSecAttrService: service as Any]
         let attributes: [CFString: Any] = [kSecAttrAccount: keyOfUID,
-                                             kSecValueData: uidData]
+                                             kSecValueData: data]
         DispatchQueue.global().async {
             let status = SecItemUpdate(query as CFDictionary, attributes as CFDictionary)
             completion?(status)
@@ -121,6 +121,8 @@ extension UIDRepository {
     }
     
     /// 주어진 `UID` 로 키체인 저장된 `UID` 를 업데이트한 뒤 `completion` 이 호출됩니다.
+    ///
+    /// 이 함수는 내부적으로 `updateUIDData(_:_:)` 를 호출합니다.
     ///
     /// 이 함수는 메인쓰레드에서 실행되지 않습니다.
     ///
@@ -132,6 +134,6 @@ extension UIDRepository {
             return
         }
         
-        updateUID(uidData, completion)
+        updateUIDData(uidData, completion)
     }
 }
