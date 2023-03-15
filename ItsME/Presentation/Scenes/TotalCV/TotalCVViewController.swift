@@ -22,6 +22,7 @@ class TotalCVViewController: UIViewController {
     let commonOffset = 15
     let addButtonSize = 120
     
+//MARK: - UI Component
     private var fullScrollView: UIScrollView = .init().then {
         $0.backgroundColor = .systemBackground
         $0.showsVerticalScrollIndicator = true
@@ -167,6 +168,176 @@ class TotalCVViewController: UIViewController {
         $0.addAction(action, for: .touchUpInside)
     }
     
+    // MARK: - Life Cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureAppearance()
+        bindViewModel()
+        configureSubviews()
+        self.view.layoutIfNeeded()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNavigationBar()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        profileImageView.circular()
+    }
+    // MARK: - Navigation
+    
+    func configureNavigationBar() {
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationItem.rightBarButtonItem = editModeButton
+        
+        //FIXME: - 화면을 끝까지 내렸을 때 자동으로 Large title로 변경되는 오류를 해결해줘야 함
+        //        navigationController?.navigationBar.prefersLargeTitles = true
+        //        UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).adjustsFontSizeToFitWidth = true
+        
+    }
+}
+// MARK: - Binding ViewModel
+
+private extension TotalCVViewController {
+    
+    func bindViewModel() {
+        let input = makeInput()
+        let output = viewModel.transform(input: input)
+        
+        output.userInfoItems
+            .drive(userInfoBinding)
+            .disposed(by: disposeBag)
+        
+        output.educationItems
+            .drive(
+                educationTableView.rx.items(cellIdentifier: EducationCell.reuseIdentifier, cellType: EducationCell.self)
+            ) { (index, educationItem, cell) in
+                cell.bind(educationItem: educationItem)
+            }
+            .disposed(by: disposeBag)
+        
+        output.cvInfo
+            .drive(cvsInfoBinding)
+            .disposed(by: disposeBag)
+    }
+    
+    func makeInput() -> TotalCVViewModel.Input {
+        let viewDidLoad = Observable.just(())
+            .map { _ in }
+            .asSignal(onErrorSignalWith: .empty())
+        
+        return .init(viewDidLoad: viewDidLoad)
+    }
+    
+    var userInfoBinding: Binder<[UserInfoItem]> {
+        return .init(self) { viewController, userInfoItems in
+            self.totalUserInfoItemStackView.bind(userInfoItems: userInfoItems)
+        }
+    }
+    
+    var educationBinding: Binder<[EducationItem]> {
+        return .init(self) { viewController, education in
+            
+        }
+    }
+    
+    var cvsInfoBinding: Binder<CVInfo> {
+        return .init(self) { viewController, cvInfo in
+            self.navigationItem.title = cvInfo.title
+            
+        }
+    }
+}
+
+
+//MARK: - Private Function
+private extension TotalCVViewController {
+    
+    func configureAppearance() {
+        self.view.backgroundColor = .systemBackground
+    }
+    
+    func configureSubviews() {
+        
+        self.view.addSubview(fullScrollView)
+        fullScrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        self.fullScrollView.addSubview(contentView)
+        contentView.snp.makeConstraints { make in
+            make.top.bottom.width.equalToSuperview()
+        }
+        
+        self.contentView.addSubview(justCVView)
+        justCVView.snp.makeConstraints { make in
+            make.top.left.right.equalToSuperview()
+        }
+        
+        self.contentView.addSubview(bothView)
+        bothView.snp.makeConstraints { make in
+            make.bottom.left.right.equalToSuperview()
+            make.top.equalTo(justCVView.snp.bottom).offset(10)
+        }
+        
+        self.justCVView.addSubview(profileImageView)
+        profileImageView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(20)
+            make.width.height.equalTo(self.view.frame.width * 0.35)
+            make.trailing.equalToSuperview().offset(-20)
+        }
+        
+        self.justCVView.addSubview(totalUserInfoItemStackView)
+        totalUserInfoItemStackView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(10)
+            make.trailing.equalTo(profileImageView.snp.leading).offset(-10)
+            make.leading.equalToSuperview().offset(10)
+        }
+        
+        self.justCVView.addSubview(educationHeaderLabel)
+        educationHeaderLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.top.equalTo(totalUserInfoItemStackView.snp.bottom).offset(30)
+        }
+        
+        self.justCVView.addSubview(educationTableView)
+        educationTableView.snp.makeConstraints { make in
+            make.top.equalTo(educationHeaderLabel.snp.bottom).offset(5)
+            make.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(24)
+        }
+        
+        self.bothView.addSubview(categoryEditingBackgroundView)
+        categoryEditingBackgroundView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(commonOffset)
+            make.leading.trailing.equalToSuperview().inset(editModeInset)
+        }
+        
+        self.categoryEditingBackgroundView.addSubview(categoryTableView)
+        categoryTableView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(editModeInset)
+            make.bottom.equalToSuperview().offset(-commonOffset)
+        }
+        
+        self.bothView.addSubview(coverLetterEditingBackgroundView)
+        coverLetterEditingBackgroundView.snp.makeConstraints { make in
+            make.top.equalTo(categoryEditingBackgroundView.snp.bottom).offset(commonOffset)
+            make.leading.trailing.equalToSuperview().inset(editModeInset)
+            make.bottom.equalToSuperview()
+        }
+        
+        self.coverLetterEditingBackgroundView.addSubview(coverLetterTableView)
+        coverLetterTableView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(commonOffset)
+            make.leading.trailing.equalToSuperview().inset(editModeInset)
+            make.bottom.equalToSuperview().offset(-commonOffset)
+        }
+    }
+    
     func changeButton() {
         if isEditingMode {
             self.editModeButton.image = nil
@@ -257,173 +428,6 @@ class TotalCVViewController: UIViewController {
                 self.navigationItem.leftBarButtonItem = nil
                 self.view.layoutIfNeeded()
             })
-        }
-    }
-    // MARK: - Life Cycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureAppearance()
-        bindViewModel()
-        configureSubviews()
-        self.view.layoutIfNeeded()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        configureNavigationBar()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        profileImageView.circular()
-    }
-    // MARK: - Navigation
-    
-    func configureNavigationBar() {
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationItem.rightBarButtonItem = editModeButton
-        
-        //FIXME: - 화면을 끝까지 내렸을 때 자동으로 Large title로 변경되는 오류를 해결해줘야 함
-        //        navigationController?.navigationBar.prefersLargeTitles = true
-        //        UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).adjustsFontSizeToFitWidth = true
-        
-    }
-}
-// MARK: - Binding ViewModel
-
-private extension TotalCVViewController {
-    
-    func bindViewModel() {
-        let input = makeInput()
-        let output = viewModel.transform(input: input)
-        
-        output.userInfoItems
-            .drive(userInfoBinding)
-            .disposed(by: disposeBag)
-        
-        output.educationItems
-            .drive(
-                educationTableView.rx.items(cellIdentifier: EducationCell.reuseIdentifier, cellType: EducationCell.self)
-            ) { (index, educationItem, cell) in
-                cell.bind(educationItem: educationItem)
-            }
-            .disposed(by: disposeBag)
-        
-        output.cvInfo
-            .drive(cvsInfoBinding)
-            .disposed(by: disposeBag)
-    }
-    
-    func makeInput() -> TotalCVViewModel.Input {
-        let viewDidLoad = Observable.just(())
-            .map { _ in }
-            .asSignal(onErrorSignalWith: .empty())
-        
-        return .init(viewDidLoad: viewDidLoad)
-    }
-    
-    var userInfoBinding: Binder<[UserInfoItem]> {
-        return .init(self) { viewController, userInfoItems in
-            self.totalUserInfoItemStackView.bind(userInfoItems: userInfoItems)
-        }
-    }
-    
-    var educationBinding: Binder<[EducationItem]> {
-        return .init(self) { viewController, education in
-            
-        }
-    }
-    
-    var cvsInfoBinding: Binder<CVInfo> {
-        return .init(self) { viewController, cvInfo in
-            self.navigationItem.title = cvInfo.title
-            
-        }
-    }
-}
-
-private extension TotalCVViewController {
-    
-    func configureAppearance() {
-        self.view.backgroundColor = .systemBackground
-    }
-    
-    func configureSubviews() {
-        
-        self.view.addSubview(fullScrollView)
-        fullScrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
-        self.fullScrollView.addSubview(contentView)
-        contentView.snp.makeConstraints { make in
-            make.top.bottom.width.equalToSuperview()
-        }
-        
-        self.contentView.addSubview(justCVView)
-        justCVView.snp.makeConstraints { make in
-            make.top.left.right.equalToSuperview()
-        }
-        
-        self.contentView.addSubview(bothView)
-        bothView.snp.makeConstraints { make in
-            make.bottom.left.right.equalToSuperview()
-            make.top.equalTo(justCVView.snp.bottom).offset(10)
-        }
-        
-        self.justCVView.addSubview(profileImageView)
-        profileImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
-            make.width.height.equalTo(self.view.frame.width * 0.35)
-            make.trailing.equalToSuperview().offset(-20)
-        }
-        
-        self.justCVView.addSubview(totalUserInfoItemStackView)
-        totalUserInfoItemStackView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
-            make.trailing.equalTo(profileImageView.snp.leading).offset(-10)
-            make.leading.equalToSuperview().offset(10)
-        }
-        
-        self.justCVView.addSubview(educationHeaderLabel)
-        educationHeaderLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.top.equalTo(totalUserInfoItemStackView.snp.bottom).offset(30)
-        }
-        
-        self.justCVView.addSubview(educationTableView)
-        educationTableView.snp.makeConstraints { make in
-            make.top.equalTo(educationHeaderLabel.snp.bottom).offset(5)
-            make.bottom.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(24)
-        }
-        
-        self.bothView.addSubview(categoryEditingBackgroundView)
-        categoryEditingBackgroundView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(commonOffset)
-            make.leading.trailing.equalToSuperview().inset(editModeInset)
-        }
-        
-        self.categoryEditingBackgroundView.addSubview(categoryTableView)
-        categoryTableView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(editModeInset)
-            make.bottom.equalToSuperview().offset(-commonOffset)
-        }
-        
-        self.bothView.addSubview(coverLetterEditingBackgroundView)
-        coverLetterEditingBackgroundView.snp.makeConstraints { make in
-            make.top.equalTo(categoryEditingBackgroundView.snp.bottom).offset(commonOffset)
-            make.leading.trailing.equalToSuperview().inset(editModeInset)
-            make.bottom.equalToSuperview()
-        }
-        
-        self.coverLetterEditingBackgroundView.addSubview(coverLetterTableView)
-        coverLetterTableView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(commonOffset)
-            make.leading.trailing.equalToSuperview().inset(editModeInset)
-            make.bottom.equalToSuperview().offset(-commonOffset)
         }
     }
     
