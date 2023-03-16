@@ -57,9 +57,7 @@ class TextViewCell: UITableViewCell {
 
         textView.addSubview(placeholderLabel)
         placeholderLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.left.right.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.directionalEdges.equalToSuperview()
         }
     }
 }
