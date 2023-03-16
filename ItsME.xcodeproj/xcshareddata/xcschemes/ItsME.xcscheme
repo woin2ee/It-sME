@@ -26,7 +26,32 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "YES">
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "D09AC9702918DE8B0081C0EC"
+            BuildableName = "ItsME.app"
+            BlueprintName = "ItsME"
+            ReferencedContainer = "container:ItsME.xcodeproj">
+         </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "D09AC9862918DE8C0081C0EC"
+            BuildableName = "ItsMETests.xctest"
+            BlueprintName = "ItsMETests"
+            ReferencedContainer = "container:ItsME.xcodeproj">
+         </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "D09AC9902918DE8C0081C0EC"
+            BuildableName = "ItsMEUITests.xctest"
+            BlueprintName = "ItsMEUITests"
+            ReferencedContainer = "container:ItsME.xcodeproj">
+         </BuildableReference>
+      </CodeCoverageTargets>
       <Testables>
          <TestableReference
             skipped = "NO"

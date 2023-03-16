@@ -86,6 +86,9 @@
 		DAB06A40291BA61100E86163 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06A3F291BA61100E86163 /* ViewModelType.swift */; };
 		DAD1D03029B759CE00B12BF8 /* Calendar+Current.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD1D02F29B759CE00B12BF8 /* Calendar+Current.swift */; };
 		DAD1D03229BF411A00B12BF8 /* OtherItemEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD1D03129BF411A00B12BF8 /* OtherItemEditingViewModel.swift */; };
+		DAD1D03429C068A600B12BF8 /* UIDRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD1D03329C068A600B12BF8 /* UIDRepository.swift */; };
+		DAD1D03629C0826100B12BF8 /* UIDRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD1D03529C0826100B12BF8 /* UIDRepositoryTests.swift */; };
+		DAD1D03829C0B40100B12BF8 /* OSStatus+ToReadableString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD1D03729C0B40100B12BF8 /* OSStatus+ToReadableString.swift */; };
 		DADDEEA629A8AD9A00D31B02 /* InsetTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADDEEA529A8AD9A00D31B02 /* InsetTextField.swift */; };
 		DAE6090B2942095400481742 /* TotalUserInfoItemStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE6090A2942095400481742 /* TotalUserInfoItemStackView.swift */; };
 		DAE6090D29420D9900481742 /* ItemAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE6090C29420D9900481742 /* ItemAddButton.swift */; };
@@ -203,6 +206,9 @@
 		DAB06A3F291BA61100E86163 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		DAD1D02F29B759CE00B12BF8 /* Calendar+Current.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+Current.swift"; sourceTree = "<group>"; };
 		DAD1D03129BF411A00B12BF8 /* OtherItemEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherItemEditingViewModel.swift; sourceTree = "<group>"; };
+		DAD1D03329C068A600B12BF8 /* UIDRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDRepository.swift; sourceTree = "<group>"; };
+		DAD1D03529C0826100B12BF8 /* UIDRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDRepositoryTests.swift; sourceTree = "<group>"; };
+		DAD1D03729C0B40100B12BF8 /* OSStatus+ToReadableString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OSStatus+ToReadableString.swift"; sourceTree = "<group>"; };
 		DADDEEA529A8AD9A00D31B02 /* InsetTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetTextField.swift; sourceTree = "<group>"; };
 		DAE6090A2942095400481742 /* TotalUserInfoItemStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalUserInfoItemStackView.swift; sourceTree = "<group>"; };
 		DAE6090C29420D9900481742 /* ItemAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemAddButton.swift; sourceTree = "<group>"; };
@@ -342,6 +348,7 @@
 			children = (
 				D09AC98B2918DE8C0081C0EC /* ItsMETests.swift */,
 				DA53B73929B5C304000BBB26 /* ExtensionTests.swift */,
+				DAD1D03529C0826100B12BF8 /* UIDRepositoryTests.swift */,
 			);
 			path = ItsMETests;
 			sourceTree = "<group>";
@@ -448,6 +455,7 @@
 				DA6BCE5F292F04930059E95D /* Firebase */,
 				DA0A88682921245000E9AE43 /* UserRepository.swift */,
 				DA7201ED2931E7BB00A69519 /* CVRepository.swift */,
+				DAD1D03329C068A600B12BF8 /* UIDRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -508,6 +516,7 @@
 				DA6B3CEA29B1CCD9002BB159 /* YearMonthPickerView+Rx.swift */,
 				DA53B73729B5BDA1000BBB26 /* Int+.swift */,
 				DAD1D02F29B759CE00B12BF8 /* Calendar+Current.swift */,
+				DAD1D03729C0B40100B12BF8 /* OSStatus+ToReadableString.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -969,6 +978,7 @@
 				DA7201F22931F21100A69519 /* ResumeCategory.swift in Sources */,
 				DA3302B129ADD36000C36154 /* TextFieldCell.swift in Sources */,
 				DA018809296D146A002C5CB0 /* BirthdayEditingViewController.swift in Sources */,
+				DAD1D03429C068A600B12BF8 /* UIDRepository.swift in Sources */,
 				DA6B3CEB29B1CCD9002BB159 /* YearMonthPickerView+Rx.swift in Sources */,
 				DAB06A3D291BA5B400E86163 /* HomeViewModel.swift in Sources */,
 				DA481D7F299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift in Sources */,
@@ -989,6 +999,7 @@
 				DA53B73829B5BDA1000BBB26 /* Int+.swift in Sources */,
 				DAFCFB6F2950693F006B287A /* IntrinsicHeightTableView.swift in Sources */,
 				D09AC9772918DE8B0081C0EC /* SceneDelegate.swift in Sources */,
+				DAD1D03829C0B40100B12BF8 /* OSStatus+ToReadableString.swift in Sources */,
 				DA7201EE2931E7BB00A69519 /* CVRepository.swift in Sources */,
 				DAFCFB7529543D3B006B287A /* UIButton+.swift in Sources */,
 				DAA5B9672938827200BAB04E /* ProfileEditingViewModel.swift in Sources */,
@@ -1006,6 +1017,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAD1D03629C0826100B12BF8 /* UIDRepositoryTests.swift in Sources */,
 				D09AC98C2918DE8C0081C0EC /* ItsMETests.swift in Sources */,
 				DA53B73A29B5C304000BBB26 /* ExtensionTests.swift in Sources */,
 			);
