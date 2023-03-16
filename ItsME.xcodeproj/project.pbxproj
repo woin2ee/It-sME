@@ -89,6 +89,8 @@
 		DAD1D03429C068A600B12BF8 /* UIDRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD1D03329C068A600B12BF8 /* UIDRepository.swift */; };
 		DAD1D03629C0826100B12BF8 /* UIDRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD1D03529C0826100B12BF8 /* UIDRepositoryTests.swift */; };
 		DAD1D03829C0B40100B12BF8 /* OSStatus+ToReadableString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD1D03729C0B40100B12BF8 /* OSStatus+ToReadableString.swift */; };
+		DAD1D05A29C1CEC500B12BF8 /* AppLoginStatusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD1D05929C1CEC500B12BF8 /* AppLoginStatusManager.swift */; };
+		DAD1D05C29C2DD9500B12BF8 /* AppLoginStatusManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD1D05B29C2DD9500B12BF8 /* AppLoginStatusManager+Rx.swift */; };
 		DADDEEA629A8AD9A00D31B02 /* InsetTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADDEEA529A8AD9A00D31B02 /* InsetTextField.swift */; };
 		DAE6090B2942095400481742 /* TotalUserInfoItemStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE6090A2942095400481742 /* TotalUserInfoItemStackView.swift */; };
 		DAE6090D29420D9900481742 /* ItemAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE6090C29420D9900481742 /* ItemAddButton.swift */; };
@@ -209,6 +211,8 @@
 		DAD1D03329C068A600B12BF8 /* UIDRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDRepository.swift; sourceTree = "<group>"; };
 		DAD1D03529C0826100B12BF8 /* UIDRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDRepositoryTests.swift; sourceTree = "<group>"; };
 		DAD1D03729C0B40100B12BF8 /* OSStatus+ToReadableString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OSStatus+ToReadableString.swift"; sourceTree = "<group>"; };
+		DAD1D05929C1CEC500B12BF8 /* AppLoginStatusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLoginStatusManager.swift; sourceTree = "<group>"; };
+		DAD1D05B29C2DD9500B12BF8 /* AppLoginStatusManager+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppLoginStatusManager+Rx.swift"; sourceTree = "<group>"; };
 		DADDEEA529A8AD9A00D31B02 /* InsetTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetTextField.swift; sourceTree = "<group>"; };
 		DAE6090A2942095400481742 /* TotalUserInfoItemStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalUserInfoItemStackView.swift; sourceTree = "<group>"; };
 		DAE6090C29420D9900481742 /* ItemAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemAddButton.swift; sourceTree = "<group>"; };
@@ -517,6 +521,7 @@
 				DA53B73729B5BDA1000BBB26 /* Int+.swift */,
 				DAD1D02F29B759CE00B12BF8 /* Calendar+Current.swift */,
 				DAD1D03729C0B40100B12BF8 /* OSStatus+ToReadableString.swift */,
+				DAD1D05B29C2DD9500B12BF8 /* AppLoginStatusManager+Rx.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -578,6 +583,7 @@
 			children = (
 				D09AC9742918DE8B0081C0EC /* AppDelegate.swift */,
 				D09AC9762918DE8B0081C0EC /* SceneDelegate.swift */,
+				DAD1D05929C1CEC500B12BF8 /* AppLoginStatusManager.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -943,6 +949,7 @@
 				DAAFB2532918EE5A007A8DF0 /* UserInfo.swift in Sources */,
 				DAFCFB6C294C3666006B287A /* EducationCell.swift in Sources */,
 				DA7201EC29309B9600A69519 /* AuthenticationServices+Rx.swift in Sources */,
+				DAD1D05C29C2DD9500B12BF8 /* AppLoginStatusManager+Rx.swift in Sources */,
 				D09AC9792918DE8B0081C0EC /* HomeViewController.swift in Sources */,
 				DA7201F02931EEE600A69519 /* CVInfo.swift in Sources */,
 				DADDEEA629A8AD9A00D31B02 /* InsetTextField.swift in Sources */,
@@ -1010,6 +1017,7 @@
 				D0CCF504292CCB4C00AD4AE6 /* CVCard.swift in Sources */,
 				DA01880D296D1477002C5CB0 /* PhoneNumberEditingViewController.swift in Sources */,
 				D0B1BA862988DA75003ACD41 /* CategoryCell.swift in Sources */,
+				DAD1D05A29C1CEC500B12BF8 /* AppLoginStatusManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

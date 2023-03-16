@@ -58,22 +58,20 @@ private extension LoginViewModel {
     func loginWithKakao() -> Observable<Void> {
         if (UserApi.isKakaoTalkLoginAvailable()) {
             return UserApi.shared.rx.loginWithKakaoTalk()
-                .map { AuthToken -> Void in
-                    #if DEBUG
-                        print("Login Success")
-                        print(AuthToken.accessToken)
-                    #endif
-                    return ()
+                .flatMap { authToken in
+                    return UserApi.shared.rx.me()
+                        .compactMap { $0.id }
+                        .map { String($0) }
                 }
+                .flatMap { AppLoginStatusManager.shared.rx.login(with: $0) }
         } else {
             return UserApi.shared.rx.loginWithKakaoAccount()
-                .map { AuthToken -> Void in
-                    #if DEBUG
-                        print("Login Success")
-                        print(AuthToken.accessToken)
-                    #endif
-                    return ()
+                .flatMap { authToken in
+                    return UserApi.shared.rx.me()
+                        .compactMap { $0.id }
+                        .map { String($0) }
                 }
+                .flatMap { AppLoginStatusManager.shared.rx.login(with: $0) }
         }
     }
 }

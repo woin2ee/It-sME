@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         
-        let isLoggedIn = false // TODO: 로그인 체크 로직 구현
+        let isLoggedIn = AppLoginStatusManager.shared.isLoggedIn
         
         let rootViewController = isLoggedIn ? HomeViewController() : LoginViewController()
         let navigationController: UINavigationController = .init(rootViewController: rootViewController)
