@@ -12,18 +12,6 @@ class TextViewCell: UITableViewCell {
     
     let textViewPlaceholder: String? = "설명을 입력하세요."
     
-    lazy var textView: UITextView = .init().then {
-        if $0.text == textViewPlaceholder || $0.text.isEmpty {
-            $0.textColor = .placeholderText
-        } else {
-            $0.textColor = .label
-        }
-        
-        $0.text = textViewPlaceholder
-        
-        $0.delegate = self
-    }
-    
     var textViewHeight = 100 {
         didSet {
             textView.snp.updateConstraints { make in
@@ -32,6 +20,20 @@ class TextViewCell: UITableViewCell {
             self.setNeedsLayout()
         }
     }
+
+//MARK: - UI Component
+    lazy var textView: UITextView = .init().then {
+        $0.delegate = self
+    }
+    
+    lazy var placeholderLabel: UILabel = .init().then {
+        $0.text = textViewPlaceholder
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.textColor = .placeholderText
+        $0.numberOfLines = 0
+    }
+    
+    
     
     override init(style: UITableViewCell.CellStyle = .default, reuseIdentifier: String? = nil) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -52,6 +54,11 @@ class TextViewCell: UITableViewCell {
             make.edges.equalToSuperview().inset(10)
             make.height.equalTo(textViewHeight)
         }
+
+        textView.addSubview(placeholderLabel)
+        placeholderLabel.snp.makeConstraints { make in
+            make.directionalEdges.equalToSuperview()
+        }
     }
 }
 
@@ -59,6 +66,7 @@ class TextViewCell: UITableViewCell {
 extension TextViewCell: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
+        placeholderLabel.removeFromSuperview()
         if textView.text == textViewPlaceholder {
             textView.text = nil
             textView.textColor = .label
