@@ -1,5 +1,5 @@
 //
-//  CategoryEditingViewController.swift
+//  ResumeItemEditingViewController.swift
 //  ItsME
 //
 //  Created by MacBook Air on 2023/03/03.
@@ -10,10 +10,10 @@ import Then
 import SnapKit
 import RxSwift
 
-final class CategoryEditingViewController: UIViewController {
+final class ResumeItemEditingViewController: UIViewController {
     
     private let disposeBag: DisposeBag = .init()
-    private let viewModel: CategoryEditingViewModel
+    private let viewModel: ResumeItemEditingViewModel
     
     // MARK: - UI Components
     
@@ -101,7 +101,7 @@ final class CategoryEditingViewController: UIViewController {
     
     // MARK: - Initializer
     
-    init(viewModel: CategoryEditingViewModel) {
+    init(viewModel: ResumeItemEditingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         bindViewModel()
@@ -130,7 +130,7 @@ final class CategoryEditingViewController: UIViewController {
 }
 
 //MARK: - Private Function
-private extension CategoryEditingViewController {
+private extension ResumeItemEditingViewController {
     
     func configureNavigationBar() {
         self.navigationItem.rightBarButtonItem = completeBarButton
@@ -215,11 +215,11 @@ private extension CategoryEditingViewController {
 }
 
 //MARK: - Binding ViewModel
-private extension CategoryEditingViewController {
+private extension ResumeItemEditingViewController {
     
     func bindViewModel() {
         
-        let input: CategoryEditingViewModel.Input = .init(
+        let input: ResumeItemEditingViewModel.Input = .init(
             title: firstTitleInputCell.textField.rx.text.orEmpty.asDriver(),
             secondTitle: secondTitleInputCell.textField.rx.text.orEmpty.asDriver(),
             description: descriptionInputCell.textView.rx.text.orEmpty.asDriver(),
@@ -264,7 +264,7 @@ private extension CategoryEditingViewController {
         }
     }
     
-    var editingTypeBinding: Binder<CategoryEditingViewModel.EditingType> {
+    var editingTypeBinding: Binder<ResumeItemEditingViewModel.EditingType> {
         .init(self) { vc, editingType in
             switch editingType {
             case .edit:
@@ -279,7 +279,7 @@ private extension CategoryEditingViewController {
 }
 
 // MARK: - TableView
-extension CategoryEditingViewController: UITableViewDataSource, UITableViewDelegate {
+extension ResumeItemEditingViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         inputTableViewDataSource.count

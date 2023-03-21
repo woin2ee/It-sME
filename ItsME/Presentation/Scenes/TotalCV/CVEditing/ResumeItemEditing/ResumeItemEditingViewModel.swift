@@ -1,5 +1,5 @@
 //
-//  CategoryEditingViewModel.swift
+//  ResumeItemEditingViewModel.swift
 //  ItsME
 //
 //  Created by MacBook Air on 2023/03/07.
@@ -8,21 +8,21 @@
 import RxSwift
 import RxCocoa
 
-protocol CategoryEditingViewModelDelegate: AnyObject {
-    func categoryEditingViewModelDidEndEditing(with resumeItem: ResumeItem, at indexPath: IndexPath?)
-    func categoryEditingViewModelDidAppend(resumeItem: ResumeItem)
+protocol ResumeItemEditingViewModelDelegate: AnyObject {
+    func resumeItemEditingViewModelDidEndEditing(with resumeItem: ResumeItem, at indexPath: IndexPath?)
+    func resumeItemEditingViewModelDidAppend(resumeItem: ResumeItem)
 }
 
-final class CategoryEditingViewModel: ViewModelType {
+final class ResumeItemEditingViewModel: ViewModelType {
     
     let resumeItem: ResumeItem
     let editingType: EditingType
-    private weak var delgate: CategoryEditingViewModelDelegate?
+    private weak var delgate: ResumeItemEditingViewModelDelegate?
     
     init(
         resumeItem: ResumeItem,
         editingType: EditingType,
-        delegate: CategoryEditingViewModelDelegate? = nil
+        delegate: ResumeItemEditingViewModelDelegate? = nil
     ) {
         self.resumeItem = resumeItem
         self.editingType = editingType
@@ -83,15 +83,15 @@ final class CategoryEditingViewModel: ViewModelType {
     private func endEditing(with resumeItem: ResumeItem) {
         switch editingType {
         case .edit(let indexPath):
-            delgate?.categoryEditingViewModelDidEndEditing(with: resumeItem, at: indexPath)
+            delgate?.resumeItemEditingViewModelDidEndEditing(with: resumeItem, at: indexPath)
         case .new:
-            delgate?.categoryEditingViewModelDidAppend(resumeItem: resumeItem)
+            delgate?.resumeItemEditingViewModelDidAppend(resumeItem: resumeItem)
         }
     }
 }
 
 //MARK: - Input & Output
-extension CategoryEditingViewModel {
+extension ResumeItemEditingViewModel {
     
     struct Input {
         let title: Driver<String>
@@ -112,7 +112,7 @@ extension CategoryEditingViewModel {
 }
 
 //MARK: - EditingType
-extension CategoryEditingViewModel {
+extension ResumeItemEditingViewModel {
     
     enum EditingType {
         

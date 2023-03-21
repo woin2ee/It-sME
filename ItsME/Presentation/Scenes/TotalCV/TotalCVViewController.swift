@@ -444,21 +444,25 @@ private extension TotalCVViewController {
         }
     }
     
-    func pushCategoryEditingView(indexPath: IndexPath) {
+    func pushResumeItemEditingView(indexPath: IndexPath) {
         
         guard let resumeItem = self.viewModel.resumeCategory[ifExists: indexPath.section]?.items[indexPath.row] else { return }
         
-        let categoryEditingViewModel: CategoryEditingViewModel = .init(resumeItem: resumeItem, editingType: .edit(indexPath: indexPath))
+        let resumeItemEditingViewModel: ResumeItemEditingViewModel = .init(resumeItem: resumeItem, editingType: .edit(indexPath: indexPath))
         
-        let viewController: CategoryEditingViewController = .init(viewModel: categoryEditingViewModel)
+        let viewController: ResumeItemEditingViewController = .init(viewModel: resumeItemEditingViewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func pushResumItemAddView() {
+        let resumeItem = ResumeItem(period: "", title: "", secondTitle: "", description: "")
+        let resumeItemEditingViewModel: ResumeItemEditingViewModel = .init(resumeItem: resumeItem, editingType: .new)
+        let viewController: ResumeItemEditingViewController = .init(viewModel: resumeItemEditingViewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func pushCategoryAddView() {
-        
-        let resumeItem = ResumeItem(period: "", title: "", secondTitle: "", description: "")
-        let categoryEditingViewModel: CategoryEditingViewModel = .init(resumeItem: resumeItem, editingType: .new)
-        let viewController: CategoryEditingViewController = .init(viewModel: categoryEditingViewModel)
+        let viewController: CategoryAddingViewController = .init(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -504,6 +508,9 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
             let categoryView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CategoryHeaderView.reuseIdentifier) as? CategoryHeaderView
             categoryView?.titleTextField.text = viewModel.resumeCategory[section].title
             categoryView?.backgroundColor = .clear
+            categoryView?.addButton.addAction(UIAction { action in
+                self.pushResumItemAddView()
+            }, for: .touchUpInside)
             return categoryView
         } else {
             let coverLetterView = tableView.dequeueReusableHeaderFooterView(withIdentifier:CoverLetterHeaderView.reuseIdentifier) as? CoverLetterHeaderView
@@ -538,7 +545,7 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if tableView == categoryTableView {
-            pushCategoryEditingView(indexPath: indexPath)
+            pushResumeItemEditingView(indexPath: indexPath)
         } else {
             pushCoverLetterEditingView(indexPath: indexPath)
         }
