@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import UITextView_Placeholder
 
 class TextViewCell: UITableViewCell {
     
@@ -22,18 +23,7 @@ class TextViewCell: UITableViewCell {
     }
 
 //MARK: - UI Component
-    lazy var textView: UITextView = .init().then {
-        $0.delegate = self
-    }
-    
-    lazy var placeholderLabel: UILabel = .init().then {
-        $0.text = textViewPlaceholder
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.textColor = .placeholderText
-        $0.numberOfLines = 0
-    }
-    
-    
+    lazy var textView: UITextView = .init()
     
     override init(style: UITableViewCell.CellStyle = .default, reuseIdentifier: String? = nil) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -53,30 +43,6 @@ class TextViewCell: UITableViewCell {
         textView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(10)
             make.height.equalTo(textViewHeight)
-        }
-
-        textView.addSubview(placeholderLabel)
-        placeholderLabel.snp.makeConstraints { make in
-            make.directionalEdges.equalToSuperview()
-        }
-    }
-}
-
-//MARK: - Extension Function
-extension TextViewCell: UITextViewDelegate {
-    
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        placeholderLabel.removeFromSuperview()
-        if textView.text == textViewPlaceholder {
-            textView.text = nil
-            textView.textColor = .label
-        }
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            textView.text = textViewPlaceholder
-            textView.textColor = .placeholderText
         }
     }
 }

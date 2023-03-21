@@ -169,6 +169,7 @@ PODS:
   - RxSwift (6.5.0)
   - SnapKit (5.6.0)
   - Then (3.0.0)
+  - "UITextView+Placeholder (1.4.0)"
 
 DEPENDENCIES:
   - Firebase/Analytics
@@ -179,6 +180,7 @@ DEPENDENCIES:
   - RxSwift (= 6.5.0)
   - SnapKit (= 5.6.0)
   - Then
+  - "UITextView+Placeholder"
 
 SPEC REPOS:
   trunk:
@@ -219,6 +221,7 @@ SPEC REPOS:
     - RxSwift
     - SnapKit
     - Then
+    - "UITextView+Placeholder"
 
 SPEC CHECKSUMS:
   Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
@@ -258,7 +261,8 @@ SPEC CHECKSUMS:
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
+  "UITextView+Placeholder": d7b0c400921f66523f3a85d74f774512e14f6502
 
-PODFILE CHECKSUM: 4422a1e85c0cf39e87133683e6ce7380c6484626
+PODFILE CHECKSUM: f87781bb7615020414e5b7b7acd1d39cf8f5087b
 
 COCOAPODS: 1.11.3

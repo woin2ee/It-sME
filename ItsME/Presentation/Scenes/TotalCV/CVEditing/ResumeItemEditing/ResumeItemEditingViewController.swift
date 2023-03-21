@@ -40,6 +40,8 @@ final class ResumeItemEditingViewController: UIViewController {
     }
     
     private lazy var descriptionInputCell: TextViewCell = .init().then {
+        $0.textView.placeholder = "설명을 입력하세요."
+        $0.textView.placeholderColor = .placeholderText
         $0.textViewHeight = 120
         $0.textView.font = .systemFont(ofSize: 17, weight: .regular)
         $0.textView.backgroundColor = .clear
@@ -258,9 +260,6 @@ private extension ResumeItemEditingViewController {
             vc.entranceDatePickerCell.yearMonthPickerView.setDate(year: resumeItem.entranceYear ?? 0, month: resumeItem.entranceMonth ?? 0, animated: false)
             vc.endDateInputCell.trailingButton.setTitle(resumeItem.endDate, for: .normal)
             vc.endDatePickerCell.yearMonthPickerView.setDate(year: resumeItem.endYear ?? 0, month: resumeItem.endMonth ?? 0, animated: false)
-            if resumeItem.description.isEmpty == false {
-                vc.descriptionInputCell.placeholderLabel.removeFromSuperview()
-            }
         }
     }
     
