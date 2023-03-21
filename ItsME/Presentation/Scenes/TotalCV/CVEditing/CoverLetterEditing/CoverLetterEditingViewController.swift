@@ -93,9 +93,7 @@ extension CoverLetterEditingViewController {
     }
     
     func configureNavigationBar() {
-        self.navigationItem.title = "자기소개서 편집"
         self.navigationItem.rightBarButtonItem = completeBarButton
-        self.navigationItem.rightBarButtonItem?.style = .done
     }
     
     func configureSubviews() {
@@ -145,10 +143,10 @@ private extension CoverLetterEditingViewController {
         .init(self) { vc, editingType in
             switch editingType {
             case .edit:
-                vc.navigationItem.title = "편집"
+                vc.navigationItem.title = "자기소개서 편집"
                 vc.completeBarButton.title = "완료"
             case .new:
-                vc.navigationItem.title = "추가"
+                vc.navigationItem.title = "자기소개서 추가"
                 vc.completeBarButton.title = "추가"
             }
         }
