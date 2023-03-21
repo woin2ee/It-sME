@@ -16,7 +16,7 @@ class TotalCVViewController: UIViewController {
     
     var viewModel: TotalCVViewModel!
     let headerFont: UIFont = .systemFont(ofSize: 30, weight: .bold)
-    var isEditingMode: Bool = false
+    private var isEditingMode: Bool = false
     let navigationBarHeight = 91
     let editModeInset = 15
     let commonOffset = 15
@@ -118,8 +118,6 @@ class TotalCVViewController: UIViewController {
                 }
                 headerView.isEditingMode = self.isEditingMode
             }
-            self.categoryTableView.reloadData() // 변경된 데이터를 다시 로드
-
             self.changeButton()
             self.changeMode()
         })
