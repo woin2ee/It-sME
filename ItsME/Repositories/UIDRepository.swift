@@ -41,7 +41,7 @@ extension UIDRepository {
     ///
     /// 이미 키체인에 `UID` 가 존재하는 경우 기존 값을 업데이트한 뒤 `completion` 이 호출됩니다.
     ///
-    /// 이 함수는 메인쓰레드에서 실행되지 않습니다.
+    /// - Note: 키체인에 `UID` 를 저장하는 작업과 `completion` 호출은 메인쓰레드에서 실행되지 않습니다.
     ///
     /// - Parameter uid: 키체인에 저장할 UID
     /// - Parameter completion: 성공적으로 키체인에 저장되면 매개변수로 `errSecSuccess` 값이 전달됩니다. 저장에 실패할 경우 실패 원인에 대한 `OSStatus` 값이 전달됩니다.
@@ -66,7 +66,7 @@ extension UIDRepository {
     
     /// 키체인에 존재하는 `UID` 를 삭제한 뒤 `completion` 이 호출됩니다.
     ///
-    /// 이 함수는 메인쓰레드에서 실행되지 않습니다.
+    /// - Note: `UID` 를 삭제하는 작업과 `completion` 호출은 메인쓰레드에서 실행되지 않습니다.
     ///
     /// - Parameter completion: 성공적으로 키체인에서 UID 가 삭제되면 매개변수로 `errSecSuccess` 값이 전달됩니다. 삭제에 실패할 경우 실패 원인에 대한 `OSStatus` 값이 전달됩니다.
     func removeUID(_ completion: ((OSStatus) -> Void)? = nil) {
@@ -83,7 +83,7 @@ extension UIDRepository {
     ///
     /// 키체인에 `UID` 가 존재하지 않을 경우 `UID` 매개변수에 nil 이 담긴 `completion` 이 호출됩니다.
     ///
-    /// 이 함수는 메인쓰레드에서 실행되지 않습니다.
+    /// - Note: 키체인을 검색하는 작업과 `completion` 호출은 메인쓰레드에서 실행되지 않습니다.
     func getUID(_ completion: @escaping ((OSStatus, UID?) -> Void)) {
         let query: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
                                 kSecAttrService: service as Any,
@@ -105,7 +105,7 @@ extension UIDRepository {
     
     /// 주어진 `UIDData` 로 키체인 저장된 `UID` 를 업데이트한 뒤 `completion` 이 호출됩니다.
     ///
-    /// 이 함수는 메인쓰레드에서 실행되지 않습니다.
+    /// - Note: 키체인에 `UIDData` 를 업데이트하는 작업과 `completion` 호출은 메인쓰레드에서 실행되지 않습니다.
     ///
     /// - Parameter uidData: 키체인에 업데이트할 `UID Data`
     /// - Parameter completion: 성공적으로 키체인에 `UID Data` 가 업데이트될 경우 매개변수로 `errSecSuccess` 값이 전달됩니다. 업데이트에 실패할 경우 실패 원인에 대한 `OSStatus` 값이 전달됩니다.
@@ -124,7 +124,7 @@ extension UIDRepository {
     ///
     /// 이 함수는 내부적으로 `updateUIDData(_:_:)` 를 호출합니다.
     ///
-    /// 이 함수는 메인쓰레드에서 실행되지 않습니다.
+    /// - Note: 키체인에 `UID` 를 업데이트하는 작업과 `completion` 호출은 메인쓰레드에서 실행되지 않습니다.
     ///
     /// - Parameter uid: 키체인에 업데이트할 `UID`
     /// - Parameter completion: 성공적으로 키체인에 `UID` 가 업데이트될 경우 매개변수로 `errSecSuccess` 값이 전달됩니다. 업데이트에 실패할 경우 실패 원인에 대한 `OSStatus` 값이 전달됩니다.

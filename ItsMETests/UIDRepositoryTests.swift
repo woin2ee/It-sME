@@ -12,6 +12,14 @@ final class UIDRepositoryTests: XCTestCase {
     
     let sut: UIDRepository! = .shared
     
+    override func setUp() {
+        let expectation = expectation(description: "setUpRemoveUID")
+        sut.removeUID { _ in
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 2)
+    }
+    
     override func tearDown() {
         sut.removeUID()
     }

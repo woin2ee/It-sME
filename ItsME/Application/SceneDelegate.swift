@@ -18,9 +18,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
-        let navigationController: UINavigationController = .init(rootViewController: LoginViewController())
-        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        
+        let isLoggedIn = AppLoginStatusManager.shared.isLoggedIn
+        
+        let rootViewController = isLoggedIn ? HomeViewController() : LoginViewController()
+        let navigationController: UINavigationController = .init(rootViewController: rootViewController)
+        window?.rootViewController = navigationController
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
