@@ -22,7 +22,7 @@ class TotalCVViewController: UIViewController {
     let commonOffset = 15
     let addButtonSize = 120
     
-//MARK: - UI Component
+    //MARK: - UI Component
     private var fullScrollView: UIScrollView = .init().then {
         $0.backgroundColor = .systemBackground
         $0.showsVerticalScrollIndicator = true
@@ -109,7 +109,15 @@ class TotalCVViewController: UIViewController {
     
     private lazy var editModeButton: UIBarButtonItem = .init().then {
         $0.primaryAction = UIAction(image: UIImage(systemName: "wrench.and.screwdriver.fill"), handler: { _ in
+            
             self.isEditingMode.toggle()
+            
+            for section in 0..<self.categoryTableView.numberOfSections {
+                guard let headerView = self.categoryTableView.headerView(forSection: section) as? CategoryHeaderView else {
+                    continue
+                }
+                headerView.isEditingMode = self.isEditingMode
+            }
             self.changeButton()
             self.changeMode()
         })
@@ -187,6 +195,11 @@ class TotalCVViewController: UIViewController {
         super.viewDidLayoutSubviews()
         profileImageView.circular()
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
     // MARK: - Navigation
     
     func configureNavigationBar() {
@@ -299,7 +312,7 @@ private extension TotalCVViewController {
         
         self.justCVView.addSubview(educationHeaderLabel)
         educationHeaderLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.leading.trailing.equalToSuperview().inset(30)
             make.top.equalTo(totalUserInfoItemStackView.snp.bottom).offset(30)
         }
         
@@ -489,7 +502,7 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
         
         if tableView == categoryTableView {
             let categoryView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CategoryHeaderView.reuseIdentifier) as? CategoryHeaderView
-            categoryView?.titleLabel.text = viewModel.resumeCategory[section].title
+            categoryView?.titleTextField.text = viewModel.resumeCategory[section].title
             categoryView?.backgroundColor = .clear
             return categoryView
         } else {
