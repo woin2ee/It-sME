@@ -467,14 +467,18 @@ private extension TotalCVViewController {
     }
     
     func pushCoverLetterEditingView(indexPath: IndexPath) {
-        let coverLetterEditingViewModel: CoverLetterEditingViewModel = .init(coverLetter: self.viewModel.coverLetter.items[indexPath.row], totalCVVM: self.viewModel)
+        
+        guard let coverLetterItem = self.viewModel.coverLetter.items[ifExists: indexPath.row] else { return }
+        
+        let coverLetterEditingViewModel: CoverLetterEditingViewModel = .init(coverLetterItem: coverLetterItem, editingType: .edit(indexPath: indexPath))
         
         let viewController: CoverLetterEditingViewController = .init(viewModel: coverLetterEditingViewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func pushCoverLetterAddView() {
-        let coverLetterEditingViewModel: CoverLetterEditingViewModel = .init(coverLetter: nil, totalCVVM: self.viewModel)
+        let coverLetterItem = CoverLetterItem(title: "", contents: "")
+        let coverLetterEditingViewModel: CoverLetterEditingViewModel = .init(coverLetterItem: coverLetterItem, editingType: .new)
         let viewController: CoverLetterEditingViewController = .init(viewModel: coverLetterEditingViewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }

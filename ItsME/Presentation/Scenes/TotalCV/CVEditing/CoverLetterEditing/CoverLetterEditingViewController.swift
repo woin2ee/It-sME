@@ -8,9 +8,11 @@
 import UIKit
 import Then
 import SnapKit
+import RxSwift
 
 final class CoverLetterEditingViewController: UIViewController {
     
+    private let disposeBag: DisposeBag = .init()
     private let viewModel: CoverLetterEditingViewModel
     
     // MARK: - UI Components
@@ -22,20 +24,42 @@ final class CoverLetterEditingViewController: UIViewController {
         $0.sectionHeaderHeight = 0
     }
     
+    private lazy var coverLetterTitleCell: CoverLetterTitleCell = .init().then {
+        $0.titleTextField.placeholder = "제목"
+        $0.titleTextField.autocorrectionType = .no
+        $0.titleTextField.clearButtonMode = .whileEditing
+        $0.backgroundColor = .secondarySystemGroupedBackground
+        $0.selectionStyle = .none
+    }
+    
+    private lazy var coverLetterContentCell: CoverLetterContentCell = .init().then {
+        $0.content.placeholder = "설명을 입력하세요."
+        $0.content.placeholderColor = .placeholderText
+        $0.content.autocorrectionType = .no
+        $0.content.backgroundColor = .clear
+        $0.backgroundColor = .secondarySystemGroupedBackground
+        $0.selectionStyle = .none
+    }
+    
+    private(set) lazy var inputTableViewDataSource: [UITableViewCell] = [
+        coverLetterTitleCell, coverLetterContentCell
+    ]
+    
     private lazy var completeBarButton: UIBarButtonItem = .init().then {
         $0.primaryAction = .init(title: "완료", handler: { [weak self] _ in
             self?.navigationController?.popViewController(animated: true)
         })
     }
     
-    var coverLetterItemCell: CoverLetterItemCell? {
-        coverLetterEditTableView.visibleCells[ifExists: 0] as? CoverLetterItemCell
+    var coverLetterItemCell: CoverLetterTitleCell? {
+        coverLetterEditTableView.visibleCells[ifExists: 0] as? CoverLetterTitleCell
     }
     
     // MARK: - Initializer
     init(viewModel: CoverLetterEditingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        bindViewModel()
     }
     
     required init?(coder: NSCoder) {
@@ -69,9 +93,7 @@ extension CoverLetterEditingViewController {
     }
     
     func configureNavigationBar() {
-        self.navigationItem.title = "자기소개서 편집"
         self.navigationItem.rightBarButtonItem = completeBarButton
-        self.navigationItem.rightBarButtonItem?.style = .done
     }
     
     func configureSubviews() {
@@ -84,20 +106,61 @@ extension CoverLetterEditingViewController {
     }
 }
 
+//MARK: - Binding ViewModel
+private extension CoverLetterEditingViewController {
+    
+    func bindViewModel() {
+        
+        let input: CoverLetterEditingViewModel.Input = .init(
+            title: coverLetterTitleCell.titleTextField.rx.text.orEmpty.asDriver(),
+            content: coverLetterContentCell.content.rx.text.orEmpty.asDriver(),
+            doneTrigger: completeBarButton.rx.tap.asSignal()
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        [
+            output.coverLetterItem
+                .drive(coverLetterItemBinding),
+            output.doneHandler
+                .emit(with: self, onNext: { owner, _ in
+                    owner.navigationController?.popViewController(animated: true)
+                }),
+            output.editingType
+                .drive(editingTypeBinding),
+        ]
+            .forEach { $0.disposed(by: disposeBag) }
+    }
+    
+    var coverLetterItemBinding: Binder<CoverLetterItem> {
+        .init(self) { vc, coverLetterItem in
+            vc.coverLetterTitleCell.titleTextField.text = coverLetterItem.title
+            vc.coverLetterContentCell.content.text = coverLetterItem.contents
+        }
+    }
+    
+    var editingTypeBinding: Binder<CoverLetterEditingViewModel.EditingType> {
+        .init(self) { vc, editingType in
+            switch editingType {
+            case .edit:
+                vc.navigationItem.title = "자기소개서 편집"
+                vc.completeBarButton.title = "완료"
+            case .new:
+                vc.navigationItem.title = "자기소개서 추가"
+                vc.completeBarButton.title = "추가"
+            }
+        }
+    }
+}
+
 //MARK: - TableView
 extension CoverLetterEditingViewController :UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return inputTableViewDataSource.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell: CoverLetterItemCell = .init()
-        
-        cell.titleTextField.text = viewModel.coverLetterItem.title
-        cell.content.text = viewModel.coverLetterItem.contents
-        
-        return cell
+        return inputTableViewDataSource[indexPath.row]
     }
 }
