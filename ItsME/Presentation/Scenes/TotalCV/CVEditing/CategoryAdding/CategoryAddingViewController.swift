@@ -8,10 +8,12 @@
 import SnapKit
 import Then
 import UIKit
+import RxSwift
 
 class CategoryAddingViewController: UIViewController {
     
-    private let viewModel: TotalCVViewModel
+    private let disposeBag: DisposeBag = .init()
+    private let viewModel: CategoryAddingViewModel
     
     // MARK: - UI Components
     private lazy var inputTableView: IntrinsicHeightTableView = .init(style: .insetGrouped).then {
@@ -19,8 +21,9 @@ class CategoryAddingViewController: UIViewController {
         $0.backgroundColor = .clear
     }
     
-    var inputCell: ContentsInputCell? {
-        inputTableView.visibleCells[ifExists: 0] as? ContentsInputCell
+    var inputCell: ContentsInputCell = .init().then {
+        $0.contentsTextField.placeholder = "제목을 입력하세요."
+        $0.titleLabel.text = "항목"
     }
     
     private lazy var completeBarButton: UIBarButtonItem = .init().then {
@@ -32,7 +35,7 @@ class CategoryAddingViewController: UIViewController {
     
     // MARK: - Initalizer
     
-    init(viewModel: TotalCVViewModel) {
+    init(viewModel: CategoryAddingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -48,6 +51,7 @@ class CategoryAddingViewController: UIViewController {
         self.view.backgroundColor = .systemGroupedBackground
         configureSubviews()
         configureNavigationBar()
+        bindViewModel()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -56,7 +60,7 @@ class CategoryAddingViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        inputCell?.contentsTextField.becomeFirstResponder()
+        inputCell.contentsTextField.becomeFirstResponder()
     }
 }
 
@@ -73,7 +77,7 @@ private extension CategoryAddingViewController {
     }
     
     func configureNavigationBar() {
-        self.navigationItem.title = "카테고리 추가"
+        self.navigationItem.title = "항목 추가"
         self.navigationItem.rightBarButtonItem = completeBarButton
         self.navigationItem.rightBarButtonItem?.style = .done
     }
@@ -83,6 +87,51 @@ private extension CategoryAddingViewController {
 //        viewModel.resumeCategory[]?.title
 //        viewModel.updateCategory(category)
 //    }
+}
+//MARK: - Binding ViewModel
+private extension CategoryAddingViewController {
+    
+    func bindViewModel() {
+        
+        let input: CategoryAddingViewModel.Input = .init(
+            title: inputCell.contentsTextField.rx.text.orEmpty.asDriver(),
+            doneTrigger: completeBarButton.rx.tap.asSignal()
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        [ output.resumeCategory
+            .drive(resumeCategoryBinding),
+          output.doneHandler
+            .emit(with: self, onNext: { owner, _ in
+                owner.navigationController?.popViewController(animated: true)
+            }),
+          output.editingType
+            .drive(editingTypeBinding),
+        ]
+            .forEach { $0.disposed(by: disposeBag) }
+    }
+    
+    var resumeCategoryBinding: Binder<ResumeCategory> {
+        .init(self) { vc, resumCategory in
+            vc.inputCell.contentsTextField.text = resumCategory.title
+        }
+    }
+    
+    var editingTypeBinding: Binder<CategoryAddingViewModel.EditingType> {
+        .init(self) { vc, editingType in
+            switch editingType {
+            case .edit:
+                vc.navigationItem.title = "편집"
+                vc.completeBarButton.title = "완료"
+            case .new:
+                vc.navigationItem.title = "추가"
+                vc.completeBarButton.title = "추가"
+            }
+        }
+    }
+    
+    
 }
 
 // MARK: - UITableViewDataSource
@@ -94,9 +143,6 @@ extension CategoryAddingViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: ContentsInputCell = .init()
-        cell.titleLabel.text = "제목"
-        cell.contentsTextField.placeholder = "카테고리"
-        return cell
+        return inputCell
     }
 }

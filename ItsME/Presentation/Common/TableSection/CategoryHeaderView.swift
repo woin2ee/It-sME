@@ -30,12 +30,11 @@ class CategoryHeaderView: UITableViewHeaderFooterView {
         $0.layer.borderWidth = 2.0
     }
     
-    lazy var titleTextField = UITextField().then {
+    lazy var titleButton = UIButton().then {
+        $0.setTitleColor(.systemBlue, for: .normal)
+        $0.contentHorizontalAlignment = .left
         $0.isUserInteractionEnabled = false
-        $0.text = "제목"
-        $0.textColor = .systemBlue
-        $0.returnKeyType = .done
-        $0.delegate = self
+        $0.titleLabel?.font = UIFont.systemFont(ofSize: 30, weight: .bold)
     }
     
     lazy var addButton = UIButton().then {
@@ -58,15 +57,12 @@ class CategoryHeaderView: UITableViewHeaderFooterView {
         if isEditingMode {
             headerContentView.layer.borderColor = UIColor.tertiaryLabel.cgColor
             headerContentView.layer.masksToBounds = true
-            titleTextField.isUserInteractionEnabled = true
-            titleTextField.font = .systemFont(ofSize: 20, weight: .regular)
+            titleButton.isUserInteractionEnabled = true
             editMode()
         } else {
             headerContentView.layer.borderColor = UIColor.clear.cgColor
             headerContentView.layer.masksToBounds = false
-            titleTextField.isUserInteractionEnabled = false
-            titleTextField.clearsOnBeginEditing = false
-            titleTextField.font = .systemFont(ofSize: 30, weight: .bold)
+            titleButton.isUserInteractionEnabled = false
             
             viewMode()
         }
@@ -92,8 +88,8 @@ private extension CategoryHeaderView {
             make.bottom.equalToSuperview().offset(bottomOffset)
         }
         
-        self.headerContentView.addSubview(titleTextField)
-        titleTextField.snp.makeConstraints { make in
+        self.headerContentView.addSubview(titleButton)
+        titleButton.snp.makeConstraints { make in
             make.edges.equalToSuperview()
             make.height.equalTo(40)
         }
@@ -106,8 +102,8 @@ private extension CategoryHeaderView {
             make.top.leading.equalToSuperview()
         }
         
-        titleTextField.snp.removeConstraints()
-        titleTextField.snp.makeConstraints { make in
+        titleButton.snp.removeConstraints()
+        titleButton.snp.makeConstraints { make in
             make.verticalEdges.equalToSuperview().inset(verticalEdgesInset)
             make.horizontalEdges.equalToSuperview().inset(horizontalEdgesInset)
         }
@@ -123,17 +119,9 @@ private extension CategoryHeaderView {
     
     func viewMode() {
         addButton.removeFromSuperview()
-        titleTextField.removeFromSuperview()
+        titleButton.removeFromSuperview()
         headerContentView.removeFromSuperview()
         
         configureSubviews()
-    }
-}
-
-// MARK: - TextField Delegate
-extension CategoryHeaderView: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        titleTextField.resignFirstResponder()
-        return true
     }
 }
