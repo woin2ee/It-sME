@@ -10,16 +10,7 @@ import RxCocoa
 
 final class TotalCVViewModel: ViewModelType {
     
-    struct Input {
-        let viewDidLoad: Signal<Void>
-    }
     
-    struct Output {
-        let userInfoItems: Driver<[UserInfoItem]>
-        let educationItems: Driver<[EducationItem]>
-        let cvInfo: Driver<CVInfo>
-        
-    }
     
     private let userRepository: UserRepository = .init()
     private let cvRepository: CVRepository = .init()
@@ -71,3 +62,19 @@ extension TotalCVViewModel {
     }
 }
 
+//MARK: - Input & Output
+extension TotalCVViewModel {
+    
+    struct Input {
+        let viewDidLoad: Signal<Void>
+//        let doneTrigger: Signal<Void>
+    }
+    
+    struct Output {
+        let userInfoItems: Driver<[UserInfoItem]>
+        let educationItems: Driver<[EducationItem]>
+        let cvInfo: Driver<CVInfo>
+//        let tappedEditingCompleteButton: Signal<Resume>
+//        let viewDidLoad: Driver<Void>
+    }
+}

@@ -461,8 +461,20 @@ private extension TotalCVViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
+    func pushCategoryEditingView(section: Int) {
+        
+        guard let categoryTitle = self.viewModel.resumeCategory[ifExists: section]?.title else { return }
+        
+        let categoryAddingViewModel: CategoryAddingViewModel = .init(categoryTitle: categoryTitle, editingType: .edit(section: section))
+        let viewController: CategoryAddingViewController = .init(viewModel: categoryAddingViewModel)
+        
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
     func pushCategoryAddView() {
-        let viewController: CategoryAddingViewController = .init(viewModel: viewModel)
+        
+        let categoryAddingViewModel: CategoryAddingViewModel = .init(categoryTitle: "", editingType: .new)
+        let viewController: CategoryAddingViewController = .init(viewModel: categoryAddingViewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -510,8 +522,14 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
         
         if tableView == categoryTableView {
             let categoryView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CategoryHeaderView.reuseIdentifier) as? CategoryHeaderView
-            categoryView?.titleTextField.text = viewModel.resumeCategory[section].title
+            categoryView?.titleButton.setTitle(viewModel.resumeCategory[section].title, for: .normal)
+            
+            categoryView?.titleButton.addAction(UIAction { action in
+                self.pushCategoryEditingView(section: section)
+            }, for: .touchUpInside)
+            
             categoryView?.backgroundColor = .clear
+            
             categoryView?.addButton.addAction(UIAction { action in
                 self.pushResumItemAddView()
             }, for: .touchUpInside)
@@ -569,14 +587,6 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
             if tableView == coverLetterTableView {
                 coverLetter.items.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
-            }
-        } else if editingStyle == UITableViewCell.EditingStyle.insert {
-            if tableView == categoryTableView {
-                tableView.insertRows(at: [indexPath], with: .automatic)
-            }
-            
-            if tableView == coverLetterTableView {
-                tableView.insertRows(at: [indexPath], with: .automatic)
             }
         }
     }
