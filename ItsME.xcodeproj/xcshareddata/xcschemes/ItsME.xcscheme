@@ -51,6 +51,13 @@
             BlueprintName = "ItsMEUITests"
             ReferencedContainer = "container:ItsME.xcodeproj">
          </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "DA90694C29C8234600535A3D"
+            BuildableName = "ItsMETestsWithoutApp.xctest"
+            BlueprintName = "ItsMETestsWithoutApp"
+            ReferencedContainer = "container:ItsME.xcodeproj">
+         </BuildableReference>
       </CodeCoverageTargets>
       <Testables>
          <TestableReference
@@ -72,6 +79,17 @@
                BlueprintIdentifier = "D09AC9902918DE8C0081C0EC"
                BuildableName = "ItsMEUITests.xctest"
                BlueprintName = "ItsMEUITests"
+               ReferencedContainer = "container:ItsME.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DA90694C29C8234600535A3D"
+               BuildableName = "ItsMETestsWithoutApp.xctest"
+               BlueprintName = "ItsMETestsWithoutApp"
                ReferencedContainer = "container:ItsME.xcodeproj">
             </BuildableReference>
          </TestableReference>
