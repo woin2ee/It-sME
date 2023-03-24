@@ -463,9 +463,9 @@ private extension TotalCVViewController {
     
     func pushCategoryEditingView(section: Int) {
         
-        guard let resumeCategory = self.viewModel.resumeCategory[ifExists: section] else { return }
+        guard let categoryTitle = self.viewModel.resumeCategory[ifExists: section]?.title else { return }
         
-        let categoryAddingViewModel: CategoryAddingViewModel = .init(resumeCategory: resumeCategory, editingType: .edit(section: section))
+        let categoryAddingViewModel: CategoryAddingViewModel = .init(categoryTitle: categoryTitle, editingType: .edit(section: section))
         let viewController: CategoryAddingViewController = .init(viewModel: categoryAddingViewModel)
         
         self.navigationController?.pushViewController(viewController, animated: true)
@@ -473,8 +473,7 @@ private extension TotalCVViewController {
     
     func pushCategoryAddView() {
         
-        let resumeCategory = ResumeCategory(title: "", items: [])
-        let categoryAddingViewModel: CategoryAddingViewModel = .init(resumeCategory: resumeCategory, editingType: .new)
+        let categoryAddingViewModel: CategoryAddingViewModel = .init(categoryTitle: "", editingType: .new)
         let viewController: CategoryAddingViewController = .init(viewModel: categoryAddingViewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }

@@ -9,67 +9,57 @@ import RxSwift
 import RxCocoa
 
 protocol CategoryAddingViewModelDelegate: AnyObject {
-    func categoryAddingViewModelDidEndEditing(with resumeCategory: ResumeCategory, at section: Int?)
-    func categoryAddingViewModelDidAppend(resumeCategory: ResumeCategory)
+    func categoryAddingViewModelDidEndEditing(with title: String, at section: Int?)
+    func categoryAddingViewModelDidAppend(title: String)
 }
 
 final class CategoryAddingViewModel: ViewModelType {
     
-    private let resumeCategoryRelay: BehaviorRelay<ResumeCategory>
     
-    let resumeCategory: ResumeCategory
+    let categoryTitle: String
     let editingType: EditingType
     private weak var delegate: CategoryAddingViewModelDelegate?
     
-    
     init(
-        resumeCategory: ResumeCategory,
+        categoryTitle: String,
          editingType: EditingType,
          delegate: CategoryAddingViewModelDelegate? = nil
     ) {
-        self.resumeCategory = resumeCategory
         self.editingType = editingType
         self.delegate = delegate
-        self.resumeCategoryRelay = .init(value: resumeCategory)
-    }
-    
-    var currentResumeItem: [ResumeItem] {
-        resumeCategoryRelay.value.items
+        self.categoryTitle = categoryTitle
     }
     
     func transform(input: Input) -> Output {
         
-        let resumeCategory = Driver.combineLatest(input.title, Driver.just(currentResumeItem)) { (title, items) -> ResumeCategory in
-            return .init(title: title, items: items)
-        }
-            .startWith(resumeCategory)
+        let title = input.title
+            .startWith(categoryTitle)
         
         let doneHandler = input.doneTrigger
-            .withLatestFrom(resumeCategory)
+            .withLatestFrom(title)
             .do(onNext: endEditing(with:))
             .mapToVoid()
                 
-                let editingType = Driver.just(editingType)
+        let editingType = Driver.just(editingType)
                 
-                return .init(
-                    resumeCategory: resumeCategory,
-                    doneHandler: doneHandler,
-                    editingType: editingType
-                )
-                }
+        return .init(
+            title: title,
+            doneHandler: doneHandler,
+            editingType: editingType
+        )
+    }
     
-    private func endEditing(with resumeCategory: ResumeCategory) {
+    private func endEditing(with title: String) {
         switch editingType {
         case .edit(let section):
             delegate?
-                .categoryAddingViewModelDidEndEditing(with: resumeCategory, at: section)
+                .categoryAddingViewModelDidEndEditing(with: title, at: section)
         case .new:
             delegate?
-                .categoryAddingViewModelDidAppend(resumeCategory: resumeCategory)
+                .categoryAddingViewModelDidAppend(title: title)
         }
     }
 }
-
 
 extension CategoryAddingViewModel {
     
@@ -79,7 +69,7 @@ extension CategoryAddingViewModel {
     }
     
     struct Output {
-        let resumeCategory: Driver<ResumeCategory>
+        let title: Driver<String>
         let doneHandler: Signal<Void>
         let editingType: Driver<EditingType>
     }

@@ -24,6 +24,8 @@ class CategoryAddingViewController: UIViewController {
     var inputCell: ContentsInputCell = .init().then {
         $0.contentsTextField.placeholder = "제목을 입력하세요."
         $0.titleLabel.text = "항목"
+        $0.titleLabel.font = .systemFont(ofSize: 18, weight: .bold)
+        $0.contentsTextField.font = .systemFont(ofSize: 18)
     }
     
     private lazy var completeBarButton: UIBarButtonItem = .init().then {
@@ -100,8 +102,8 @@ private extension CategoryAddingViewController {
         
         let output = viewModel.transform(input: input)
         
-        [ output.resumeCategory
-            .drive(resumeCategoryBinding),
+        [ output.title
+            .drive(inputCell.contentsTextField.rx.text),
           output.doneHandler
             .emit(with: self, onNext: { owner, _ in
                 owner.navigationController?.popViewController(animated: true)
@@ -110,12 +112,6 @@ private extension CategoryAddingViewController {
             .drive(editingTypeBinding),
         ]
             .forEach { $0.disposed(by: disposeBag) }
-    }
-    
-    var resumeCategoryBinding: Binder<ResumeCategory> {
-        .init(self) { vc, resumCategory in
-            vc.inputCell.contentsTextField.text = resumCategory.title
-        }
     }
     
     var editingTypeBinding: Binder<CategoryAddingViewModel.EditingType> {
