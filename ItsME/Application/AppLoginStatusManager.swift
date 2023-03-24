@@ -22,14 +22,9 @@ final class AppLoginStatusManager {
     
     /// 앱의 사용자가 현재 로그인 되어있는지 여부를 반환합니다.
     var isLoggedIn: Bool {
-        do {
-            let uid = try uidRepository.get()
-            if uid.isNotEmpty {
-                return true
-            } else {
-                return false
-            }
-        } catch {
+        if let uid = try? uidRepository.get(), uid.isNotEmpty {
+            return true
+        } else {
             return false
         }
     }
