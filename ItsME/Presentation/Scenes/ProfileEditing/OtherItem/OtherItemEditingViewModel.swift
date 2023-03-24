@@ -14,7 +14,7 @@ protocol OtherItemEditingViewModelDelegate: AnyObject {
     func otherItemEditingViewModelDidEndEditing(with otherItem: UserInfoItem, at index: IndexPath.Index?)
     
     /// 항목 추가가 완료됐을때 호출되는 함수입니다.
-    func otherItemeditingViewModelDidAppend(otherItem: UserInfoItem)
+    func otherItemEditingViewModelDidAppend(otherItem: UserInfoItem)
 }
 
 final class OtherItemEditingViewModel: ViewModelType {
@@ -80,7 +80,7 @@ private extension OtherItemEditingViewModel {
         case .edit(let index):
             delegate?.otherItemEditingViewModelDidEndEditing(with: otherItem, at: index)
         case .new:
-            delegate?.otherItemeditingViewModelDidAppend(otherItem: otherItem)
+            delegate?.otherItemEditingViewModelDidAppend(otherItem: otherItem)
         }
     }
 }
