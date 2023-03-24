@@ -109,7 +109,7 @@ PODS:
     - KakaoSDKCommon/Common (= 2.13.0)
   - KakaoSDKUser (2.13.0):
     - KakaoSDKAuth (= 2.13.0)
-  - Keychaining (0.3.0)
+  - Keychaining (0.4.0)
   - leveldb-library (1.22.1)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
@@ -247,7 +247,7 @@ SPEC CHECKSUMS:
   KakaoSDKTalk: f448b999ed2c264dcea26924e508b52191e38b28
   KakaoSDKTemplate: a5d36f715edbc57069df530a3352dd5b48f9db79
   KakaoSDKUser: 7c2d98fc54f744da4784b554a383ada548fed0e5
-  Keychaining: e06158e72d8e0a24526aa9a287e647e8ee63e9da
+  Keychaining: 7628c49ec360d0272c5c0b919977e99f641473f0
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb

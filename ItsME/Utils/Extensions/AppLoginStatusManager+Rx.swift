@@ -9,14 +9,14 @@ import RxSwift
 
 extension Reactive where Base: AppLoginStatusManager {
     
-    func login(with uid: UIDRepository.UID) -> Single<Void> {
+    func login(with loginType: AppLoginStatusManager.LoginType, uid: UIDRepository.UID) -> Single<Void> {
         return Single
             .create { observer in
                 do {
-                    try AppLoginStatusManager.shared.login(with: uid)
+                    try AppLoginStatusManager.shared.login(with: loginType, uid: uid)
                     observer(.success(()))
                 } catch {
-                    observer(.failure(AppLoginStatusManager.AppLoginError.loginFail))
+                    observer(.failure(error))
                 }
                 return Disposables.create()
             }
