@@ -15,6 +15,7 @@ target 'ItsME' do
 	pod 'FirebaseDatabase' #Realtime Database
 	pod 'Then'
 	pod 'UITextView+Placeholder'
+	pod 'Keychaining'
 
   target 'ItsMETests' do
     inherit! :search_paths
