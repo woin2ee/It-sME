@@ -66,7 +66,7 @@ extension UIDRepository {
     
     func get() throws -> UID {
         let data = try defaultKeychainQuery.forSearch
-            .setReturnType(.true, forKey: .returnData)
+            .setReturnType(true, forKey: .returnData)
             .execute()
         guard let uid = UID.init(data: data, encoding: .utf8) else {
             throw UIDRepositoryError.decodeFail
