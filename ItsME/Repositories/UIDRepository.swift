@@ -38,8 +38,8 @@ final class UIDRepository {
         .utf8
     }
     
-    var defaultKeychainQuery: KeychainQuery {
-        Keychain.genericPassword.makeQuery()
+    var defaultKeychainQuery: KeychainBasicQuery {
+        Keychain.genericPassword.makeBasicQuery()
             .setAttribute(service, forKey: .service)
             .setAttribute(keyOfUID, forKey: .account)
     }
