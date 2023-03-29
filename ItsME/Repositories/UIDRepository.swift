@@ -24,8 +24,8 @@ final class UIDRepository {
     /// 현재 앱을 구분하는데 사용되는 값입니다.
     ///
     /// 기본 값으로 `Bundle Identifier` 가 사용됩니다.
-    var service: String? {
-        Bundle.main.bundleIdentifier
+    var service: String {
+        Bundle.main.bundleIdentifier ?? "ItsME"
     }
     
     /// `UID` 데이터에 해당하는 키 값입니다.
@@ -38,10 +38,10 @@ final class UIDRepository {
         .utf8
     }
     
-    var defaultKeychainQuery: KeychainBasicQuery {
+    var defaultKeychainQuery: KeychainBasicQuerySetter<KeychainGenericPassword> {
         Keychain.genericPassword.makeBasicQuery()
-            .setAttribute(service, forKey: .service)
-            .setAttribute(keyOfUID, forKey: .account)
+            .setService(service)
+            .setAccount(keyOfUID)
     }
 }
 
