@@ -16,7 +16,7 @@ final class ProfileEditingViewController: UIViewController {
     
     private let viewModel: ProfileEditingViewModel
     
-    // MARK: - UI Components
+    // MARK: UI Components
     
     private lazy var containerScrollView: UIScrollView = .init().then {
         $0.backgroundColor = .clear
@@ -96,6 +96,15 @@ final class ProfileEditingViewController: UIViewController {
             self?.navigationController?.pushViewController(viewController, animated: true)
         })
         $0.addAction(action, for: .touchUpInside)
+    }
+    
+    private lazy var logoutButton: UIButton = .init().then {
+        $0.configuration = .bordered().with {
+            $0.baseBackgroundColor = .secondarySystemGroupedBackground
+            $0.baseForegroundColor = .systemRed
+            $0.title = "로그아웃"
+            $0.buttonSize = .medium
+        }
     }
     
     private lazy var editingCompleteButton: UIBarButtonItem = .init(title: "수정완료").then {
@@ -267,9 +276,15 @@ private extension ProfileEditingViewController {
         educationItemAddButton.snp.makeConstraints { make in
             make.top.equalTo(educationTableView.snp.bottom).offset(tableViewToAdditionButtonOffset)
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-20)
             make.leading.trailing.equalToSuperview().inset(additionButtonHorizontalInset)
             make.height.equalTo(42)
+        }
+        
+        self.contentView.addSubview(logoutButton)
+        logoutButton.snp.makeConstraints { make in
+            make.directionalHorizontalEdges.equalToSuperview().inset(additionButtonHorizontalInset)
+            make.top.equalTo(educationItemAddButton.snp.bottom).offset(30)
+            make.bottom.equalToSuperview().offset(-20)
         }
     }
     
