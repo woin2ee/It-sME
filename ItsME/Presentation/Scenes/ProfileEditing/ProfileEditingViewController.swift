@@ -98,14 +98,29 @@ final class ProfileEditingViewController: UIViewController {
         $0.addAction(action, for: .touchUpInside)
     }
     
-    private lazy var logoutButton: UIButton = .init().then {
-        $0.configuration = .bordered().with {
+    private lazy var logoutButton: UIButton = .init(
+        configuration: .bordered().with {
             $0.baseBackgroundColor = .secondarySystemGroupedBackground
             $0.baseForegroundColor = .systemRed
             $0.title = "로그아웃"
             $0.buttonSize = .medium
+        },
+        primaryAction: UIAction { [weak self] _ in
+            guard let self = self else { return }
+            self.present(self.logoutAlertViewController, animated: true)
         }
-    }
+    )
+    
+    private lazy var logoutAlertViewController: CommonAlertViewController = .init(
+        title: "로그아웃",
+        message: "로그아웃하시겠습니까?",
+        style: .confirm,
+        okHandler: { [weak self] in
+            #if DEBUG
+                print("Logout.")
+            #endif
+        }
+    )
     
     private lazy var editingCompleteButton: UIBarButtonItem = .init(title: "수정완료").then {
         $0.style = .done
