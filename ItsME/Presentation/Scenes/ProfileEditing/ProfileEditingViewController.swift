@@ -107,20 +107,19 @@ final class ProfileEditingViewController: UIViewController {
         },
         primaryAction: UIAction { [weak self] _ in
             guard let self = self else { return }
-            self.present(self.logoutAlertViewController, animated: true)
+            self.present(self.logoutConfirmAlert, animated: true)
         }
     )
     
-    private lazy var logoutAlertViewController: CommonAlertViewController = .init(
-        title: "로그아웃",
-        message: "로그아웃하시겠습니까?",
-        style: .confirm,
-        okHandler: { [weak self] in
-            #if DEBUG
-                print("Logout.")
-            #endif
+    private lazy var logoutConfirmAlert: UIAlertController = .init(title: "로그아웃", message: "로그아웃하시겠습니까?", preferredStyle: .alert).then {
+        let cancelAction: UIAlertAction = .init(title: "아니오", style: .cancel)
+        $0.addAction(cancelAction)
+        let okAction: UIAlertAction = .init(title: "예", style: .default) { _ in
+            // TODO: ViewModel 바인딩
+            print("logout.")
         }
-    )
+        $0.addAction(okAction)
+    }
     
     private lazy var editingCompleteButton: UIBarButtonItem = .init(title: "수정완료").then {
         $0.style = .done
