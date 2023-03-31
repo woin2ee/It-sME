@@ -37,6 +37,10 @@ class CategoryHeaderView: UITableViewHeaderFooterView {
         $0.titleLabel?.font = UIFont.systemFont(ofSize: 30, weight: .bold)
     }
     
+    lazy var editButton = UIImageView().then {
+        $0.image = UIImage(systemName: "rectangle.and.pencil.and.ellipsis")
+    }
+    
     lazy var addButton = UIButton().then {
         $0.setImage(.init(systemName: "plus"), for: .normal)
     }
@@ -58,6 +62,7 @@ class CategoryHeaderView: UITableViewHeaderFooterView {
             headerContentView.layer.borderColor = UIColor.tertiaryLabel.cgColor
             headerContentView.layer.masksToBounds = true
             titleButton.isUserInteractionEnabled = true
+            
             editMode()
         } else {
             headerContentView.layer.borderColor = UIColor.clear.cgColor
@@ -102,11 +107,20 @@ private extension CategoryHeaderView {
             make.top.leading.equalToSuperview()
         }
         
+        self.titleButton.addSubview(editButton)
+        editButton.snp.makeConstraints { make in
+            make.verticalEdges.equalToSuperview()
+            make.width.equalTo(buttonWidth)
+            make.trailing.equalToSuperview()
+        }
+        
         titleButton.snp.removeConstraints()
         titleButton.snp.makeConstraints { make in
             make.verticalEdges.equalToSuperview().inset(verticalEdgesInset)
             make.horizontalEdges.equalToSuperview().inset(horizontalEdgesInset)
         }
+        
+        
         
         self.contentView.addSubview(addButton)
         addButton.snp.makeConstraints { make in
@@ -121,6 +135,7 @@ private extension CategoryHeaderView {
         addButton.removeFromSuperview()
         titleButton.removeFromSuperview()
         headerContentView.removeFromSuperview()
+        editButton.removeFromSuperview()
         
         configureSubviews()
     }

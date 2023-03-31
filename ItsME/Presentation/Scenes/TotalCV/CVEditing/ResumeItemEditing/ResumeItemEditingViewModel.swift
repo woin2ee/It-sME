@@ -9,15 +9,15 @@ import RxSwift
 import RxCocoa
 
 protocol ResumeItemEditingViewModelDelegate: AnyObject {
-    func resumeItemEditingViewModelDidEndEditing(with resumeItem: ResumeItem, at indexPath: IndexPath?)
-    func resumeItemEditingViewModelDidAppend(resumeItem: ResumeItem)
+    func resumeItemEditingViewModelDidEndEditing(with resumeItem: ResumeItem, at indexPath: IndexPath)
+    func resumeItemEditingViewModelDidAppend(with resumeItem: ResumeItem, at section: Int)
 }
 
 final class ResumeItemEditingViewModel: ViewModelType {
     
     let resumeItem: ResumeItem
     let editingType: EditingType
-    private weak var delgate: ResumeItemEditingViewModelDelegate?
+    private weak var delegate: ResumeItemEditingViewModelDelegate?
     
     init(
         resumeItem: ResumeItem,
@@ -26,7 +26,7 @@ final class ResumeItemEditingViewModel: ViewModelType {
     ) {
         self.resumeItem = resumeItem
         self.editingType = editingType
-        self.delgate = delegate
+        self.delegate = delegate
     }
     
     func transform(input: Input) -> Output {
@@ -83,9 +83,9 @@ final class ResumeItemEditingViewModel: ViewModelType {
     private func endEditing(with resumeItem: ResumeItem) {
         switch editingType {
         case .edit(let indexPath):
-            delgate?.resumeItemEditingViewModelDidEndEditing(with: resumeItem, at: indexPath)
-        case .new:
-            delgate?.resumeItemEditingViewModelDidAppend(resumeItem: resumeItem)
+            delegate?.resumeItemEditingViewModelDidEndEditing(with: resumeItem, at: indexPath)
+        case .new(let section):
+            delegate?.resumeItemEditingViewModelDidAppend(with: resumeItem, at: section)
         }
     }
 }
@@ -117,9 +117,9 @@ extension ResumeItemEditingViewModel {
     enum EditingType {
         
         /// 기존 카테고리 정보를 수정할 때 사용하는 열거형 값입니다.
-        case edit(indexPath: IndexPath? = nil)
+        case edit(indexPath: IndexPath)
         
         /// 새 카테고리를 추가할 때 사용하는 열거형 값입니다.
-        case new
+        case new(section: Int)
     }
 }

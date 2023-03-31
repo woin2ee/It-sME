@@ -1,5 +1,5 @@
 //
-//  CategoryAddingViewController.swift
+//  CategoryEditingViewController.swift
 //  ItsME
 //
 //  Created by MacBook Air on 2023/03/15.
@@ -10,10 +10,10 @@ import Then
 import UIKit
 import RxSwift
 
-class CategoryAddingViewController: UIViewController {
+class CategoryEditingViewController: UIViewController {
     
     private let disposeBag: DisposeBag = .init()
-    private let viewModel: CategoryAddingViewModel
+    private let viewModel: CategoryEditingViewModel
     
     // MARK: - UI Components
     private lazy var inputTableView: IntrinsicHeightTableView = .init(style: .insetGrouped).then {
@@ -28,18 +28,13 @@ class CategoryAddingViewController: UIViewController {
         $0.contentsTextField.font = .systemFont(ofSize: 18)
     }
     
-    private lazy var completeBarButton: UIBarButtonItem = .init().then {
-        $0.primaryAction = .init(title: "완료", handler: { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
-//            self?.updateCategory()
-        })
-    }
-    
+    private lazy var completeBarButton: UIBarButtonItem = .init()
+
     // MARK: - Initalizer
-    
-    init(viewModel: CategoryAddingViewModel) {
+    init(viewModel: CategoryEditingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        bindViewModel()
     }
     
     required init?(coder: NSCoder) {
@@ -53,7 +48,6 @@ class CategoryAddingViewController: UIViewController {
         self.view.backgroundColor = .systemGroupedBackground
         configureSubviews()
         configureNavigationBar()
-        bindViewModel()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -68,7 +62,7 @@ class CategoryAddingViewController: UIViewController {
 
 // MARK: - Private Functions
 
-private extension CategoryAddingViewController {
+private extension CategoryEditingViewController {
     
     func configureSubviews() {
         let safeArea = self.view.safeAreaLayoutGuide
@@ -83,19 +77,14 @@ private extension CategoryAddingViewController {
         self.navigationItem.rightBarButtonItem = completeBarButton
         self.navigationItem.rightBarButtonItem?.style = .done
     }
-    
-//    func updateCategory() {
-//        let categoryTitle = inputCell?.contentsTextField.text ?? ""
-//        viewModel.resumeCategory[]?.title
-//        viewModel.updateCategory(category)
-//    }
 }
+
 //MARK: - Binding ViewModel
-private extension CategoryAddingViewController {
+private extension CategoryEditingViewController {
     
     func bindViewModel() {
         
-        let input: CategoryAddingViewModel.Input = .init(
+        let input: CategoryEditingViewModel.Input = .init(
             title: inputCell.contentsTextField.rx.text.orEmpty.asDriver(),
             doneTrigger: completeBarButton.rx.tap.asSignal()
         )
@@ -114,7 +103,7 @@ private extension CategoryAddingViewController {
             .forEach { $0.disposed(by: disposeBag) }
     }
     
-    var editingTypeBinding: Binder<CategoryAddingViewModel.EditingType> {
+    var editingTypeBinding: Binder<CategoryEditingViewModel.EditingType> {
         .init(self) { vc, editingType in
             switch editingType {
             case .edit:
@@ -132,7 +121,7 @@ private extension CategoryAddingViewController {
 
 // MARK: - UITableViewDataSource
 
-extension CategoryAddingViewController: UITableViewDataSource {
+extension CategoryEditingViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1

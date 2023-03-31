@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 
 protocol CoverLetterEditingViewModelDelegate: AnyObject {
-    func coverLetterEditingViewModelDidEndEditing(with coverLetterItem: CoverLetterItem, at indexPath: IndexPath?)
+    func coverLetterEditingViewModelDidEndEditing(with coverLetterItem: CoverLetterItem, at indexPath: IndexPath)
     func coverLetterEditingViewModelDidAppend(coverLetterItem: CoverLetterItem)
 }
 
@@ -90,7 +90,7 @@ extension CoverLetterEditingViewModel {
     enum EditingType {
         
         /// 기존 자기소개서 정보를 수정할 때 사용하는 열거형 값입니다.
-        case edit(indexPath: IndexPath? = nil)
+        case edit(indexPath: IndexPath)
         
         /// 새 자기소개서를 추가할 때 사용하는 열거형 값입니다.
         case new

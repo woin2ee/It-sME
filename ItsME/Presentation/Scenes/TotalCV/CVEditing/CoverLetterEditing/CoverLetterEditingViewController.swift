@@ -45,11 +45,7 @@ final class CoverLetterEditingViewController: UIViewController {
         coverLetterTitleCell, coverLetterContentCell
     ]
     
-    private lazy var completeBarButton: UIBarButtonItem = .init().then {
-        $0.primaryAction = .init(title: "완료", handler: { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
-        })
-    }
+    private lazy var completeBarButton: UIBarButtonItem = .init()
     
     var coverLetterItemCell: CoverLetterTitleCell? {
         coverLetterEditTableView.visibleCells[ifExists: 0] as? CoverLetterTitleCell

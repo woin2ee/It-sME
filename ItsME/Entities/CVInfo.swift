@@ -8,10 +8,10 @@
 import Foundation
 
 final class CVInfo: Decodable {
-    let title: String
-    let resume: Resume
-    let coverLetter: CoverLetter
-    let lastModified: String
+    var title: String
+    var resume: Resume
+    var coverLetter: CoverLetter
+    var lastModified: String
     
     init(title: String, resume: Resume, coverLetter: CoverLetter, lastModified: String) {
         self.title = title
