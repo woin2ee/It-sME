@@ -1,5 +1,5 @@
 //
-//  CategoryAddingViewModel.swift
+//  CategoryEditingViewModel.swift
 //  ItsME
 //
 //  Created by MacBook Air on 2023/03/22.
@@ -8,26 +8,25 @@
 import RxSwift
 import RxCocoa
 
-protocol CategoryAddingViewModelDelegate: AnyObject {
-    func categoryAddingViewModelDidEndEditing(with title: String, at section: Int?)
-    func categoryAddingViewModelDidAppend(title: String)
+protocol CategoryEditingViewModelDelegate: AnyObject {
+    func categoryEditingViewModelDidEndEditing(with title: String, at section: Int)
+    func categoryEditingViewModelDidAppend(title: String)
 }
 
-final class CategoryAddingViewModel: ViewModelType {
-    
+final class CategoryEditingViewModel: ViewModelType {
     
     let categoryTitle: String
     let editingType: EditingType
-    private weak var delegate: CategoryAddingViewModelDelegate?
+    private weak var delegate: CategoryEditingViewModelDelegate?
     
     init(
         categoryTitle: String,
          editingType: EditingType,
-         delegate: CategoryAddingViewModelDelegate? = nil
+         delegate: CategoryEditingViewModelDelegate? = nil
     ) {
+        self.categoryTitle = categoryTitle
         self.editingType = editingType
         self.delegate = delegate
-        self.categoryTitle = categoryTitle
     }
     
     func transform(input: Input) -> Output {
@@ -52,16 +51,14 @@ final class CategoryAddingViewModel: ViewModelType {
     private func endEditing(with title: String) {
         switch editingType {
         case .edit(let section):
-            delegate?
-                .categoryAddingViewModelDidEndEditing(with: title, at: section)
+            delegate?.categoryEditingViewModelDidEndEditing(with: title, at: section)
         case .new:
-            delegate?
-                .categoryAddingViewModelDidAppend(title: title)
+            delegate?.categoryEditingViewModelDidAppend(title: title)
         }
     }
 }
 
-extension CategoryAddingViewModel {
+extension CategoryEditingViewModel {
     
     struct Input {
         let title: Driver<String>
@@ -76,12 +73,12 @@ extension CategoryAddingViewModel {
 }
 
 //MARK: - EditingType
-extension CategoryAddingViewModel {
+extension CategoryEditingViewModel {
     
     enum EditingType {
         
         /// 기존 자기소개서 정보를 수정할 때 사용하는 열거형 값입니다.
-        case edit(section: Int? = nil)
+        case edit(section: Int)
         
         /// 새 자기소개서를 추가할 때 사용하는 열거형 값입니다.
         case new

@@ -13,8 +13,8 @@ import Then
 class TotalCVViewController: UIViewController {
     
     private let disposeBag: DisposeBag = .init()
+    var viewModel: TotalCVViewModel
     
-    var viewModel: TotalCVViewModel!
     let headerFont: UIFont = .systemFont(ofSize: 30, weight: .bold)
     private var isEditingMode: Bool = false
     let navigationBarHeight = 91
@@ -176,6 +176,17 @@ class TotalCVViewController: UIViewController {
         $0.addAction(action, for: .touchUpInside)
     }
     
+    // MARK: - Initializer
+    
+    init(viewModel: TotalCVViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -217,32 +228,30 @@ class TotalCVViewController: UIViewController {
 private extension TotalCVViewController {
     
     func bindViewModel() {
-        let input = makeInput()
+        
+        let input = TotalCVViewModel.Input.init(
+            viewDidLoad: .just(()),
+            doneTrigger: editModeButton.rx.tap.asSignal()
+        )
+        
         let output = viewModel.transform(input: input)
-        
-        output.userInfoItems
-            .drive(userInfoBinding)
-            .disposed(by: disposeBag)
-        
-        output.educationItems
-            .drive(
-                educationTableView.rx.items(cellIdentifier: EducationCell.reuseIdentifier, cellType: EducationCell.self)
-            ) { (index, educationItem, cell) in
-                cell.bind(educationItem: educationItem)
-            }
-            .disposed(by: disposeBag)
-        
-        output.cvInfo
-            .drive(cvsInfoBinding)
-            .disposed(by: disposeBag)
-    }
-    
-    func makeInput() -> TotalCVViewModel.Input {
-        let viewDidLoad = Observable.just(())
-            .map { _ in }
-            .asSignal(onErrorSignalWith: .empty())
-        
-        return .init(viewDidLoad: viewDidLoad)
+        [
+            output.userInfoItems
+                .drive(userInfoBinding),
+            output.educationItems
+                .drive(
+                    educationTableView.rx.items(cellIdentifier: EducationCell.reuseIdentifier, cellType: EducationCell.self)
+                ) { (index, educationItem, cell) in
+                    cell.bind(educationItem: educationItem)
+                },
+            output.cvInfo
+                .drive(cvsInfoBinding),
+            output.tappedEditCompleteButton
+                .emit(with: self, onNext: { owner, cvInfo in
+                    owner.dismiss(animated: true)
+                })
+        ]
+            .forEach { $0.disposed(by: disposeBag) }
     }
     
     var userInfoBinding: Binder<[UserInfoItem]> {
@@ -258,8 +267,10 @@ private extension TotalCVViewController {
     }
     
     var cvsInfoBinding: Binder<CVInfo> {
-        return .init(self) { viewController, cvInfo in
-            self.navigationItem.title = cvInfo.title
+        return .init(self) { vc, cvInfo in
+            vc.navigationItem.title = cvInfo.title
+            vc.categoryTableView.reloadData()
+            vc.coverLetterTableView.reloadData()
             
         }
     }
@@ -448,33 +459,31 @@ private extension TotalCVViewController {
         
         guard let resumeItem = self.viewModel.resumeCategory[ifExists: indexPath.section]?.items[indexPath.row] else { return }
         
-        let resumeItemEditingViewModel: ResumeItemEditingViewModel = .init(resumeItem: resumeItem, editingType: .edit(indexPath: indexPath))
+        let resumeItemEditingViewModel: ResumeItemEditingViewModel = .init(resumeItem: resumeItem, editingType: .edit(indexPath: indexPath), delegate: viewModel)
         
         let viewController: ResumeItemEditingViewController = .init(viewModel: resumeItemEditingViewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func pushResumItemAddView() {
+    func pushResumItemAddView(section: Int) {
         let resumeItem = ResumeItem(period: "", title: "", secondTitle: "", description: "")
-        let resumeItemEditingViewModel: ResumeItemEditingViewModel = .init(resumeItem: resumeItem, editingType: .new)
+        let resumeItemEditingViewModel: ResumeItemEditingViewModel = .init(resumeItem: resumeItem, editingType: .new(section: section), delegate: viewModel)
         let viewController: ResumeItemEditingViewController = .init(viewModel: resumeItemEditingViewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func pushCategoryEditingView(section: Int) {
-        
         guard let categoryTitle = self.viewModel.resumeCategory[ifExists: section]?.title else { return }
         
-        let categoryAddingViewModel: CategoryAddingViewModel = .init(categoryTitle: categoryTitle, editingType: .edit(section: section))
-        let viewController: CategoryAddingViewController = .init(viewModel: categoryAddingViewModel)
+        let categoryAddingViewModel: CategoryEditingViewModel = .init(categoryTitle: categoryTitle, editingType: .edit(section: section), delegate: viewModel)
+        let viewController: CategoryEditingViewController = .init(viewModel: categoryAddingViewModel)
         
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func pushCategoryAddView() {
-        
-        let categoryAddingViewModel: CategoryAddingViewModel = .init(categoryTitle: "", editingType: .new)
-        let viewController: CategoryAddingViewController = .init(viewModel: categoryAddingViewModel)
+        let categoryAddingViewModel: CategoryEditingViewModel = .init(categoryTitle: "", editingType: .new, delegate: viewModel)
+        let viewController: CategoryEditingViewController = .init(viewModel: categoryAddingViewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -482,7 +491,7 @@ private extension TotalCVViewController {
         
         guard let coverLetterItem = self.viewModel.coverLetter.items[ifExists: indexPath.row] else { return }
         
-        let coverLetterEditingViewModel: CoverLetterEditingViewModel = .init(coverLetterItem: coverLetterItem, editingType: .edit(indexPath: indexPath))
+        let coverLetterEditingViewModel: CoverLetterEditingViewModel = .init(coverLetterItem: coverLetterItem, editingType: .edit(indexPath: indexPath), delegate: viewModel)
         
         let viewController: CoverLetterEditingViewController = .init(viewModel: coverLetterEditingViewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
@@ -490,9 +499,24 @@ private extension TotalCVViewController {
     
     func pushCoverLetterAddView() {
         let coverLetterItem = CoverLetterItem(title: "", contents: "")
-        let coverLetterEditingViewModel: CoverLetterEditingViewModel = .init(coverLetterItem: coverLetterItem, editingType: .new)
+        let coverLetterEditingViewModel: CoverLetterEditingViewModel = .init(coverLetterItem: coverLetterItem, editingType: .new, delegate: viewModel)
         let viewController: CoverLetterEditingViewController = .init(viewModel: coverLetterEditingViewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func resumeItemAction(section: Int) -> UIAction {
+        return UIAction(
+            identifier: UIAction.Identifier("resumeItemIdentifier"),
+            handler: { [weak self] action in
+                self?.pushResumItemAddView(section: section)
+            })
+    }
+    
+    func resumeCategoryAction(section: Int) -> UIAction {
+        return UIAction(identifier: UIAction.Identifier("resumeCategoryIdentifier"),
+                        handler: { [weak self] action in
+            self?.pushCategoryEditingView(section: section)
+        })
     }
 }
 
@@ -522,17 +546,15 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
         
         if tableView == categoryTableView {
             let categoryView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CategoryHeaderView.reuseIdentifier) as? CategoryHeaderView
-            categoryView?.titleButton.setTitle(viewModel.resumeCategory[section].title, for: .normal)
-            
-            categoryView?.titleButton.addAction(UIAction { action in
-                self.pushCategoryEditingView(section: section)
-            }, for: .touchUpInside)
-            
             categoryView?.backgroundColor = .clear
             
-            categoryView?.addButton.addAction(UIAction { action in
-                self.pushResumItemAddView()
-            }, for: .touchUpInside)
+            categoryView?.titleButton.setTitle(viewModel.resumeCategory[section].title, for: .normal)
+            categoryView?.titleButton.addAction(resumeCategoryAction(section: section), for: .touchUpInside)
+            
+            categoryView?.addButton.addAction(resumeItemAction(section: section), for: .touchUpInside)
+            
+            categoryView?.isEditingMode = self.isEditingMode
+            
             return categoryView
         } else {
             let coverLetterView = tableView.dequeueReusableHeaderFooterView(withIdentifier:CoverLetterHeaderView.reuseIdentifier) as? CoverLetterHeaderView

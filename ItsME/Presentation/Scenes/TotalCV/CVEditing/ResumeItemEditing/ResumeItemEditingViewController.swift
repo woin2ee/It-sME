@@ -72,8 +72,12 @@ final class ResumeItemEditingViewController: UIViewController {
     private lazy var endOrNotEnrollmentStatusCell: ContextMenuCell = .init().then {
         $0.title = "종료 여부"
         $0.menu = [
-            .init(title: "진행중", handler: hideEndDateInputCells),
-            .init(title: "종료", handler: showEndDateInputCells),
+            .init(title: "진행중", handler: { [weak self] in
+                self?.hideEndDateInputCells()
+            }),
+            .init(title: "종료", handler: { [weak self] in
+                self?.showEndDateInputCells()
+            }),
         ]
         $0.backgroundColor = .secondarySystemGroupedBackground
     }

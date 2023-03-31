@@ -157,10 +157,7 @@ private extension HomeViewController {
                 }
                 
                 cvCard.addAction(UIAction{ _ in
-                    let totalCVVC: TotalCVViewController = .init()
-                    let totalCVVM: TotalCVViewModel = .init(cvInfo: cvInfo)
-                    
-                    totalCVVC.viewModel = totalCVVM
+                    let totalCVVC: TotalCVViewController = .init(viewModel: TotalCVViewModel.init(cvInfo: cvInfo))
                     
                     self.navigationController?.pushViewController(totalCVVC, animated: true)
                     
