@@ -98,28 +98,12 @@ final class ProfileEditingViewController: UIViewController {
         $0.addAction(action, for: .touchUpInside)
     }
     
-    private lazy var logoutButton: UIButton = .init(
-        configuration: .bordered().with {
-            $0.baseBackgroundColor = .secondarySystemGroupedBackground
-            $0.baseForegroundColor = .systemRed
-            $0.title = "로그아웃"
-            $0.buttonSize = .medium
-        },
-        primaryAction: UIAction { [weak self] _ in
-            guard let self = self else { return }
-            self.present(self.logoutConfirmAlert, animated: true)
-        }
-    )
-    
-    private lazy var logoutConfirmAlert: UIAlertController = .init(title: "로그아웃", message: "로그아웃하시겠습니까?", preferredStyle: .alert).then {
-        let cancelAction: UIAlertAction = .init(title: "아니오", style: .cancel)
-        $0.addAction(cancelAction)
-        let okAction: UIAlertAction = .init(title: "예", style: .default) { _ in
-            // TODO: ViewModel 바인딩
-            print("logout.")
-        }
-        $0.addAction(okAction)
-    }
+    private lazy var logoutButton: UIButton = .init(configuration: .bordered().with {
+        $0.baseBackgroundColor = .secondarySystemGroupedBackground
+        $0.baseForegroundColor = .systemRed
+        $0.title = "로그아웃"
+        $0.buttonSize = .medium
+    })
     
     private lazy var editingCompleteButton: UIBarButtonItem = .init(title: "수정완료").then {
         $0.style = .done
@@ -180,7 +164,14 @@ private extension ProfileEditingViewController {
         let input = ProfileEditingViewModel.Input.init(
             tapEditingCompleteButton: editingCompleteButton.rx.tap.asSignal(),
             userName: nameTextField.rx.text.orEmpty.asDriver(),
-            viewDidLoad: .just(())
+            viewDidLoad: .just(()),
+            logoutTrigger: logoutButton.rx.tap.flatMap {
+                self.rx.presentConfirmAlert(
+                    title: "로그아웃",
+                    message: "로그아웃하시겠습니까?",
+                    okAction: UIAlertAction(title: "예", style: .default)
+                )
+            }.asSignalOnErrorJustComplete()
         )
         let output = viewModel.transform(input: input)
         [
@@ -208,6 +199,10 @@ private extension ProfileEditingViewController {
                 .emit(with: self, onNext: { owner, userInfo in
                     owner.dismiss(animated: true)
                 }),
+            output.logoutComplete
+                .emit(with: self, onNext: { owner, _ in
+                    owner.navigationController?.setViewControllers([LoginViewController()], animated: false)
+                })
         ]
             .forEach { $0.disposed(by: disposeBag) }
     }

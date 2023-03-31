@@ -15,6 +15,7 @@ final class ProfileEditingViewModel: ViewModelType {
         let tapEditingCompleteButton: Signal<Void>
         let userName: Driver<String>
         let viewDidLoad: Driver<Void>
+        let logoutTrigger: Signal<Void>
     }
     
     struct Output {
@@ -23,6 +24,7 @@ final class ProfileEditingViewModel: ViewModelType {
         let educationItems: Driver<[EducationItem]>
         let tappedEditingCompleteButton: Signal<UserInfo>
         let viewDidLoad: Driver<Void>
+        let logoutComplete: Signal<Void>
     }
     
     private let userRepository: UserRepository = .init()
@@ -81,12 +83,16 @@ final class ProfileEditingViewModel: ViewModelType {
             .withLatestFrom(userInfoDriver)
             .doOnNext { print($0) } // TODO: 유저 정보 저장
         
+        let logoutComplete = input.logoutTrigger
+            .doOnNext { AppLoginStatusManager.shared.logout() }
+        
         return .init(
             userName: userName,
             userInfoItems: userInfoItems,
             educationItems: educationItems,
             tappedEditingCompleteButton: tappedEditingCompleteButton,
-            viewDidLoad: viewDidLoad
+            viewDidLoad: viewDidLoad,
+            logoutComplete: logoutComplete
         )
     }
 }
