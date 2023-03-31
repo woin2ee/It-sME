@@ -164,7 +164,7 @@ extension ProfileEditingViewModel: OtherItemEditingViewModelDelegate {
         }
     }
     
-    func otherItemeditingViewModelDidAppend(otherItem: UserInfoItem) {
+    func otherItemEditingViewModelDidAppend(otherItem: UserInfoItem) {
         let userInfo = userInfoRelay.value
         userInfo.otherItems.append(otherItem)
         userInfoRelay.accept(userInfo)

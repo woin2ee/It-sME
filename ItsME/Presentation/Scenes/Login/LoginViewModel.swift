@@ -63,7 +63,7 @@ private extension LoginViewModel {
                         .compactMap { $0.id }
                         .map { String($0) }
                 }
-                .flatMap { AppLoginStatusManager.shared.rx.login(with: $0) }
+                .flatMap { AppLoginStatusManager.shared.rx.login(with: .kakao, uid: $0) }
         } else {
             return UserApi.shared.rx.loginWithKakaoAccount()
                 .flatMap { authToken in
@@ -71,7 +71,7 @@ private extension LoginViewModel {
                         .compactMap { $0.id }
                         .map { String($0) }
                 }
-                .flatMap { AppLoginStatusManager.shared.rx.login(with: $0) }
+                .flatMap { AppLoginStatusManager.shared.rx.login(with: .kakao, uid: $0) }
         }
     }
 }

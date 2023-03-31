@@ -78,6 +78,7 @@
 		DA739DE62925E35A003AEE4C /* ItsMEUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9952918DE8C0081C0EC /* ItsMEUITests.swift */; };
 		DA90695629C823F200535A3D /* ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53B73929B5C304000BBB26 /* ExtensionTests.swift */; };
 		DA90695729C826F300535A3D /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53B73729B5BDA1000BBB26 /* Int+.swift */; };
+		DA9069D629CDA64B00535A3D /* Collection+isNotEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9069D529CDA64B00535A3D /* Collection+isNotEmpty.swift */; };
 		DAA5B9652938825A00BAB04E /* ProfileEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA5B9642938825A00BAB04E /* ProfileEditingViewController.swift */; };
 		DAA5B9672938827200BAB04E /* ProfileEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA5B9662938827200BAB04E /* ProfileEditingViewModel.swift */; };
 		DAAB20C1299B6AEF00D5338D /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAB20C0299B6AEF00D5338D /* Reusable.swift */; };
@@ -211,6 +212,7 @@
 		DA739DDD2923B4D2003AEE4C /* ItsME.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ItsME.entitlements; sourceTree = "<group>"; };
 		DA739DE32924FE54003AEE4C /* CommonAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonAlertViewController.swift; sourceTree = "<group>"; };
 		DA90694D29C8234600535A3D /* ItsMETestsWithoutApp.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ItsMETestsWithoutApp.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA9069D529CDA64B00535A3D /* Collection+isNotEmpty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+isNotEmpty.swift"; sourceTree = "<group>"; };
 		DAA5B9642938825A00BAB04E /* ProfileEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditingViewController.swift; sourceTree = "<group>"; };
 		DAA5B9662938827200BAB04E /* ProfileEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditingViewModel.swift; sourceTree = "<group>"; };
 		DAAB20C0299B6AEF00D5338D /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
@@ -548,6 +550,7 @@
 				DAD1D02F29B759CE00B12BF8 /* Calendar+Current.swift */,
 				DAD1D03729C0B40100B12BF8 /* OSStatus+ToReadableString.swift */,
 				DAD1D05B29C2DD9500B12BF8 /* AppLoginStatusManager+Rx.swift */,
+				DA9069D529CDA64B00535A3D /* Collection+isNotEmpty.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1011,6 +1014,7 @@
 				DAAB20C7299B7A5600D5338D /* ContentsInputCell.swift in Sources */,
 				DAAFB2532918EE5A007A8DF0 /* UserInfo.swift in Sources */,
 				DAFCFB6C294C3666006B287A /* EducationCell.swift in Sources */,
+				DA9069D629CDA64B00535A3D /* Collection+isNotEmpty.swift in Sources */,
 				DA7201EC29309B9600A69519 /* AuthenticationServices+Rx.swift in Sources */,
 				DAD1D05C29C2DD9500B12BF8 /* AppLoginStatusManager+Rx.swift in Sources */,
 				D09AC9792918DE8B0081C0EC /* HomeViewController.swift in Sources */,

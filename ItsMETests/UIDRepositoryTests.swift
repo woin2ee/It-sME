@@ -12,141 +12,50 @@ final class UIDRepositoryTests: XCTestCase {
     
     let sut: UIDRepository! = .shared
     
-    override func setUp() {
-        let expectation = expectation(description: "setUpRemoveUID")
-        sut.removeUID { _ in
-            expectation.fulfill()
+    override func setUpWithError() throws {
+        try sut.remove()
+    }
+    
+    override func tearDownWithError() throws {
+        try sut.remove()
+    }
+    
+    func testGetUIDAfterSaveUID() throws {
+        // Arrange
+        let testUID: String! = "TestUID"
+        try sut.save(testUID)
+        
+        // Act
+        let currentUID = try sut.get()
+        
+        // Assert
+        XCTAssertEqual(testUID, currentUID)
+    }
+    
+    func testGetUIDWhenNotSaved() throws {
+        // Act
+        do {
+            let currentUID = try sut.get()
+            XCTFail("가져오기 실패를 예상했으나 성공함.")
         }
-        waitForExpectations(timeout: 2)
-    }
-    
-    override func tearDown() {
-        sut.removeUID()
-    }
-    
-    func testGetUIDAfterSaveUID() {
-        // Arrange
-        let testUID: String! = "TestUID"
-        saveUID(testUID)
-        let expectedUID: String! = testUID
-        
-        // Act
-        let currentUID = getUID()
         
         // Assert
-        XCTAssertEqual(expectedUID, currentUID)
+        catch {
+            XCTAssert(true)
+        }
     }
     
-    func testGetUIDWhenNotSaved() {
-        // Act
-        let currentUID = getUID()
-        
-        // Assert
-        XCTAssertNil(currentUID)
-    }
-    
-    func testUpdateUIDWhenExistSavedUID() {
+    func testSaveOtherUIDWhenAlreadyExistUID() throws {
         // Arrange
         let testUID: String! = "TestUID"
-        saveUID(testUID)
+        try sut.save(testUID)
         let newTestUID = "newTestUID"
         
         // Act
-        updateUID(newTestUID)
-        let currentUID = getUID()
+        try sut.save(newTestUID)
+        let currentUID = try sut.get()
         
         // Assert
         XCTAssertEqual(newTestUID, currentUID)
-    }
-    
-    func testUpdateUIDWhenNotSaved() {
-        // Arrange
-        let newTestUID: String! = "newTestUID"
-        var expectedStatus: OSStatus = errSecSuccess
-        
-        // Act
-        let expectation = expectation(description: "UID update 가 수행된 후 fulfill 됩니다.")
-        sut.updateUID(newTestUID) { status in
-            expectedStatus = status
-            expectation.fulfill()
-        }
-        
-        // Assert
-        waitForExpectations(timeout: .infinity) { _ in
-            XCTAssertNotEqual(expectedStatus, errSecSuccess)
-        }
-    }
-    
-    func testSaveOtherUIDWhenAlreadyExistUID() {
-        // Arrange
-        let testUID: String! = "TestUID"
-        saveUID(testUID)
-        let newTestUID = "newTestUID"
-        
-        // Act
-        let saveExpectation = expectation(description: "saveUID 의 excaping closure 가 호출된 후 fulfill 됩니다.")
-        sut.saveUID(newTestUID) { status in
-            saveExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 2)
-        let currentUID = getUID()
-        
-        // Assert
-        XCTAssertEqual(newTestUID, currentUID)
-    }
-}
-
-// MARK: - Private Functions
-
-private extension UIDRepositoryTests {
-    
-    func saveUID(_ uid: String) {
-        let saveExpectation = expectation(description: "saveUID 함수의 escaping closure 에서 fulfill() 이 호출됩니다.")
-        
-        sut.saveUID(uid) { status in
-            if status == errSecSuccess || status == errSecDuplicateItem {
-                saveExpectation.fulfill()
-            }
-        }
-        
-        waitForExpectations(timeout: 2) { error in
-            if let error = error {
-                XCTFail("Time out. \(error) \(#function)")
-            }
-        }
-    }
-    
-    func updateUID(_ newUID: String!) {
-        let updateExpectation = expectation(description: "UID 가 업데이트 되고 난 뒤 fulfill 됩니다.")
-        
-        sut.updateUID(newUID) { status in
-            updateExpectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: 2) { error in
-            if let error = error {
-                XCTFail("Time out. \(error) \(#function)")
-            }
-        }
-    }
-    
-    func getUID() -> String? {
-        var result: String? = nil
-        
-        let getExpectation = expectation(description: "getUID 함수의 escaping closure 에서 값이 모두 할당된 뒤 fulfill() 이 호출됩니다.")
-        
-        sut.getUID { status, uid in
-            result = uid
-            
-            getExpectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: 2) { error in
-            if let error = error {
-                XCTFail("Time out. \(error) \(#function)")
-            }
-        }
-        
-        return result
     }
 }
