@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KakaoSDKUser
 
 final class AppLoginStatusManager {
     
@@ -16,50 +17,53 @@ final class AppLoginStatusManager {
     
     private let uidRepository: UIDRepository = .shared
     
+    /// 현재 로그인에 사용된 플랫폼입니다.
+    private(set) var loginType: LoginType?
+    
     /// 앱의 사용자가 현재 로그인 되어있는지 여부를 반환합니다.
     var isLoggedIn: Bool {
-        var result: Bool = false
-        let semaphore: DispatchSemaphore = .init(value: 0)
-        uidRepository.getUID { status, uid in
-            if status == errSecSuccess, let uid = uid {
-                result = true
-                #if DEBUG
-                    debugPrint("현재 로그인 되어있습니다. UID - \(uid)")
-                #endif
-            }
-            semaphore.signal()
+        if let uid = try? uidRepository.get(), uid.isNotEmpty {
+            return true
+        } else {
+            return false
         }
-        semaphore.wait()
-        return result
     }
     
     /// 앱 사용자를 로그인 처리 합니다.
-    func login(with uid: UIDRepository.UID) throws {
-        var isSuccessLogin: Bool = false
-        let semaphore: DispatchSemaphore = .init(value: 0)
-        uidRepository.saveUID(uid) { status in
-            if status == errSecSuccess {
-                isSuccessLogin = true
-            }
-            semaphore.signal()
-        }
-        semaphore.wait()
-        if !isSuccessLogin {
-            throw AppLoginError.loginFail
-        }
+    func login(with loginType: LoginType, uid: UIDRepository.UID) throws {
+        try uidRepository.save(uid)
+        self.loginType = loginType
     }
     
     /// 앱 사용자를 로그아웃 처리 합니다.
     func logout() {
-        uidRepository.removeUID()
+        defer { loginType = nil }
+        if let loginType = loginType {
+            switch loginType {
+            case .apple:
+                break
+            case .kakao:
+                UserApi.shared.logout(completion: { _ in })
+            }
+        }
+        
+        do {
+            try uidRepository.remove()
+        } catch {
+            #if DEBUG
+                debugPrint(error)
+            #endif
+            return
+        }
     }
 }
 
-// MARK: - AppLoginError
+// MARK: - LoginType
 
 extension AppLoginStatusManager {
     
-    enum AppLoginError: Error {
-        case loginFail
+    enum LoginType {
+        case apple
+        case kakao
     }
 }
