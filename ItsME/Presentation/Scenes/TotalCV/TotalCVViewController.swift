@@ -13,7 +13,7 @@ import Then
 class TotalCVViewController: UIViewController {
     
     private let disposeBag: DisposeBag = .init()
-    var viewModel: TotalCVViewModel
+    let viewModel: TotalCVViewModel
     
     let headerFont: UIFont = .systemFont(ofSize: 30, weight: .bold)
     private var isEditingMode: Bool = false
@@ -108,19 +108,7 @@ class TotalCVViewController: UIViewController {
     }
     
     private lazy var editModeButton: UIBarButtonItem = .init().then {
-        $0.primaryAction = UIAction(image: UIImage(systemName: "wrench.and.screwdriver.fill"), handler: { _ in
-            
-            self.isEditingMode.toggle()
-            
-            for section in 0..<self.categoryTableView.numberOfSections {
-                guard let headerView = self.categoryTableView.headerView(forSection: section) as? CategoryHeaderView else {
-                    continue
-                }
-                headerView.isEditingMode = self.isEditingMode
-            }
-            self.changeButton()
-            self.changeMode()
-        })
+        $0.image = UIImage(systemName: "wrench.and.screwdriver.fill")
         $0.style = .done
     }
     
@@ -248,7 +236,16 @@ private extension TotalCVViewController {
                 .drive(cvsInfoBinding),
             output.tappedEditCompleteButton
                 .emit(with: self, onNext: { owner, cvInfo in
-                    owner.dismiss(animated: true)
+                    owner.isEditingMode.toggle()
+                    
+                    for section in 0..<owner.categoryTableView.numberOfSections {
+                        guard let headerView = owner.categoryTableView.headerView(forSection: section) as? CategoryHeaderView else {
+                            continue
+                        }
+                        headerView.isEditingMode = self.isEditingMode
+                    }
+                    owner.changeButton()
+                    owner.changeMode()
                 })
         ]
             .forEach { $0.disposed(by: disposeBag) }
@@ -504,7 +501,7 @@ private extension TotalCVViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func resumeItemAction(section: Int) -> UIAction {
+    func makeResumeItemAction(section: Int) -> UIAction {
         return UIAction(
             identifier: UIAction.Identifier("resumeItemIdentifier"),
             handler: { [weak self] action in
@@ -512,7 +509,7 @@ private extension TotalCVViewController {
             })
     }
     
-    func resumeCategoryAction(section: Int) -> UIAction {
+    func makeResumeCategoryAction(section: Int) -> UIAction {
         return UIAction(identifier: UIAction.Identifier("resumeCategoryIdentifier"),
                         handler: { [weak self] action in
             self?.pushCategoryEditingView(section: section)
@@ -549,9 +546,9 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
             categoryView?.backgroundColor = .clear
             
             categoryView?.titleButton.setTitle(viewModel.resumeCategory[section].title, for: .normal)
-            categoryView?.titleButton.addAction(resumeCategoryAction(section: section), for: .touchUpInside)
+            categoryView?.titleButton.addAction(makeResumeCategoryAction(section: section), for: .touchUpInside)
             
-            categoryView?.addButton.addAction(resumeItemAction(section: section), for: .touchUpInside)
+            categoryView?.addButton.addAction(makeResumeItemAction(section: section), for: .touchUpInside)
             
             categoryView?.isEditingMode = self.isEditingMode
             
