@@ -66,9 +66,7 @@ final class ProfileEditingViewModel: ViewModelType {
             .filter { self.userInfoRelay.value == .empty }
             .flatMapLatest { _ -> Driver<Void> in
                 self.userRepository.getUserInfo(byUID: "testUser")
-                    .do(onNext: { userInfo in
-                        self.userInfoRelay.accept(userInfo)
-                    })
+                    .doOnNext { self.userInfoRelay.accept($0) }
                     .mapToVoid()
                     .asDriverOnErrorJustComplete()
             }
@@ -76,17 +74,12 @@ final class ProfileEditingViewModel: ViewModelType {
         let userName = Driver.merge(input.userName,
                                     userInfoDriver.map { $0.name })
             .startWith(userInfoRelay.value.name)
-            .do(onNext: { userName in
-                self.userInfoRelay.value.name = userName
-            })
+            .doOnNext { self.userInfoRelay.value.name = $0 }
         let userInfoItems = userInfoDriver.map { $0.allItems }
         let educationItems = userInfoDriver.map { $0.educationItems }
         let tappedEditingCompleteButton = input.tapEditingCompleteButton
             .withLatestFrom(userInfoDriver)
-            .do(onNext: { userInfo in
-                // TODO: 유저 정보 저장
-                print(userInfo)
-            })
+            .doOnNext { print($0) } // TODO: 유저 정보 저장
         
         return .init(
             userName: userName,
