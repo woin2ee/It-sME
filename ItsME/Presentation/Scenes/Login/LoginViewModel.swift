@@ -30,20 +30,13 @@ final class LoginViewModel: ViewModelType {
             }
         
         let loggedInApple = input.appleLoginSuccess
-            .do(onNext: { authorization in
-                // TODO: Firebase 계정 생성
-                #if DEBUG
-                    guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
-                        return
-                    }
-                    print("authorizationCode : \(String(data: appleIDCredential.authorizationCode!, encoding: .utf8))")
-                    print("identityToken : \(String(data: appleIDCredential.identityToken!, encoding: .utf8))")
-                    print("uid : \(appleIDCredential.user)")
-                    print("name : \(appleIDCredential.fullName)")
-                    print("email : \(appleIDCredential.email)")
-                #endif
-            })
-            .map { _ -> Void in }
+            .flatMap { authorization -> Driver<Void> in
+                guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
+                    return .empty()
+                }
+                return AppLoginStatusManager.shared.rx.login(with: .apple, uid: appleIDCredential.user)
+                    .asDriverOnErrorJustComplete()
+            }
         
         let loggedIn = Driver.merge(loggedInKakao, loggedInApple)
         
