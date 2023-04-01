@@ -14,7 +14,7 @@ final class CVRepository {
     func getAllCV(byUID uid: String) -> Observable<[CVInfo]> {
         return database.cvRef(uid).rx.dataSnapshot
             .map { dataSnapshot in
-                return try DefaultJsonDecoder.decode([CVInfo].self, from: dataSnapshot.value)
+                return try LoggedJsonDecoder.decode([CVInfo].self, withJSONObject: dataSnapshot.value)
             }
     }
 }

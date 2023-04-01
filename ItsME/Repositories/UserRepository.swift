@@ -14,9 +14,7 @@ final class UserRepository {
     func getUserInfo(byUID uid: String) -> Observable<UserInfo> {
         return database.userRef(uid).rx.dataSnapshot
             .map { dataSnapshot in
-                let jsonData = try JSONSerialization.data(withJSONObject: dataSnapshot.value as Any)
-                let userInfo = try JSONDecoder().decode(UserInfo.self, from: jsonData)
-                return userInfo
+                return try LoggedJsonDecoder.decode(UserInfo.self, withJSONObject: dataSnapshot.value)
             }
     }
 }
