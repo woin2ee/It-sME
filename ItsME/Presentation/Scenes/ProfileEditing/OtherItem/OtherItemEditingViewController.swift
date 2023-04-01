@@ -23,6 +23,12 @@ final class OtherItemEditingViewController: UIViewController {
     private lazy var iconInputCell: IconInputCell = .init()
     private lazy var contentsInputCell: ContentsInputCell = .init()
     private lazy var completeButton: UIBarButtonItem = .init()
+    private lazy var deleteButton: UIButton = .init(configuration: .bordered().with {
+        $0.baseBackgroundColor = .secondarySystemGroupedBackground
+        $0.baseForegroundColor = .systemRed
+        $0.title = "삭제"
+        $0.cornerStyle = .large
+    })
     
     // MARK: - Computed Properties
     
@@ -66,6 +72,12 @@ private extension OtherItemEditingViewController {
         userInfoItemInputTableView.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
         }
+        
+        self.view.addSubview(deleteButton)
+        deleteButton.snp.makeConstraints { make in
+            make.top.equalTo(userInfoItemInputTableView.snp.bottom).offset(8)
+            make.directionalHorizontalEdges.equalToSuperview().inset(20)
+        }
     }
     
     func configureNavigationBar() {
@@ -108,9 +120,11 @@ private extension OtherItemEditingViewController {
             case .edit:
                 vc.navigationItem.title = "항목 편집"
                 vc.completeButton.title = "완료"
+                vc.deleteButton.isHidden = false
             case .new:
                 vc.navigationItem.title = "새 항목 추가"
                 vc.completeButton.title = "추가"
+                vc.deleteButton.isHidden = true
             }
         }
     }
