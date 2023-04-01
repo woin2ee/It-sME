@@ -45,11 +45,13 @@ final class OtherItemEditingViewModel: ViewModelType {
             .withLatestFrom(userInfoItem)
             .doOnNext(endEditing(with:))
             .mapToVoid()
+        let deleteComplete = input.deleteTrigger
         
         return .init(
             editingType: editingType,
             doneCompleted: doneCompleted,
-            userInfoItem: userInfoItem
+            userInfoItem: userInfoItem,
+            deleteComplete: deleteComplete
         )
     }
 }
@@ -62,12 +64,14 @@ extension OtherItemEditingViewModel {
         let doneTrigger: Signal<Void>
         let icon: Driver<UserInfoItemIcon>
         let contents: Driver<String>
+        let deleteTrigger: Signal<Void>
     }
     
     struct Output {
         let editingType: Driver<EditingType>
         let doneCompleted: Signal<Void>
         let userInfoItem: Driver<UserInfoItem>
+        let deleteComplete: Signal<Void>
     }
 }
 

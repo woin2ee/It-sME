@@ -102,6 +102,10 @@ private extension OtherItemEditingViewController {
                 .emit(with: self, onNext: { owner, _ in
                     owner.navigationController?.popViewController(animated: true)
                 }),
+            output.deleteComplete
+                .emit(with: self, onNext: { owner, _ in
+                    owner.navigationController?.popViewController(animated: true)
+                }),
         ]
             .forEach { $0.disposed(by: disposeBag) }
     }
@@ -110,7 +114,14 @@ private extension OtherItemEditingViewController {
         return .init(
             doneTrigger: completeButton.rx.tap.asSignal(),
             icon: .empty(), // TODO: 아이콘 선택 이벤트 매핑
-            contents: contentsInputCell.contentsTextField.rx.text.orEmpty.asDriver()
+            contents: contentsInputCell.contentsTextField.rx.text.orEmpty.asDriver(),
+            deleteTrigger: deleteButton.rx.tap.flatMap {
+                return self.rx.presentConfirmAlert(
+                    title: "항목 삭제",
+                    message: "이 항목을 삭제하시겠습니까?",
+                    okAction: UIAlertAction(title: "삭제", style: .destructive)
+                )
+            }.asSignalOnErrorJustComplete()
         )
     }
     
