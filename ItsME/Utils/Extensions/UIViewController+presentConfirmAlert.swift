@@ -13,7 +13,7 @@ extension UIViewController {
     func presentConfirmAlert(
         title: String,
         message: String? = nil,
-        cancelAction: UIAlertAction = .init(title: "아니오", style: .cancel),
+        cancelAction: UIAlertAction = .init(title: "취소", style: .cancel),
         okAction: UIAlertAction,
         animated: Bool = true
     ) {
