@@ -43,7 +43,7 @@ final class OtherItemEditingViewModel: ViewModelType {
         let editingType = Driver.just(editingType)
         let doneCompleted = input.doneTrigger
             .withLatestFrom(userInfoItem)
-            .do(onNext: endEditing(with:))
+            .doOnNext(endEditing(with:))
             .mapToVoid()
         
         return .init(
