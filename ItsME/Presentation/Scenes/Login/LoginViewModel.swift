@@ -31,10 +31,12 @@ final class LoginViewModel: ViewModelType {
         
         let loggedInApple = input.appleLoginSuccess
             .flatMap { authorization -> Driver<Void> in
-                guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
+                guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
+                      let uid = appleIDCredential.user.data(using: .utf8)?.base64EncodedString()
+                else {
                     return .empty()
                 }
-                return AppLoginStatusManager.shared.rx.login(with: .apple, uid: appleIDCredential.user)
+                return AppLoginStatusManager.shared.rx.login(with: .apple, uid: uid)
                     .asDriverOnErrorJustComplete()
             }
         
