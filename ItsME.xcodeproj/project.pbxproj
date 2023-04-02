@@ -63,6 +63,7 @@
 		DA6B3CED29B1D453002BB159 /* YearMonthPickerViewDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B3CEC29B1D453002BB159 /* YearMonthPickerViewDelegateProxy.swift */; };
 		DA6BCE5E292F04910059E95D /* DatabaseReferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */; };
 		DA708F0329D6EDBF00EF84F2 /* UIViewController+presentConfirmAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F0229D6EDBF00EF84F2 /* UIViewController+presentConfirmAlert.swift */; };
+		DA708F0529D9DC4500EF84F2 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F0429D9DC4500EF84F2 /* Hash.swift */; };
 		DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */; };
 		DA7201EA29309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */; };
 		DA7201EC29309B9600A69519 /* AuthenticationServices+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */; };
@@ -201,6 +202,7 @@
 		DA6B3CEC29B1D453002BB159 /* YearMonthPickerViewDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearMonthPickerViewDelegateProxy.swift; sourceTree = "<group>"; };
 		DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseReferenceManager.swift; sourceTree = "<group>"; };
 		DA708F0229D6EDBF00EF84F2 /* UIViewController+presentConfirmAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+presentConfirmAlert.swift"; sourceTree = "<group>"; };
+		DA708F0429D9DC4500EF84F2 /* Hash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hash.swift; sourceTree = "<group>"; };
 		DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseReference+Rx.swift"; sourceTree = "<group>"; };
 		DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASAuthorizationControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationServices+Rx.swift"; sourceTree = "<group>"; };
@@ -695,6 +697,7 @@
 				DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */,
 				DA26989B298A4709008A5D30 /* LoggedJsonDecoder.swift */,
 				DA6B3CEC29B1D453002BB159 /* YearMonthPickerViewDelegateProxy.swift */,
+				DA708F0429D9DC4500EF84F2 /* Hash.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1042,6 +1045,7 @@
 				DA481D8929A4BFE500C8C734 /* IntrinsicHeightTextView.swift in Sources */,
 				DA26989C298A4709008A5D30 /* LoggedJsonDecoder.swift in Sources */,
 				DA01880B296D1471002C5CB0 /* AddressEditingViewController.swift in Sources */,
+				DA708F0529D9DC4500EF84F2 /* Hash.swift in Sources */,
 				D0472F07296406BC00E83F61 /* TotalCVViewController.swift in Sources */,
 				DA739DDA292398BE003AEE4C /* LoginViewController.swift in Sources */,
 				D0C755B629AC889F0070FC08 /* EditModeAddButton.swift in Sources */,
