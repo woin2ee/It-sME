@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class UserInfo: Decodable {
+final class UserInfo: Codable {
     var name: String
     let profileImageURL: String
     var birthday: UserInfoItem

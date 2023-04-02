@@ -22,7 +22,7 @@ final class ProfileEditingViewModel: ViewModelType {
         let userName: Driver<String>
         let userInfoItems: Driver<[UserInfoItem]>
         let educationItems: Driver<[EducationItem]>
-        let tappedEditingCompleteButton: Signal<UserInfo>
+        let tappedEditingCompleteButton: Signal<Void>
         let viewDidLoad: Driver<Void>
         let logoutComplete: Signal<Void>
     }
@@ -81,7 +81,7 @@ final class ProfileEditingViewModel: ViewModelType {
         let educationItems = userInfoDriver.map { $0.educationItems }
         let tappedEditingCompleteButton = input.tapEditingCompleteButton
             .withLatestFrom(userInfoDriver)
-            .doOnNext { print($0) } // TODO: 유저 정보 저장
+            .flatMapFirst { self.userRepository.saveCurrentUserInfo($0).asSignalOnErrorJustComplete() } // TODO: Error 처리 고려
         
         let logoutComplete = input.logoutTrigger
             .doOnNext { AppLoginStatusManager.shared.logout() }

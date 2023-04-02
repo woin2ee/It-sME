@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class UserInfoItem: Decodable {
+final class UserInfoItem: Codable {
     let icon: UserInfoItemIcon
     var contents: String
     
@@ -21,6 +21,13 @@ final class UserInfoItem: Decodable {
         let iconString = try container.decode(String.self, forKey: .icon)
         self.icon = .init(rawValue: iconString) ?? .default
         self.contents = try container.decode(String.self, forKey: .contents)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(icon.rawValue, forKey: .icon)
+        try container.encode(contents, forKey: .contents)
     }
 }
 

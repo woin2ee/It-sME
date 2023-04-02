@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class EducationItem: Decodable {
+final class EducationItem: Codable {
     let period: String
     let title: String
     let description: String

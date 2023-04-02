@@ -31,4 +31,28 @@ final class UserRepository {
             return .error(error)
         }
     }
+    
+    func saveUserInfo(_ userInfo: UserInfo, byUID uid: String) -> Single<Void> {
+        return .create { singleObserver in
+            do {
+                let data = try JSONEncoder().encode(userInfo)
+                let jsonObject = try JSONSerialization.jsonObject(with: data)
+                self.database.userRef(uid).setValue(jsonObject)
+                singleObserver(.success(()))
+            } catch {
+                singleObserver(.failure(error))
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func saveCurrentUserInfo(_ userInfo: UserInfo) -> Single<Void> {
+        do {
+            let uid = try self.uidRepository.get()
+            return saveUserInfo(userInfo, byUID: uid)
+        } catch {
+            return .error(error)
+        }
+    }
 }
