@@ -40,6 +40,7 @@ final class EducationEditingViewController: UIViewController {
     private lazy var entranceDateInputCell: ButtonCell = .init(title: "입학일").then {
         let action: UIAction = .init { [weak self] _ in
             self?.toggleEntranceDatePickerCell()
+            self?.hideGraduateDatePickerCell()
         }
         $0.trailingButton.addAction(action, for: .touchUpInside)
         $0.trailingButton.setTitleColor(.label, for: .normal)
@@ -49,6 +50,14 @@ final class EducationEditingViewController: UIViewController {
     
     private lazy var entranceDatePickerCell: YearMonthPickerCell = .init().then {
         $0.backgroundColor = .secondarySystemGroupedBackground
+    }
+    
+    private var entranceDatePickerCellIndexPath: IndexPath {
+        .init(row: 1, section: 1)
+    }
+    
+    private var isShowingEntranceDatePickerCell: Bool {
+        inputTableViewDataSource[entranceDatePickerCellIndexPath.section].contains(entranceDatePickerCell)
     }
     
     private lazy var schoolEnrollmentStatusCell: ContextMenuCell = .init().then {
@@ -67,6 +76,7 @@ final class EducationEditingViewController: UIViewController {
     private lazy var graduateDateInputCell: ButtonCell = .init(title: "졸업일").then {
         let action: UIAction = .init { [weak self] _ in
             self?.toggleGraduateDatePickerCell()
+            self?.hideEntranceDatePickerCell()
         }
         $0.trailingButton.addAction(action, for: .touchUpInside)
         $0.trailingButton.setTitleColor(.label, for: .normal)
@@ -76,6 +86,16 @@ final class EducationEditingViewController: UIViewController {
     
     private lazy var graduateDatePickerCell: YearMonthPickerCell = .init().then {
         $0.backgroundColor = .secondarySystemGroupedBackground
+    }
+    
+    private var graduateDatePickerCellIndexPath: IndexPath {
+        let section = 1
+        let row = inputTableViewDataSource[section].endIndex
+        return .init(row: row, section: section)
+    }
+    
+    private var isShowingGraduateDatePickerCell: Bool {
+        inputTableViewDataSource[graduateDatePickerCellIndexPath.section].contains(graduateDatePickerCell)
     }
     
     private(set) lazy var inputTableViewDataSource: [[UITableViewCell]] = [
@@ -138,20 +158,29 @@ private extension EducationEditingViewController {
     }
     
     func toggleEntranceDatePickerCell() {
-        let section = 1
-        let row = 1
-        let indexPath: IndexPath = .init(row: row, section: section)
-        let animationDuration: TimeInterval = 0.3
-        let isShowingDatePickerCell: Bool = inputTableViewDataSource[section].contains(entranceDatePickerCell)
-        if isShowingDatePickerCell {
-            UIView.animate(withDuration: animationDuration, animations: {
-                self.inputTableViewDataSource[section].removeAll { $0 === self.entranceDatePickerCell }
+        if isShowingEntranceDatePickerCell {
+            hideEntranceDatePickerCell()
+        } else {
+            showEntranceDatePickerCell()
+        }
+    }
+    
+    func hideEntranceDatePickerCell(withDuration duration: TimeInterval = 0.3) {
+        if isShowingEntranceDatePickerCell {
+            let indexPath = entranceDatePickerCellIndexPath
+            UIView.animate(withDuration: duration, animations: {
+                self.inputTableViewDataSource[indexPath.section].removeAll { $0 === self.entranceDatePickerCell }
                 self.inputTableView.deleteRows(at: [indexPath], with: .fade)
                 self.view.layoutIfNeeded()
             })
-        } else {
-            UIView.animate(withDuration: animationDuration, animations: {
-                self.inputTableViewDataSource[section].insert(self.entranceDatePickerCell, at: row)
+        }
+    }
+    
+    func showEntranceDatePickerCell(withDuration duration: TimeInterval = 0.3) {
+        if !isShowingEntranceDatePickerCell {
+            let indexPath = entranceDatePickerCellIndexPath
+            UIView.animate(withDuration: duration, animations: {
+                self.inputTableViewDataSource[indexPath.section].insert(self.entranceDatePickerCell, at: indexPath.row)
                 self.inputTableView.insertRows(at: [indexPath], with: .fade)
                 self.view.layoutIfNeeded()
             })
@@ -159,20 +188,30 @@ private extension EducationEditingViewController {
     }
     
     func toggleGraduateDatePickerCell() {
-        let section = 1
-        let row = inputTableViewDataSource[section].endIndex
-        let animationDuration: TimeInterval = 0.3
-        let isShowingDatePickerCell: Bool = inputTableViewDataSource[section].contains(graduateDatePickerCell)
-        if isShowingDatePickerCell {
-            UIView.animate(withDuration: animationDuration, animations: {
-                self.inputTableViewDataSource[section].removeAll { $0 === self.graduateDatePickerCell }
-                self.inputTableView.deleteRows(at: [.init(row: row - 1, section: section)], with: .fade)
+        if isShowingGraduateDatePickerCell {
+            hideGraduateDatePickerCell()
+        } else {
+            showGraduateDatePickerCell()
+        }
+    }
+    
+    func hideGraduateDatePickerCell(withDuration duration: TimeInterval = 0.3) {
+        if isShowingGraduateDatePickerCell {
+            let indexPath = graduateDatePickerCellIndexPath
+            UIView.animate(withDuration: duration, animations: {
+                self.inputTableViewDataSource[indexPath.section].removeAll { $0 === self.graduateDatePickerCell }
+                self.inputTableView.deleteRows(at: [.init(row: indexPath.row - 1, section: indexPath.section)], with: .fade)
                 self.view.layoutIfNeeded()
             })
-        } else {
-            UIView.animate(withDuration: animationDuration, animations: {
-                self.inputTableViewDataSource[section].insert(self.graduateDatePickerCell, at: row)
-                self.inputTableView.insertRows(at: [.init(row: row, section: section)], with: .fade)
+        }
+    }
+    
+    func showGraduateDatePickerCell(withDuration duration: TimeInterval = 0.3) {
+        if !isShowingGraduateDatePickerCell {
+            let indexPath = graduateDatePickerCellIndexPath
+            UIView.animate(withDuration: duration, animations: {
+                self.inputTableViewDataSource[indexPath.section].insert(self.graduateDatePickerCell, at: indexPath.row)
+                self.inputTableView.insertRows(at: [indexPath], with: .fade)
                 self.view.layoutIfNeeded()
             })
         }
