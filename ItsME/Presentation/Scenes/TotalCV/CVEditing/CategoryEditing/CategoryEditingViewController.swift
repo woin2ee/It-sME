@@ -28,6 +28,16 @@ class CategoryEditingViewController: UIViewController {
         $0.contentsTextField.font = .systemFont(ofSize: 18)
     }
     
+    lazy var removeButton = UIButton().then {
+        $0.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+        $0.layer.cornerRadius = 10
+        $0.layer.masksToBounds = true
+        $0.tintColor = .white
+        $0.backgroundColor = .systemRed
+        $0.setTitle("카테고리 삭제", for: .normal)
+        $0.setImage(.init(systemName: "trash.fill"), for: .normal)
+    }
+    
     private lazy var completeBarButton: UIBarButtonItem = .init()
 
     // MARK: - Initalizer
@@ -77,6 +87,15 @@ private extension CategoryEditingViewController {
         self.navigationItem.rightBarButtonItem = completeBarButton
         self.navigationItem.rightBarButtonItem?.style = .done
     }
+    
+    func makeRemoveButton() {
+        view.addSubview(removeButton)
+        removeButton.snp.makeConstraints { make in
+            make.top.equalTo(inputTableView.snp.bottom).offset(10)
+            make.horizontalEdges.equalToSuperview().inset(20)
+            make.height.equalTo(40)
+        }
+    }
 }
 
 //MARK: - Binding ViewModel
@@ -109,6 +128,7 @@ private extension CategoryEditingViewController {
             case .edit:
                 vc.navigationItem.title = "편집"
                 vc.completeBarButton.title = "완료"
+                vc.makeRemoveButton()
             case .new:
                 vc.navigationItem.title = "추가"
                 vc.completeBarButton.title = "추가"
