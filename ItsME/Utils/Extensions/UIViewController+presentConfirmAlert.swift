@@ -31,7 +31,7 @@ extension Reactive where Base: UIViewController {
     ///   - title: <#title description#>
     ///   - message: <#message description#>
     ///   - cancelAction: <#cancelAction description#>
-    ///   - okAction: 확인 버튼에 해당하는 `UIAlertAction` 객체입니다. 이 파라미터로 넘긴 객체의 `handler` 는 실행되지 않습니다. 대신 `subscribe` 를 이용하세요.
+    ///   - okAction: 확인 버튼에 해당하는 `UIAlertAction` 객체입니다. 이 파라미터로 넘긴 객체의 `handler` 는 실행되지 않습니다. 대신 `subscribe` 를 이용하여 `handler` 에 해당하는 작업을 실행하세요.
     ///   - animated: <#animated description#>
     /// - Returns: <#description#>
     func presentConfirmAlert(
