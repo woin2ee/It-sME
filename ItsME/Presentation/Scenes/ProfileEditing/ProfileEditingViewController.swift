@@ -396,7 +396,7 @@ extension ProfileEditingViewController: UITableViewDelegate {
             }
             let viewModel: EducationEditingViewModel = .init(
                 educationItem: educationItem,
-                editingType: .edit(indexPath: indexPath),
+                editingType: .edit(index: indexPath.row),
                 delegate: viewModel
             )
             let viewController: EducationEditingViewController = .init(viewModel: viewModel)

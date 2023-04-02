@@ -136,10 +136,10 @@ extension ProfileEditingViewModel {
 
 extension ProfileEditingViewModel: EducationEditingViewModelDelegate {
     
-    func educationEditingViewModelDidEndEditing(with educationItem: EducationItem, at indexPath: IndexPath?) {
+    func educationEditingViewModelDidEndEditing(with educationItem: EducationItem, at index: IndexPath.Index) {
         let userInfo = userInfoRelay.value
-        if let indexPath = indexPath, userInfo.educationItems.indices ~= indexPath.row {
-            userInfo.educationItems[indexPath.row] = educationItem
+        if userInfo.educationItems.indices ~= index {
+            userInfo.educationItems[index] = educationItem
             userInfoRelay.accept(userInfo)
         }
     }
@@ -147,6 +147,12 @@ extension ProfileEditingViewModel: EducationEditingViewModelDelegate {
     func educationEditingViewModelDidAppend(educationItem: EducationItem) {
         let userInfo = userInfoRelay.value
         userInfo.educationItems.append(educationItem)
+        userInfoRelay.accept(userInfo)
+    }
+    
+    func educationEditingViewModelDidDeleteEducationItem(at index: IndexPath.Index) {
+        let userInfo = userInfoRelay.value
+        userInfo.educationItems.remove(at: index)
         userInfoRelay.accept(userInfo)
     }
 }

@@ -15,7 +15,7 @@ final class EducationEditingViewController: UIViewController {
     private let disposeBag: DisposeBag = .init()
     private let viewModel: EducationEditingViewModel
     
-    // MARK: - UI Components
+    // MARK: UI Components
     
     private lazy var inputTableView: IntrinsicHeightTableView = .init(style: .insetGrouped).then {
         $0.dataSource = self
@@ -87,7 +87,14 @@ final class EducationEditingViewController: UIViewController {
         $0.style = .done
     }
     
-    // MARK: - Initalizer
+    private lazy var deleteButton: UIButton = .init(configuration: .bordered().with {
+        $0.baseBackgroundColor = .secondarySystemGroupedBackground
+        $0.baseForegroundColor = .systemRed
+        $0.title = "삭제"
+        $0.cornerStyle = .large
+    })
+    
+    // MARK: Initalizer
     
     init(viewModel: EducationEditingViewModel) {
         self.viewModel = viewModel
@@ -99,7 +106,7 @@ final class EducationEditingViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Life Cycle
+    // MARK: Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,6 +124,12 @@ private extension EducationEditingViewController {
         self.view.addSubview(inputTableView)
         inputTableView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
+        }
+        
+        self.view.addSubview(deleteButton)
+        deleteButton.snp.makeConstraints { make in
+            make.top.equalTo(inputTableView.snp.bottom).offset(8)
+            make.directionalHorizontalEdges.equalToSuperview().inset(20)
         }
     }
     
@@ -211,7 +224,14 @@ private extension EducationEditingViewController {
                 .asDriverOnErrorJustComplete(),
             graduateSelection: self.rx.methodInvoked(#selector(showGraduateDateInputCells))
                 .mapToVoid()
-                .asDriverOnErrorJustComplete()
+                .asDriverOnErrorJustComplete(),
+            deleteTrigger: deleteButton.rx.tap.flatMapFirst {
+                self.rx.presentConfirmAlert(
+                    title: "항목 삭제",
+                    message: "학력 정보를 삭제하시겠습니까?",
+                    okAction: UIAlertAction(title: "삭제", style: .destructive)
+                )
+            }.asSignalOnErrorJustComplete()
         )
         let output = viewModel.transform(input: input)
         
@@ -224,6 +244,10 @@ private extension EducationEditingViewController {
                 }),
             output.editingType
                 .drive(editingTypeBinding),
+            output.deleteComplete
+                .emit(with: self, onNext: { owner, _ in
+                    owner.navigationController?.popViewController(animated: true)
+                }),
         ]
             .forEach { $0.disposed(by: disposeBag) }
     }
@@ -245,9 +269,11 @@ private extension EducationEditingViewController {
             case .edit:
                 vc.navigationItem.title = "학력 편집"
                 vc.completeButton.title = "완료"
+                vc.deleteButton.isHidden = false
             case .new:
                 vc.navigationItem.title = "학력 추가"
                 vc.completeButton.title = "추가"
+                vc.deleteButton.isHidden = true
             }
         }
     }
