@@ -8,6 +8,7 @@
 import Foundation
 import KakaoSDKUser
 
+@available(*, deprecated, message: "더 이상 사용되지 않는 객체입니다.")
 final class AppLoginStatusManager {
     
     /// 앱 사용자의 로그인 상태를 관리하는 싱글톤 객체입니다.

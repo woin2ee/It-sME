@@ -8,11 +8,13 @@
 import Foundation
 import Keychaining
 
+@available(*, deprecated, message: "더 이상 사용되지 않는 객체입니다.")
 enum UIDRepositoryError: Error {
     case encodeFail
     case decodeFail
 }
 
+@available(*, deprecated, message: "더 이상 사용되지 않는 객체입니다.")
 final class UIDRepository {
     
     typealias UID = String
