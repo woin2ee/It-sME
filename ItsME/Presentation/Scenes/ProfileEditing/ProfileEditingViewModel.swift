@@ -5,6 +5,7 @@
 //  Created by Jaewon Yun on 2022/12/01.
 //
 
+import FirebaseAuth
 import RxSwift
 import RxCocoa
 import Then
@@ -84,7 +85,7 @@ final class ProfileEditingViewModel: ViewModelType {
             .flatMapFirst { self.userRepository.saveCurrentUserInfo($0).asSignalOnErrorJustComplete() } // TODO: Error 처리 고려
         
         let logoutComplete = input.logoutTrigger
-            .doOnNext { AppLoginStatusManager.shared.logout() }
+            .doOnNext { try? Auth.auth().signOut() }
         
         return .init(
             userName: userName,

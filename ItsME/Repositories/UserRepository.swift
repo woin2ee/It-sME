@@ -5,6 +5,7 @@
 //  Created by Jaewon Yun on 2022/11/13.
 //
 
+import FirebaseAuth
 import RxSwift
 
 final class UserRepository {
@@ -12,7 +13,6 @@ final class UserRepository {
     // MARK: Dependencies
     
     private let database = DatabaseReferenceManager.shared
-    private let uidRepository: UIDRepository = .shared
     
     // MARK: API
     
@@ -24,35 +24,32 @@ final class UserRepository {
     }
     
     func getCurrentUserInfo() -> Observable<UserInfo> {
-        do {
-            let uid = try self.uidRepository.get()
-            return getUserInfo(byUID: uid)
-        } catch {
-            return .error(error)
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return .empty()
         }
+        return getUserInfo(byUID: uid)
     }
     
-    func saveUserInfo(_ userInfo: UserInfo, byUID uid: String) -> Single<Void> {
-        return .create { singleObserver in
+    func saveUserInfo(_ userInfo: UserInfo, byUID uid: String) -> Observable<Void> {
+        return .create { observer in
             do {
                 let data = try JSONEncoder().encode(userInfo)
                 let jsonObject = try JSONSerialization.jsonObject(with: data)
                 self.database.userRef(uid).setValue(jsonObject)
-                singleObserver(.success(()))
+                observer.onNext(())
+                observer.onCompleted()
             } catch {
-                singleObserver(.failure(error))
+                observer.onError(error)
             }
             
             return Disposables.create()
         }
     }
     
-    func saveCurrentUserInfo(_ userInfo: UserInfo) -> Single<Void> {
-        do {
-            let uid = try self.uidRepository.get()
-            return saveUserInfo(userInfo, byUID: uid)
-        } catch {
-            return .error(error)
+    func saveCurrentUserInfo(_ userInfo: UserInfo) -> Observable<Void> {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return .empty()
         }
+        return saveUserInfo(userInfo, byUID: uid)
     }
 }

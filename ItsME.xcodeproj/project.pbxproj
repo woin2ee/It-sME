@@ -64,6 +64,8 @@
 		DA6BCE5E292F04910059E95D /* DatabaseReferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */; };
 		DA708F0329D6EDBF00EF84F2 /* UIViewController+presentConfirmAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F0229D6EDBF00EF84F2 /* UIViewController+presentConfirmAlert.swift */; };
 		DA708F0529D9DC4500EF84F2 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F0429D9DC4500EF84F2 /* Hash.swift */; };
+		DA708F0729D9F11900EF84F2 /* FIRAuth+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F0629D9F11900EF84F2 /* FIRAuth+Rx.swift */; };
+		DA708F0929D9FE1700EF84F2 /* FIRAuth+isLoggedIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F0829D9FE1700EF84F2 /* FIRAuth+isLoggedIn.swift */; };
 		DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */; };
 		DA7201EA29309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */; };
 		DA7201EC29309B9600A69519 /* AuthenticationServices+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */; };
@@ -203,6 +205,8 @@
 		DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseReferenceManager.swift; sourceTree = "<group>"; };
 		DA708F0229D6EDBF00EF84F2 /* UIViewController+presentConfirmAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+presentConfirmAlert.swift"; sourceTree = "<group>"; };
 		DA708F0429D9DC4500EF84F2 /* Hash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hash.swift; sourceTree = "<group>"; };
+		DA708F0629D9F11900EF84F2 /* FIRAuth+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FIRAuth+Rx.swift"; sourceTree = "<group>"; };
+		DA708F0829D9FE1700EF84F2 /* FIRAuth+isLoggedIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FIRAuth+isLoggedIn.swift"; sourceTree = "<group>"; };
 		DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseReference+Rx.swift"; sourceTree = "<group>"; };
 		DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASAuthorizationControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationServices+Rx.swift"; sourceTree = "<group>"; };
@@ -559,6 +563,8 @@
 				DA9069D529CDA64B00535A3D /* Collection+isNotEmpty.swift */,
 				DAF516FD29D5765E00BDAD68 /* UIButton.Configuration+Then.swift */,
 				DA708F0229D6EDBF00EF84F2 /* UIViewController+presentConfirmAlert.swift */,
+				DA708F0629D9F11900EF84F2 /* FIRAuth+Rx.swift */,
+				DA708F0829D9FE1700EF84F2 /* FIRAuth+isLoggedIn.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1014,6 +1020,7 @@
 			files = (
 				DAAB20C1299B6AEF00D5338D /* Reusable.swift in Sources */,
 				DAD1D03029B759CE00B12BF8 /* Calendar+Current.swift in Sources */,
+				DA708F0729D9F11900EF84F2 /* FIRAuth+Rx.swift in Sources */,
 				DAE6090D29420D9900481742 /* ItemAddButton.swift in Sources */,
 				DAAF1BDF299A1E8100728376 /* Array+SafeIndex.swift in Sources */,
 				DA53B73E29B5DB55000BBB26 /* ContextMenuCell.swift in Sources */,
@@ -1039,6 +1046,7 @@
 				DA7201FA2931F90900A69519 /* Resume.swift in Sources */,
 				DAD1D03229BF411A00B12BF8 /* OtherItemEditingViewModel.swift in Sources */,
 				DA0A88692921245000E9AE43 /* UserRepository.swift in Sources */,
+				DA708F0929D9FE1700EF84F2 /* FIRAuth+isLoggedIn.swift in Sources */,
 				D0CCF4E12925FB0100AD4AE6 /* UIView+.swift in Sources */,
 				D0CCF4E629260C2B00AD4AE6 /* ProfileInfoComponent.swift in Sources */,
 				DA7201EA29309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift in Sources */,
@@ -1288,6 +1296,7 @@
 				DEVELOPMENT_TEAM = 585F6TK5A8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ItsME/Resources/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "프로필 사진으로 사용할 사진 선택";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -1321,6 +1330,7 @@
 				DEVELOPMENT_TEAM = 585F6TK5A8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ItsME/Resources/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "프로필 사진으로 사용할 사진 선택";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
