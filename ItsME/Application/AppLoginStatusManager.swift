@@ -8,6 +8,7 @@
 import Foundation
 import KakaoSDKUser
 
+@available(*, deprecated, message: "더 이상 사용되지 않는 객체입니다.")
 final class AppLoginStatusManager {
     
     /// 앱 사용자의 로그인 상태를 관리하는 싱글톤 객체입니다.
@@ -23,6 +24,9 @@ final class AppLoginStatusManager {
     /// 앱의 사용자가 현재 로그인 되어있는지 여부를 반환합니다.
     var isLoggedIn: Bool {
         if let uid = try? uidRepository.get(), uid.isNotEmpty {
+            #if DEBUG
+                debugPrint("로그인되어있는 사용자의 UID: [\(uid)]")
+            #endif
             return true
         } else {
             return false
@@ -31,6 +35,9 @@ final class AppLoginStatusManager {
     
     /// 앱 사용자를 로그인 처리 합니다.
     func login(with loginType: LoginType, uid: UIDRepository.UID) throws {
+        #if DEBUG
+            debugPrint("로그인한 사용자의 UID: [\(uid)]")
+        #endif
         try uidRepository.save(uid)
         self.loginType = loginType
     }

@@ -31,7 +31,7 @@ final class TotalCVViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let userInfo = input.viewDidLoad
             .flatMapLatest { _ in
-                self.userRepository.getUserInfo(byUID: "testUser") // FIXME: 유저 고유 ID 저장 방안 필요
+                return self.userRepository.getCurrentUserInfo()
                     .asDriver(onErrorDriveWith: .empty())
             }
         

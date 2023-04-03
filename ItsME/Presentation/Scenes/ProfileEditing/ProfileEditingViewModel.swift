@@ -5,6 +5,7 @@
 //  Created by Jaewon Yun on 2022/12/01.
 //
 
+import FirebaseAuth
 import RxSwift
 import RxCocoa
 import Then
@@ -15,14 +16,16 @@ final class ProfileEditingViewModel: ViewModelType {
         let tapEditingCompleteButton: Signal<Void>
         let userName: Driver<String>
         let viewDidLoad: Driver<Void>
+        let logoutTrigger: Signal<Void>
     }
     
     struct Output {
         let userName: Driver<String>
         let userInfoItems: Driver<[UserInfoItem]>
         let educationItems: Driver<[EducationItem]>
-        let tappedEditingCompleteButton: Signal<UserInfo>
+        let tappedEditingCompleteButton: Signal<Void>
         let viewDidLoad: Driver<Void>
+        let logoutComplete: Signal<Void>
     }
     
     private let userRepository: UserRepository = .init()
@@ -65,10 +68,8 @@ final class ProfileEditingViewModel: ViewModelType {
         let viewDidLoad = input.viewDidLoad
             .filter { self.userInfoRelay.value == .empty }
             .flatMapLatest { _ -> Driver<Void> in
-                self.userRepository.getUserInfo(byUID: "testUser")
-                    .do(onNext: { userInfo in
-                        self.userInfoRelay.accept(userInfo)
-                    })
+                return self.userRepository.getCurrentUserInfo()
+                    .doOnNext { self.userInfoRelay.accept($0) }
                     .mapToVoid()
                     .asDriverOnErrorJustComplete()
             }
@@ -76,24 +77,23 @@ final class ProfileEditingViewModel: ViewModelType {
         let userName = Driver.merge(input.userName,
                                     userInfoDriver.map { $0.name })
             .startWith(userInfoRelay.value.name)
-            .do(onNext: { userName in
-                self.userInfoRelay.value.name = userName
-            })
+            .doOnNext { self.userInfoRelay.value.name = $0 }
         let userInfoItems = userInfoDriver.map { $0.allItems }
         let educationItems = userInfoDriver.map { $0.educationItems }
         let tappedEditingCompleteButton = input.tapEditingCompleteButton
             .withLatestFrom(userInfoDriver)
-            .do(onNext: { userInfo in
-                // TODO: 유저 정보 저장
-                print(userInfo)
-            })
+            .flatMapFirst { self.userRepository.saveCurrentUserInfo($0).asSignalOnErrorJustComplete() } // TODO: Error 처리 고려
+        
+        let logoutComplete = input.logoutTrigger
+            .doOnNext { try? Auth.auth().signOut() }
         
         return .init(
             userName: userName,
             userInfoItems: userInfoItems,
             educationItems: educationItems,
             tappedEditingCompleteButton: tappedEditingCompleteButton,
-            viewDidLoad: viewDidLoad
+            viewDidLoad: viewDidLoad,
+            logoutComplete: logoutComplete
         )
     }
 }
@@ -137,10 +137,10 @@ extension ProfileEditingViewModel {
 
 extension ProfileEditingViewModel: EducationEditingViewModelDelegate {
     
-    func educationEditingViewModelDidEndEditing(with educationItem: EducationItem, at indexPath: IndexPath?) {
+    func educationEditingViewModelDidEndEditing(with educationItem: EducationItem, at index: IndexPath.Index) {
         let userInfo = userInfoRelay.value
-        if let indexPath = indexPath, userInfo.educationItems.indices ~= indexPath.row {
-            userInfo.educationItems[indexPath.row] = educationItem
+        if userInfo.educationItems.indices ~= index {
+            userInfo.educationItems[index] = educationItem
             userInfoRelay.accept(userInfo)
         }
     }
@@ -150,15 +150,21 @@ extension ProfileEditingViewModel: EducationEditingViewModelDelegate {
         userInfo.educationItems.append(educationItem)
         userInfoRelay.accept(userInfo)
     }
+    
+    func educationEditingViewModelDidDeleteEducationItem(at index: IndexPath.Index) {
+        let userInfo = userInfoRelay.value
+        userInfo.educationItems.remove(at: index)
+        userInfoRelay.accept(userInfo)
+    }
 }
 
 // MARK: - OtherItemEditingViewModelDelegate
 
 extension ProfileEditingViewModel: OtherItemEditingViewModelDelegate {
     
-    func otherItemEditingViewModelDidEndEditing(with otherItem: UserInfoItem, at index: IndexPath.Index?) {
+    func otherItemEditingViewModelDidEndEditing(with otherItem: UserInfoItem, at index: IndexPath.Index) {
         let userInfo = userInfoRelay.value
-        if let index = index, userInfo.otherItems.indices ~= index {
+        if userInfo.otherItems.indices ~= index {
             userInfo.otherItems[index] = otherItem
             userInfoRelay.accept(userInfo)
         }
@@ -167,6 +173,12 @@ extension ProfileEditingViewModel: OtherItemEditingViewModelDelegate {
     func otherItemEditingViewModelDidAppend(otherItem: UserInfoItem) {
         let userInfo = userInfoRelay.value
         userInfo.otherItems.append(otherItem)
+        userInfoRelay.accept(userInfo)
+    }
+    
+    func otherItemEditingViewModelDidDeleteOtherItem(at index: IndexPath.Index) {
+        let userInfo = userInfoRelay.value
+        userInfo.otherItems.remove(at: index)
         userInfoRelay.accept(userInfo)
     }
 }

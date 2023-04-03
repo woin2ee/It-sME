@@ -11,10 +11,13 @@ import RxCocoa
 protocol OtherItemEditingViewModelDelegate: AnyObject {
     
     /// 항목 편집이 완료됐을때 호출되는 함수입니다.
-    func otherItemEditingViewModelDidEndEditing(with otherItem: UserInfoItem, at index: IndexPath.Index?)
+    func otherItemEditingViewModelDidEndEditing(with otherItem: UserInfoItem, at index: IndexPath.Index)
     
     /// 항목 추가가 완료됐을때 호출되는 함수입니다.
     func otherItemEditingViewModelDidAppend(otherItem: UserInfoItem)
+    
+    /// 항목을 삭제할때 호출되는 함수입니다.
+    func otherItemEditingViewModelDidDeleteOtherItem(at index: IndexPath.Index)
 }
 
 final class OtherItemEditingViewModel: ViewModelType {
@@ -43,13 +46,20 @@ final class OtherItemEditingViewModel: ViewModelType {
         let editingType = Driver.just(editingType)
         let doneCompleted = input.doneTrigger
             .withLatestFrom(userInfoItem)
-            .do(onNext: endEditing(with:))
+            .doOnNext(endEditing(with:))
             .mapToVoid()
+        let deleteComplete = input.deleteTrigger
+            .doOnNext {
+                if case let .edit(index) = self.editingType {
+                    self.delegate?.otherItemEditingViewModelDidDeleteOtherItem(at: index)
+                }
+            }
         
         return .init(
             editingType: editingType,
             doneCompleted: doneCompleted,
-            userInfoItem: userInfoItem
+            userInfoItem: userInfoItem,
+            deleteComplete: deleteComplete
         )
     }
 }
@@ -62,12 +72,14 @@ extension OtherItemEditingViewModel {
         let doneTrigger: Signal<Void>
         let icon: Driver<UserInfoItemIcon>
         let contents: Driver<String>
+        let deleteTrigger: Signal<Void>
     }
     
     struct Output {
         let editingType: Driver<EditingType>
         let doneCompleted: Signal<Void>
         let userInfoItem: Driver<UserInfoItem>
+        let deleteComplete: Signal<Void>
     }
 }
 
@@ -92,7 +104,7 @@ extension OtherItemEditingViewModel {
     enum EditingType {
         
         /// 기존 정보를 수정할 때 사용하는 열거형 값입니다.
-        case edit(index: IndexPath.Index? = nil)
+        case edit(index: IndexPath.Index)
         
         /// 새 정보를 추가할 때 사용하는 열거형 값입니다.
         case new

@@ -11,7 +11,9 @@ enum JSONSerializationError: Error {
     case invalidJSONObject
 }
 
-struct DefaultJsonDecoder {
+struct LoggedJsonDecoder {
+    
+    private init() {}
     
     static func decode<T>(_ type: T.Type, from data: Data) throws -> T where T: Decodable {
         do {
@@ -24,7 +26,7 @@ struct DefaultJsonDecoder {
         }
     }
     
-    static func decode<T>(_ type: T.Type, from jsonObject: Any?) throws -> T where T: Decodable {
+    static func decode<T>(_ type: T.Type, withJSONObject jsonObject: Any?) throws -> T where T: Decodable {
         let jsonObject = jsonObject as Any
         
         guard JSONSerialization.isValidJSONObject(jsonObject) else {

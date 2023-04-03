@@ -48,14 +48,12 @@ private extension LoginViewController {
     func bindViewModel() {
         let input = LoginViewModel.Input.init(
             kakaoLoginRequest: kakaoLoginButton.rx.tap.asSignal(),
-            appleLoginSuccess: appleLoginButton.rx
-                .tapToLogin(scope: [.fullName, .email])
-                .asDriver(onErrorDriveWith: .empty())
+            appleLoginRequest: appleLoginButton.rx.tap.asSignal()
         )
         let output = viewModel.transform(input: input)
         
         output.loggedIn
-            .drive(onNext: { [weak self] in
+            .emit(onNext: { [weak self] in
                 let homeViewController: HomeViewController = .init()
                 self?.navigationController?.setViewControllers([homeViewController], animated: false)
             })
