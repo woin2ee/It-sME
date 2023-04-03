@@ -108,6 +108,12 @@ extension TotalCVViewModel:
         cvInfoRelay.accept(changedCVInfo)
     }
     
+    func categoryEditingViewModelDidRemove(at section: Int) {
+        let changedCVInfo = cvInfoRelay.value
+        changedCVInfo.resume.category.remove(at: section)
+        cvInfoRelay.accept(changedCVInfo)
+    }
+    
     func coverLetterEditingViewModelDidEndEditing(with coverLetterItem: CoverLetterItem, at indexPath: IndexPath) {
         let changedCVInfo = cvInfoRelay.value
         changedCVInfo.coverLetter.items[indexPath.row] = coverLetterItem

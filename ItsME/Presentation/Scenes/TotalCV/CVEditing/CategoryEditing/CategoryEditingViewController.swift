@@ -105,7 +105,8 @@ private extension CategoryEditingViewController {
         
         let input: CategoryEditingViewModel.Input = .init(
             title: inputCell.contentsTextField.rx.text.orEmpty.asDriver(),
-            doneTrigger: completeBarButton.rx.tap.asSignal()
+            doneTrigger: completeBarButton.rx.tap.asSignal(),
+            removeTrigger: removeButton.rx.tap.asSignal()
         )
         
         let output = viewModel.transform(input: input)
@@ -113,6 +114,10 @@ private extension CategoryEditingViewController {
         [ output.title
             .drive(inputCell.contentsTextField.rx.text),
           output.doneHandler
+            .emit(with: self, onNext: { owner, _ in
+                owner.navigationController?.popViewController(animated: true)
+            }),
+          output.removeHandler
             .emit(with: self, onNext: { owner, _ in
                 owner.navigationController?.popViewController(animated: true)
             }),
