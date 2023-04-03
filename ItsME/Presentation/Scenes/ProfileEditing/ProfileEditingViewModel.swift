@@ -68,7 +68,7 @@ final class ProfileEditingViewModel: ViewModelType {
         let viewDidLoad = input.viewDidLoad
             .filter { self.userInfoRelay.value == .empty }
             .flatMapLatest { _ -> Driver<Void> in
-                self.userRepository.getUserInfo(byUID: "testUser")
+                return self.userRepository.getCurrentUserInfo()
                     .doOnNext { self.userInfoRelay.accept($0) }
                     .mapToVoid()
                     .asDriverOnErrorJustComplete()
