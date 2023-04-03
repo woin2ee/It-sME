@@ -5,6 +5,7 @@
 //  Created by MacBook Air on 2022/11/07.
 //
 
+import FirebaseAuth
 import UIKit
 import KakaoSDKAuth
 import RxKakaoSDKAuth
@@ -20,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         
-        let isLoggedIn = AppLoginStatusManager.shared.isLoggedIn
+        let isLoggedIn = Auth.auth().isLoggedIn
         
         let rootViewController = isLoggedIn ? HomeViewController() : LoginViewController()
         let navigationController: UINavigationController = .init(rootViewController: rootViewController)

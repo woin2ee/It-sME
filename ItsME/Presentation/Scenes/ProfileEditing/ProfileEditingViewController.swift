@@ -16,7 +16,7 @@ final class ProfileEditingViewController: UIViewController {
     
     private let viewModel: ProfileEditingViewModel
     
-    // MARK: - UI Components
+    // MARK: UI Components
     
     private lazy var containerScrollView: UIScrollView = .init().then {
         $0.backgroundColor = .clear
@@ -98,6 +98,13 @@ final class ProfileEditingViewController: UIViewController {
         $0.addAction(action, for: .touchUpInside)
     }
     
+    private lazy var logoutButton: UIButton = .init(configuration: .bordered().with {
+        $0.baseBackgroundColor = .secondarySystemGroupedBackground
+        $0.baseForegroundColor = .systemRed
+        $0.title = "로그아웃"
+        $0.buttonSize = .medium
+    })
+    
     private lazy var editingCompleteButton: UIBarButtonItem = .init(title: "수정완료").then {
         $0.style = .done
     }
@@ -157,7 +164,14 @@ private extension ProfileEditingViewController {
         let input = ProfileEditingViewModel.Input.init(
             tapEditingCompleteButton: editingCompleteButton.rx.tap.asSignal(),
             userName: nameTextField.rx.text.orEmpty.asDriver(),
-            viewDidLoad: .just(())
+            viewDidLoad: .just(()),
+            logoutTrigger: logoutButton.rx.tap.flatMap {
+                self.rx.presentConfirmAlert(
+                    title: "로그아웃",
+                    message: "로그아웃하시겠습니까?",
+                    okAction: UIAlertAction(title: "예", style: .default)
+                )
+            }.asSignalOnErrorJustComplete()
         )
         let output = viewModel.transform(input: input)
         [
@@ -185,6 +199,10 @@ private extension ProfileEditingViewController {
                 .emit(with: self, onNext: { owner, userInfo in
                     owner.dismiss(animated: true)
                 }),
+            output.logoutComplete
+                .emit(with: self, onNext: { owner, _ in
+                    owner.navigationController?.setViewControllers([LoginViewController()], animated: false)
+                })
         ]
             .forEach { $0.disposed(by: disposeBag) }
     }
@@ -267,9 +285,15 @@ private extension ProfileEditingViewController {
         educationItemAddButton.snp.makeConstraints { make in
             make.top.equalTo(educationTableView.snp.bottom).offset(tableViewToAdditionButtonOffset)
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-20)
             make.leading.trailing.equalToSuperview().inset(additionButtonHorizontalInset)
             make.height.equalTo(42)
+        }
+        
+        self.contentView.addSubview(logoutButton)
+        logoutButton.snp.makeConstraints { make in
+            make.directionalHorizontalEdges.equalToSuperview().inset(additionButtonHorizontalInset)
+            make.top.equalTo(educationItemAddButton.snp.bottom).offset(30)
+            make.bottom.equalToSuperview().offset(-20)
         }
     }
     
@@ -372,7 +396,7 @@ extension ProfileEditingViewController: UITableViewDelegate {
             }
             let viewModel: EducationEditingViewModel = .init(
                 educationItem: educationItem,
-                editingType: .edit(indexPath: indexPath),
+                editingType: .edit(index: indexPath.row),
                 delegate: viewModel
             )
             let viewController: EducationEditingViewController = .init(viewModel: viewModel)

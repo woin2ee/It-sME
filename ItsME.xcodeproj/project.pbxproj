@@ -45,7 +45,7 @@
 		DA01880F296D147D002C5CB0 /* EmailEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA01880E296D147D002C5CB0 /* EmailEditingViewController.swift */; };
 		DA018811296D1483002C5CB0 /* OtherItemEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA018810296D1483002C5CB0 /* OtherItemEditingViewController.swift */; };
 		DA0A88692921245000E9AE43 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0A88682921245000E9AE43 /* UserRepository.swift */; };
-		DA26989C298A4709008A5D30 /* DefaultJsonDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA26989B298A4709008A5D30 /* DefaultJsonDecoder.swift */; };
+		DA26989C298A4709008A5D30 /* LoggedJsonDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA26989B298A4709008A5D30 /* LoggedJsonDecoder.swift */; };
 		DA3302AC29ADCC9F00C36154 /* EducationEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3302AB29ADCC9F00C36154 /* EducationEditingViewController.swift */; };
 		DA3302AE29ADCCA700C36154 /* EducationEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3302AD29ADCCA700C36154 /* EducationEditingViewModel.swift */; };
 		DA3302B129ADD36000C36154 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3302B029ADD36000C36154 /* TextFieldCell.swift */; };
@@ -62,6 +62,10 @@
 		DA6B3CEB29B1CCD9002BB159 /* YearMonthPickerView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B3CEA29B1CCD9002BB159 /* YearMonthPickerView+Rx.swift */; };
 		DA6B3CED29B1D453002BB159 /* YearMonthPickerViewDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B3CEC29B1D453002BB159 /* YearMonthPickerViewDelegateProxy.swift */; };
 		DA6BCE5E292F04910059E95D /* DatabaseReferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */; };
+		DA708F0329D6EDBF00EF84F2 /* UIViewController+presentConfirmAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F0229D6EDBF00EF84F2 /* UIViewController+presentConfirmAlert.swift */; };
+		DA708F0529D9DC4500EF84F2 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F0429D9DC4500EF84F2 /* Hash.swift */; };
+		DA708F0729D9F11900EF84F2 /* FIRAuth+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F0629D9F11900EF84F2 /* FIRAuth+Rx.swift */; };
+		DA708F0929D9FE1700EF84F2 /* FIRAuth+isLoggedIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F0829D9FE1700EF84F2 /* FIRAuth+isLoggedIn.swift */; };
 		DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */; };
 		DA7201EA29309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */; };
 		DA7201EC29309B9600A69519 /* AuthenticationServices+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */; };
@@ -99,6 +103,7 @@
 		DADDEEA629A8AD9A00D31B02 /* InsetTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADDEEA529A8AD9A00D31B02 /* InsetTextField.swift */; };
 		DAE6090B2942095400481742 /* TotalUserInfoItemStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE6090A2942095400481742 /* TotalUserInfoItemStackView.swift */; };
 		DAE6090D29420D9900481742 /* ItemAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE6090C29420D9900481742 /* ItemAddButton.swift */; };
+		DAF516FE29D5765E00BDAD68 /* UIButton.Configuration+Then.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF516FD29D5765E00BDAD68 /* UIButton.Configuration+Then.swift */; };
 		DAFCFB63294A9CD0006B287A /* EducationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB62294A9CD0006B287A /* EducationItem.swift */; };
 		DAFCFB67294AC00C006B287A /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB66294AC00C006B287A /* UIStackView+.swift */; };
 		DAFCFB6C294C3666006B287A /* EducationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB6B294C3666006B287A /* EducationCell.swift */; };
@@ -180,7 +185,7 @@
 		DA01880E296D147D002C5CB0 /* EmailEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailEditingViewController.swift; sourceTree = "<group>"; };
 		DA018810296D1483002C5CB0 /* OtherItemEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherItemEditingViewController.swift; sourceTree = "<group>"; };
 		DA0A88682921245000E9AE43 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
-		DA26989B298A4709008A5D30 /* DefaultJsonDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultJsonDecoder.swift; sourceTree = "<group>"; };
+		DA26989B298A4709008A5D30 /* LoggedJsonDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedJsonDecoder.swift; sourceTree = "<group>"; };
 		DA3302AB29ADCC9F00C36154 /* EducationEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationEditingViewController.swift; sourceTree = "<group>"; };
 		DA3302AD29ADCCA700C36154 /* EducationEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationEditingViewModel.swift; sourceTree = "<group>"; };
 		DA3302B029ADD36000C36154 /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
@@ -198,6 +203,10 @@
 		DA6B3CEA29B1CCD9002BB159 /* YearMonthPickerView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YearMonthPickerView+Rx.swift"; sourceTree = "<group>"; };
 		DA6B3CEC29B1D453002BB159 /* YearMonthPickerViewDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearMonthPickerViewDelegateProxy.swift; sourceTree = "<group>"; };
 		DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseReferenceManager.swift; sourceTree = "<group>"; };
+		DA708F0229D6EDBF00EF84F2 /* UIViewController+presentConfirmAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+presentConfirmAlert.swift"; sourceTree = "<group>"; };
+		DA708F0429D9DC4500EF84F2 /* Hash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hash.swift; sourceTree = "<group>"; };
+		DA708F0629D9F11900EF84F2 /* FIRAuth+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FIRAuth+Rx.swift"; sourceTree = "<group>"; };
+		DA708F0829D9FE1700EF84F2 /* FIRAuth+isLoggedIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FIRAuth+isLoggedIn.swift"; sourceTree = "<group>"; };
 		DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseReference+Rx.swift"; sourceTree = "<group>"; };
 		DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASAuthorizationControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationServices+Rx.swift"; sourceTree = "<group>"; };
@@ -234,6 +243,7 @@
 		DADDEEA529A8AD9A00D31B02 /* InsetTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetTextField.swift; sourceTree = "<group>"; };
 		DAE6090A2942095400481742 /* TotalUserInfoItemStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalUserInfoItemStackView.swift; sourceTree = "<group>"; };
 		DAE6090C29420D9900481742 /* ItemAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemAddButton.swift; sourceTree = "<group>"; };
+		DAF516FD29D5765E00BDAD68 /* UIButton.Configuration+Then.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton.Configuration+Then.swift"; sourceTree = "<group>"; };
 		DAFCFB62294A9CD0006B287A /* EducationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationItem.swift; sourceTree = "<group>"; };
 		DAFCFB66294AC00C006B287A /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		DAFCFB6B294C3666006B287A /* EducationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationCell.swift; sourceTree = "<group>"; };
@@ -551,6 +561,10 @@
 				DAD1D03729C0B40100B12BF8 /* OSStatus+ToReadableString.swift */,
 				DAD1D05B29C2DD9500B12BF8 /* AppLoginStatusManager+Rx.swift */,
 				DA9069D529CDA64B00535A3D /* Collection+isNotEmpty.swift */,
+				DAF516FD29D5765E00BDAD68 /* UIButton.Configuration+Then.swift */,
+				DA708F0229D6EDBF00EF84F2 /* UIViewController+presentConfirmAlert.swift */,
+				DA708F0629D9F11900EF84F2 /* FIRAuth+Rx.swift */,
+				DA708F0829D9FE1700EF84F2 /* FIRAuth+isLoggedIn.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -687,8 +701,9 @@
 				DAB06A41291BA8C800E86163 /* Protocols */,
 				D0CCF4E02925FB0100AD4AE6 /* UIView+.swift */,
 				DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */,
-				DA26989B298A4709008A5D30 /* DefaultJsonDecoder.swift */,
+				DA26989B298A4709008A5D30 /* LoggedJsonDecoder.swift */,
 				DA6B3CEC29B1D453002BB159 /* YearMonthPickerViewDelegateProxy.swift */,
+				DA708F0429D9DC4500EF84F2 /* Hash.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1005,6 +1020,7 @@
 			files = (
 				DAAB20C1299B6AEF00D5338D /* Reusable.swift in Sources */,
 				DAD1D03029B759CE00B12BF8 /* Calendar+Current.swift in Sources */,
+				DA708F0729D9F11900EF84F2 /* FIRAuth+Rx.swift in Sources */,
 				DAE6090D29420D9900481742 /* ItemAddButton.swift in Sources */,
 				DAAF1BDF299A1E8100728376 /* Array+SafeIndex.swift in Sources */,
 				DA53B73E29B5DB55000BBB26 /* ContextMenuCell.swift in Sources */,
@@ -1017,6 +1033,7 @@
 				DA9069D629CDA64B00535A3D /* Collection+isNotEmpty.swift in Sources */,
 				DA7201EC29309B9600A69519 /* AuthenticationServices+Rx.swift in Sources */,
 				DAD1D05C29C2DD9500B12BF8 /* AppLoginStatusManager+Rx.swift in Sources */,
+				DAF516FE29D5765E00BDAD68 /* UIButton.Configuration+Then.swift in Sources */,
 				D09AC9792918DE8B0081C0EC /* HomeViewController.swift in Sources */,
 				DA7201F02931EEE600A69519 /* CVInfo.swift in Sources */,
 				DADDEEA629A8AD9A00D31B02 /* InsetTextField.swift in Sources */,
@@ -1029,12 +1046,14 @@
 				DA7201FA2931F90900A69519 /* Resume.swift in Sources */,
 				DAD1D03229BF411A00B12BF8 /* OtherItemEditingViewModel.swift in Sources */,
 				DA0A88692921245000E9AE43 /* UserRepository.swift in Sources */,
+				DA708F0929D9FE1700EF84F2 /* FIRAuth+isLoggedIn.swift in Sources */,
 				D0CCF4E12925FB0100AD4AE6 /* UIView+.swift in Sources */,
 				D0CCF4E629260C2B00AD4AE6 /* ProfileInfoComponent.swift in Sources */,
 				DA7201EA29309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift in Sources */,
 				DA481D8929A4BFE500C8C734 /* IntrinsicHeightTextView.swift in Sources */,
-				DA26989C298A4709008A5D30 /* DefaultJsonDecoder.swift in Sources */,
+				DA26989C298A4709008A5D30 /* LoggedJsonDecoder.swift in Sources */,
 				DA01880B296D1471002C5CB0 /* AddressEditingViewController.swift in Sources */,
+				DA708F0529D9DC4500EF84F2 /* Hash.swift in Sources */,
 				D0472F07296406BC00E83F61 /* TotalCVViewController.swift in Sources */,
 				DA739DDA292398BE003AEE4C /* LoginViewController.swift in Sources */,
 				D0C755B629AC889F0070FC08 /* EditModeAddButton.swift in Sources */,
@@ -1046,6 +1065,7 @@
 				D06CD86B29936BBC005DFB3B /* CategoryHeaderView.swift in Sources */,
 				DA739DE42924FE54003AEE4C /* CommonAlertViewController.swift in Sources */,
 				DA6BCE5E292F04910059E95D /* DatabaseReferenceManager.swift in Sources */,
+				DA708F0329D6EDBF00EF84F2 /* UIViewController+presentConfirmAlert.swift in Sources */,
 				DA6B3CDB29ADEE33002BB159 /* UIEdgeInsets+All.swift in Sources */,
 				DA6B3CD929ADE36B002BB159 /* ButtonCell.swift in Sources */,
 				DAFCFB63294A9CD0006B287A /* EducationItem.swift in Sources */,
@@ -1276,6 +1296,7 @@
 				DEVELOPMENT_TEAM = 585F6TK5A8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ItsME/Resources/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "프로필 사진으로 사용할 사진 선택";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -1309,6 +1330,7 @@
 				DEVELOPMENT_TEAM = 585F6TK5A8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ItsME/Resources/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "프로필 사진으로 사용할 사진 선택";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";

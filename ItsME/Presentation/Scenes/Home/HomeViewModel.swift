@@ -28,14 +28,14 @@ final class HomeViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let userInfo = Signal.merge(input.viewDidLoad, input.viewWillAppear.skip(1))
             .flatMap { _ in
-                return self.userRepository.getUserInfo(byUID: "testUser")
-                    .asDriver(onErrorDriveWith: .empty())
-                    .do(onNext: { self.userInfo = $0 })
+                return self.userRepository.getCurrentUserInfo()
+                    .asDriverOnErrorJustComplete()
+                    .doOnNext { self.userInfo = $0 }
             }
         
         let cvInfo = Signal.merge(input.viewDidLoad, input.viewWillAppear.skip(1))
             .flatMapLatest { _ in
-                return self.cvRepository.getAllCV(byUID: "testUser")
+                return self.cvRepository.getAllCVOfCurrentUser()
                     .asDriver(onErrorDriveWith: .empty())
             }
         

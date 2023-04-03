@@ -16,9 +16,9 @@ class ASAuthorizationControllerDelegateProxy:
     DelegateProxyType
 {
     static func registerKnownImplementations() {
-        self.register { authrizationController in
+        self.register { parent in
             ASAuthorizationControllerDelegateProxy.init(
-                parentObject: authrizationController,
+                parentObject: parent,
                 delegateProxy: ASAuthorizationControllerDelegateProxy.self
             )
         }

@@ -51,4 +51,8 @@ extension Reactive where Base: ASAuthorizationAppleIDButton {
                 return authorizationController.rx.didCompleteWithAuthorization
             }
     }
+    
+    var tap: ControlEvent<Void> {
+        return controlEvent(.touchUpInside)
+    }
 }

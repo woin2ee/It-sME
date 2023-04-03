@@ -23,6 +23,12 @@ final class OtherItemEditingViewController: UIViewController {
     private lazy var iconInputCell: IconInputCell = .init()
     private lazy var contentsInputCell: ContentsInputCell = .init()
     private lazy var completeButton: UIBarButtonItem = .init()
+    private lazy var deleteButton: UIButton = .init(configuration: .bordered().with {
+        $0.baseBackgroundColor = .secondarySystemGroupedBackground
+        $0.baseForegroundColor = .systemRed
+        $0.title = "삭제"
+        $0.cornerStyle = .large
+    })
     
     // MARK: - Computed Properties
     
@@ -66,6 +72,12 @@ private extension OtherItemEditingViewController {
         userInfoItemInputTableView.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
         }
+        
+        self.view.addSubview(deleteButton)
+        deleteButton.snp.makeConstraints { make in
+            make.top.equalTo(userInfoItemInputTableView.snp.bottom).offset(8)
+            make.directionalHorizontalEdges.equalToSuperview().inset(20)
+        }
     }
     
     func configureNavigationBar() {
@@ -90,6 +102,10 @@ private extension OtherItemEditingViewController {
                 .emit(with: self, onNext: { owner, _ in
                     owner.navigationController?.popViewController(animated: true)
                 }),
+            output.deleteComplete
+                .emit(with: self, onNext: { owner, _ in
+                    owner.navigationController?.popViewController(animated: true)
+                }),
         ]
             .forEach { $0.disposed(by: disposeBag) }
     }
@@ -98,7 +114,14 @@ private extension OtherItemEditingViewController {
         return .init(
             doneTrigger: completeButton.rx.tap.asSignal(),
             icon: .empty(), // TODO: 아이콘 선택 이벤트 매핑
-            contents: contentsInputCell.contentsTextField.rx.text.orEmpty.asDriver()
+            contents: contentsInputCell.contentsTextField.rx.text.orEmpty.asDriver(),
+            deleteTrigger: deleteButton.rx.tap.flatMap {
+                return self.rx.presentConfirmAlert(
+                    title: "항목 삭제",
+                    message: "이 항목을 삭제하시겠습니까?",
+                    okAction: UIAlertAction(title: "삭제", style: .destructive)
+                )
+            }.asSignalOnErrorJustComplete()
         )
     }
     
@@ -108,9 +131,11 @@ private extension OtherItemEditingViewController {
             case .edit:
                 vc.navigationItem.title = "항목 편집"
                 vc.completeButton.title = "완료"
+                vc.deleteButton.isHidden = false
             case .new:
                 vc.navigationItem.title = "새 항목 추가"
                 vc.completeButton.title = "추가"
+                vc.deleteButton.isHidden = true
             }
         }
     }

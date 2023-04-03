@@ -124,5 +124,14 @@ extension ContextMenuCell {
         
         /// 해당 메뉴가 선택되었을때 실행될 핸들러입니다.
         let handler: (() -> Void)?
+        
+        /// 주어진 `title` 을 가지고 터치되었을때 `handler` 를 실행하는 메뉴 항목을 생성합니다.
+        /// - Parameters:
+        ///   - title: `View` 에 보여질 메뉴의 타이틀입니다.
+        ///   - handler: 터치되었을때 실행될 `handler` 입니다.
+        init(title: String, handler: (() -> Void)?) {
+            self.title = title
+            self.handler = handler
+        }
     }
 }

@@ -9,8 +9,9 @@ import RxSwift
 import RxCocoa
 
 protocol EducationEditingViewModelDelegate: AnyObject {
-    func educationEditingViewModelDidEndEditing(with educationItem: EducationItem, at indexPath: IndexPath?)
+    func educationEditingViewModelDidEndEditing(with educationItem: EducationItem, at index: IndexPath.Index)
     func educationEditingViewModelDidAppend(educationItem: EducationItem)
+    func educationEditingViewModelDidDeleteEducationItem(at index: IndexPath.Index)
 }
 
 final class EducationEditingViewModel: ViewModelType {
@@ -63,22 +64,30 @@ final class EducationEditingViewModel: ViewModelType {
         
         let doneHandler = input.doneTrigger
             .withLatestFrom(educationItem)
-            .do(onNext: endEditing(with:))
+            .doOnNext(endEditing(with:))
             .mapToVoid()
         
         let editingType = Driver.just(editingType)
+        
+        let deleteComplete = input.deleteTrigger
+            .doOnNext {
+                if case let .edit(index) = self.editingType {
+                    self.delegate?.educationEditingViewModelDidDeleteEducationItem(at: index)
+                }
+            }
                 
         return .init(
             educationItem: educationItem,
             doneHandler: doneHandler,
-            editingType: editingType
+            editingType: editingType,
+            deleteComplete: deleteComplete
         )
     }
     
     private func endEditing(with educationItem: EducationItem) {
         switch editingType {
-        case .edit(let indexPath):
-            delegate?.educationEditingViewModelDidEndEditing(with: educationItem, at: indexPath)
+        case .edit(let index):
+            delegate?.educationEditingViewModelDidEndEditing(with: educationItem, at: index)
         case .new:
             delegate?.educationEditingViewModelDidAppend(educationItem: educationItem)
         }
@@ -97,12 +106,14 @@ extension EducationEditingViewModel {
         let doneTrigger: Signal<Void>
         let enrollmentSelection: Driver<Void>
         let graduateSelection: Driver<Void>
+        let deleteTrigger: Signal<Void>
     }
     
     struct Output {
         let educationItem: Driver<EducationItem>
         let doneHandler: Signal<Void>
         let editingType: Driver<EditingType>
+        let deleteComplete: Signal<Void>
     }
 }
 
@@ -113,7 +124,7 @@ extension EducationEditingViewModel {
     enum EditingType {
         
         /// 기존 학력 정보를 수정할 때 사용하는 열거형 값입니다.
-        case edit(indexPath: IndexPath? = nil)
+        case edit(index: IndexPath.Index)
         
         /// 새 학력 정보를 추가할 때 사용하는 열거형 값입니다.
         case new

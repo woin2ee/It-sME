@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>프로필 사진으로 사용할 사진 선택</string>
-	<key>KAKAO_NATIVE_APP_KEY</key>
-	<string>ff28d124ec4c8b9e53c3bc5697ec592f</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -16,7 +12,15 @@
 				<string>kakaoff28d124ec4c8b9e53c3bc5697ec592f</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array/>
+		</dict>
 	</array>
+	<key>KAKAO_NATIVE_APP_KEY</key>
+	<string>ff28d124ec4c8b9e53c3bc5697ec592f</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>kakaokompassauth</string>

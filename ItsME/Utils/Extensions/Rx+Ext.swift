@@ -24,11 +24,19 @@ extension ObservableType {
     func mapToVoid() -> Observable<Void> {
         return self.map { _ in }
     }
+    
+    func doOnNext(_ block: ((Element) -> Void)?) -> Observable<Element> {
+        return self.do(onNext: block)
+    }
 }
 
 extension SharedSequenceConvertibleType {
     
     func mapToVoid() -> SharedSequence<SharingStrategy, Void> {
         return self.map { _ in }
+    }
+    
+    func doOnNext(_ block: ((Element) -> Void)?) -> SharedSequence<SharingStrategy, Element> {
+        return self.do(onNext: block)
     }
 }
