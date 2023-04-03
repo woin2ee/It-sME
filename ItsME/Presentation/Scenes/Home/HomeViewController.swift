@@ -145,7 +145,7 @@ private extension HomeViewController {
             
             self.hStackLayout.removeAllArrangedSubviews()
             
-            cvsInfo.forEach { cvInfo in
+            cvsInfo.enumerated().forEach { (index, cvInfo) in
                 let cvCard = CVCard()
                 cvCard.cvTitle.text = cvInfo.title
                 cvCard.latestDate.text = "최근 수정일: " + cvInfo.lastModified
@@ -157,7 +157,7 @@ private extension HomeViewController {
                 }
                 
                 cvCard.addAction(UIAction{ _ in
-                    let totalCVVC: TotalCVViewController = .init(viewModel: TotalCVViewModel.init(cvInfo: cvInfo))
+                    let totalCVVC: TotalCVViewController = .init(viewModel: TotalCVViewModel.init(cvInfo: cvInfo, index: index))
                     
                     self.navigationController?.pushViewController(totalCVVC, animated: true)
                     

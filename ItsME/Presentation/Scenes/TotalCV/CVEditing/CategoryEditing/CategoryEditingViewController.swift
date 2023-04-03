@@ -106,7 +106,13 @@ private extension CategoryEditingViewController {
         let input: CategoryEditingViewModel.Input = .init(
             title: inputCell.contentsTextField.rx.text.orEmpty.asDriver(),
             doneTrigger: completeBarButton.rx.tap.asSignal(),
-            removeTrigger: removeButton.rx.tap.asSignal()
+            removeTrigger: removeButton.rx.tap.flatMap {
+                return self.rx.presentConfirmAlert(
+                    title: "카테고리 삭제",
+                    message: "이 항목을 삭제하시겠습니까?",
+                    okAction: UIAlertAction(title: "삭제", style: .destructive)
+                )
+            }.asSignalOnErrorJustComplete()
         )
         
         let output = viewModel.transform(input: input)

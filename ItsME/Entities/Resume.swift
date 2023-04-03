@@ -7,10 +7,33 @@
 
 import Foundation
 
-final class Resume: Decodable {
+final class Resume: Codable {
     var category: [ResumeCategory]
     
     init(category: [ResumeCategory]) {
         self.category = category
+    }
+}
+
+// MARK: - CodingKeys
+
+extension Resume {
+    enum CodingKeys: CodingKey {
+    case category
+    }
+}
+
+// MARK: - Equatable
+
+extension Resume: Equatable {
+    
+    static func == (lhs: Resume, rhs: Resume) -> Bool {
+        lhs.category == rhs.category
+    }
+}
+
+extension Resume {
+    static var empty: Resume {
+        .init(category: [])
     }
 }

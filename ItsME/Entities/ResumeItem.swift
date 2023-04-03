@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class ResumeItem: Decodable {
+final class ResumeItem: Codable {
     var period: String
     var title: String
     var secondTitle: String
@@ -41,5 +41,38 @@ final class ResumeItem: Decodable {
         self.title = title
         self.secondTitle = secondTitle
         self.description = description
+    }
+}
+
+// MARK: - CodingKeys
+
+extension ResumeItem {
+    enum CodingKeys: CodingKey {
+    case period
+    case title
+    case secondTitle
+    case description
+    }
+}
+
+// MARK: - Equatable
+
+extension ResumeItem: Equatable {
+    
+    static func == (lhs: ResumeItem, rhs: ResumeItem) -> Bool {
+        lhs.period == rhs.period &&
+        lhs.title == rhs.title &&
+        lhs.secondTitle == rhs.secondTitle &&
+        lhs.description == rhs.description
+    }
+}
+
+extension ResumeItem {
+    static var empty: ResumeItem {
+        .init(
+            period: "",
+            title: "",
+            secondTitle: "",
+            description: "")
     }
 }
