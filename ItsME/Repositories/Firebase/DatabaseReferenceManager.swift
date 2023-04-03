@@ -7,7 +7,7 @@
 
 import FirebaseDatabase
 
-final class DatabaseReferenceManager {
+struct DatabaseReferenceManager {
     
     static let shared: DatabaseReferenceManager = .init()
     
@@ -34,6 +34,12 @@ final class DatabaseReferenceManager {
         usersRef.child(uid)
     }
     
+    /// 특정 유저의 CV 목록 데이터 Reference
+    func cvsRef(_ uid: String) -> DatabaseReference {
+        cvsRef.child(uid)
+    }
+    
+    @available(*, deprecated, renamed: "cvsRef(_:)")
     func cvRef(_ uid: String) -> DatabaseReference {
         cvsRef.child(uid)
     }
