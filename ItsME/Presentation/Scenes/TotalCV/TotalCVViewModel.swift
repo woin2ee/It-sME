@@ -14,7 +14,7 @@ final class TotalCVViewModel: ViewModelType {
     private let cvRepository: CVRepository = .init()
     
     private let cvInfoRelay: BehaviorRelay<CVInfo>
-    
+    private let index: Int
     
     var resumeCategory: [ResumeCategory] {
         cvInfoRelay.value.resume.category
@@ -24,8 +24,9 @@ final class TotalCVViewModel: ViewModelType {
         cvInfoRelay.value.coverLetter
     }
     
-    init(cvInfo: CVInfo) {
+    init(cvInfo: CVInfo, index: Int) {
         self.cvInfoRelay = .init(value: cvInfo)
+        self.index = index
     }
     
     func transform(input: Input) -> Output {
@@ -40,18 +41,17 @@ final class TotalCVViewModel: ViewModelType {
         
         let educationItems = userInfo.map { $0.educationItems }
         
-        let completeHandler = input.doneTrigger
-            .withLatestFrom(cvInfo)
-            .do(onNext: { cvInfo in
-                // TODO: 유저 정보 저장
-                print(cvInfo)
-            })
+        let cvInfoDriver = cvInfoRelay.asDriver()
+                
+        let tappedEditingCompleteButton = input.doneTrigger
+            .withLatestFrom(cvInfoDriver)
+            .flatMapFirst { self.cvRepository.saveCurrentCVInfo($0, index: self.index).asSignalOnErrorJustComplete() } // TODO: Error 처리 고려
         
         return .init(
             userInfoItems: userInfoItems,
             educationItems: educationItems,
             cvInfo: cvInfo,
-            tappedEditCompleteButton: completeHandler
+            tappedEditCompleteButton: tappedEditingCompleteButton
         )
     }
 }
@@ -76,7 +76,7 @@ extension TotalCVViewModel {
         let userInfoItems: Driver<[UserInfoItem]>
         let educationItems: Driver<[EducationItem]>
         let cvInfo: Driver<CVInfo>
-        let tappedEditCompleteButton: Signal<CVInfo>
+        let tappedEditCompleteButton: Signal<Void>
     }
 }
 
@@ -105,6 +105,12 @@ extension TotalCVViewModel:
     func categoryEditingViewModelDidAppend(title: String) {
         let changedCVInfo = cvInfoRelay.value
         changedCVInfo.resume.category.append(.init(title: title, items: []))
+        cvInfoRelay.accept(changedCVInfo)
+    }
+    
+    func categoryEditingViewModelDidRemove(at section: Int) {
+        let changedCVInfo = cvInfoRelay.value
+        changedCVInfo.resume.category.remove(at: section)
         cvInfoRelay.accept(changedCVInfo)
     }
     

@@ -28,6 +28,16 @@ class CategoryEditingViewController: UIViewController {
         $0.contentsTextField.font = .systemFont(ofSize: 18)
     }
     
+    lazy var removeButton = UIButton().then {
+        $0.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+        $0.layer.cornerRadius = 10
+        $0.layer.masksToBounds = true
+        $0.tintColor = .white
+        $0.backgroundColor = .systemRed
+        $0.setTitle("카테고리 삭제", for: .normal)
+        $0.setImage(.init(systemName: "trash.fill"), for: .normal)
+    }
+    
     private lazy var completeBarButton: UIBarButtonItem = .init()
 
     // MARK: - Initalizer
@@ -77,6 +87,15 @@ private extension CategoryEditingViewController {
         self.navigationItem.rightBarButtonItem = completeBarButton
         self.navigationItem.rightBarButtonItem?.style = .done
     }
+    
+    func addRemoveButton() {
+        view.addSubview(removeButton)
+        removeButton.snp.makeConstraints { make in
+            make.top.equalTo(inputTableView.snp.bottom).offset(10)
+            make.horizontalEdges.equalToSuperview().inset(20)
+            make.height.equalTo(40)
+        }
+    }
 }
 
 //MARK: - Binding ViewModel
@@ -86,7 +105,14 @@ private extension CategoryEditingViewController {
         
         let input: CategoryEditingViewModel.Input = .init(
             title: inputCell.contentsTextField.rx.text.orEmpty.asDriver(),
-            doneTrigger: completeBarButton.rx.tap.asSignal()
+            doneTrigger: completeBarButton.rx.tap.asSignal(),
+            removeTrigger: removeButton.rx.tap.flatMap {
+                return self.rx.presentConfirmAlert(
+                    title: "카테고리 삭제",
+                    message: "이 항목을 삭제하시겠습니까?",
+                    okAction: UIAlertAction(title: "삭제", style: .destructive)
+                )
+            }.asSignalOnErrorJustComplete()
         )
         
         let output = viewModel.transform(input: input)
@@ -94,6 +120,10 @@ private extension CategoryEditingViewController {
         [ output.title
             .drive(inputCell.contentsTextField.rx.text),
           output.doneHandler
+            .emit(with: self, onNext: { owner, _ in
+                owner.navigationController?.popViewController(animated: true)
+            }),
+          output.removeHandler
             .emit(with: self, onNext: { owner, _ in
                 owner.navigationController?.popViewController(animated: true)
             }),
@@ -109,6 +139,7 @@ private extension CategoryEditingViewController {
             case .edit:
                 vc.navigationItem.title = "편집"
                 vc.completeBarButton.title = "완료"
+                vc.addRemoveButton()
             case .new:
                 vc.navigationItem.title = "추가"
                 vc.completeBarButton.title = "추가"

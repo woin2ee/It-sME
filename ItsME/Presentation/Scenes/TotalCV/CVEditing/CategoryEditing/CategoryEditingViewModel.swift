@@ -11,6 +11,7 @@ import RxCocoa
 protocol CategoryEditingViewModelDelegate: AnyObject {
     func categoryEditingViewModelDidEndEditing(with title: String, at section: Int)
     func categoryEditingViewModelDidAppend(title: String)
+    func categoryEditingViewModelDidRemove(at section: Int)
 }
 
 final class CategoryEditingViewModel: ViewModelType {
@@ -41,9 +42,17 @@ final class CategoryEditingViewModel: ViewModelType {
                 
         let editingType = Driver.just(editingType)
                 
+        let removeHandler = input.removeTrigger
+                .do(onNext: { _ in
+                    if case let .edit(section) = self.editingType {
+                        self.delegate?.categoryEditingViewModelDidRemove(at: section)
+                    }
+                })
+                
         return .init(
             title: title,
             doneHandler: doneHandler,
+            removeHandler: removeHandler,
             editingType: editingType
         )
     }
@@ -63,11 +72,13 @@ extension CategoryEditingViewModel {
     struct Input {
         let title: Driver<String>
         let doneTrigger: Signal<Void>
+        let removeTrigger: Signal<Void>
     }
     
     struct Output {
         let title: Driver<String>
         let doneHandler: Signal<Void>
+        let removeHandler: Signal<Void>
         let editingType: Driver<EditingType>
     }
 }
@@ -77,10 +88,10 @@ extension CategoryEditingViewModel {
     
     enum EditingType {
         
-        /// 기존 자기소개서 정보를 수정할 때 사용하는 열거형 값입니다.
+        /// 기존 카테고리 정보를 수정할 때 사용하는 열거형 값입니다.
         case edit(section: Int)
         
-        /// 새 자기소개서를 추가할 때 사용하는 열거형 값입니다.
+        /// 새 카테고리를 추가할 때 사용하는 열거형 값입니다.
         case new
     }
 }

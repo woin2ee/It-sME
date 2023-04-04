@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class ResumeItem: Decodable {
+final class ResumeItem: Codable {
     var period: String
     var title: String
     var secondTitle: String
@@ -41,5 +41,26 @@ final class ResumeItem: Decodable {
         self.title = title
         self.secondTitle = secondTitle
         self.description = description
+    }
+}
+
+// MARK: - CodingKeys
+
+extension ResumeItem {
+    enum CodingKeys: CodingKey {
+    case period
+    case title
+    case secondTitle
+    case description
+    }
+}
+
+extension ResumeItem {
+    static var empty: ResumeItem {
+        .init(
+            period: "",
+            title: "",
+            secondTitle: "",
+            description: "")
     }
 }
