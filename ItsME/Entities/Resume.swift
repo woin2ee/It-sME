@@ -23,15 +23,6 @@ extension Resume {
     }
 }
 
-// MARK: - Equatable
-
-extension Resume: Equatable {
-    
-    static func == (lhs: Resume, rhs: Resume) -> Bool {
-        lhs.category == rhs.category
-    }
-}
-
 extension Resume {
     static var empty: Resume {
         .init(category: [])

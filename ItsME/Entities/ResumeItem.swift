@@ -55,18 +55,6 @@ extension ResumeItem {
     }
 }
 
-// MARK: - Equatable
-
-extension ResumeItem: Equatable {
-    
-    static func == (lhs: ResumeItem, rhs: ResumeItem) -> Bool {
-        lhs.period == rhs.period &&
-        lhs.title == rhs.title &&
-        lhs.secondTitle == rhs.secondTitle &&
-        lhs.description == rhs.description
-    }
-}
-
 extension ResumeItem {
     static var empty: ResumeItem {
         .init(

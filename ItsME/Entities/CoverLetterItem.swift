@@ -26,17 +26,6 @@ extension CoverLetterItem {
     }
 }
 
-// MARK: - Equatable
-
-extension CoverLetterItem: Equatable {
-    
-    static func == (lhs: CoverLetterItem, rhs: CoverLetterItem) -> Bool {
-        lhs.title == rhs.title &&
-        lhs.contents == rhs.contents
-        
-    }
-}
-
 extension CoverLetterItem {
     static var empty: CoverLetterItem {
         .init(

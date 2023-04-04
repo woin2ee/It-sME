@@ -48,7 +48,6 @@ final class CategoryEditingViewModel: ViewModelType {
                         self.delegate?.categoryEditingViewModelDidRemove(at: section)
                     }
                 })
-                .mapToVoid()
                 
         return .init(
             title: title,

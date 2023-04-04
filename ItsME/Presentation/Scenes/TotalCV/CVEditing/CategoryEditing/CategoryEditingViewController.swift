@@ -88,7 +88,7 @@ private extension CategoryEditingViewController {
         self.navigationItem.rightBarButtonItem?.style = .done
     }
     
-    func makeRemoveButton() {
+    func addRemoveButton() {
         view.addSubview(removeButton)
         removeButton.snp.makeConstraints { make in
             make.top.equalTo(inputTableView.snp.bottom).offset(10)
@@ -139,7 +139,7 @@ private extension CategoryEditingViewController {
             case .edit:
                 vc.navigationItem.title = "편집"
                 vc.completeBarButton.title = "완료"
-                vc.makeRemoveButton()
+                vc.addRemoveButton()
             case .new:
                 vc.navigationItem.title = "추가"
                 vc.completeBarButton.title = "추가"

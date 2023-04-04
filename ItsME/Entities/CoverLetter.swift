@@ -23,15 +23,6 @@ extension CoverLetter {
     }
 }
 
-// MARK: - Equatable
-
-extension CoverLetter: Equatable {
-    
-    static func == (lhs: CoverLetter, rhs: CoverLetter) -> Bool {
-        lhs.items == rhs.items
-    }
-}
-
 extension CoverLetter {
     static var empty: CoverLetter {
         .init(items: [])
