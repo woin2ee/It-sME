@@ -15,7 +15,7 @@ final class CVRepository {
     
     // MARK: API
     func getAllCV(byUID uid: String) -> Observable<[CVInfo]> {
-        return database.cvRef(uid).rx.dataSnapshot
+        return database.cvsRef(uid).rx.dataSnapshot
             .map { dataSnapshot in
                 return try LoggedJsonDecoder.decode([CVInfo].self, withJSONObject: dataSnapshot.value)
             }
@@ -33,7 +33,7 @@ final class CVRepository {
             do {
                 let data = try JSONEncoder().encode(cvInfo)
                 let jsonObject = try JSONSerialization.jsonObject(with: data)
-                self.database.cvRef("\(uid)/\(index)").setValue(jsonObject)
+                self.database.cvsRef("\(uid)/\(index)").setValue(jsonObject)
                 observer.onNext(())
                 observer.onCompleted()
             } catch {

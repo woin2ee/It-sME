@@ -467,7 +467,7 @@ private extension TotalCVViewController {
     }
     
     func pushResumItemAddView(section: Int) {
-        let resumeItem = ResumeItem(period: "", title: "", secondTitle: "", description: "")
+        let resumeItem = ResumeItem.empty
         let resumeItemEditingViewModel: ResumeItemEditingViewModel = .init(resumeItem: resumeItem, editingType: .new(section: section), delegate: viewModel)
         let viewController: ResumeItemEditingViewController = .init(viewModel: resumeItemEditingViewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
@@ -499,7 +499,7 @@ private extension TotalCVViewController {
     }
     
     func pushCoverLetterAddView() {
-        let coverLetterItem = CoverLetterItem(title: "", contents: "")
+        let coverLetterItem = CoverLetterItem.empty
         let coverLetterEditingViewModel: CoverLetterEditingViewModel = .init(coverLetterItem: coverLetterItem, editingType: .new, delegate: viewModel)
         let viewController: CoverLetterEditingViewController = .init(viewModel: coverLetterEditingViewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
