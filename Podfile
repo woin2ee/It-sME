@@ -13,6 +13,7 @@ target 'ItsME' do
 	pod 'Firebase/Analytics' # Google Analytics
 	pod 'FirebaseAuth'
 	pod 'FirebaseDatabase' #Realtime Database
+	pod 'FirebaseStorage' # Cloud Storage
 	pod 'Then'
 	pod 'UITextView+Placeholder'
 	pod 'Keychaining'

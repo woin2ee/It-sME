@@ -116,10 +116,14 @@ class TotalCVViewController: UIViewController {
         $0.primaryAction = .init(handler: { [weak self] _ in
             let title = "정말로 뒤로 가시겠습니까?"
             let message = "소중한 회원님의 정보는 되돌릴 수 없습니다. 이 사실을 인지하고 뒤로 가시겠습니까?"
-            let alertVC = CommonAlertViewController(title: title, message: message, style: .confirm, okHandler: {
-                self?.navigationController?.popViewController(animated: true)
-            })
-            self?.present(alertVC, animated: true)
+            self?.presentConfirmAlert(
+                title: title,
+                message: message,
+                cancelAction: .init(title: "아니오", style: .cancel),
+                okAction: .init(title: "예", style: .default, handler: { _ in
+                    self?.navigationController?.popViewController(animated: true)
+                })
+            )
         })
     }
     

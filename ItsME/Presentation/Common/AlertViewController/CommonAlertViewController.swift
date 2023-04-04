@@ -7,6 +7,7 @@
 
 import UIKit
 
+@available(*, deprecated, message: "The UIAlertController class is intended to be used as-is and doesn’t support subclassing. The view hierarchy for this class is private and must not be modified.")
 final class CommonAlertViewController: UIAlertController {
     
     /// 기본 세팅이 되어 있는 AlertViewController 를 만들어서 반환합니다.
