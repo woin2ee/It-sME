@@ -5,6 +5,7 @@
 //  Created by MacBook Air on 2022/11/07.
 //
 
+import FirebaseStorage
 import UIKit
 import RxSwift
 import SnapKit
@@ -16,7 +17,6 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
     private let viewModel: HomeViewModel = .init()
     
     private let profileImageView: UIImageView = {
-        
         let profileImageView: UIImageView = .init(image: UIImage.init(named: "테스트이미지"))
         return profileImageView
     }()
@@ -136,6 +136,24 @@ private extension HomeViewController {
             userInfo.defaultItems.forEach { item in
                 let profileInfo: ProfileInfoComponent = .init(userInfoItem: item)
                 self.vStackLayout.addArrangedSubview(profileInfo)
+            }
+            
+            let ref = Storage.storage().reference().child(userInfo.profileImageURL)
+            ref.getData(maxSize: 3 * 1024 * 1024) { data, error in
+                if let error = error {
+                    // TODO: Error 처리 (ex: Toast message 출력)
+                    #if DEBUG
+                        print(error)
+                    #endif
+                    return
+                }
+                
+                guard let data = data else {
+                    // TODO: Error 처리 (ex: Toast message 출력)
+                    return
+                }
+
+                viewController.profileImageView.image = .init(data: data)
             }
         }
     }
