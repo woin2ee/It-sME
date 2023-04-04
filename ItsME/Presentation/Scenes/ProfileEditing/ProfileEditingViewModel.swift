@@ -6,6 +6,7 @@
 //
 
 import FirebaseAuth
+import FirebaseStorage
 import RxSwift
 import RxCocoa
 import Then
@@ -17,9 +18,11 @@ final class ProfileEditingViewModel: ViewModelType {
         let userName: Driver<String>
         let viewDidLoad: Driver<Void>
         let logoutTrigger: Signal<Void>
+        let newProfileImageData: Driver<Data?>
     }
     
     struct Output {
+        let profileImageData: Driver<Data?>
         let userName: Driver<String>
         let userInfoItems: Driver<[UserInfoItem]>
         let educationItems: Driver<[EducationItem]>
@@ -30,6 +33,7 @@ final class ProfileEditingViewModel: ViewModelType {
     
     private let userRepository: UserRepository = .init()
     
+    private let initalProfileImage: Data
     private let userInfoRelay: BehaviorRelay<UserInfo>
     
     var currentBirthday: Date {
@@ -58,7 +62,8 @@ final class ProfileEditingViewModel: ViewModelType {
         userInfoRelay.value.educationItems
     }
     
-    init(userInfo: UserInfo) {
+    init(initalProfileImage: Data?, userInfo: UserInfo) {
+        self.initalProfileImage = initalProfileImage ?? .init()
         self.userInfoRelay = .init(value: userInfo)
     }
     
@@ -74,20 +79,42 @@ final class ProfileEditingViewModel: ViewModelType {
                     .asDriverOnErrorJustComplete()
             }
         
+        let profileImageData = Driver.merge(
+            input.newProfileImageData,
+            userInfoDriver.flatMap {
+                Storage.storage().reference().child($0.profileImageURL).rx.getData().map { $0 }
+                    .asDriverOnErrorJustComplete()
+            }
+        )
+            .startWith(initalProfileImage)
+            
         let userName = Driver.merge(input.userName,
                                     userInfoDriver.map { $0.name })
             .startWith(userInfoRelay.value.name)
             .doOnNext { self.userInfoRelay.value.name = $0 }
         let userInfoItems = userInfoDriver.map { $0.allItems }
         let educationItems = userInfoDriver.map { $0.educationItems }
-        let tappedEditingCompleteButton = input.tapEditingCompleteButton
-            .withLatestFrom(userInfoDriver)
-            .flatMapFirst { self.userRepository.saveCurrentUserInfo($0).asSignalOnErrorJustComplete() } // TODO: Error 처리 고려
+        let tappedEditingCompleteButton = input.tapEditingCompleteButton // TODO: Error 처리 고려
+            .asObservable()
+            .withLatestFrom(profileImageData)
+            .compactMap { $0 }
+            .flatMap { data in
+                let path = try Path().userProfileImage
+                return Storage.storage().reference().child(path).rx.putData(data)
+            }
+            .compactMap { $0.path }
+            .flatMap { path in
+                let userInfo = self.userInfoRelay.value
+                userInfo.profileImageURL = path
+                return self.userRepository.saveCurrentUserInfo(userInfo)
+            }
+            .asSignalOnErrorJustComplete()
         
         let logoutComplete = input.logoutTrigger
             .doOnNext { try? Auth.auth().signOut() }
         
         return .init(
+            profileImageData: profileImageData,
             userName: userName,
             userInfoItems: userInfoItems,
             educationItems: educationItems,

@@ -23,7 +23,10 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
     
     private lazy var profileEditingButton: UIButton = {
         let action = UIAction { _ in
-            let profileEditingViewModel: ProfileEditingViewModel = .init(userInfo: self.viewModel.userInfo)
+            let profileEditingViewModel: ProfileEditingViewModel = .init(
+                initalProfileImage: self.profileImageView.image?.jpegData(compressionQuality: 1.0),
+                userInfo: self.viewModel.userInfo
+            )
             let profileEditingViewController: ProfileEditingViewController = .init(viewModel: profileEditingViewModel)
             let profileEditingNavigationController: UINavigationController = .init(rootViewController: profileEditingViewController)
             profileEditingNavigationController.modalTransitionStyle = .coverVertical
