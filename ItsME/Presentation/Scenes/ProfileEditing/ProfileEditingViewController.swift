@@ -365,18 +365,18 @@ private extension ProfileEditingViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func presentUserInfoItemInputView(by indexPath: IndexPath) {
-        switch viewModel.currentAllItems[ifExists: indexPath.row]?.icon {
-        case .cake:
+    func presentUserInfoItemInputView(by index: IndexPath.Index) {
+        switch index {
+        case 0:
             presentDatePickerView()
-        case .house:
+        case 1:
             presentAddressEditingView()
-        case .phone:
+        case 2:
             presentPhoneNumberEditingView()
-        case .letter:
+        case 3:
             presentEmailEditingView()
         default:
-            if let otherItem = viewModel.currentAllItems[ifExists: indexPath.row] {
+            if let otherItem = viewModel.currentAllItems[ifExists: index] {
                 pushOtherItemEditingViewController(with: otherItem)
             }
         }
@@ -405,7 +405,7 @@ extension ProfileEditingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch tableView {
         case userInfoItemTableView:
-            presentUserInfoItemInputView(by: indexPath)
+            presentUserInfoItemInputView(by: indexPath.row)
         case educationTableView:
             guard let educationItem = viewModel.currentEducationItems[ifExists: indexPath.row] else {
                 return
