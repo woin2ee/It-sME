@@ -5,20 +5,51 @@
 //  Created by Jaewon Yun on 2023/02/14.
 //
 
+import RxSwift
+import RxCocoa
 import SnapKit
 import Then
 import UIKit
 
 final class IconInputCell: UITableViewCell {
     
-    // MARK: - UI Components
+    // MARK: UI Objects
     
     private lazy var titleLabel: UILabel = .init().then {
         $0.text = "아이콘"
     }
     private lazy var iconLabel: UILabel = .init()
+    private lazy var iconSelectButton: UIButton = .init().then {
+        $0.setImage(.init(systemName: "chevron.down"), for: .normal)
+        $0.tintColor = .systemGray
+        $0.addAction(UIAction(handler: { [weak self] _ in
+            guard let self = self else { return }
+            if !self.isAnimating {
+                self.isShowingIconPickerView.toggle()
+            }
+        }), for: .touchUpInside)
+    }
+    private(set) lazy var iconPickerView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        layout.itemSize = self.iconCellSize
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(IconCell.self, forCellWithReuseIdentifier: IconCell.reuseIdentifier)
+        collectionView.backgroundColor = .secondarySystemGroupedBackground
+        collectionView.layer.cornerRadius = 10.0
+        collectionView.clipsToBounds = true
+        collectionView.layer.shadowColor = UIColor.systemGray.cgColor
+        collectionView.layer.shadowRadius = 60.0
+        collectionView.layer.shadowOffset = .zero
+        collectionView.layer.shadowOpacity = 0.5
+        collectionView.layer.masksToBounds = false
+        return collectionView
+    }()
     
-    // MARK: - Accessible Properties
+    // MARK: Properties
     
     var icon: UserInfoItemIcon = .default {
         willSet {
@@ -26,7 +57,24 @@ final class IconInputCell: UITableViewCell {
         }
     }
     
-    // MARK: - Initializer
+    private var isShowingIconPickerView: Bool = false {
+        willSet {
+            if isShowingIconPickerView {
+                self.hideIconPickerView()
+            } else {
+                self.showIconPickerView()
+            }
+        }
+    }
+    private var isAnimating: Bool = false
+    private let iconCellSize: CGSize = .init(width: 50, height: 50)
+    private let itemCountPerLine = 4
+    private var itemLineCount: Int { (UserInfoItemIcon.allCases.count + itemCountPerLine) / itemCountPerLine }
+    private let animationDuration: TimeInterval = 0.5
+    private let dampingRatio: CGFloat = 0.8
+    private let initialSpringVelocity: CGFloat = 0.3
+    
+    // MARK: Initializers
     
     init() {
         super.init(style: .default, reuseIdentifier: nil)
@@ -38,12 +86,14 @@ final class IconInputCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Override
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(false, animated: false)
     }
 }
 
-// MARK: - Private Functions
+// MARK: - Private Methods
 
 private extension IconInputCell {
     
@@ -58,8 +108,135 @@ private extension IconInputCell {
         
         self.contentView.addSubview(iconLabel)
         iconLabel.snp.makeConstraints { make in
-            make.top.trailing.bottom.equalToSuperview()
+            make.verticalEdges.equalToSuperview()
             make.leading.equalTo(titleLabel.snp.trailing).offset(20)
         }
+        
+        self.contentView.addSubview(iconSelectButton)
+        iconSelectButton.snp.makeConstraints { make in
+            make.verticalEdges.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.width.equalTo(40)
+            make.leading.equalTo(iconLabel.snp.trailing)
+        }
+    }
+    
+    func showIconPickerView() {
+        guard let window = self.window else { return }
+        
+        window.addSubview(iconPickerView)
+        iconPickerView.snp.makeConstraints { make in
+            make.top.equalTo(self.contentView.snp.bottom).offset(-2)
+            make.trailing.equalTo(self.contentView).offset(-8)
+            make.size.equalToZero()
+        }
+        window.layoutIfNeeded()
+        
+        UIView.animate(
+            withDuration: animationDuration,
+            delay: .zero,
+            usingSpringWithDamping: dampingRatio,
+            initialSpringVelocity: initialSpringVelocity,
+            options: [.curveEaseOut, .allowUserInteraction],
+            animations: { [self] in
+                iconPickerView.snp.updateConstraints { make in
+                    make.width.equalTo(iconCellSize.width * CGFloat(itemCountPerLine))
+                    make.height.equalTo(iconCellSize.height * CGFloat(itemLineCount))
+                }
+                window.layoutIfNeeded()
+            }
+        )
+    }
+    
+    func hideIconPickerView() {
+        isAnimating = true
+        
+        guard let window = self.window else { return }
+        
+        UIView.animate(
+            withDuration: animationDuration,
+            delay: .zero,
+            usingSpringWithDamping: dampingRatio,
+            initialSpringVelocity: initialSpringVelocity,
+            options: .curveEaseOut,
+            animations: {
+                self.iconPickerView.snp.updateConstraints { make in
+                    make.size.equalToZero()
+                }
+                window.layoutIfNeeded()
+            },
+            completion: { _ in
+                self.iconPickerView.snp.removeConstraints()
+                self.iconPickerView.removeFromSuperview()
+                self.isAnimating = false
+            }
+        )
+    }
+}
+
+// MARK: - UICollectionViewDataSource
+
+extension IconInputCell: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        UserInfoItemIcon.allCases.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: IconCell.reuseIdentifier, for: indexPath) as! IconCell
+        cell.icon = UserInfoItemIcon.allCases[indexPath.row]
+        return cell
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension IconInputCell: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedIcon = UserInfoItemIcon.allCases[indexPath.row]
+        self.icon = selectedIcon
+        self.isShowingIconPickerView = false
+    }
+}
+
+// MARK: - Reactive Extension
+
+extension Reactive where Base: IconInputCell {
+    
+    private var delegateProxy: DelegateProxy<IconInputCell, UICollectionViewDelegate> {
+        return IconInputCellDelegateProxy.proxy(for: self.base)
+    }
+    
+    var icon: ControlEvent<UserInfoItemIcon> {
+        let source = delegateProxy
+            .methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:didSelectItemAt:)))
+            .map { parameters -> UserInfoItemIcon in
+                guard let indexPath = parameters[1] as? IndexPath else {
+                    preconditionFailure("Delegate 함수의 파라미터 타입이 일치하지 않습니다.")
+                }
+                return UserInfoItemIcon.allCases[indexPath.row]
+            }
+        return .init(events: source)
+    }
+}
+
+final class IconInputCellDelegateProxy:
+    DelegateProxy<IconInputCell, UICollectionViewDelegate>,
+    DelegateProxyType,
+    UICollectionViewDelegate
+{
+    static func registerKnownImplementations() {
+        self.register { parant in
+            return .init(parentObject: parant, delegateProxy: IconInputCellDelegateProxy.self)
+        }
+    }
+    
+    static func currentDelegate(for object: IconInputCell) -> UICollectionViewDelegate? {
+        return object.iconPickerView.delegate
+    }
+    
+    static func setCurrentDelegate(_ delegate: UICollectionViewDelegate?, to object: IconInputCell) {
+        object.iconPickerView.delegate = delegate
     }
 }

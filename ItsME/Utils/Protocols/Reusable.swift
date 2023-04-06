@@ -16,3 +16,9 @@ extension UITableViewCell: Reusable {
         .init(describing: self)
     }
 }
+
+extension UICollectionViewCell: Reusable {
+    static var reuseIdentifier: String {
+        .init(describing: self)
+    }
+}

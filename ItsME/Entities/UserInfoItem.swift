@@ -31,7 +31,7 @@ final class UserInfoItem: Codable {
     }
 }
 
-enum UserInfoItemIcon: String {
+enum UserInfoItemIcon: String, CaseIterable{
     case `default` = "default"
     case computer = "computer"
     case cake = "cake"
@@ -54,6 +54,17 @@ enum UserInfoItemIcon: String {
             return "📱"
         case .letter:
             return "✉️"
+        }
+    }
+    
+    /// 지정된 `rawString` 에 해당하는 인스턴스를 만들어 반환합니다.
+    ///
+    /// 해당하는 `rawString` 이 없을 경우 `default(👤)` 인스턴스를 반환합니다.
+    init(rawString: String) {
+        if let instance = UserInfoItemIcon.init(rawValue: rawString) {
+            self = instance
+        } else {
+            self = .default
         }
     }
 }

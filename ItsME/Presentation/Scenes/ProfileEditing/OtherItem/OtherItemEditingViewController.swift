@@ -113,7 +113,7 @@ private extension OtherItemEditingViewController {
     func makeInput() -> OtherItemEditingViewModel.Input {
         return .init(
             doneTrigger: completeButton.rx.tap.asSignal(),
-            icon: .empty(), // TODO: 아이콘 선택 이벤트 매핑
+            icon: iconInputCell.rx.icon.asDriver(),
             contents: contentsInputCell.contentsTextField.rx.text.orEmpty.asDriver(),
             deleteTrigger: deleteButton.rx.tap.flatMap {
                 return self.rx.presentConfirmAlert(
