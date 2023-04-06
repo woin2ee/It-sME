@@ -23,10 +23,7 @@ final class IconInputCell: UITableViewCell {
         $0.setImage(.init(systemName: "chevron.down"), for: .normal)
         $0.tintColor = .systemGray
         $0.addAction(UIAction(handler: { [weak self] _ in
-            guard let self = self else { return }
-            if !self.isAnimating {
-                self.isShowingIconPickerView.toggle()
-            }
+            self?.toggleIconPickerView()
         }), for: .touchUpInside)
     }
     private(set) lazy var iconPickerView: UICollectionView = {
@@ -57,6 +54,7 @@ final class IconInputCell: UITableViewCell {
         }
     }
     
+    /// 해당 값을 직접 변경하는건 권장하지 않습니다.
     private var isShowingIconPickerView: Bool = false {
         willSet {
             if isShowingIconPickerView {
@@ -79,6 +77,8 @@ final class IconInputCell: UITableViewCell {
     init() {
         super.init(style: .default, reuseIdentifier: nil)
         self.backgroundColor = .secondarySystemGroupedBackground
+        self.selectionStyle = .none
+        addTapGesture()
         configureSubviews()
     }
     
@@ -121,6 +121,15 @@ private extension IconInputCell {
         }
     }
     
+    @objc func toggleIconPickerView() {
+        if !isAnimating {
+            isShowingIconPickerView.toggle()
+        }
+    }
+    
+    /// 애니메이션 효과와 함께 `IconPickerView` 를 화면에 나타냅니다.
+    ///
+    /// 이 함수를 직접 호출하는건 권장하지 않습니다. 대신 `toggleIconPickerView()` 를 이용하세요.
     func showIconPickerView() {
         guard let window = self.window else { return }
         
@@ -148,6 +157,9 @@ private extension IconInputCell {
         )
     }
     
+    /// 애니메이션 효과와 함께 `IconPickerView` 를 화면에서 사라지게 합니다.
+    ///
+    /// 이 함수를 직접 호출하는건 권장하지 않습니다. 대신 `toggleIconPickerView()` 를 이용하세요.
     func hideIconPickerView() {
         isAnimating = true
         
@@ -171,6 +183,11 @@ private extension IconInputCell {
                 self.isAnimating = false
             }
         )
+    }
+    
+    func addTapGesture() {
+        let tapGestureRecognizer: UITapGestureRecognizer = .init(target: self, action: #selector(toggleIconPickerView))
+        self.addGestureRecognizer(tapGestureRecognizer)
     }
 }
 
@@ -196,7 +213,7 @@ extension IconInputCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedIcon = UserInfoItemIcon.allCases[indexPath.row]
         self.icon = selectedIcon
-        self.isShowingIconPickerView = false
+        hideIconPickerView()
     }
 }
 
