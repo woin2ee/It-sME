@@ -83,7 +83,6 @@
 		DA7201FA2931F90900A69519 /* Resume.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201F92931F90900A69519 /* Resume.swift */; };
 		DA739DDA292398BE003AEE4C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DD9292398BE003AEE4C /* LoginViewController.swift */; };
 		DA739DDC292398C3003AEE4C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DDB292398C3003AEE4C /* LoginViewModel.swift */; };
-		DA739DE42924FE54003AEE4C /* CommonAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DE32924FE54003AEE4C /* CommonAlertViewController.swift */; };
 		DA739DE62925E35A003AEE4C /* ItsMEUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9952918DE8C0081C0EC /* ItsMEUITests.swift */; };
 		DA90695629C823F200535A3D /* ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53B73929B5C304000BBB26 /* ExtensionTests.swift */; };
 		DA90695729C826F300535A3D /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53B73729B5BDA1000BBB26 /* Int+.swift */; };
@@ -226,7 +225,6 @@
 		DA739DD9292398BE003AEE4C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DA739DDB292398C3003AEE4C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		DA739DDD2923B4D2003AEE4C /* ItsME.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ItsME.entitlements; sourceTree = "<group>"; };
-		DA739DE32924FE54003AEE4C /* CommonAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonAlertViewController.swift; sourceTree = "<group>"; };
 		DA90694D29C8234600535A3D /* ItsMETestsWithoutApp.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ItsMETestsWithoutApp.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA9069D529CDA64B00535A3D /* Collection+isNotEmpty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+isNotEmpty.swift"; sourceTree = "<group>"; };
 		DAA5B9642938825A00BAB04E /* ProfileEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditingViewController.swift; sourceTree = "<group>"; };
@@ -414,7 +412,6 @@
 				DAFCFB6D295068EE006B287A /* TableView */,
 				DAFCFB6A294C3622006B287A /* Cells */,
 				D0CCF502292CCB2400AD4AE6 /* Component */,
-				DA739DE22924FCA0003AEE4C /* AlertViewController */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -585,14 +582,6 @@
 				DA739DDB292398C3003AEE4C /* LoginViewModel.swift */,
 			);
 			path = Login;
-			sourceTree = "<group>";
-		};
-		DA739DE22924FCA0003AEE4C /* AlertViewController */ = {
-			isa = PBXGroup;
-			children = (
-				DA739DE32924FE54003AEE4C /* CommonAlertViewController.swift */,
-			);
-			path = AlertViewController;
 			sourceTree = "<group>";
 		};
 		DA90694E29C8234600535A3D /* ItsMETestsWithoutApp */ = {
@@ -1075,7 +1064,6 @@
 				DA3302AE29ADCCA700C36154 /* EducationEditingViewModel.swift in Sources */,
 				D09AC9752918DE8B0081C0EC /* AppDelegate.swift in Sources */,
 				D06CD86B29936BBC005DFB3B /* CategoryHeaderView.swift in Sources */,
-				DA739DE42924FE54003AEE4C /* CommonAlertViewController.swift in Sources */,
 				DA6BCE5E292F04910059E95D /* DatabaseReferenceManager.swift in Sources */,
 				DA708F0329D6EDBF00EF84F2 /* UIViewController+presentConfirmAlert.swift in Sources */,
 				DA6B3CDB29ADEE33002BB159 /* UIEdgeInsets+All.swift in Sources */,
