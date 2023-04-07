@@ -99,7 +99,7 @@ final class ProfileEditingViewModel: ViewModelType {
             .withLatestFrom(profileImageData)
             .compactMap { $0 }
             .flatMap { data in
-                let path = try Path().userProfileImage
+                let path = try StoragePath().userProfileImage
                 return Storage.storage().reference().child(path).rx.putData(data)
             }
             .compactMap { $0.path }
