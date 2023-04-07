@@ -33,7 +33,6 @@ extension CVInfo {
     
     static var empty: CVInfo {
         return .init(
-            uuid: "",
             title: "",
             resume: .empty,
             coverLetter: .empty,
