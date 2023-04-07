@@ -115,7 +115,8 @@ private extension OtherItemEditingViewController {
             doneTrigger: completeButton.rx.tap.asSignal(),
             icon: iconInputCell.rx.icon.asDriver(),
             contents: contentsInputCell.contentsTextField.rx.text.orEmpty.asDriver(),
-            deleteTrigger: deleteButton.rx.tap.flatMap {
+            deleteTrigger: deleteButton.rx.tap.flatMap { [weak self] in
+                guard let self = self else { return Observable<Void>.empty() }
                 return self.rx.presentConfirmAlert(
                     title: "항목 삭제",
                     message: "이 항목을 삭제하시겠습니까?",
