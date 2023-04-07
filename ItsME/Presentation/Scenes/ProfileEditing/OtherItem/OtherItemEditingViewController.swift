@@ -61,6 +61,11 @@ final class OtherItemEditingViewController: UIViewController {
         super.viewDidAppear(animated)
         contentsInputCell.contentsTextField.becomeFirstResponder()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        iconInputCell.hideIconPickerView()
+    }
 }
 
 // MARK: - Private Functions

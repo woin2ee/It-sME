@@ -13,6 +13,8 @@ import UIKit
 
 final class IconInputCell: UITableViewCell {
     
+    private let disposeBag: DisposeBag = .init()
+    
     // MARK: UI Objects
     
     private lazy var titleLabel: UILabel = .init().then {
@@ -85,19 +87,22 @@ final class IconInputCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: Override
+}
+
+// MARK: - Override Methods
+
+extension IconInputCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(false, animated: false)
     }
 }
 
-// MARK: - Private Methods
+// MARK: - Methods
 
-private extension IconInputCell {
+extension IconInputCell {
     
-    func configureSubviews() {
+    private func configureSubviews() {
         self.contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(12)
@@ -185,7 +190,7 @@ private extension IconInputCell {
         )
     }
     
-    func addTapGesture() {
+    private func addTapGesture() {
         let tapGestureRecognizer: UITapGestureRecognizer = .init(target: self, action: #selector(toggleIconPickerView))
         self.addGestureRecognizer(tapGestureRecognizer)
     }
@@ -221,39 +226,9 @@ extension IconInputCell: UICollectionViewDelegate {
 
 extension Reactive where Base: IconInputCell {
     
-    private var delegateProxy: DelegateProxy<IconInputCell, UICollectionViewDelegate> {
-        return IconInputCellDelegateProxy.proxy(for: self.base)
-    }
-    
     var icon: ControlEvent<UserInfoItemIcon> {
-        let source = delegateProxy
-            .methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:didSelectItemAt:)))
-            .map { parameters -> UserInfoItemIcon in
-                guard let indexPath = parameters[1] as? IndexPath else {
-                    preconditionFailure("Delegate 함수의 파라미터 타입이 일치하지 않습니다.")
-                }
-                return UserInfoItemIcon.allCases[indexPath.row]
-            }
+        let source = self.base.iconPickerView.rx.itemSelected
+            .map { UserInfoItemIcon.allCases[$0.row] }
         return .init(events: source)
-    }
-}
-
-final class IconInputCellDelegateProxy:
-    DelegateProxy<IconInputCell, UICollectionViewDelegate>,
-    DelegateProxyType,
-    UICollectionViewDelegate
-{
-    static func registerKnownImplementations() {
-        self.register { parant in
-            return .init(parentObject: parant, delegateProxy: IconInputCellDelegateProxy.self)
-        }
-    }
-    
-    static func currentDelegate(for object: IconInputCell) -> UICollectionViewDelegate? {
-        return object.iconPickerView.delegate
-    }
-    
-    static func setCurrentDelegate(_ delegate: UICollectionViewDelegate?, to object: IconInputCell) {
-        object.iconPickerView.delegate = delegate
     }
 }
