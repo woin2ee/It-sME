@@ -45,7 +45,7 @@ final class TotalCVViewModel: ViewModelType {
                 
         let tappedEditingCompleteButton = input.doneTrigger
             .withLatestFrom(cvInfoDriver)
-            .flatMapFirst { self.cvRepository.saveCurrentCVInfo($0, index: self.index).asSignalOnErrorJustComplete() } // TODO: Error 처리 고려
+            .flatMapFirst { self.cvRepository.saveCurrentCVInfo($0).asSignalOnErrorJustComplete() } // TODO: Error 처리 고려
         
         return .init(
             userInfoItems: userInfoItems,
