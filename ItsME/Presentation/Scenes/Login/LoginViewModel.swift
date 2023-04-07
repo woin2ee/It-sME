@@ -62,8 +62,11 @@ private extension LoginViewModel {
                       let idTokenData = appleIDCredential.identityToken,
                       let idTokenString = String(data: idTokenData, encoding: .utf8)
                 else {
-                    return .empty()
+                    throw ASAuthorizationError(.failed)
                 }
+                
+                ItsMEUserDefaults.isLoggedInAsApple = true
+                ItsMEUserDefaults.setAppleUserID(appleIDCredential.user)
                 
                 let credential = OAuthProvider.credential(
                     withProviderID: "apple.com",

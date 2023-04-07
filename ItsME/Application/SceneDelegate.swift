@@ -5,6 +5,7 @@
 //  Created by MacBook Air on 2022/11/07.
 //
 
+import AuthenticationServices
 import FirebaseAuth
 import UIKit
 import KakaoSDKAuth
@@ -13,19 +14,19 @@ import RxKakaoSDKAuth
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    let rootNavigationController: UINavigationController = .init()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
+        window?.rootViewController = rootNavigationController
         
         let isLoggedIn = Auth.auth().isLoggedIn
         
         let rootViewController = isLoggedIn ? HomeViewController() : LoginViewController()
-        let navigationController: UINavigationController = .init(rootViewController: rootViewController)
-        window?.rootViewController = navigationController
+        rootNavigationController.setViewControllers([rootViewController], animated: false)
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -54,8 +55,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
-        // Called as the scene transitions from the background to the foreground.
-        // Use this method to undo the changes made on entering the background.
+        if ItsMEUserDefaults.isLoggedInAsApple {
+            guard let userID = ItsMEUserDefaults.appleUserID else {
+                handleAppleIDLogout()
+                return
+            }
+            
+            let appleIDProvider = ASAuthorizationAppleIDProvider()
+            appleIDProvider.getCredentialState(forUserID: userID) { credentialState, error in
+                // 비동기적으로 실행되므로 원하는 방식대로 동작 안할 수 있음 - 관찰, 테스트 필요
+                if let _ = error {
+                    self.handleAppleIDLogout()
+                    return
+                }
+                switch credentialState {
+                case .authorized:
+                    return
+                default:
+                    self.handleAppleIDLogout()
+                    return
+                }
+            }
+        }
+        
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
@@ -67,3 +89,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 }
 
+extension SceneDelegate {
+    
+    private func handleAppleIDLogout() {
+        DispatchQueue.main.async {
+            let loginViewController: LoginViewController = .init()
+            self.rootNavigationController.setViewControllers([loginViewController], animated: false)
+            ItsMEUserDefaults.removeAppleUserID()
+            ItsMEUserDefaults.isLoggedInAsApple = false
+        }
+    }
+}
