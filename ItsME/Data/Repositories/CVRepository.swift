@@ -10,8 +10,16 @@ import RxSwift
 
 final class CVRepository {
     
+    // MARK: Make to Singleton
+    
+    static let shared: CVRepository = .init()
+    
+    private init() {
+        self.database = .shared
+    }
+    
     // MARK: Dependencies
-    private let database = DatabaseReferenceManager.shared
+    private let database: DatabaseReferenceManager
     
     // MARK: API
     func getAllCV(byUID uid: String) -> Observable<[CVInfo]> {

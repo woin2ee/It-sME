@@ -66,7 +66,7 @@
 		DA708F0529D9DC4500EF84F2 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F0429D9DC4500EF84F2 /* Hash.swift */; };
 		DA708F0729D9F11900EF84F2 /* FIRAuth+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F0629D9F11900EF84F2 /* FIRAuth+Rx.swift */; };
 		DA708F0929D9FE1700EF84F2 /* FIRAuth+isLoggedIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F0829D9FE1700EF84F2 /* FIRAuth+isLoggedIn.swift */; };
-		DA708F0F29DC1F7400EF84F2 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F0E29DC1F7400EF84F2 /* Path.swift */; };
+		DA708F0F29DC1F7400EF84F2 /* StoragePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F0E29DC1F7400EF84F2 /* StoragePath.swift */; };
 		DA708F1129DC32BB00EF84F2 /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F1029DC32BB00EF84F2 /* UIImagePickerController+Rx.swift */; };
 		DA708F1329DC32F600EF84F2 /* UIImagePickerControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F1229DC32F600EF84F2 /* UIImagePickerControllerDelegateProxy.swift */; };
 		DA708F1529DC465800EF84F2 /* StorageReference+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F1429DC465800EF84F2 /* StorageReference+Rx.swift */; };
@@ -207,7 +207,7 @@
 		DA708F0429D9DC4500EF84F2 /* Hash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hash.swift; sourceTree = "<group>"; };
 		DA708F0629D9F11900EF84F2 /* FIRAuth+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FIRAuth+Rx.swift"; sourceTree = "<group>"; };
 		DA708F0829D9FE1700EF84F2 /* FIRAuth+isLoggedIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FIRAuth+isLoggedIn.swift"; sourceTree = "<group>"; };
-		DA708F0E29DC1F7400EF84F2 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
+		DA708F0E29DC1F7400EF84F2 /* StoragePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoragePath.swift; sourceTree = "<group>"; };
 		DA708F1029DC32BB00EF84F2 /* UIImagePickerController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+Rx.swift"; sourceTree = "<group>"; };
 		DA708F1229DC32F600EF84F2 /* UIImagePickerControllerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImagePickerControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		DA708F1429DC465800EF84F2 /* StorageReference+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StorageReference+Rx.swift"; sourceTree = "<group>"; };
@@ -536,6 +536,7 @@
 			isa = PBXGroup;
 			children = (
 				DA6BCE5D292F04910059E95D /* DatabaseReferenceManager.swift */,
+				DA708F0E29DC1F7400EF84F2 /* StoragePath.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -728,7 +729,6 @@
 				DAB06A41291BA8C800E86163 /* Protocols */,
 				DA26989B298A4709008A5D30 /* LoggedJsonDecoder.swift */,
 				DA708F0429D9DC4500EF84F2 /* Hash.swift */,
-				DA708F0E29DC1F7400EF84F2 /* Path.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1111,7 +1111,7 @@
 				D0CCF4E3292604BE00AD4AE6 /* UIColor+.swift in Sources */,
 				DA018811296D1483002C5CB0 /* OtherItemEditingViewController.swift in Sources */,
 				D0CCF4E829260ED200AD4AE6 /* UserInfoItem.swift in Sources */,
-				DA708F0F29DC1F7400EF84F2 /* Path.swift in Sources */,
+				DA708F0F29DC1F7400EF84F2 /* StoragePath.swift in Sources */,
 				D0A078EA29BF00B800EBD41C /* TextViewCell.swift in Sources */,
 				D0E6FF6029B1BA23008CB451 /* CoverLetterEditingViewController.swift in Sources */,
 				D05522A029B9B1A3000ED03C /* CoverLetterTitleCell.swift in Sources */,

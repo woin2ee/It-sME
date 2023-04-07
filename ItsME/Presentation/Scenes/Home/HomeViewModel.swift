@@ -20,8 +20,8 @@ final class HomeViewModel: ViewModelType {
         let cvsInfo: Driver<[CVInfo]>
     }
     
-    private let userRepository: UserRepository = .init()
-    private let cvRepository: CVRepository = .init()
+    private let userRepository: UserRepository = .shared
+    private let cvRepository: CVRepository = .shared
     
     private(set) var userInfo: UserInfo = .empty
     

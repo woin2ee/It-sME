@@ -10,9 +10,17 @@ import RxSwift
 
 final class UserRepository {
     
+    // MARK: Make to Singleton
+    
+    static let shared: UserRepository = .init()
+    
+    private init() {
+        self.database = .shared
+    }
+    
     // MARK: Dependencies
     
-    private let database = DatabaseReferenceManager.shared
+    private let database: DatabaseReferenceManager
     
     // MARK: API
     
