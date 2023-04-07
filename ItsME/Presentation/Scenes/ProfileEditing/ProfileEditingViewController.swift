@@ -34,16 +34,17 @@ final class ProfileEditingViewController: UIViewController {
     }
     
     private lazy var profileEditButton: UIButton = .init(type: .system).then {
-        let imagePickerController: UIImagePickerController = .init().then {
-            $0.delegate = self
-            $0.allowsEditing = true
-        }
         let action: UIAction = .init { [weak self] _ in
-            self?.present(imagePickerController, animated: true)
+            guard let self = self else { return }
+            self.present(self.imagePickerController, animated: true)
         }
         $0.addAction(action, for: .touchUpInside)
         $0.setTitle("프로필 사진 변경하기", for: .normal)
         $0.configuration = .borderless()
+    }
+    
+    private lazy var imagePickerController: UIImagePickerController = .init().then {
+        $0.allowsEditing = true
     }
     
     private lazy var nameTextField: InsetTextField = .init().then {
@@ -175,12 +176,23 @@ private extension ProfileEditingViewController {
                     message: "로그아웃하시겠습니까?",
                     okAction: UIAlertAction(title: "예", style: .default)
                 )
-            }.asSignalOnErrorJustComplete()
+            }.asSignalOnErrorJustComplete(),
+            newProfileImageData: imagePickerController.rx.didFinishPickingImage
+                .map { $0?.jpegData(compressionQuality: 0.5) }
+                .asDriverOnErrorJustComplete()
         )
         let output = viewModel.transform(input: input)
         [
             output.viewDidLoad
                 .drive(),
+            output.profileImageData
+                .map { imageData -> UIImage? in
+                    guard let imageData = imageData else {
+                        return UIImage() // FIXME: 기본 프로필 사진 이미지로 수정
+                    }
+                    return UIImage(data: imageData)
+                }
+                .drive(profileImageView.rx.image),
             output.userName
                 .drive(nameTextField.rx.text),
             output.userInfoItems
@@ -412,26 +424,6 @@ extension ProfileEditingViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - UIImagePickerControllerDelegate
-
-extension ProfileEditingViewController: UIImagePickerControllerDelegate {
-    
-    func imagePickerController(
-        _ picker: UIImagePickerController,
-        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
-    ) {
-        picker.dismiss(animated: true)
-        
-        if let croppedImage = info[.editedImage] as? UIImage {
-            profileImageView.image = croppedImage
-        }
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true)
-    }
-}
-
 // MARK: - UIScrollViewDelegate
 
 extension ProfileEditingViewController: UIScrollViewDelegate {
@@ -439,11 +431,6 @@ extension ProfileEditingViewController: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         nameTextField.resignFirstResponder()
     }
-}
-
-// MARK: - UINavigationControllerDelegate
-
-extension ProfileEditingViewController: UINavigationControllerDelegate {
 }
 
 #if DEBUG
@@ -459,7 +446,7 @@ struct ProfileEditingViewControllerRepresenter: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> UIViewController {
         let navigationController: UINavigationController = .init(rootViewController: .init())
-        let profileEditingViewModel: ProfileEditingViewModel = .init(userInfo: .empty)
+        let profileEditingViewModel: ProfileEditingViewModel = .init(initalProfileImage: Data(), userInfo: .empty)
         let profileEditingViewController: ProfileEditingViewController = .init(viewModel: profileEditingViewModel)
         navigationController.pushViewController(profileEditingViewController, animated: false)
         return navigationController

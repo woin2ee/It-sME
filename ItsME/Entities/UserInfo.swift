@@ -9,7 +9,7 @@ import Foundation
 
 final class UserInfo: Codable {
     var name: String
-    let profileImageURL: String
+    var profileImageURL: String
     var birthday: UserInfoItem
     let address: UserInfoItem
     let phoneNumber: UserInfoItem
