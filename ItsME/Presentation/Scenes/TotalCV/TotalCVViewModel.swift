@@ -10,8 +10,8 @@ import RxCocoa
 
 final class TotalCVViewModel: ViewModelType {
     
-    private let userRepository: UserRepository = .init()
-    private let cvRepository: CVRepository = .init()
+    private let userRepository: UserRepository = .shared
+    private let cvRepository: CVRepository = .shared
     
     private let cvInfoRelay: BehaviorRelay<CVInfo>
     private let index: Int

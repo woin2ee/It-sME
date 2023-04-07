@@ -31,7 +31,7 @@ final class ProfileEditingViewModel: ViewModelType {
         let logoutComplete: Signal<Void>
     }
     
-    private let userRepository: UserRepository = .init()
+    private let userRepository: UserRepository = .shared
     
     private let initalProfileImage: Data
     private let userInfoRelay: BehaviorRelay<UserInfo>
