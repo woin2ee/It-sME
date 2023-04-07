@@ -53,6 +53,9 @@ final class BirthdayEditingViewController: UIViewController {
         self.view.backgroundColor = .init(white: 0.0, alpha: 0.3)
         configureSubviews()
         configureNavigationBar()
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissDatePicker))
+        self.view.addGestureRecognizer(tapGestureRecognizer)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -113,5 +116,9 @@ private extension BirthdayEditingViewController {
             contents: birthday
         )
         self.viewModel.updateBirthday(newItem)
+    }
+    
+    @objc func dismissDatePicker() {
+        self.dismiss(animated: false)
     }
 }

@@ -15,10 +15,15 @@ final class CVRepository {
     
     // MARK: API
     func getAllCV(byUID uid: String) -> Observable<[CVInfo]> {
-        return database.cvsRef(uid).rx.dataSnapshot
-            .map { dataSnapshot in
-                return try LoggedJsonDecoder.decode([CVInfo].self, withJSONObject: dataSnapshot.value)
+        let observable = database.cvsRef(uid).rx.dataSnapshot
+            .compactMap { $0.value as? [String: Any] }
+            .map { $0.map { key, value in
+                return value
+            }}
+            .map { jsonObject in
+                return try LoggedJsonDecoder.decode([CVInfo].self, withJSONObject: jsonObject)
             }
+        return observable
     }
     
     func getAllCVOfCurrentUser() -> Observable<[CVInfo]> {
@@ -28,12 +33,12 @@ final class CVRepository {
         return getAllCV(byUID: uid)
     }
     
-    func saveCVInfo(_ cvInfo: CVInfo, byUID uid: String, index: Int) -> Observable<Void> {
+    func saveCVInfo(_ cvInfo: CVInfo, byUID uid: String) -> Observable<Void> {
         return .create { observer in
             do {
                 let data = try JSONEncoder().encode(cvInfo)
                 let jsonObject = try JSONSerialization.jsonObject(with: data)
-                self.database.cvsRef("\(uid)/\(index)").setValue(jsonObject)
+                self.database.cvsRef(uid).child(cvInfo.uuid).setValue(jsonObject)
                 observer.onNext(())
                 observer.onCompleted()
             } catch {
@@ -44,11 +49,11 @@ final class CVRepository {
         }
     }
     
-    func saveCurrentCVInfo(_ cvInfo: CVInfo, index: Int) -> Observable<Void> {
+    func saveCurrentCVInfo(_ cvInfo: CVInfo) -> Observable<Void> {
         guard let uid = Auth.auth().currentUser?.uid else {
             return .empty()
         }
-        return saveCVInfo(cvInfo, byUID: uid, index: index)
+        return saveCVInfo(cvInfo, byUID: uid)
     }
 }
 

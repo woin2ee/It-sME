@@ -70,6 +70,7 @@
 		DA708F1129DC32BB00EF84F2 /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F1029DC32BB00EF84F2 /* UIImagePickerController+Rx.swift */; };
 		DA708F1329DC32F600EF84F2 /* UIImagePickerControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F1229DC32F600EF84F2 /* UIImagePickerControllerDelegateProxy.swift */; };
 		DA708F1529DC465800EF84F2 /* StorageReference+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F1429DC465800EF84F2 /* StorageReference+Rx.swift */; };
+		DA708F1929DE864600EF84F2 /* IconCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F1829DE864600EF84F2 /* IconCell.swift */; };
 		DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */; };
 		DA7201EA29309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */; };
 		DA7201EC29309B9600A69519 /* AuthenticationServices+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */; };
@@ -82,7 +83,6 @@
 		DA7201FA2931F90900A69519 /* Resume.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201F92931F90900A69519 /* Resume.swift */; };
 		DA739DDA292398BE003AEE4C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DD9292398BE003AEE4C /* LoginViewController.swift */; };
 		DA739DDC292398C3003AEE4C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DDB292398C3003AEE4C /* LoginViewModel.swift */; };
-		DA739DE42924FE54003AEE4C /* CommonAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DE32924FE54003AEE4C /* CommonAlertViewController.swift */; };
 		DA739DE62925E35A003AEE4C /* ItsMEUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9952918DE8C0081C0EC /* ItsMEUITests.swift */; };
 		DA90695629C823F200535A3D /* ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53B73929B5C304000BBB26 /* ExtensionTests.swift */; };
 		DA90695729C826F300535A3D /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53B73729B5BDA1000BBB26 /* Int+.swift */; };
@@ -99,11 +99,7 @@
 		DAB06A40291BA61100E86163 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06A3F291BA61100E86163 /* ViewModelType.swift */; };
 		DAD1D03029B759CE00B12BF8 /* Calendar+Current.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD1D02F29B759CE00B12BF8 /* Calendar+Current.swift */; };
 		DAD1D03229BF411A00B12BF8 /* OtherItemEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD1D03129BF411A00B12BF8 /* OtherItemEditingViewModel.swift */; };
-		DAD1D03429C068A600B12BF8 /* UIDRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD1D03329C068A600B12BF8 /* UIDRepository.swift */; };
-		DAD1D03629C0826100B12BF8 /* UIDRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD1D03529C0826100B12BF8 /* UIDRepositoryTests.swift */; };
 		DAD1D03829C0B40100B12BF8 /* OSStatus+ToReadableString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD1D03729C0B40100B12BF8 /* OSStatus+ToReadableString.swift */; };
-		DAD1D05A29C1CEC500B12BF8 /* AppLoginStatusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD1D05929C1CEC500B12BF8 /* AppLoginStatusManager.swift */; };
-		DAD1D05C29C2DD9500B12BF8 /* AppLoginStatusManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD1D05B29C2DD9500B12BF8 /* AppLoginStatusManager+Rx.swift */; };
 		DADDEEA629A8AD9A00D31B02 /* InsetTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADDEEA529A8AD9A00D31B02 /* InsetTextField.swift */; };
 		DAE6090B2942095400481742 /* TotalUserInfoItemStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE6090A2942095400481742 /* TotalUserInfoItemStackView.swift */; };
 		DAE6090D29420D9900481742 /* ItemAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE6090C29420D9900481742 /* ItemAddButton.swift */; };
@@ -215,6 +211,7 @@
 		DA708F1029DC32BB00EF84F2 /* UIImagePickerController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+Rx.swift"; sourceTree = "<group>"; };
 		DA708F1229DC32F600EF84F2 /* UIImagePickerControllerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImagePickerControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		DA708F1429DC465800EF84F2 /* StorageReference+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StorageReference+Rx.swift"; sourceTree = "<group>"; };
+		DA708F1829DE864600EF84F2 /* IconCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCell.swift; sourceTree = "<group>"; };
 		DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseReference+Rx.swift"; sourceTree = "<group>"; };
 		DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASAuthorizationControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationServices+Rx.swift"; sourceTree = "<group>"; };
@@ -228,7 +225,6 @@
 		DA739DD9292398BE003AEE4C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DA739DDB292398C3003AEE4C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		DA739DDD2923B4D2003AEE4C /* ItsME.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ItsME.entitlements; sourceTree = "<group>"; };
-		DA739DE32924FE54003AEE4C /* CommonAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonAlertViewController.swift; sourceTree = "<group>"; };
 		DA90694D29C8234600535A3D /* ItsMETestsWithoutApp.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ItsMETestsWithoutApp.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA9069D529CDA64B00535A3D /* Collection+isNotEmpty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+isNotEmpty.swift"; sourceTree = "<group>"; };
 		DAA5B9642938825A00BAB04E /* ProfileEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditingViewController.swift; sourceTree = "<group>"; };
@@ -243,11 +239,7 @@
 		DAB06A3F291BA61100E86163 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		DAD1D02F29B759CE00B12BF8 /* Calendar+Current.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+Current.swift"; sourceTree = "<group>"; };
 		DAD1D03129BF411A00B12BF8 /* OtherItemEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherItemEditingViewModel.swift; sourceTree = "<group>"; };
-		DAD1D03329C068A600B12BF8 /* UIDRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDRepository.swift; sourceTree = "<group>"; };
-		DAD1D03529C0826100B12BF8 /* UIDRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDRepositoryTests.swift; sourceTree = "<group>"; };
 		DAD1D03729C0B40100B12BF8 /* OSStatus+ToReadableString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OSStatus+ToReadableString.swift"; sourceTree = "<group>"; };
-		DAD1D05929C1CEC500B12BF8 /* AppLoginStatusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLoginStatusManager.swift; sourceTree = "<group>"; };
-		DAD1D05B29C2DD9500B12BF8 /* AppLoginStatusManager+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppLoginStatusManager+Rx.swift"; sourceTree = "<group>"; };
 		DADDEEA529A8AD9A00D31B02 /* InsetTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetTextField.swift; sourceTree = "<group>"; };
 		DAE6090A2942095400481742 /* TotalUserInfoItemStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalUserInfoItemStackView.swift; sourceTree = "<group>"; };
 		DAE6090C29420D9900481742 /* ItemAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemAddButton.swift; sourceTree = "<group>"; };
@@ -377,7 +369,7 @@
 				DAAFB2492918E43B007A8DF0 /* Application */,
 				DAAFB2512918EE3D007A8DF0 /* Entities */,
 				DAAFB24B2918E49A007A8DF0 /* Presentation */,
-				DA0A88672921244400E9AE43 /* Repositories */,
+				DA0A88672921244400E9AE43 /* Data */,
 				DAAFB24A2918E44B007A8DF0 /* Resources */,
 				DAB06A3E291BA5E600E86163 /* Utils */,
 			);
@@ -388,7 +380,6 @@
 			isa = PBXGroup;
 			children = (
 				D09AC98B2918DE8C0081C0EC /* ItsMETests.swift */,
-				DAD1D03529C0826100B12BF8 /* UIDRepositoryTests.swift */,
 			);
 			path = ItsMETests;
 			sourceTree = "<group>";
@@ -421,7 +412,6 @@
 				DAFCFB6D295068EE006B287A /* TableView */,
 				DAFCFB6A294C3622006B287A /* Cells */,
 				D0CCF502292CCB2400AD4AE6 /* Component */,
-				DA739DE22924FCA0003AEE4C /* AlertViewController */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -499,15 +489,13 @@
 			path = EmailEditing;
 			sourceTree = "<group>";
 		};
-		DA0A88672921244400E9AE43 /* Repositories */ = {
+		DA0A88672921244400E9AE43 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				DA708F1C29DFF1E200EF84F2 /* Repositories */,
 				DA6BCE5F292F04930059E95D /* Firebase */,
-				DA0A88682921245000E9AE43 /* UserRepository.swift */,
-				DA7201ED2931E7BB00A69519 /* CVRepository.swift */,
-				DAD1D03329C068A600B12BF8 /* UIDRepository.swift */,
 			);
-			path = Repositories;
+			path = Data;
 			sourceTree = "<group>";
 		};
 		DA3302AA29ADCC8A00C36154 /* EducationEditing */ = {
@@ -552,29 +540,65 @@
 			path = Firebase;
 			sourceTree = "<group>";
 		};
-		DA7201E5292F684900A69519 /* Extensions */ = {
+		DA708F1C29DFF1E200EF84F2 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				DA0A88682921245000E9AE43 /* UserRepository.swift */,
+				DA7201ED2931E7BB00A69519 /* CVRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		DA708F1D29DFF81500EF84F2 /* Reactive */ = {
+			isa = PBXGroup;
+			children = (
+				DA708F1F29DFF96100EF84F2 /* DelegateProxy */,
+				DA708F1E29DFF84500EF84F2 /* BaseExtensions */,
+				DAAC7A5B29715C0A0083A8E9 /* Rx+Ext.swift */,
+			);
+			path = Reactive;
+			sourceTree = "<group>";
+		};
+		DA708F1E29DFF84500EF84F2 /* BaseExtensions */ = {
 			isa = PBXGroup;
 			children = (
 				DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */,
 				DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */,
+				DA6B3CEA29B1CCD9002BB159 /* YearMonthPickerView+Rx.swift */,
+				DA708F0629D9F11900EF84F2 /* FIRAuth+Rx.swift */,
+				DA708F1029DC32BB00EF84F2 /* UIImagePickerController+Rx.swift */,
+				DA708F1429DC465800EF84F2 /* StorageReference+Rx.swift */,
+			);
+			path = BaseExtensions;
+			sourceTree = "<group>";
+		};
+		DA708F1F29DFF96100EF84F2 /* DelegateProxy */ = {
+			isa = PBXGroup;
+			children = (
+				DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */,
+				DA6B3CEC29B1D453002BB159 /* YearMonthPickerViewDelegateProxy.swift */,
+				DA708F1229DC32F600EF84F2 /* UIImagePickerControllerDelegateProxy.swift */,
+			);
+			path = DelegateProxy;
+			sourceTree = "<group>";
+		};
+		DA7201E5292F684900A69519 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
 				DAFCFB66294AC00C006B287A /* UIStackView+.swift */,
 				DAFCFB7429543D3B006B287A /* UIButton+.swift */,
-				DAAC7A5B29715C0A0083A8E9 /* Rx+Ext.swift */,
 				DAAF1BDE299A1E8100728376 /* Array+SafeIndex.swift */,
 				DA6B3CDA29ADEE33002BB159 /* UIEdgeInsets+All.swift */,
 				DA6B3CE129B08E95002BB159 /* SnapKit+.swift */,
-				DA6B3CEA29B1CCD9002BB159 /* YearMonthPickerView+Rx.swift */,
 				DA53B73729B5BDA1000BBB26 /* Int+.swift */,
 				DAD1D02F29B759CE00B12BF8 /* Calendar+Current.swift */,
 				DAD1D03729C0B40100B12BF8 /* OSStatus+ToReadableString.swift */,
-				DAD1D05B29C2DD9500B12BF8 /* AppLoginStatusManager+Rx.swift */,
 				DA9069D529CDA64B00535A3D /* Collection+isNotEmpty.swift */,
 				DAF516FD29D5765E00BDAD68 /* UIButton.Configuration+Then.swift */,
 				DA708F0229D6EDBF00EF84F2 /* UIViewController+presentConfirmAlert.swift */,
-				DA708F0629D9F11900EF84F2 /* FIRAuth+Rx.swift */,
 				DA708F0829D9FE1700EF84F2 /* FIRAuth+isLoggedIn.swift */,
-				DA708F1029DC32BB00EF84F2 /* UIImagePickerController+Rx.swift */,
-				DA708F1429DC465800EF84F2 /* StorageReference+Rx.swift */,
+				D0CCF4E02925FB0100AD4AE6 /* UIView+.swift */,
+				D0CCF4E2292604BE00AD4AE6 /* UIColor+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -586,14 +610,6 @@
 				DA739DDB292398C3003AEE4C /* LoginViewModel.swift */,
 			);
 			path = Login;
-			sourceTree = "<group>";
-		};
-		DA739DE22924FCA0003AEE4C /* AlertViewController */ = {
-			isa = PBXGroup;
-			children = (
-				DA739DE32924FE54003AEE4C /* CommonAlertViewController.swift */,
-			);
-			path = AlertViewController;
 			sourceTree = "<group>";
 		};
 		DA90694E29C8234600535A3D /* ItsMETestsWithoutApp */ = {
@@ -625,6 +641,7 @@
 			children = (
 				DAAB20C4299B7A1000D5338D /* IconInputCell.swift */,
 				DAAB20C6299B7A5600D5338D /* ContentsInputCell.swift */,
+				DA708F1829DE864600EF84F2 /* IconCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -644,7 +661,6 @@
 			children = (
 				D09AC9742918DE8B0081C0EC /* AppDelegate.swift */,
 				D09AC9762918DE8B0081C0EC /* SceneDelegate.swift */,
-				DAD1D05929C1CEC500B12BF8 /* AppLoginStatusManager.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -707,15 +723,12 @@
 		DAB06A3E291BA5E600E86163 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				DA708F1D29DFF81500EF84F2 /* Reactive */,
 				DA7201E5292F684900A69519 /* Extensions */,
 				DAB06A41291BA8C800E86163 /* Protocols */,
-				D0CCF4E02925FB0100AD4AE6 /* UIView+.swift */,
-				DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */,
 				DA26989B298A4709008A5D30 /* LoggedJsonDecoder.swift */,
-				DA6B3CEC29B1D453002BB159 /* YearMonthPickerViewDelegateProxy.swift */,
 				DA708F0429D9DC4500EF84F2 /* Hash.swift */,
 				DA708F0E29DC1F7400EF84F2 /* Path.swift */,
-				DA708F1229DC32F600EF84F2 /* UIImagePickerControllerDelegateProxy.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -724,7 +737,6 @@
 			isa = PBXGroup;
 			children = (
 				DAB06A3F291BA61100E86163 /* ViewModelType.swift */,
-				D0CCF4E2292604BE00AD4AE6 /* UIColor+.swift */,
 				DAAB20C0299B6AEF00D5338D /* Reusable.swift */,
 			);
 			path = Protocols;
@@ -1044,7 +1056,6 @@
 				DAFCFB6C294C3666006B287A /* EducationCell.swift in Sources */,
 				DA9069D629CDA64B00535A3D /* Collection+isNotEmpty.swift in Sources */,
 				DA7201EC29309B9600A69519 /* AuthenticationServices+Rx.swift in Sources */,
-				DAD1D05C29C2DD9500B12BF8 /* AppLoginStatusManager+Rx.swift in Sources */,
 				DA708F1129DC32BB00EF84F2 /* UIImagePickerController+Rx.swift in Sources */,
 				DAF516FE29D5765E00BDAD68 /* UIButton.Configuration+Then.swift in Sources */,
 				D09AC9792918DE8B0081C0EC /* HomeViewController.swift in Sources */,
@@ -1077,7 +1088,6 @@
 				DA3302AE29ADCCA700C36154 /* EducationEditingViewModel.swift in Sources */,
 				D09AC9752918DE8B0081C0EC /* AppDelegate.swift in Sources */,
 				D06CD86B29936BBC005DFB3B /* CategoryHeaderView.swift in Sources */,
-				DA739DE42924FE54003AEE4C /* CommonAlertViewController.swift in Sources */,
 				DA6BCE5E292F04910059E95D /* DatabaseReferenceManager.swift in Sources */,
 				DA708F0329D6EDBF00EF84F2 /* UIViewController+presentConfirmAlert.swift in Sources */,
 				DA6B3CDB29ADEE33002BB159 /* UIEdgeInsets+All.swift in Sources */,
@@ -1086,7 +1096,6 @@
 				DA7201F22931F21100A69519 /* ResumeCategory.swift in Sources */,
 				DA3302B129ADD36000C36154 /* TextFieldCell.swift in Sources */,
 				DA018809296D146A002C5CB0 /* BirthdayEditingViewController.swift in Sources */,
-				DAD1D03429C068A600B12BF8 /* UIDRepository.swift in Sources */,
 				DA6B3CEB29B1CCD9002BB159 /* YearMonthPickerView+Rx.swift in Sources */,
 				DAB06A3D291BA5B400E86163 /* HomeViewModel.swift in Sources */,
 				DA481D7F299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift in Sources */,
@@ -1121,9 +1130,9 @@
 				DA739DDC292398C3003AEE4C /* LoginViewModel.swift in Sources */,
 				DAE6090B2942095400481742 /* TotalUserInfoItemStackView.swift in Sources */,
 				D0CCF504292CCB4C00AD4AE6 /* CVCard.swift in Sources */,
+				DA708F1929DE864600EF84F2 /* IconCell.swift in Sources */,
 				DA01880D296D1477002C5CB0 /* PhoneNumberEditingViewController.swift in Sources */,
 				D0B1BA862988DA75003ACD41 /* CategoryCell.swift in Sources */,
-				DAD1D05A29C1CEC500B12BF8 /* AppLoginStatusManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1131,7 +1140,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DAD1D03629C0826100B12BF8 /* UIDRepositoryTests.swift in Sources */,
 				D09AC98C2918DE8C0081C0EC /* ItsMETests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

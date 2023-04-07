@@ -8,16 +8,20 @@
 import Foundation
 
 final class CVInfo: Codable {
+    let uuid: String
     var title: String
     var resume: Resume
     var coverLetter: CoverLetter
     var lastModified: String
     
-    init(title: String,
-         resume: Resume,
-         coverLetter: CoverLetter,
-         lastModified: String
+    init(
+        uuid: String = UUID().uuidString,
+        title: String,
+        resume: Resume,
+        coverLetter: CoverLetter,
+        lastModified: String
     ) {
+        self.uuid = uuid
         self.title = title
         self.resume = resume
         self.coverLetter = coverLetter
@@ -25,22 +29,11 @@ final class CVInfo: Codable {
     }
 }
 
-// MARK: - CodingKeys
-
-extension CVInfo {
-    
-    enum CodingKeys: String, CodingKey {
-    case title
-    case resume
-    case coverLetter
-    case lastModified
-    }
-}
-
 extension CVInfo {
     
     static var empty: CVInfo {
-        .init(
+        return .init(
+            uuid: "",
             title: "",
             resume: .empty,
             coverLetter: .empty,
