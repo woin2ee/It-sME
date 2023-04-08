@@ -283,7 +283,7 @@ private extension EducationEditingViewController {
                 }),
             output.editingType
                 .drive(editingTypeBinding),
-            output.deleteComplete
+            output.deleteHandler
                 .emit(with: self, onNext: { owner, _ in
                     owner.navigationController?.popViewController(animated: true)
                 }),

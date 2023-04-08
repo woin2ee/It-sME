@@ -16,16 +16,16 @@ protocol EducationEditingViewModelDelegate: AnyObject {
 
 final class EducationEditingViewModel: ViewModelType {
     
-    let educationItem: EducationItem
+    let initalEducationItem: EducationItem
     let editingType: EditingType
-    private weak var delegate: EducationEditingViewModelDelegate?
+    weak var delegate: EducationEditingViewModelDelegate?
     
     init(
         educationItem: EducationItem,
         editingType: EditingType,
         delegate: EducationEditingViewModelDelegate? = nil
     ) {
-        self.educationItem = educationItem
+        self.initalEducationItem = educationItem
         self.editingType = editingType
         self.delegate = delegate
     }
@@ -33,7 +33,7 @@ final class EducationEditingViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let graduateDateString = Driver.merge(
             input.graduateDate
-                .startWith((year: educationItem.graduateYear ?? 0, month: educationItem.graduateMonth ?? 0))
+                .startWith((year: initalEducationItem.graduateYear ?? 0, month: initalEducationItem.graduateMonth ?? 0))
                 .map { return "\($0.year).\($0.month.toLeadingZero(digit: 2))" },
             input.enrollmentSelection
                 .startWith(()) // 졸업일 초기 상태 지정
@@ -51,8 +51,8 @@ final class EducationEditingViewModel: ViewModelType {
             input.description,
             input.entranceDate
                 .startWith((
-                    year: educationItem.entranceYear ?? Calendar.current.currentYear,
-                    month: educationItem.entranceMonth ?? Calendar.current.currentMonth
+                    year: initalEducationItem.entranceYear ?? Calendar.current.currentYear,
+                    month: initalEducationItem.entranceMonth ?? Calendar.current.currentMonth
                 )), // 입학일 초기 상태 지정
             graduateDateString
         ) {
@@ -60,7 +60,7 @@ final class EducationEditingViewModel: ViewModelType {
             let period = "\(entranceDate.year).\(entranceDate.month.toLeadingZero(digit: 2)) - \(graduateDate)"
             return .init(period: period, title: title, description: description)
         }
-            .startWith(educationItem)
+            .startWith(initalEducationItem)
         
         let doneHandler = input.doneTrigger
             .withLatestFrom(educationItem)
@@ -69,7 +69,7 @@ final class EducationEditingViewModel: ViewModelType {
         
         let editingType = Driver.just(editingType)
         
-        let deleteComplete = input.deleteTrigger
+        let deleteHandler = input.deleteTrigger
             .doOnNext {
                 if case let .edit(index) = self.editingType {
                     self.delegate?.educationEditingViewModelDidDeleteEducationItem(at: index)
@@ -80,7 +80,7 @@ final class EducationEditingViewModel: ViewModelType {
             educationItem: educationItem,
             doneHandler: doneHandler,
             editingType: editingType,
-            deleteComplete: deleteComplete
+            deleteHandler: deleteHandler
         )
     }
     
@@ -113,7 +113,7 @@ extension EducationEditingViewModel {
         let educationItem: Driver<EducationItem>
         let doneHandler: Signal<Void>
         let editingType: Driver<EditingType>
-        let deleteComplete: Signal<Void>
+        let deleteHandler: Signal<Void>
     }
 }
 
