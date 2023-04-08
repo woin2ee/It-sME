@@ -14,7 +14,7 @@ extension Reactive where Base: YearMonthPickerView {
         YearMonthPickerViewDelegateProxy.proxy(for: base)
     }
     
-    var dateSelected: ControlEvent<(year: Int, month: Int)> {
+    var selectedDate: ControlEvent<(year: Int, month: Int)> {
         let selector: Selector = #selector(YearMonthPickerViewDelegate.yearMonthPickerViewDidSelect(year:month:))
         let source = delegateProxy
             .methodInvoked(selector)

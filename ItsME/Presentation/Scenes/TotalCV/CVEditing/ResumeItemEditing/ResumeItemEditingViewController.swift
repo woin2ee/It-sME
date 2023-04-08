@@ -229,8 +229,8 @@ private extension ResumeItemEditingViewController {
             title: firstTitleInputCell.textField.rx.text.orEmpty.asDriver(),
             secondTitle: secondTitleInputCell.textField.rx.text.orEmpty.asDriver(),
             description: descriptionInputCell.textView.rx.text.orEmpty.asDriver(),
-            entranceDate: entranceDatePickerCell.yearMonthPickerView.rx.dateSelected.asDriver(),
-            endDate: endDatePickerCell.yearMonthPickerView.rx.dateSelected.asDriver(),
+            entranceDate: entranceDatePickerCell.yearMonthPickerView.rx.selectedDate.asDriver(),
+            endDate: endDatePickerCell.yearMonthPickerView.rx.selectedDate.asDriver(),
             doneTrigger: completeBarButton.rx.tap.asSignal(),
             enrollmentSelection: self.rx.methodInvoked(#selector(hideEndDateInputCells))
                 .mapToVoid()
