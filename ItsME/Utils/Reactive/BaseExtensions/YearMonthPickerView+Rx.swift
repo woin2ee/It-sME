@@ -19,10 +19,13 @@ extension Reactive where Base: YearMonthPickerView {
         let source = delegateProxy
             .methodInvoked(selector)
             .map { parameters in
-                guard let year = parameters[0] as? Int,
-                      let month = parameters[1] as? Int else {
-                    fatalError("\(#file) \(#line) yearMonthPickerViewDidSelect(year:month:) 함수의 파라미터와 일치하지 않습니다.")
+                guard let year = parameters[0] as? Int else {
+                    throw RxCocoaError.castingError(object: parameters[0], targetType: Int.self)
                 }
+                guard let month = parameters[1] as? Int else {
+                    throw RxCocoaError.castingError(object: parameters[1], targetType: Int.self)
+                }
+                
                 return (year: year, month: month)
             }
         
