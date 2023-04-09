@@ -32,7 +32,7 @@ final class EducationEditingViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         let graduateDateString = Driver.merge(
-            input.graduateDate
+            input.selectedGraduateDate
                 .startWith((year: initalEducationItem.graduateYear ?? 0, month: initalEducationItem.graduateMonth ?? 0))
                 .map { return "\($0.year).\($0.month.toLeadingZero(digit: 2))" },
             input.enrollmentSelection
@@ -49,7 +49,7 @@ final class EducationEditingViewModel: ViewModelType {
         let educationItem = Driver.combineLatest(
             input.title,
             input.description,
-            input.entranceDate
+            input.selectedEntranceDate
                 .startWith((
                     year: initalEducationItem.entranceYear ?? Calendar.current.currentYear,
                     month: initalEducationItem.entranceMonth ?? Calendar.current.currentMonth
@@ -101,8 +101,8 @@ extension EducationEditingViewModel {
     struct Input {
         let title: Driver<String>
         let description: Driver<String>
-        let entranceDate: Driver<(year: Int, month: Int)>
-        let graduateDate: Driver<(year: Int, month: Int)>
+        let selectedEntranceDate: Driver<(year: Int, month: Int)>
+        let selectedGraduateDate: Driver<(year: Int, month: Int)>
         let doneTrigger: Signal<Void>
         let enrollmentSelection: Driver<Void>
         let graduateSelection: Driver<Void>

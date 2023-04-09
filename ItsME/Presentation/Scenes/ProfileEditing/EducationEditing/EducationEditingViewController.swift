@@ -255,8 +255,8 @@ private extension EducationEditingViewController {
         let input: EducationEditingViewModel.Input = .init(
             title: titleInputCell.textField.rx.text.orEmpty.asDriver(),
             description: descriptionInputCell.textField.rx.text.orEmpty.asDriver(),
-            entranceDate: entranceDatePickerCell.yearMonthPickerView.rx.selectedDate.asDriver(),
-            graduateDate: graduateDatePickerCell.yearMonthPickerView.rx.selectedDate.asDriver(),
+            selectedEntranceDate: entranceDatePickerCell.yearMonthPickerView.rx.selectedDate.asDriver(),
+            selectedGraduateDate: graduateDatePickerCell.yearMonthPickerView.rx.selectedDate.asDriver(),
             doneTrigger: completeButton.rx.tap.asSignal(),
             enrollmentSelection: self.rx.methodInvoked(#selector(hideGraduateDateInputCells))
                 .mapToVoid()
