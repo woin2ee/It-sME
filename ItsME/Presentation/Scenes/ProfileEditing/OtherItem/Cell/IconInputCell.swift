@@ -13,8 +13,6 @@ import UIKit
 
 final class IconInputCell: UITableViewCell {
     
-    private let disposeBag: DisposeBag = .init()
-    
     // MARK: UI Objects
     
     private lazy var titleLabel: UILabel = .init().then {
