@@ -212,7 +212,7 @@ private extension ProfileEditingViewController {
                 },
             output.tappedEditingCompleteButton
                 .emit(with: self, onNext: { owner, userInfo in
-                    owner.dismiss(animated: true)
+                    owner.presentingViewController?.dismiss(animated: true)
                 }),
             output.logoutComplete
                 .emit(with: self, onNext: { owner, _ in
