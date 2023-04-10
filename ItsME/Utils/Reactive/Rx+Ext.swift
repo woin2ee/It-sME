@@ -39,4 +39,8 @@ extension SharedSequenceConvertibleType {
     func doOnNext(_ block: ((Element) -> Void)?) -> SharedSequence<SharingStrategy, Element> {
         return self.do(onNext: block)
     }
+    
+    func startWith(_ block: () -> Element) -> SharedSequence<SharingStrategy, Element> {
+        return startWith(block())
+    }
 }

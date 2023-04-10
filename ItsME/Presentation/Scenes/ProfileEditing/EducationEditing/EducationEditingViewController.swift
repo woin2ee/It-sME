@@ -64,10 +64,10 @@ final class EducationEditingViewController: UIViewController {
         $0.title = "졸업 여부"
         $0.menu = [
             .init(title: "재학중", handler: { [weak self] in
-                self?.hideGraduateDateInputCells()
+                self?.tapEnrolledMenu()
             }),
             .init(title: "졸업", handler: { [weak self] in
-                self?.showGraduateDateInputCells()
+                self?.tapGraduatedMenu()
             }),
         ]
         $0.backgroundColor = .secondarySystemGroupedBackground
@@ -217,7 +217,7 @@ private extension EducationEditingViewController {
         }
     }
     
-    @objc dynamic func hideGraduateDateInputCells() {
+    func hideGraduateDateInputCells() {
         inputTableView.beginUpdates()
         defer { inputTableView.endUpdates() }
         
@@ -235,7 +235,7 @@ private extension EducationEditingViewController {
         }
     }
     
-    @objc dynamic func showGraduateDateInputCells() {
+    func showGraduateDateInputCells() {
         let section = 1
         if inputTableViewDataSource[section].contains(graduateDateInputCell) { return }
         
@@ -245,6 +245,14 @@ private extension EducationEditingViewController {
             inputTableView.insertRows(at: [.init(row: nextRow, section: section)], with: .fade)
         }
     }
+    
+    @objc dynamic func tapEnrolledMenu() {
+        self.hideGraduateDateInputCells()
+    }
+    
+    @objc dynamic func tapGraduatedMenu() {
+        self.showGraduateDateInputCells()
+    }
 }
 
 // MARK: - Binding ViewModel
@@ -252,31 +260,25 @@ private extension EducationEditingViewController {
 private extension EducationEditingViewController {
     
     func bindViewModel() {
-        let input: EducationEditingViewModel.Input = .init(
-            title: titleInputCell.textField.rx.text.orEmpty.asDriver(),
-            description: descriptionInputCell.textField.rx.text.orEmpty.asDriver(),
-            selectedEntranceDate: entranceDatePickerCell.yearMonthPickerView.rx.selectedDate.asDriver(),
-            selectedGraduateDate: graduateDatePickerCell.yearMonthPickerView.rx.selectedDate.asDriver(),
-            doneTrigger: completeButton.rx.tap.asSignal(),
-            enrollmentSelection: self.rx.methodInvoked(#selector(hideGraduateDateInputCells))
-                .mapToVoid()
-                .asDriverOnErrorJustComplete(),
-            graduateSelection: self.rx.methodInvoked(#selector(showGraduateDateInputCells))
-                .mapToVoid()
-                .asDriverOnErrorJustComplete(),
-            deleteTrigger: deleteButton.rx.tap.flatMapFirst {
-                self.rx.presentConfirmAlert(
-                    title: "항목 삭제",
-                    message: "학력 정보를 삭제하시겠습니까?",
-                    okAction: UIAlertAction(title: "삭제", style: .destructive)
-                )
-            }.asSignalOnErrorJustComplete()
-        )
+        let input: EducationEditingViewModel.Input = makeInput()
         let output = viewModel.transform(input: input)
-        
         [
-            output.educationItem
-                .drive(educationItemBinding),
+            output.title
+                .drive(titleInputCell.textField.rx.text),
+            output.description
+                .drive(descriptionInputCell.textField.rx.text),
+            output.entranceDate
+                .drive(with: self, onNext: { owner, date in
+                    let dateString = "\(date.year).\(date.month.toLeadingZero(digit: 2))"
+                    owner.entranceDateInputCell.trailingButton.setTitle(dateString, for: .normal)
+                    owner.entranceDatePickerCell.yearMonthPickerView.setDate(year: date.year, month: date.month, animated: false)
+                }),
+            output.graduateDate
+                .drive(with: self, onNext: { owner, date in
+                    let dateString = "\(date.year).\(date.month.toLeadingZero(digit: 2))"
+                    owner.graduateDateInputCell.trailingButton.setTitle(dateString, for: .normal)
+                    owner.graduateDatePickerCell.yearMonthPickerView.setDate(year: date.year, month: date.month, animated: false)
+                }),
             output.doneHandler
                 .emit(with: self, onNext: { owner, _ in
                     owner.navigationController?.popViewController(animated: true)
@@ -287,19 +289,36 @@ private extension EducationEditingViewController {
                 .emit(with: self, onNext: { owner, _ in
                     owner.navigationController?.popViewController(animated: true)
                 }),
+            output.schoolEnrollmentStatus
+                .drive(schoolEnrollmentStatusBinding),
         ]
             .forEach { $0.disposed(by: disposeBag) }
     }
     
-    var educationItemBinding: Binder<EducationItem> {
-        .init(self) { vc, educationItem in
-            vc.titleInputCell.textField.text = educationItem.title
-            vc.descriptionInputCell.textField.text = educationItem.description
-            vc.entranceDateInputCell.trailingButton.setTitle(educationItem.entranceDate, for: .normal)
-            vc.entranceDatePickerCell.yearMonthPickerView.setDate(year: educationItem.entranceYear ?? 0, month: educationItem.entranceMonth ?? 0, animated: false)
-            vc.graduateDateInputCell.trailingButton.setTitle(educationItem.graduateDate, for: .normal)
-            vc.graduateDatePickerCell.yearMonthPickerView.setDate(year: educationItem.graduateYear ?? 0, month: educationItem.graduateMonth ?? 0, animated: false)
-        }
+    func makeInput() -> EducationEditingViewModel.Input {
+        return .init(
+            title: titleInputCell.textField.rx.text.orEmpty.asDriver(),
+            description: descriptionInputCell.textField.rx.text.orEmpty.asDriver(),
+            selectedEntranceDate: entranceDatePickerCell.yearMonthPickerView.rx.selectedDate.asDriver(),
+            selectedGraduateDate: graduateDatePickerCell.yearMonthPickerView.rx.selectedDate.asDriver(),
+            doneTrigger: completeButton.rx.tap.asSignal(),
+            deleteTrigger: deleteButton.rx.tap.flatMapFirst { [weak self] in
+                guard let self = self else { return Observable<Void>.empty() }
+                return self.rx.presentConfirmAlert(
+                    title: "항목 삭제",
+                    message: "학력 정보를 삭제하시겠습니까?",
+                    okAction: UIAlertAction(title: "삭제", style: .destructive)
+                )
+            }.asSignalOnErrorJustComplete(),
+            selectedEnrollmentStatus: .merge(
+                self.rx.methodInvoked(#selector(tapEnrolledMenu))
+                    .map { _ in SchoolEnrollmentStatus.enrolled }
+                    .asDriverOnErrorJustComplete(),
+                self.rx.methodInvoked(#selector(tapGraduatedMenu))
+                    .map { _ in SchoolEnrollmentStatus.graduated }
+                    .asDriverOnErrorJustComplete()
+            )
+        )
     }
     
     var editingTypeBinding: Binder<EducationEditingViewModel.EditingType> {
@@ -313,6 +332,19 @@ private extension EducationEditingViewController {
                 vc.navigationItem.title = "학력 추가"
                 vc.completeButton.title = "추가"
                 vc.deleteButton.isHidden = true
+            }
+        }
+    }
+    
+    var schoolEnrollmentStatusBinding: Binder<SchoolEnrollmentStatus> {
+        return .init(self) { vc, status in
+            switch status {
+            case .enrolled:
+                vc.schoolEnrollmentStatusCell.menuTitleLabel.text = SchoolEnrollmentStatus.enrolled.rawValue
+                vc.hideGraduateDateInputCells()
+            case .graduated:
+                vc.schoolEnrollmentStatusCell.menuTitleLabel.text = SchoolEnrollmentStatus.graduated.rawValue
+                vc.showGraduateDateInputCells()
             }
         }
     }

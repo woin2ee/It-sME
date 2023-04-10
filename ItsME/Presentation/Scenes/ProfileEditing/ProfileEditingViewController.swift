@@ -89,7 +89,6 @@ final class ProfileEditingViewController: UIViewController {
     private lazy var educationItemAddButton: ItemAddButton = .init().then {
         let action: UIAction = .init(handler: { [weak self] _ in
             let viewModel: EducationEditingViewModel = .init(
-                educationItem: .empty,
                 editingType: .new,
                 delegate: self?.viewModel
             )
@@ -411,8 +410,7 @@ extension ProfileEditingViewController: UITableViewDelegate {
                 return
             }
             let viewModel: EducationEditingViewModel = .init(
-                educationItem: educationItem,
-                editingType: .edit(index: indexPath.row),
+                editingType: .edit(index: indexPath.row, target: educationItem),
                 delegate: viewModel
             )
             let viewController: EducationEditingViewController = .init(viewModel: viewModel)
