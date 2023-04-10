@@ -14,7 +14,7 @@ extension Array {
         get {
             guard self.indices ~= index else {
                 #if DEBUG
-                    debugPrint("Out of index. >>> \(self.debugDescription)")
+                    ItsMELogger.standard.error("Out of index. >>> \(self.debugDescription)")
                 #endif
                 return nil
             }
