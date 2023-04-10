@@ -302,14 +302,14 @@ private extension EducationEditingViewController {
             selectedEntranceDate: entranceDatePickerCell.yearMonthPickerView.rx.selectedDate.asDriver(),
             selectedGraduateDate: graduateDatePickerCell.yearMonthPickerView.rx.selectedDate.asDriver(),
             doneTrigger: completeButton.rx.tap.asSignal(),
-            deleteTrigger: deleteButton.rx.tap.flatMapFirst { [weak self] in
-                guard let self = self else { return Observable<Void>.empty() }
+            deleteTrigger: deleteButton.rx.tap.asSignal().flatMapFirst { [weak self] in
+                guard let self = self else { return .empty() }
                 return self.rx.presentConfirmAlert(
                     title: "항목 삭제",
                     message: "학력 정보를 삭제하시겠습니까?",
                     okAction: UIAlertAction(title: "삭제", style: .destructive)
-                )
-            }.asSignalOnErrorJustComplete(),
+                ).asSignal()
+            },
             selectedEnrollmentStatus: .merge(
                 self.rx.methodInvoked(#selector(tapEnrolledMenu))
                     .map { _ in SchoolEnrollmentStatus.enrolled }

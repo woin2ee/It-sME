@@ -169,13 +169,14 @@ private extension ProfileEditingViewController {
             tapEditingCompleteButton: editingCompleteButton.rx.tap.asSignal(),
             userName: nameTextField.rx.text.orEmpty.asDriver(),
             viewDidLoad: .just(()),
-            logoutTrigger: logoutButton.rx.tap.flatMap {
-                self.rx.presentConfirmAlert(
+            logoutTrigger: logoutButton.rx.tap.asSignal().flatMapFirst { [weak self] _ in
+                guard let self = self else { return .empty() }
+                return self.rx.presentConfirmAlert(
                     title: "로그아웃",
                     message: "로그아웃하시겠습니까?",
                     okAction: UIAlertAction(title: "예", style: .default)
-                )
-            }.asSignalOnErrorJustComplete(),
+                ).asSignal()
+            },
             newProfileImageData: imagePickerController.rx.didFinishPickingImage
                 .map { $0?.jpegData(compressionQuality: 0.7) }
                 .asDriverOnErrorJustComplete()

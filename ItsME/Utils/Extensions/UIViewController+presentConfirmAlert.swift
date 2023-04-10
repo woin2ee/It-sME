@@ -6,6 +6,7 @@
 //
 
 import RxSwift
+import RxCocoa
 import UIKit
 
 extension UIViewController {
@@ -40,8 +41,8 @@ extension Reactive where Base: UIViewController {
         cancelAction: UIAlertAction = .init(title: "아니오", style: .cancel),
         okAction: UIAlertAction,
         animated: Bool = true
-    ) -> Observable<Void> {
-        return .create { observer in
+    ) -> ControlEvent<Void> {
+        let source: Observable<Void> = .create { observer in
             let okActionProxy: UIAlertAction = .init(title: okAction.title, style: okAction.style) { _ in
                 observer.onNext(())
                 observer.onCompleted()
@@ -50,5 +51,7 @@ extension Reactive where Base: UIViewController {
             
             return Disposables.create()
         }
+        
+        return ControlEvent<Void>.init(events: source)
     }
 }
