@@ -17,11 +17,11 @@ final class TotalCVViewModel: ViewModelType {
     private let index: Int
     
     var resumeCategory: [ResumeCategory] {
-        cvInfoRelay.value.resume.category
+        cvInfoRelay.value.resume?.category ?? []
     }
     
     var coverLetter: CoverLetter {
-        cvInfoRelay.value.coverLetter
+        cvInfoRelay.value.coverLetter ?? CoverLetter.empty
     }
     
     init(cvInfo: CVInfo, index: Int) {
@@ -36,12 +36,10 @@ final class TotalCVViewModel: ViewModelType {
                     .asDriver(onErrorDriveWith: .empty())
             }
         
-        let cvInfo = cvInfoRelay.asDriver()
+        let cvInfoDriver = cvInfoRelay.asDriver()
         let userInfoItems = userInfo.map { $0.defaultItems + $0.otherItems }
         
         let educationItems = userInfo.map { $0.educationItems }
-        
-        let cvInfoDriver = cvInfoRelay.asDriver()
                 
         let tappedEditingCompleteButton = input.doneTrigger
             .withLatestFrom(cvInfoDriver)
@@ -50,7 +48,7 @@ final class TotalCVViewModel: ViewModelType {
         return .init(
             userInfoItems: userInfoItems,
             educationItems: educationItems,
-            cvInfo: cvInfo,
+            cvInfo: cvInfoDriver,
             tappedEditCompleteButton: tappedEditingCompleteButton
         )
     }
@@ -60,7 +58,7 @@ final class TotalCVViewModel: ViewModelType {
 extension TotalCVViewModel {
     func removeResumeCategory(indexPath: IndexPath, resumeCatgory: ResumeCategory) {
         let changedCVInfo = cvInfoRelay.value
-        changedCVInfo.resume.category.remove(at: indexPath.section)
+        changedCVInfo.resume?.category.remove(at: indexPath.section)
     }
 }
 
@@ -86,43 +84,43 @@ extension TotalCVViewModel:
     
     func resumeItemEditingViewModelDidEndEditing(with resumeItem: ResumeItem, at indexPath: IndexPath) {
         let changedCVInfo = cvInfoRelay.value
-        changedCVInfo.resume.category[indexPath.section].items[indexPath.row] = resumeItem
+        changedCVInfo.resume?.category[indexPath.section].items[indexPath.row] = resumeItem
         cvInfoRelay.accept(changedCVInfo)
     }
     
     func resumeItemEditingViewModelDidAppend(with resumeItem: ResumeItem, at section: Int) {
         let changedCVInfo = cvInfoRelay.value
-        changedCVInfo.resume.category[section].items.append(resumeItem)
+        changedCVInfo.resume?.category[section].items.append(resumeItem)
         cvInfoRelay.accept(changedCVInfo)
     }
     
     func categoryEditingViewModelDidEndEditing(with title: String, at section: Int) {
         let changedCVInfo = cvInfoRelay.value
-        changedCVInfo.resume.category[section].title = title
+        changedCVInfo.resume?.category[section].title = title
         cvInfoRelay.accept(changedCVInfo)
     }
     
     func categoryEditingViewModelDidAppend(title: String) {
         let changedCVInfo = cvInfoRelay.value
-        changedCVInfo.resume.category.append(.init(title: title, items: []))
+        changedCVInfo.resume?.category.append(.init(title: title, items: []))
         cvInfoRelay.accept(changedCVInfo)
     }
     
     func categoryEditingViewModelDidRemove(at section: Int) {
         let changedCVInfo = cvInfoRelay.value
-        changedCVInfo.resume.category.remove(at: section)
+        changedCVInfo.resume?.category.remove(at: section)
         cvInfoRelay.accept(changedCVInfo)
     }
     
     func coverLetterEditingViewModelDidEndEditing(with coverLetterItem: CoverLetterItem, at indexPath: IndexPath) {
         let changedCVInfo = cvInfoRelay.value
-        changedCVInfo.coverLetter.items[indexPath.row] = coverLetterItem
+        changedCVInfo.coverLetter?.items[indexPath.row] = coverLetterItem
         cvInfoRelay.accept(changedCVInfo)
     }
     
     func coverLetterEditingViewModelDidAppend(coverLetterItem: CoverLetterItem) {
         let changedCVInfo = cvInfoRelay.value
-        changedCVInfo.coverLetter.items.append(coverLetterItem)
+        changedCVInfo.coverLetter?.items.append(coverLetterItem)
         cvInfoRelay.accept(changedCVInfo)
     }
 }

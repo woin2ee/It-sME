@@ -9,6 +9,7 @@ import FirebaseStorage
 import UIKit
 import RxSwift
 import SnapKit
+import Then
 
 final class HomeViewController: UIViewController, UIScrollViewDelegate {
     
@@ -51,14 +52,17 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
     
     private lazy var pageController = UIPageControl()
     
+    private lazy var addCVButton: AddCVButton = .init()
+    
     let contentWidth = 250
+    
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureAppearance()
         bindViewModel()
         configureSubviews()
-        
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
@@ -184,6 +188,7 @@ private extension HomeViewController {
                     
                 }, for: .touchUpInside)
             }
+            self.layoutAddCVButton()
         }
     }
 }
@@ -243,7 +248,6 @@ private extension HomeViewController {
         }
         
         vStackLayout.snp.makeConstraints { make in
-//            make.height.equalTo(self.view.snp.height).multipliedBy(0.25)
             make.width.equalTo(self.view.snp.width).multipliedBy(0.8)
             make.centerX.equalTo(self.view.safeAreaLayoutGuide)
             make.top.equalTo(self.profileImageView.snp.bottom).offset(20)
@@ -317,24 +321,38 @@ struct ScrollPageController {
     
 }
 
-
-//MARK: - for canvas
-import SwiftUI
-
-struct ViewControllerRepresentable: UIViewControllerRepresentable {
-    typealias UIViewControllerType = HomeViewController
+// MARK: - Private Function
+extension HomeViewController {
     
-    func makeUIViewController(context: Context) -> HomeViewController {
-        return HomeViewController()
+    func pushCVAddView() {
+        let cvAddViewModel: CVAddViewModel = .init(cvTitle: "", editingType: .new)
+        let viewController: CVAddViewController = .init(viewModel: cvAddViewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func updateUIViewController(_ uiViewController: HomeViewController, context: Context) {
+    func makeCVAction() -> UIAction {
+        return UIAction(
+            identifier: UIAction.Identifier("CVIdentifier"),
+            handler: { [weak self] action in
+                self?.pushCVAddView()
+            })
     }
-}
-
-@available(iOS 15.0.0, *)
-struct HomeViewControllerPrivew: PreviewProvider {
-    static var previews: some View {
-        ViewControllerRepresentable()
+    
+    func layoutAddCVButton() {
+        addCVButton.title.text = "CV 추가"
+        addCVButton.title.textColor = .mainColor
+        addCVButton.title.textAlignment = .center
+        addCVButton.title.font = .systemFont(ofSize: 30, weight: .bold)
+        
+        addCVButton.addImage.image =  UIImage(systemName: "plus.rectangle.portrait.fill")
+        addCVButton.backgroundColor = .systemBackground
+        addCVButton.tintColor = .mainColor
+        
+        self.hStackLayout.addArrangedSubview(addCVButton)
+        addCVButton.snp.makeConstraints{ make in
+            make.width.equalTo(self.contentWidth)
+            make.verticalEdges.equalToSuperview()
+        }
+        addCVButton.addAction(makeCVAction(), for: .touchUpInside)
     }
 }

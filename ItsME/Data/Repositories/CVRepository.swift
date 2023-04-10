@@ -63,5 +63,38 @@ final class CVRepository {
         }
         return saveCVInfo(cvInfo, byUID: uid)
     }
+    
+    func saveCVTitle(_ cvTitle: String, lastModified: String, byUID uid: String, uuid: String) -> Observable<Void> {
+        return .create { observer in
+            self.database.cvsRef("\(uid)/\(uuid)/title").setValue(cvTitle)
+            self.database.cvsRef("\(uid)/\(uuid)/lastModified").setValue(lastModified)
+            observer.onNext(())
+            observer.onCompleted()
+            
+            return Disposables.create()
+        }
+    }
+    
+    func saveCurrentCVTitle(_ cvTitle: String, lastModified: String, uuid: String) -> Observable<Void> {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return .empty()
+        }
+        return saveCVTitle(cvTitle, lastModified: lastModified, byUID: uid, uuid: uuid)
+    }
+    
+    func removeCV(_ uuid: String, byUID uid: String) -> Observable<Void> {
+        return .create { observer in
+            self.database.cvsRef(uid).child(uuid).removeValue()
+            
+            return Disposables.create()
+        }
+    }
+    
+    func removeCurrentCVInfo(_ uuid: String) -> Observable<Void> {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return .empty()
+        }
+        return removeCV(uuid, byUID: uid)
+    }
 }
 
