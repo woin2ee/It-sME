@@ -22,22 +22,44 @@ final class LoginViewModel: ViewModelType {
     
     struct Output {
         let loggedIn: Signal<Void>
+        let needSignUp: Signal<Void>
     }
     
     func transform(input: Input) -> Output {
-        let loggedInKakao = input.kakaoLoginRequest
+        let authDataResultForKakaoLogin = input.kakaoLoginRequest.asObservable()
             .flatMapFirst {
-                return self.loginWithKakao().asSignalOnErrorJustComplete()
+                return self.loginWithKakao()
             }
         
-        let loggedInApple = input.appleLoginRequest
+        let authDataResultForAppleLogin = input.appleLoginRequest.asObservable()
             .flatMapFirst {
-                return self.loginWithApple().asSignalOnErrorJustComplete()
+                return self.loginWithApple()
             }
         
-        let loggedIn = Signal.merge(loggedInKakao, loggedInApple)
+        let authDataResult = Observable.merge(authDataResultForKakaoLogin, authDataResultForAppleLogin)
         
-        return .init(loggedIn: loggedIn)
+        let isNewUser = authDataResult
+            .map { authDataResult in
+                guard let isNewUser = authDataResult.additionalUserInfo?.isNewUser else {
+                    throw LoginViewModelError.LoginFailed
+                }
+                return isNewUser
+            }
+        
+        let loggedIn = isNewUser
+            .filter { $0 == false }
+            .mapToVoid()
+            .asSignalOnErrorJustComplete()
+        
+        let needSignUp = isNewUser
+            .filter { $0 == true }
+            .mapToVoid()
+            .asSignalOnErrorJustComplete()
+        
+        return .init(
+            loggedIn: loggedIn,
+            needSignUp: needSignUp
+        )
     }
 }
 
@@ -45,7 +67,7 @@ final class LoginViewModel: ViewModelType {
 
 private extension LoginViewModel {
     
-    func loginWithApple() -> Single<Void> {
+    func loginWithApple() -> Single<AuthDataResult> {
         let rawNonce = randomNonceString()
         
         let appleIDProvider = ASAuthorizationAppleIDProvider.init()
@@ -75,28 +97,30 @@ private extension LoginViewModel {
                     rawNonce: rawNonce
                 )
                 
-                return Auth.auth().rx.signIn(with: credential).mapToVoid()
+                return Auth.auth().rx.signIn(with: credential)
             }
     }
     
-    func loginWithKakao() -> Observable<Void> {
+    func loginWithKakao() -> Observable<AuthDataResult> {
         let rawNonce = randomNonceString()
         
         if (UserApi.isKakaoTalkLoginAvailable()) {
             return UserApi.shared.rx.loginWithKakaoTalk(nonce: sha256(rawNonce))
                 .flatMapFirst { oAuthToken in
-                    self.signInToFirebase(with: oAuthToken, rawNonce: rawNonce)
+                    self.signInToFirebase(with: oAuthToken, rawNonce: rawNonce).asObservable()
                 }
         } else {
             return UserApi.shared.rx.loginWithKakaoAccount(nonce: sha256(rawNonce))
                 .flatMapFirst { oAuthToken in
-                    self.signInToFirebase(with: oAuthToken, rawNonce: rawNonce)
+                    self.signInToFirebase(with: oAuthToken, rawNonce: rawNonce).asObservable()
                 }
         }
     }
     
-    func signInToFirebase(with oAuthToken: OAuthToken, rawNonce: String) -> Observable<Void> {
-        guard let idToken = oAuthToken.idToken else { return .empty() }
+    func signInToFirebase(with oAuthToken: OAuthToken, rawNonce: String) -> Single<AuthDataResult> {
+        guard let idToken = oAuthToken.idToken else {
+            return .error(LoginViewModelError.LoginFailed)
+        }
         
         let providerID = "oidc.kakao" // Firebase console: Authentication 탭에서 설정한 OIDC 제공업체 ID
         let credential = OAuthProvider.credential(
@@ -105,7 +129,7 @@ private extension LoginViewModel {
             rawNonce: rawNonce
         )
         
-        return Auth.auth().rx.signIn(with: credential).asObservable().mapToVoid()
+        return Auth.auth().rx.signIn(with: credential)
     }
     
     func randomNonceString(length: Int = 32) -> String {
@@ -138,5 +162,12 @@ private extension LoginViewModel {
         }
         
         return result
+    }
+}
+
+extension LoginViewModel {
+    
+    enum LoginViewModelError: Error {
+        case LoginFailed
     }
 }
