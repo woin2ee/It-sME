@@ -166,19 +166,31 @@ private extension HomeViewController {
     }
     
     var cvsInfoBinding: Binder<[CVInfo]> {
-        return .init(self) { viewController, cvsInfo in
+        return .init(self) { vc, cvsInfo in
             
-            self.hStackLayout.removeAllArrangedSubviews()
+            vc.hStackLayout.removeAllArrangedSubviews()
             
-            cvsInfo.enumerated().forEach { (index, cvInfo) in
-                let cvCard = CVCard()
-                cvCard.cvTitle.text = cvInfo.title
-                cvCard.latestDate.text = "최근 수정일: " + cvInfo.lastModified
-                cvCard.layer.cornerRadius = 10
-                cvCard.backgroundColor = .mainColor
-                self.hStackLayout.addArrangedSubview(cvCard)
-                cvCard.snp.makeConstraints{ make in
-                    make.width.equalTo(self.contentWidth)
+            cvsInfo.sorted(by: { $0.lastModified > $1.lastModified })
+                .enumerated()
+                .forEach { (index, cvInfo) in
+                    let cvCard = CVCard().then {
+                        $0.cvTitle.text = cvInfo.title
+                        $0.latestDate.text = "최근 수정일: " + cvInfo.lastModified
+                        $0.layer.cornerRadius = 10
+                        $0.backgroundColor = .mainColor
+                    }
+                    vc.hStackLayout.addArrangedSubview(cvCard)
+                    
+                    cvCard.snp.makeConstraints{ make in
+                        make.width.equalTo(vc.contentWidth)
+                    }
+                    
+                    let pushAction: UIAction = .init { _ in
+                        let totalCVViewModel: TotalCVViewModel = .init(cvInfo: cvInfo)
+                        let totalCVVC: TotalCVViewController = .init(viewModel: totalCVViewModel)
+                        vc.navigationController?.pushViewController(totalCVVC, animated: true)
+                    }
+                    cvCard.addAction(pushAction, for: .touchUpInside)
                 }
                 
                 cvCard.addAction(UIAction{ _ in

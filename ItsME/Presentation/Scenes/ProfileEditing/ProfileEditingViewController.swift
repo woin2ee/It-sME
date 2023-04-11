@@ -178,7 +178,7 @@ private extension ProfileEditingViewController {
                 )
             }.asSignalOnErrorJustComplete(),
             newProfileImageData: imagePickerController.rx.didFinishPickingImage
-                .map { $0?.jpegData(compressionQuality: 0.5) }
+                .map { $0?.jpegData(compressionQuality: 0.7) }
                 .asDriverOnErrorJustComplete()
         )
         let output = viewModel.transform(input: input)
