@@ -14,7 +14,6 @@ final class TotalCVViewModel: ViewModelType {
     private let cvRepository: CVRepository = .shared
     
     private let cvInfoRelay: BehaviorRelay<CVInfo>
-    private let index: Int
     
     var resumeCategory: [ResumeCategory] {
         cvInfoRelay.value.resume.category
@@ -24,9 +23,8 @@ final class TotalCVViewModel: ViewModelType {
         cvInfoRelay.value.coverLetter
     }
     
-    init(cvInfo: CVInfo, index: Int) {
+    init(cvInfo: CVInfo) {
         self.cvInfoRelay = .init(value: cvInfo)
-        self.index = index
     }
     
     func transform(input: Input) -> Output {

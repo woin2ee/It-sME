@@ -111,7 +111,11 @@ final class ProfileEditingViewModel: ViewModelType {
             .asSignalOnErrorJustComplete()
         
         let logoutComplete = input.logoutTrigger
-            .doOnNext { try? Auth.auth().signOut() }
+            .doOnNext {
+                try? Auth.auth().signOut()
+                ItsMEUserDefaults.removeAppleUserID()
+                ItsMEUserDefaults.isLoggedInAsApple = false
+            }
         
         return .init(
             profileImageData: profileImageData,

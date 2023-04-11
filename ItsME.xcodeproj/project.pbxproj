@@ -71,6 +71,7 @@
 		DA708F1329DC32F600EF84F2 /* UIImagePickerControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F1229DC32F600EF84F2 /* UIImagePickerControllerDelegateProxy.swift */; };
 		DA708F1529DC465800EF84F2 /* StorageReference+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F1429DC465800EF84F2 /* StorageReference+Rx.swift */; };
 		DA708F1929DE864600EF84F2 /* IconCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F1829DE864600EF84F2 /* IconCell.swift */; };
+		DA708F2129E066FB00EF84F2 /* ItsMEUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F2029E066FB00EF84F2 /* ItsMEUserDefaults.swift */; };
 		DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */; };
 		DA7201EA29309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */; };
 		DA7201EC29309B9600A69519 /* AuthenticationServices+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */; };
@@ -212,6 +213,7 @@
 		DA708F1229DC32F600EF84F2 /* UIImagePickerControllerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImagePickerControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		DA708F1429DC465800EF84F2 /* StorageReference+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StorageReference+Rx.swift"; sourceTree = "<group>"; };
 		DA708F1829DE864600EF84F2 /* IconCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCell.swift; sourceTree = "<group>"; };
+		DA708F2029E066FB00EF84F2 /* ItsMEUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMEUserDefaults.swift; sourceTree = "<group>"; };
 		DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseReference+Rx.swift"; sourceTree = "<group>"; };
 		DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASAuthorizationControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationServices+Rx.swift"; sourceTree = "<group>"; };
@@ -494,6 +496,7 @@
 			children = (
 				DA708F1C29DFF1E200EF84F2 /* Repositories */,
 				DA6BCE5F292F04930059E95D /* Firebase */,
+				DA708F2029E066FB00EF84F2 /* ItsMEUserDefaults.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -1132,6 +1135,7 @@
 				D0CCF504292CCB4C00AD4AE6 /* CVCard.swift in Sources */,
 				DA708F1929DE864600EF84F2 /* IconCell.swift in Sources */,
 				DA01880D296D1477002C5CB0 /* PhoneNumberEditingViewController.swift in Sources */,
+				DA708F2129E066FB00EF84F2 /* ItsMEUserDefaults.swift in Sources */,
 				D0B1BA862988DA75003ACD41 /* CategoryCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
