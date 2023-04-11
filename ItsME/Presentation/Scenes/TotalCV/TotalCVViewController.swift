@@ -552,7 +552,11 @@ extension TotalCVViewController: UITableViewDelegate, UITableViewDataSource {
             categoryView?.titleButton.setTitle(viewModel.resumeCategory[section].title, for: .normal)
             categoryView?.titleButton.addAction(makeResumeCategoryAction(section: section), for: .touchUpInside)
             
-            categoryView?.addButton.addAction(makeResumeItemAction(section: section), for: .touchUpInside)
+            categoryView?.addButton.addAction(UIAction(
+                identifier: UIAction.Identifier("resumeItemIdentifier"),
+                handler: { [weak self] action in
+                    self?.pushResumItemAddView(section: section)
+                }), for: .touchUpInside)
             
             categoryView?.isEditingMode = self.isEditingMode
             
