@@ -24,7 +24,7 @@ final class HomeViewModel: ViewModelType {
     private let cvRepository: CVRepository = .shared
     
     private(set) var userInfo: UserInfo = .empty
-        
+    
     func transform(input: Input) -> Output {
         let userInfo = Signal.merge(input.viewDidLoad, input.viewWillAppear.skip(1))
             .flatMap { _ in
@@ -33,7 +33,7 @@ final class HomeViewModel: ViewModelType {
                     .doOnNext { self.userInfo = $0 }
             }
         
-        let cvsInfo = Signal.merge(input.viewDidLoad, input.viewWillAppear.skip(1))
+        let cvInfo = Signal.merge(input.viewDidLoad, input.viewWillAppear.skip(1))
             .flatMapLatest { _ in
                 return self.cvRepository.getAllCVOfCurrentUser()
                     .asDriver(onErrorDriveWith: .empty())
@@ -41,8 +41,7 @@ final class HomeViewModel: ViewModelType {
         
         return Output(
             userInfo: userInfo,
-            cvsInfo: cvsInfo
+            cvsInfo: cvInfo
         )
     }
 }
-
