@@ -54,6 +54,8 @@
 		DA481D87299F735E00C8C734 /* UserInfoItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */; };
 		DA481D8929A4BFE500C8C734 /* IntrinsicHeightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */; };
 		DA4FEC2529E40C4C00D41CE1 /* ItsMELogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4FEC2429E40C4C00D41CE1 /* ItsMELogger.swift */; };
+		DA4FEC2829E5582600D41CE1 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4FEC2729E5582600D41CE1 /* SignUpViewController.swift */; };
+		DA4FEC2A29E5582F00D41CE1 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4FEC2929E5582F00D41CE1 /* SignUpViewModel.swift */; };
 		DA53B73829B5BDA1000BBB26 /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53B73729B5BDA1000BBB26 /* Int+.swift */; };
 		DA53B73E29B5DB55000BBB26 /* ContextMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53B73D29B5DB55000BBB26 /* ContextMenuCell.swift */; };
 		DA6B3CD929ADE36B002BB159 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B3CD829ADE36B002BB159 /* ButtonCell.swift */; };
@@ -199,6 +201,8 @@
 		DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoItemCell.swift; sourceTree = "<group>"; };
 		DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrinsicHeightTextView.swift; sourceTree = "<group>"; };
 		DA4FEC2429E40C4C00D41CE1 /* ItsMELogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMELogger.swift; sourceTree = "<group>"; };
+		DA4FEC2729E5582600D41CE1 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		DA4FEC2929E5582F00D41CE1 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		DA53B73729B5BDA1000BBB26 /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
 		DA53B73929B5C304000BBB26 /* ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionTests.swift; sourceTree = "<group>"; };
 		DA53B73D29B5DB55000BBB26 /* ContextMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuCell.swift; sourceTree = "<group>"; };
@@ -552,6 +556,15 @@
 			path = TextView;
 			sourceTree = "<group>";
 		};
+		DA4FEC2629E5581000D41CE1 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				DA4FEC2729E5582600D41CE1 /* SignUpViewController.swift */,
+				DA4FEC2929E5582F00D41CE1 /* SignUpViewModel.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
 		DA6B3CE329B09D86002BB159 /* PickerView */ = {
 			isa = PBXGroup;
 			children = (
@@ -743,6 +756,7 @@
 		DAB06A3A291BA5A300E86163 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				DA4FEC2629E5581000D41CE1 /* SignUp */,
 				D0472F012964054400E83F61 /* TotalCV */,
 				DAA5B9632938760900BAB04E /* ProfileEditing */,
 				DA739DD82923989A003AEE4C /* Login */,
@@ -1109,6 +1123,7 @@
 				DA481D8929A4BFE500C8C734 /* IntrinsicHeightTextView.swift in Sources */,
 				DA26989C298A4709008A5D30 /* LoggedJsonDecoder.swift in Sources */,
 				DA01880B296D1471002C5CB0 /* AddressEditingViewController.swift in Sources */,
+				DA4FEC2829E5582600D41CE1 /* SignUpViewController.swift in Sources */,
 				DA708F1329DC32F600EF84F2 /* UIImagePickerControllerDelegateProxy.swift in Sources */,
 				DA708F0529D9DC4500EF84F2 /* Hash.swift in Sources */,
 				D0472F07296406BC00E83F61 /* TotalCVViewController.swift in Sources */,
@@ -1148,6 +1163,7 @@
 				D0A078EA29BF00B800EBD41C /* TextViewCell.swift in Sources */,
 				D0E6FF6029B1BA23008CB451 /* CoverLetterEditingViewController.swift in Sources */,
 				D0304B8E29DC07CA0017C529 /* AddCVButton.swift in Sources */,
+				DA4FEC2A29E5582F00D41CE1 /* SignUpViewModel.swift in Sources */,
 				D05522A029B9B1A3000ED03C /* CoverLetterTitleCell.swift in Sources */,
 				DA7201F62931F41100A69519 /* ResumeItem.swift in Sources */,
 				DA53B73829B5BDA1000BBB26 /* Int+.swift in Sources */,
