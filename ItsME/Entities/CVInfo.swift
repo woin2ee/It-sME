@@ -10,8 +10,8 @@ import Foundation
 final class CVInfo: Codable {
     let uuid: String
     var title: String
-    var resume: Resume?
-    var coverLetter: CoverLetter?
+    var resume: Resume
+    var coverLetter: CoverLetter
     var lastModified: String
     
     init(

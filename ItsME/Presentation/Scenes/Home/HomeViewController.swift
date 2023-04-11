@@ -334,20 +334,12 @@ struct ScrollPageController {
 }
 
 // MARK: - Private Function
-extension HomeViewController {
+private extension HomeViewController {
     
     func pushCVAddView() {
         let cvAddViewModel: CVAddViewModel = .init(cvTitle: "", editingType: .new)
         let viewController: CVAddViewController = .init(viewModel: cvAddViewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    func makeCVAction() -> UIAction {
-        return UIAction(
-            identifier: UIAction.Identifier("CVIdentifier"),
-            handler: { [weak self] action in
-                self?.pushCVAddView()
-            })
     }
     
     func layoutAddCVButton() {
@@ -365,6 +357,10 @@ extension HomeViewController {
             make.width.equalTo(self.contentWidth)
             make.verticalEdges.equalToSuperview()
         }
-        addCVButton.addAction(makeCVAction(), for: .touchUpInside)
+        addCVButton.addAction(UIAction(
+            identifier: UIAction.Identifier("CVIdentifier"),
+            handler: { [weak self] action in
+                self?.pushCVAddView()
+            }), for: .touchUpInside)
     }
 }

@@ -85,6 +85,8 @@ final class CVRepository {
     func removeCV(_ uuid: String, byUID uid: String) -> Observable<Void> {
         return .create { observer in
             self.database.cvsRef(uid).child(uuid).removeValue()
+            observer.onNext(())
+            observer.onCompleted()
             
             return Disposables.create()
         }
