@@ -192,14 +192,6 @@ private extension HomeViewController {
                     }
                     cvCard.addAction(pushAction, for: .touchUpInside)
                 }
-                
-                cvCard.addAction(UIAction{ _ in
-                    let totalCVVC: TotalCVViewController = .init(viewModel: TotalCVViewModel.init(cvInfo: cvInfo, index: index))
-                    
-                    self.navigationController?.pushViewController(totalCVVC, animated: true)
-                    
-                }, for: .touchUpInside)
-            }
             self.layoutAddCVButton()
         }
     }
