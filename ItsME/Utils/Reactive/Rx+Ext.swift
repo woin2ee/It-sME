@@ -44,3 +44,17 @@ extension SharedSequenceConvertibleType {
         return startWith(block())
     }
 }
+
+extension PrimitiveSequenceType where Trait == SingleTrait {
+    
+    func mapToVoid() -> PrimitiveSequence<Trait, Void> {
+        return self.map { _ in }
+    }
+}
+
+extension PrimitiveSequenceType where Trait == MaybeTrait {
+    
+    func mapToVoid() -> PrimitiveSequence<Trait, Void> {
+        return self.map { _ in }
+    }
+}

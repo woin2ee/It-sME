@@ -45,7 +45,7 @@ final class LoginViewModel: ViewModelType {
 
 private extension LoginViewModel {
     
-    func loginWithApple() -> Observable<Void> {
+    func loginWithApple() -> Single<Void> {
         let rawNonce = randomNonceString()
         
         let appleIDProvider = ASAuthorizationAppleIDProvider.init()
@@ -57,7 +57,8 @@ private extension LoginViewModel {
         authorizationController.performRequests()
         
         return authorizationController.rx.didCompleteWithAuthorization
-            .flatMapFirst { authorization -> Observable<Void> in
+            .asSingle()
+            .flatMap { authorization in
                 guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
                       let idTokenData = appleIDCredential.identityToken,
                       let idTokenString = String(data: idTokenData, encoding: .utf8)
@@ -74,7 +75,7 @@ private extension LoginViewModel {
                     rawNonce: rawNonce
                 )
                 
-                return Auth.auth().rx.signIn(with: credential).asObservable().mapToVoid()
+                return Auth.auth().rx.signIn(with: credential).mapToVoid()
             }
     }
     

@@ -25,7 +25,7 @@ extension Reactive where Base: ASAuthorizationController {
             .methodInvoked(selector)
             .map { parameters in
                 guard let authorization = parameters[1] as? ASAuthorization else {
-                    fatalError("authorizationController(controller:didCompleteWithAuthorization:) 함수의 두번째 파라미터가 ASAuthorization 타입이 아닙니다.")
+                    throw RxCocoaError.castingError(object: parameters[1], targetType: ASAuthorization.self)
                 }
                 return authorization
             }

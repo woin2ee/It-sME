@@ -10,13 +10,15 @@ import RxSwift
 
 extension Reactive where Base: Auth {
     
-    func signIn(with credential: AuthCredential) -> Single<AuthDataResult?> {
+    func signIn(with credential: AuthCredential) -> Single<AuthDataResult> {
         return .create { singleObserver in
-            self.base.signIn(with: credential) { authDataResult, error in
-                if let error = error {
+            Task {
+                do {
+                    let authDataResult = try await self.base.signIn(with: credential)
+                    singleObserver(.success(authDataResult))
+                } catch {
                     singleObserver(.failure(error))
                 }
-                singleObserver(.success(authDataResult))
             }
             return Disposables.create()
         }
