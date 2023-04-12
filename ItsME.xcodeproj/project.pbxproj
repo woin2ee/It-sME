@@ -56,6 +56,8 @@
 		DA4FEC2529E40C4C00D41CE1 /* ItsMELogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4FEC2429E40C4C00D41CE1 /* ItsMELogger.swift */; };
 		DA4FEC2829E5582600D41CE1 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4FEC2729E5582600D41CE1 /* SignUpViewController.swift */; };
 		DA4FEC2A29E5582F00D41CE1 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4FEC2929E5582F00D41CE1 /* SignUpViewModel.swift */; };
+		DA4FEC2C29E6D12C00D41CE1 /* UtileFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4FEC2B29E6D12C00D41CE1 /* UtileFunctions.swift */; };
+		DA4FEC2E29E6D14000D41CE1 /* ItsMEError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4FEC2D29E6D14000D41CE1 /* ItsMEError.swift */; };
 		DA53B73829B5BDA1000BBB26 /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53B73729B5BDA1000BBB26 /* Int+.swift */; };
 		DA53B73E29B5DB55000BBB26 /* ContextMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53B73D29B5DB55000BBB26 /* ContextMenuCell.swift */; };
 		DA6B3CD929ADE36B002BB159 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B3CD829ADE36B002BB159 /* ButtonCell.swift */; };
@@ -203,6 +205,8 @@
 		DA4FEC2429E40C4C00D41CE1 /* ItsMELogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMELogger.swift; sourceTree = "<group>"; };
 		DA4FEC2729E5582600D41CE1 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		DA4FEC2929E5582F00D41CE1 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		DA4FEC2B29E6D12C00D41CE1 /* UtileFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtileFunctions.swift; sourceTree = "<group>"; };
+		DA4FEC2D29E6D14000D41CE1 /* ItsMEError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMEError.swift; sourceTree = "<group>"; };
 		DA53B73729B5BDA1000BBB26 /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
 		DA53B73929B5C304000BBB26 /* ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionTests.swift; sourceTree = "<group>"; };
 		DA53B73D29B5DB55000BBB26 /* ContextMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuCell.swift; sourceTree = "<group>"; };
@@ -774,6 +778,8 @@
 				DA26989B298A4709008A5D30 /* LoggedJsonDecoder.swift */,
 				DA708F0429D9DC4500EF84F2 /* Hash.swift */,
 				DA4FEC2429E40C4C00D41CE1 /* ItsMELogger.swift */,
+				DA4FEC2B29E6D12C00D41CE1 /* UtileFunctions.swift */,
+				DA4FEC2D29E6D14000D41CE1 /* ItsMEError.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1129,6 +1135,7 @@
 				D0472F07296406BC00E83F61 /* TotalCVViewController.swift in Sources */,
 				DA739DDA292398BE003AEE4C /* LoginViewController.swift in Sources */,
 				D0C755B629AC889F0070FC08 /* EditModeAddButton.swift in Sources */,
+				DA4FEC2C29E6D12C00D41CE1 /* UtileFunctions.swift in Sources */,
 				DA6B3CE229B08E95002BB159 /* SnapKit+.swift in Sources */,
 				DA01880F296D147D002C5CB0 /* EmailEditingViewController.swift in Sources */,
 				D0472F09296406CF00E83F61 /* TotalCVViewModel.swift in Sources */,
@@ -1161,6 +1168,7 @@
 				D0CCF4E829260ED200AD4AE6 /* UserInfoItem.swift in Sources */,
 				DA708F0F29DC1F7400EF84F2 /* StoragePath.swift in Sources */,
 				D0A078EA29BF00B800EBD41C /* TextViewCell.swift in Sources */,
+				DA4FEC2E29E6D14000D41CE1 /* ItsMEError.swift in Sources */,
 				D0E6FF6029B1BA23008CB451 /* CoverLetterEditingViewController.swift in Sources */,
 				D0304B8E29DC07CA0017C529 /* AddCVButton.swift in Sources */,
 				DA4FEC2A29E5582F00D41CE1 /* SignUpViewModel.swift in Sources */,

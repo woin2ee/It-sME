@@ -22,23 +22,19 @@ final class CVRepository {
     private let database: DatabaseReferenceManager
     
     // MARK: API
-    func getAllCV(byUID uid: String) -> Observable<[CVInfo]> {
-        let observable = database.cvsRef(uid).rx.dataSnapshot
-            .compactMap { $0.value as? [String: Any] }
+    func getAllCV() -> Single<[CVInfo]> {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return .error(AuthErrorCode(.nullUser))
+        }
+        let source = database.cvsRef(uid).rx.dataSnapshot
+            .map { try castOrThrow([String: Any].self, $0.value as Any) }
             .map { $0.map { key, value in
                 return value
             }}
             .map { jsonObject in
                 return try LoggedJsonDecoder.decode([CVInfo].self, withJSONObject: jsonObject)
             }
-        return observable
-    }
-    
-    func getAllCVOfCurrentUser() -> Observable<[CVInfo]> {
-        guard let uid = Auth.auth().currentUser?.uid else {
-            return .empty()
-        }
-        return getAllCV(byUID: uid)
+        return source
     }
     
     func saveCVInfo(_ cvInfo: CVInfo, byUID uid: String) -> Observable<Void> {

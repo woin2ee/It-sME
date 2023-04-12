@@ -24,18 +24,14 @@ final class UserRepository {
     
     // MARK: API
     
-    func getUserInfo(byUID uid: String) -> Observable<UserInfo> {
+    func getUserInfo() -> Single<UserInfo> {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return .error(AuthErrorCode(.nullUser))
+        }
         return database.userRef(uid).rx.dataSnapshot
             .map { dataSnapshot in
                 return try LoggedJsonDecoder.decode(UserInfo.self, withJSONObject: dataSnapshot.value)
             }
-    }
-    
-    func getCurrentUserInfo() -> Observable<UserInfo> {
-        guard let uid = Auth.auth().currentUser?.uid else {
-            return .empty()
-        }
-        return getUserInfo(byUID: uid)
     }
     
     func saveUserInfo(_ userInfo: UserInfo, byUID uid: String) -> Observable<Void> {

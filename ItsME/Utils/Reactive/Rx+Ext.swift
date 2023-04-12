@@ -50,6 +50,10 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
     func mapToVoid() -> PrimitiveSequence<Trait, Void> {
         return self.map { _ in }
     }
+    
+    func doOnSuccess(_ block: ((Element) throws -> Void)?) -> PrimitiveSequence<Trait, Element> {
+        return self.do(onSuccess: block)
+    }
 }
 
 extension PrimitiveSequenceType where Trait == MaybeTrait {
