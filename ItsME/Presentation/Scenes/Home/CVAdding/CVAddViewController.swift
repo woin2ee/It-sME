@@ -82,10 +82,7 @@ private extension CVAddViewController {
     
     func configureNavigationBar() {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationItem.title = "CV 추가"
         self.navigationItem.rightBarButtonItem = completeBarButton
-        self.completeBarButton.title = "완료"
-        self.navigationItem.rightBarButtonItem?.style = .done
     }
     
     func addRemoveButton() {

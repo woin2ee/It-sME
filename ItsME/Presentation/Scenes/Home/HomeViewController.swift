@@ -178,6 +178,8 @@ private extension HomeViewController {
                         $0.latestDate.text = "최근 수정일: " + cvInfo.lastModified
                         $0.layer.cornerRadius = 10
                         $0.backgroundColor = .mainColor
+                        $0.menuButton.menu = self.addMenuItems(cvInfo: cvInfo)
+                        $0.menuButton.showsMenuAsPrimaryAction = true
                     }
                     vc.hStackLayout.addArrangedSubview(cvCard)
                     
@@ -332,6 +334,32 @@ private extension HomeViewController {
         let cvAddViewModel: CVAddViewModel = .init(cvTitle: "", editingType: .new)
         let viewController: CVAddViewController = .init(viewModel: cvAddViewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func addMenuItems(cvInfo: CVInfo) -> UIMenu{
+        var menuItems: [UIAction] {
+            return [
+                UIAction(title: "CV제목 편집", image: UIImage(systemName: "square.and.pencil.circle.fill"), identifier: UIAction.Identifier("CVTitleEditIdentifier"), handler: { _ in
+                    let cvAddViewModel: CVAddViewModel = .init(cvTitle: cvInfo.title, editingType: .edit(uuid: cvInfo.uuid))
+                    let viewController: CVAddViewController = .init(viewModel: cvAddViewModel)
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }),
+                UIAction(title: "CV 삭제", image: UIImage(systemName: "minus.circle.fill"), identifier: UIAction.Identifier("CVRemoveIdentifier"), handler: { _ in
+                    let title = "정말로 삭제하시겠습니까?"
+                    let message = "소중한 회원님의 정보는 되돌릴 수 없습니다. 이 사실을 인지하고 삭제하시겠습니까?"
+                    self.presentConfirmAlert(
+                        title: title,
+                        message: message,
+                        cancelAction: .init(title: "아니오", style: .cancel),
+                        okAction: .init(title: "예", style: .default, handler: { _ in
+                            print("CV삭제")
+                        })
+                    )
+                }),
+                UIAction(title: "취소", attributes: .destructive, handler: { _ in print("취소") })
+            ]
+        }
+        return UIMenu(title: "", identifier: UIMenu.Identifier("menuIdetifier"), options: .displayInline, children: menuItems)
     }
     
     func layoutAddCVButton() {
