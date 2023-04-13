@@ -21,45 +21,32 @@ final class LoginViewModel: ViewModelType {
     }
     
     struct Output {
-        let loggedIn: Signal<Void>
-        let needSignUp: Signal<Void>
+        let loggedInAndNeedSignUp: Signal<Bool>
     }
     
+    let userRepository: UserRepository = .shared
+    
     func transform(input: Input) -> Output {
-        let authDataResultForKakaoLogin = input.kakaoLoginRequest.asObservable()
+        let loggedInWithKakao = input.kakaoLoginRequest
             .flatMapFirst {
                 return self.loginWithKakao()
+                    .asSignalOnErrorJustComplete()
             }
         
-        let authDataResultForAppleLogin = input.appleLoginRequest.asObservable()
+        let loggedInWithApple = input.appleLoginRequest
             .flatMapFirst {
                 return self.loginWithApple()
+                    .asSignalOnErrorJustComplete()
             }
         
-        let authDataResult = Observable.merge(authDataResultForKakaoLogin, authDataResultForAppleLogin)
-        
-        let isNewUser = authDataResult
-            .map { authDataResult in
-                guard let isNewUser = authDataResult.additionalUserInfo?.isNewUser else {
-                    throw LoginViewModelError.LoginFailed
-                }
-                return isNewUser
+        let loggedInAndNeedSignUp = Signal.merge(loggedInWithKakao, loggedInWithApple)
+            .flatMapFirst { _ in
+                return self.userRepository.hasUserInfo
+                    .asSignalOnErrorJustComplete()
             }
+            .map { !$0 } // 유저 정보가 존재하면 SignUp 불필요.
         
-        let loggedIn = isNewUser
-            .filter { $0 == false }
-            .mapToVoid()
-            .asSignalOnErrorJustComplete()
-        
-        let needSignUp = isNewUser
-            .filter { $0 == true }
-            .mapToVoid()
-            .asSignalOnErrorJustComplete()
-        
-        return .init(
-            loggedIn: loggedIn,
-            needSignUp: needSignUp
-        )
+        return .init(loggedInAndNeedSignUp: loggedInAndNeedSignUp)
     }
 }
 
@@ -67,7 +54,7 @@ final class LoginViewModel: ViewModelType {
 
 private extension LoginViewModel {
     
-    func loginWithApple() -> Single<AuthDataResult> {
+    func loginWithApple() -> Single<Void> {
         let rawNonce = randomNonceString()
         
         let appleIDProvider = ASAuthorizationAppleIDProvider.init()
@@ -98,10 +85,11 @@ private extension LoginViewModel {
                 )
                 
                 return Auth.auth().rx.signIn(with: credential)
+                    .mapToVoid()
             }
     }
     
-    func loginWithKakao() -> Observable<AuthDataResult> {
+    func loginWithKakao() -> Observable<Void> {
         let rawNonce = randomNonceString()
         
         if (UserApi.isKakaoTalkLoginAvailable()) {
@@ -117,7 +105,7 @@ private extension LoginViewModel {
         }
     }
     
-    func signInToFirebase(with oAuthToken: OAuthToken, rawNonce: String) -> Single<AuthDataResult> {
+    func signInToFirebase(with oAuthToken: OAuthToken, rawNonce: String) -> Single<Void> {
         guard let idToken = oAuthToken.idToken else {
             return .error(LoginViewModelError.LoginFailed)
         }
@@ -130,6 +118,7 @@ private extension LoginViewModel {
         )
         
         return Auth.auth().rx.signIn(with: credential)
+            .mapToVoid()
     }
     
     func randomNonceString(length: Int = 32) -> String {

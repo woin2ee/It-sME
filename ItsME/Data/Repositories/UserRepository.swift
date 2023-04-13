@@ -24,6 +24,14 @@ final class UserRepository {
     
     // MARK: API
     
+    var hasUserInfo: Single<Bool> {
+        let source = Auth.auth().rx.currentUser
+            .map { $0.uid }
+            .flatMap { self.database.userRef($0).rx.dataSnapshot }
+            .map { $0.exists() }
+        return source
+    }
+    
     func getUserInfo() -> Single<UserInfo> {
         let source = Auth.auth().rx.currentUser
             .map { $0.uid }
