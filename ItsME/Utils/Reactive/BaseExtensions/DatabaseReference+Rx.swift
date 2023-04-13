@@ -25,4 +25,36 @@ extension Reactive where Base: DatabaseReference {
             return Disposables.create()
         }
     }
+    
+    /// `setValue(_:)` 메소드의 `Reactive wrapper` 입니다.
+    func setValue(_ jsonObject: Any?) -> Single<DatabaseReference> {
+        return .create { observer in
+            Task {
+                do {
+                    let reference = try await self.base.setValue(jsonObject)
+                    observer(.success(reference))
+                } catch {
+                    observer(.failure(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    /// `removeValue()` 메소드의 `Reactive wrapper` 입니다.
+    func removeValue() -> Single<DatabaseReference> {
+        return .create { observer in
+            Task {
+                do {
+                    let reference = try await self.base.removeValue()
+                    observer(.success(reference))
+                } catch {
+                    observer(.failure(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
 }

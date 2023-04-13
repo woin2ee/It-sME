@@ -25,35 +25,23 @@ final class UserRepository {
     // MARK: API
     
     func getUserInfo() -> Single<UserInfo> {
-        guard let uid = Auth.auth().currentUser?.uid else {
-            return .error(AuthErrorCode(.nullUser))
-        }
-        return database.userRef(uid).rx.dataSnapshot
+        let source = Auth.auth().rx.currentUser
+            .map { $0.uid }
+            .flatMap { self.database.userRef($0).rx.dataSnapshot }
             .map { dataSnapshot in
                 return try LoggedJsonDecoder.decode(UserInfo.self, withJSONObject: dataSnapshot.value)
             }
+        return source
     }
     
-    func saveUserInfo(_ userInfo: UserInfo, byUID uid: String) -> Observable<Void> {
-        return .create { observer in
-            do {
+    func saveUserInfo(_ userInfo: UserInfo) -> Single<Void> {
+        let source = Auth.auth().rx.currentUser
+            .map { $0.uid }
+            .flatMap { uid in
                 let data = try JSONEncoder().encode(userInfo)
                 let jsonObject = try JSONSerialization.jsonObject(with: data)
-                self.database.userRef(uid).setValue(jsonObject)
-                observer.onNext(())
-                observer.onCompleted()
-            } catch {
-                observer.onError(error)
+                return self.database.userRef(uid).rx.setValue(jsonObject).mapToVoid()
             }
-            
-            return Disposables.create()
-        }
-    }
-    
-    func saveCurrentUserInfo(_ userInfo: UserInfo) -> Observable<Void> {
-        guard let uid = Auth.auth().currentUser?.uid else {
-            return .empty()
-        }
-        return saveUserInfo(userInfo, byUID: uid)
+        return source
     }
 }

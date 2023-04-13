@@ -23,4 +23,11 @@ extension Reactive where Base: Auth {
             return Disposables.create()
         }
     }
+    
+    var currentUser: Single<User> {
+        guard let currentUser = Auth.auth().currentUser else {
+            return .error(AuthErrorCode(.nullUser))
+        }
+        return .just(currentUser)
+    }
 }

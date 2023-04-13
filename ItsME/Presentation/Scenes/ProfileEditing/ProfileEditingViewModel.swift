@@ -106,7 +106,7 @@ final class ProfileEditingViewModel: ViewModelType {
             .flatMap { path in
                 let userInfo = self.userInfoRelay.value
                 userInfo.profileImageURL = path
-                return self.userRepository.saveCurrentUserInfo(userInfo)
+                return self.userRepository.saveUserInfo(userInfo)
             }
             .asSignalOnErrorJustComplete()
         
