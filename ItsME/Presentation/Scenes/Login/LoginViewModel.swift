@@ -44,6 +44,9 @@ final class LoginViewModel: ViewModelType {
                 return self.userRepository.hasUserInfo
                     .asSignalOnErrorJustComplete()
             }
+            .doOnNext { hasUserInfo in
+                ItsMEUserDefaults.allowsAutoLogin = hasUserInfo
+            }
             .map { !$0 } // 유저 정보가 존재하면 SignUp 불필요.
         
         return .init(loggedInAndNeedSignUp: loggedInAndNeedSignUp)

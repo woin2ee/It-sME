@@ -10,6 +10,7 @@ import Foundation
 final class SignUpViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
+        // TODO: 추가 필요 `ItsMEUserDefaults.allowsAutoLogin = true`
         
         return .init()
     }

@@ -115,6 +115,7 @@ final class ProfileEditingViewModel: ViewModelType {
                 try? Auth.auth().signOut()
                 ItsMEUserDefaults.removeAppleUserID()
                 ItsMEUserDefaults.isLoggedInAsApple = false
+                ItsMEUserDefaults.allowsAutoLogin = false
             }
         
         return .init(
