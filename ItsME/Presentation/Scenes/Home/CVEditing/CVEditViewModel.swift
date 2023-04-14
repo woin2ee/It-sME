@@ -1,5 +1,5 @@
 //
-//  CVAddViewModel.swift
+//  CVEditViewModel.swift
 //  ItsME
 //
 //  Created by MacBook Air on 2023/04/04.
@@ -8,19 +8,17 @@
 import RxSwift
 import RxCocoa
 
-final class CVAddViewModel: ViewModelType {
+final class CVEditViewModel: ViewModelType {
     
     //MARK: - Input & Output
     struct Input {
         let cvTitle: Driver<String>
         let doneTrigger: Signal<Void>
-        let removeTrigger: Signal<Void>
     }
     
     struct Output {
         let cvTitle: Driver<String>
         let doneHandler: Signal<Void>
-        let removeHandler: Signal<Void>
         let editingType: Driver<EditingType>
     }
     private let cvRepository: CVRepository = CVRepository.shared
@@ -50,18 +48,9 @@ final class CVAddViewModel: ViewModelType {
         
         let editingType = Driver.just(editingType)
         
-        let removeHandler = input.removeTrigger
-            .flatMap { () in
-                guard case let .edit(uuid) = self.editingType else {
-                    return Signal<Void>.empty()
-                }
-                return self.cvRepository.removeCV(by: uuid).asSignalOnErrorJustComplete()
-            }
-        
         return .init(
             cvTitle: cvTitle,
             doneHandler: doneHandler,
-            removeHandler: removeHandler,
             editingType: editingType
         )
     }
@@ -82,7 +71,7 @@ final class CVAddViewModel: ViewModelType {
 }
 
 //MARK: - EditingType
-extension CVAddViewModel {
+extension CVEditViewModel {
     
     enum EditingType {
         

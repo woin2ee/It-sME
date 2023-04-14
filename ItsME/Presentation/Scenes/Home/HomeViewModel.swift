@@ -24,6 +24,10 @@ final class HomeViewModel: ViewModelType {
     private let cvRepository: CVRepository = .shared
     
     private(set) var userInfo: UserInfo = .empty
+    
+    func removeCV(cvInfo: CVInfo) -> Observable<Void> {
+        return self.cvRepository.removeCV(by: cvInfo.uuid).asObservable()
+    }
         
     func transform(input: Input) -> Output {
         let userInfo = Signal.merge(input.viewDidLoad, input.viewWillAppear.skip(1))
