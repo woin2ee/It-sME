@@ -20,7 +20,7 @@ struct LoggedJsonDecoder {
             return try JSONDecoder().decode(type, from: data)
         } catch {
             #if DEBUG
-                debugPrint("Fail decode. \(error)")
+                ItsMELogger.standard.error("Fail decode. \(error)")
             #endif
             throw error
         }
@@ -31,7 +31,7 @@ struct LoggedJsonDecoder {
         
         guard JSONSerialization.isValidJSONObject(jsonObject) else {
             #if DEBUG
-                debugPrint("Invalid json object. \(jsonObject)")
+                ItsMELogger.standard.error("Invalid json object. \(type)")
             #endif
             throw JSONSerializationError.invalidJSONObject
         }

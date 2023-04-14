@@ -26,20 +26,20 @@ final class HomeViewModel: ViewModelType {
     private(set) var userInfo: UserInfo = .empty
     
     func removeCV(cvInfo: CVInfo) -> Observable<Void> {
-       return self.cvRepository.removeCurrentCVInfo(cvInfo.uuid)
+        return self.cvRepository.removeCV(by: cvInfo.uuid).asObservable()
     }
         
     func transform(input: Input) -> Output {
         let userInfo = Signal.merge(input.viewDidLoad, input.viewWillAppear.skip(1))
             .flatMap { _ in
-                return self.userRepository.getCurrentUserInfo()
+                return self.userRepository.getUserInfo()
                     .asDriverOnErrorJustComplete()
                     .doOnNext { self.userInfo = $0 }
             }
         
         let cvsInfo = Signal.merge(input.viewDidLoad, input.viewWillAppear.skip(1))
             .flatMapLatest { _ in
-                return self.cvRepository.getAllCVOfCurrentUser()
+                return self.cvRepository.getAllCV()
                     .asDriver(onErrorDriveWith: .empty())
             }
         

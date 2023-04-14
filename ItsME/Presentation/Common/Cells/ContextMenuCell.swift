@@ -17,7 +17,7 @@ final class ContextMenuCell: UITableViewCell {
         $0.setContentHuggingPriority(.init(rawValue: 249), for: .horizontal)
     }
     
-    private lazy var menuTitleLabel: UILabel = .init().then {
+    lazy var menuTitleLabel: UILabel = .init().then {
         $0.textColor = .systemGray
     }
     

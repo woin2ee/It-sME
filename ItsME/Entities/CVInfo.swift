@@ -46,7 +46,7 @@ final class CVInfo: Codable {
 
 extension CVInfo {
     
-    enum CodingKeys: CodingKey {
+    enum CodingKeys: String, CodingKey {
         case uuid
         case title
         case resume

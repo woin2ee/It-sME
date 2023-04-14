@@ -73,8 +73,8 @@ final class ProfileEditingViewModel: ViewModelType {
         let viewDidLoad = input.viewDidLoad
             .filter { self.userInfoRelay.value == .empty }
             .flatMapLatest { _ -> Driver<Void> in
-                return self.userRepository.getCurrentUserInfo()
-                    .doOnNext { self.userInfoRelay.accept($0) }
+                return self.userRepository.getUserInfo()
+                    .doOnSuccess { self.userInfoRelay.accept($0) }
                     .mapToVoid()
                     .asDriverOnErrorJustComplete()
             }
@@ -106,7 +106,7 @@ final class ProfileEditingViewModel: ViewModelType {
             .flatMap { path in
                 let userInfo = self.userInfoRelay.value
                 userInfo.profileImageURL = path
-                return self.userRepository.saveCurrentUserInfo(userInfo)
+                return self.userRepository.saveUserInfo(userInfo)
             }
             .asSignalOnErrorJustComplete()
         
@@ -115,6 +115,7 @@ final class ProfileEditingViewModel: ViewModelType {
                 try? Auth.auth().signOut()
                 ItsMEUserDefaults.removeAppleUserID()
                 ItsMEUserDefaults.isLoggedInAsApple = false
+                ItsMEUserDefaults.allowsAutoLogin = false
             }
         
         return .init(

@@ -89,7 +89,6 @@ final class ProfileEditingViewController: UIViewController {
     private lazy var educationItemAddButton: ItemAddButton = .init().then {
         let action: UIAction = .init(handler: { [weak self] _ in
             let viewModel: EducationEditingViewModel = .init(
-                educationItem: .empty,
                 editingType: .new,
                 delegate: self?.viewModel
             )
@@ -170,13 +169,14 @@ private extension ProfileEditingViewController {
             tapEditingCompleteButton: editingCompleteButton.rx.tap.asSignal(),
             userName: nameTextField.rx.text.orEmpty.asDriver(),
             viewDidLoad: .just(()),
-            logoutTrigger: logoutButton.rx.tap.flatMap {
-                self.rx.presentConfirmAlert(
+            logoutTrigger: logoutButton.rx.tap.asSignal().flatMapFirst { [weak self] _ in
+                guard let self = self else { return .empty() }
+                return self.rx.presentConfirmAlert(
                     title: "로그아웃",
                     message: "로그아웃하시겠습니까?",
                     okAction: UIAlertAction(title: "예", style: .default)
-                )
-            }.asSignalOnErrorJustComplete(),
+                ).asSignal()
+            },
             newProfileImageData: imagePickerController.rx.didFinishPickingImage
                 .map { $0?.jpegData(compressionQuality: 0.7) }
                 .asDriverOnErrorJustComplete()
@@ -213,7 +213,7 @@ private extension ProfileEditingViewController {
                 },
             output.tappedEditingCompleteButton
                 .emit(with: self, onNext: { owner, userInfo in
-                    owner.dismiss(animated: true)
+                    owner.presentingViewController?.dismiss(animated: true)
                 }),
             output.logoutComplete
                 .emit(with: self, onNext: { owner, _ in
@@ -411,8 +411,7 @@ extension ProfileEditingViewController: UITableViewDelegate {
                 return
             }
             let viewModel: EducationEditingViewModel = .init(
-                educationItem: educationItem,
-                editingType: .edit(index: indexPath.row),
+                editingType: .edit(index: indexPath.row, target: educationItem),
                 delegate: viewModel
             )
             let viewController: EducationEditingViewController = .init(viewModel: viewModel)

@@ -52,10 +52,10 @@ private extension LoginViewController {
         )
         let output = viewModel.transform(input: input)
         
-        output.loggedIn
-            .emit(onNext: { [weak self] in
-                let homeViewController: HomeViewController = .init()
-                self?.navigationController?.setViewControllers([homeViewController], animated: false)
+        output.loggedInAndNeedSignUp
+            .emit(onNext: { [weak self] needsSignUp in
+                let nextViewController = needsSignUp ? SignUpViewController() : HomeViewController()
+                self?.navigationController?.setViewControllers([nextViewController], animated: false)
             })
             .disposed(by: disposeBag)
     }
