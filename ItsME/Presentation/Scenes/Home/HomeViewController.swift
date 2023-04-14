@@ -355,9 +355,8 @@ private extension HomeViewController {
                         cancelAction: .init(title: "아니오", style: .cancel),
                         okAction: .init(title: "삭제", style: .destructive, handler: { _ in
                             self.viewModel.removeCV(cvInfo: cvInfo)
-                                .subscribe(onNext: { _ in
-//FIXME: - 추후에 HomeViewModel의 [cvsInfo]에 이벤트를 추가하는 방향으로 개선
-                                    self.bindViewModel()
+                                .emit(with: self, onNext: { owner, _ in
+                                    owner.bindViewModel() //FIXME: 추후에 HomeViewModel의 [cvsInfo]에 이벤트를 추가하는 방향으로 개선
                                 })
                                 .disposed(by: self.disposeBag)
                         })
