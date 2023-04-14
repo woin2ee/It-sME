@@ -30,7 +30,7 @@ final class TotalCVViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let userInfo = input.viewDidLoad
             .flatMapLatest { _ in
-                return self.userRepository.getCurrentUserInfo()
+                return self.userRepository.getUserInfo()
                     .asDriver(onErrorDriveWith: .empty())
             }
         
@@ -41,7 +41,10 @@ final class TotalCVViewModel: ViewModelType {
                 
         let tappedEditingCompleteButton = input.doneTrigger
             .withLatestFrom(cvInfoDriver)
-            .flatMapFirst { self.cvRepository.saveCurrentCVInfo($0).asSignalOnErrorJustComplete() } // TODO: Error 처리 고려
+            .flatMapFirst { cvInfo in
+                return self.cvRepository.saveCVInfo(cvInfo)
+                    .asSignalOnErrorJustComplete() // TODO: Error 처리 고려
+            }
         
         return .init(
             userInfoItems: userInfoItems,

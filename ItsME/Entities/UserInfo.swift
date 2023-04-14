@@ -53,8 +53,16 @@ final class UserInfo: Codable {
         self.address = try container.decode(UserInfoItem.self, forKey: .address)
         self.phoneNumber = try container.decode(UserInfoItem.self, forKey: .phoneNumber)
         self.email = try container.decode(UserInfoItem.self, forKey: .email)
-        self.otherItems = try container.decode([UserInfoItem].self, forKey: .otherItems)
-        self.educationItems = try container.decode([EducationItem].self, forKey: .educationItems)
+        do {
+            self.otherItems = try container.decode([UserInfoItem].self, forKey: .otherItems)
+        } catch {
+            self.otherItems = []
+        }
+        do {
+            self.educationItems = try container.decode([EducationItem].self, forKey: .educationItems)
+        } catch {
+            self.educationItems = []
+        }
     }
 }
 

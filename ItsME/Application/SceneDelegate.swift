@@ -23,9 +23,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
         window?.rootViewController = rootNavigationController
         
-        let isLoggedIn = Auth.auth().isLoggedIn
-        
-        let rootViewController = isLoggedIn ? HomeViewController() : LoginViewController()
+        let rootViewController = (Auth.auth().isLoggedIn &&
+                                  ItsMEUserDefaults.allowsAutoLogin) ? HomeViewController() : LoginViewController()
         rootNavigationController.setViewControllers([rootViewController], animated: false)
     }
 

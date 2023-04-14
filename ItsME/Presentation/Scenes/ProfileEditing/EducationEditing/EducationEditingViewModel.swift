@@ -8,6 +8,11 @@
 import RxSwift
 import RxCocoa
 
+enum SchoolEnrollmentStatus: String {
+    case enrolled = "재학중"
+    case graduated = "졸업"
+}
+
 protocol EducationEditingViewModelDelegate: AnyObject {
     func educationEditingViewModelDidEndEditing(with educationItem: EducationItem, at index: IndexPath.Index)
     func educationEditingViewModelDidAppend(educationItem: EducationItem)
@@ -16,77 +21,120 @@ protocol EducationEditingViewModelDelegate: AnyObject {
 
 final class EducationEditingViewModel: ViewModelType {
     
-    let initalEducationItem: EducationItem
     let editingType: EditingType
     weak var delegate: EducationEditingViewModelDelegate?
     
     init(
-        educationItem: EducationItem,
         editingType: EditingType,
         delegate: EducationEditingViewModelDelegate? = nil
     ) {
-        self.initalEducationItem = educationItem
         self.editingType = editingType
         self.delegate = delegate
     }
     
     func transform(input: Input) -> Output {
-        let graduateDateString = Driver.merge(
-            input.selectedGraduateDate
-                .startWith((year: initalEducationItem.graduateYear ?? 0, month: initalEducationItem.graduateMonth ?? 0))
-                .map { return "\($0.year).\($0.month.toLeadingZero(digit: 2))" },
-            input.enrollmentSelection
-                .startWith(()) // 졸업일 초기 상태 지정
-                .map { return "재학중" },
-            input.graduateSelection
-                .map {
-                    let year = Calendar.current.currentYear
-                    let month = Calendar.current.currentMonth
-                    return "\(year).\(month.toLeadingZero(digit: 2))"
+        let currentYear = Calendar.current.component(.year, from: .now)
+        let currentMonth = Calendar.current.component(.month, from: .now)
+        
+        let editingType = Driver.just(editingType)
+        
+        let schoolEnrollmentStatus = input.selectedEnrollmentStatus
+            .startWith {
+                switch self.editingType {
+                case .edit(_, let editingTarget):
+                    if let graduateDate = editingTarget.graduateDate,
+                       graduateDate == SchoolEnrollmentStatus.enrolled.rawValue {
+                        return .enrolled
+                    } else {
+                        return .graduated
+                    }
+                case .new:
+                    return .graduated
                 }
-        )
+            }
+        
+        let title = input.title
+            .startWith {
+                if case let .edit(_, target) = self.editingType {
+                    return target.title
+                } else {
+                    return ""
+                }
+            }
+        
+        let description = input.description
+            .startWith {
+                if case let .edit(_, target) = self.editingType {
+                    return target.description
+                } else {
+                    return ""
+                }
+            }
+        
+        let entranceDate = input.selectedEntranceDate
+            .startWith {
+                if case let .edit(_, target) = self.editingType {
+                    return (target.entranceYear ?? currentYear, target.entranceMonth ?? currentMonth)
+                } else {
+                    return (currentYear, currentMonth)
+                }
+            }
+        
+        let graduateDate = input.selectedGraduateDate
+            .startWith {
+                if case let .edit(_, target) = self.editingType {
+                    return (target.graduateYear ?? currentYear, target.graduateMonth ?? currentMonth)
+                } else {
+                    return (currentYear, currentMonth)
+                }
+            }
         
         let educationItem = Driver.combineLatest(
-            input.title,
-            input.description,
-            input.selectedEntranceDate
-                .startWith((
-                    year: initalEducationItem.entranceYear ?? Calendar.current.currentYear,
-                    month: initalEducationItem.entranceMonth ?? Calendar.current.currentMonth
-                )), // 입학일 초기 상태 지정
-            graduateDateString
-        ) {
-            (title, description, entranceDate, graduateDate) -> EducationItem in
-            let period = "\(entranceDate.year).\(entranceDate.month.toLeadingZero(digit: 2)) - \(graduateDate)"
-            return .init(period: period, title: title, description: description)
+            title,
+            description,
+            entranceDate.map { "\($0.year).\($0.month.toLeadingZero(digit: 2))" },
+            graduateDate.map { "\($0.year).\($0.month.toLeadingZero(digit: 2))" },
+            schoolEnrollmentStatus
+        ) { title, description, entranceDateString, graduateDateString, enrollmentStatus in
+            let period: String
+            switch enrollmentStatus {
+            case .enrolled:
+                period = "\(entranceDateString) - \(SchoolEnrollmentStatus.enrolled.rawValue)"
+            case .graduated:
+                period = "\(entranceDateString) - \(graduateDateString)"
+            }
+            return EducationItem(period: period,
+                                 title: title,
+                                 description: description)
         }
-            .startWith(initalEducationItem)
         
         let doneHandler = input.doneTrigger
             .withLatestFrom(educationItem)
             .doOnNext(endEditing(with:))
             .mapToVoid()
         
-        let editingType = Driver.just(editingType)
-        
         let deleteHandler = input.deleteTrigger
             .doOnNext {
-                if case let .edit(index) = self.editingType {
+                if case let .edit(index, _) = self.editingType {
                     self.delegate?.educationEditingViewModelDidDeleteEducationItem(at: index)
                 }
             }
-                
+        
         return .init(
-            educationItem: educationItem,
+            title: title,
+            description: description,
+            entranceDate: entranceDate,
+            graduateDate: graduateDate,
             doneHandler: doneHandler,
             editingType: editingType,
-            deleteHandler: deleteHandler
+            deleteHandler: deleteHandler,
+            schoolEnrollmentStatus: schoolEnrollmentStatus
         )
     }
     
     private func endEditing(with educationItem: EducationItem) {
         switch editingType {
-        case .edit(let index):
+        case .edit(let index, _):
             delegate?.educationEditingViewModelDidEndEditing(with: educationItem, at: index)
         case .new:
             delegate?.educationEditingViewModelDidAppend(educationItem: educationItem)
@@ -104,16 +152,19 @@ extension EducationEditingViewModel {
         let selectedEntranceDate: Driver<(year: Int, month: Int)>
         let selectedGraduateDate: Driver<(year: Int, month: Int)>
         let doneTrigger: Signal<Void>
-        let enrollmentSelection: Driver<Void>
-        let graduateSelection: Driver<Void>
         let deleteTrigger: Signal<Void>
+        let selectedEnrollmentStatus: Driver<SchoolEnrollmentStatus>
     }
     
     struct Output {
-        let educationItem: Driver<EducationItem>
+        let title: Driver<String>
+        let description: Driver<String>
+        let entranceDate: Driver<(year: Int, month: Int)>
+        let graduateDate: Driver<(year: Int, month: Int)>
         let doneHandler: Signal<Void>
         let editingType: Driver<EditingType>
         let deleteHandler: Signal<Void>
+        let schoolEnrollmentStatus: Driver<SchoolEnrollmentStatus>
     }
 }
 
@@ -124,7 +175,7 @@ extension EducationEditingViewModel {
     enum EditingType {
         
         /// 기존 학력 정보를 수정할 때 사용하는 열거형 값입니다.
-        case edit(index: IndexPath.Index)
+        case edit(index: IndexPath.Index, target: EducationItem)
         
         /// 새 학력 정보를 추가할 때 사용하는 열거형 값입니다.
         case new

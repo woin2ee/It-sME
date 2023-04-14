@@ -11,17 +11,47 @@ import FirebaseDatabase
 extension Reactive where Base: DatabaseReference {
     
     /// Observable sequence of DataSnapshot
-    var dataSnapshot: Observable<DataSnapshot> {
-        return Observable.create { observer in
-            
-            self.base.getData { error, dataSnapshot in
-                guard let dataSnapshot = dataSnapshot else {
-                    observer.onError(error ?? RxError.noElements)
-                    return
+    var dataSnapshot: Single<DataSnapshot> {
+        return .create { observer in
+            Task {
+                do {
+                    let dataSnapshot = try await self.base.getData()
+                    observer(.success(dataSnapshot))
+                } catch {
+                    observer(.failure(error))
                 }
-                
-                observer.onNext(dataSnapshot)
-                observer.onCompleted()
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    /// `setValue(_:)` 메소드의 `Reactive wrapper` 입니다.
+    func setValue(_ jsonObject: Any?) -> Single<DatabaseReference> {
+        return .create { observer in
+            Task {
+                do {
+                    let reference = try await self.base.setValue(jsonObject)
+                    observer(.success(reference))
+                } catch {
+                    observer(.failure(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    /// `removeValue()` 메소드의 `Reactive wrapper` 입니다.
+    func removeValue() -> Single<DatabaseReference> {
+        return .create { observer in
+            Task {
+                do {
+                    let reference = try await self.base.removeValue()
+                    observer(.success(reference))
+                } catch {
+                    observer(.failure(error))
+                }
             }
             
             return Disposables.create()

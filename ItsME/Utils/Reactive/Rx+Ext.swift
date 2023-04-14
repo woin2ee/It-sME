@@ -39,4 +39,26 @@ extension SharedSequenceConvertibleType {
     func doOnNext(_ block: ((Element) -> Void)?) -> SharedSequence<SharingStrategy, Element> {
         return self.do(onNext: block)
     }
+    
+    func startWith(_ block: () -> Element) -> SharedSequence<SharingStrategy, Element> {
+        return startWith(block())
+    }
+}
+
+extension PrimitiveSequenceType where Trait == SingleTrait {
+    
+    func mapToVoid() -> PrimitiveSequence<Trait, Void> {
+        return self.map { _ in }
+    }
+    
+    func doOnSuccess(_ block: ((Element) throws -> Void)?) -> PrimitiveSequence<Trait, Element> {
+        return self.do(onSuccess: block)
+    }
+}
+
+extension PrimitiveSequenceType where Trait == MaybeTrait {
+    
+    func mapToVoid() -> PrimitiveSequence<Trait, Void> {
+        return self.map { _ in }
+    }
 }

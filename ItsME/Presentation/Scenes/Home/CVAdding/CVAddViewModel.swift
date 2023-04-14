@@ -55,7 +55,7 @@ final class CVAddViewModel: ViewModelType {
                 guard case let .edit(uuid) = self.editingType else {
                     return Signal<Void>.empty()
                 }
-                return self.cvRepository.removeCurrentCVInfo(uuid).asSignalOnErrorJustComplete()
+                return self.cvRepository.removeCV(by: uuid).asSignalOnErrorJustComplete()
             }
         
         return .init(
@@ -73,10 +73,10 @@ final class CVAddViewModel: ViewModelType {
         
         switch editingType {
         case .edit(let uuid):
-            return cvRepository.saveCurrentCVTitle(cvTitle, lastModified: todayString, uuid: uuid).asSignalOnErrorJustComplete()
+            return cvRepository.saveCVTitle(cvTitle, lastModified: todayString, uuid: uuid).asSignalOnErrorJustComplete()
         case .new:
             let cvInfo: CVInfo = .init(title: cvTitle, resume: Resume.empty, coverLetter: CoverLetter.empty, lastModified: todayString)
-            return cvRepository.saveCurrentCVInfo(cvInfo).asSignalOnErrorJustComplete()
+            return cvRepository.saveCVInfo(cvInfo).asSignalOnErrorJustComplete()
         }
     }
 }

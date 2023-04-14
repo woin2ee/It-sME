@@ -65,6 +65,7 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
         configureSubviews()
     }
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
     }
     

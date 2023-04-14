@@ -21,23 +21,35 @@ final class LoginViewModel: ViewModelType {
     }
     
     struct Output {
-        let loggedIn: Signal<Void>
+        let loggedInAndNeedSignUp: Signal<Bool>
     }
     
+    let userRepository: UserRepository = .shared
+    
     func transform(input: Input) -> Output {
-        let loggedInKakao = input.kakaoLoginRequest
+        let loggedInWithKakao = input.kakaoLoginRequest
             .flatMapFirst {
-                return self.loginWithKakao().asSignalOnErrorJustComplete()
+                return self.loginWithKakao()
+                    .asSignalOnErrorJustComplete()
             }
         
-        let loggedInApple = input.appleLoginRequest
+        let loggedInWithApple = input.appleLoginRequest
             .flatMapFirst {
-                return self.loginWithApple().asSignalOnErrorJustComplete()
+                return self.loginWithApple()
+                    .asSignalOnErrorJustComplete()
             }
         
-        let loggedIn = Signal.merge(loggedInKakao, loggedInApple)
+        let loggedInAndNeedSignUp = Signal.merge(loggedInWithKakao, loggedInWithApple)
+            .flatMapFirst { _ in
+                return self.userRepository.hasUserInfo
+                    .asSignalOnErrorJustComplete()
+            }
+            .doOnNext { hasUserInfo in
+                ItsMEUserDefaults.allowsAutoLogin = hasUserInfo
+            }
+            .map { !$0 } // 유저 정보가 존재하면 SignUp 불필요.
         
-        return .init(loggedIn: loggedIn)
+        return .init(loggedInAndNeedSignUp: loggedInAndNeedSignUp)
     }
 }
 
@@ -45,7 +57,7 @@ final class LoginViewModel: ViewModelType {
 
 private extension LoginViewModel {
     
-    func loginWithApple() -> Observable<Void> {
+    func loginWithApple() -> Single<Void> {
         let rawNonce = randomNonceString()
         
         let appleIDProvider = ASAuthorizationAppleIDProvider.init()
@@ -57,7 +69,8 @@ private extension LoginViewModel {
         authorizationController.performRequests()
         
         return authorizationController.rx.didCompleteWithAuthorization
-            .flatMapFirst { authorization -> Observable<Void> in
+            .asSingle()
+            .flatMap { authorization in
                 guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
                       let idTokenData = appleIDCredential.identityToken,
                       let idTokenString = String(data: idTokenData, encoding: .utf8)
@@ -74,7 +87,8 @@ private extension LoginViewModel {
                     rawNonce: rawNonce
                 )
                 
-                return Auth.auth().rx.signIn(with: credential).asObservable().mapToVoid()
+                return Auth.auth().rx.signIn(with: credential)
+                    .mapToVoid()
             }
     }
     
@@ -84,18 +98,20 @@ private extension LoginViewModel {
         if (UserApi.isKakaoTalkLoginAvailable()) {
             return UserApi.shared.rx.loginWithKakaoTalk(nonce: sha256(rawNonce))
                 .flatMapFirst { oAuthToken in
-                    self.signInToFirebase(with: oAuthToken, rawNonce: rawNonce)
+                    self.signInToFirebase(with: oAuthToken, rawNonce: rawNonce).asObservable()
                 }
         } else {
             return UserApi.shared.rx.loginWithKakaoAccount(nonce: sha256(rawNonce))
                 .flatMapFirst { oAuthToken in
-                    self.signInToFirebase(with: oAuthToken, rawNonce: rawNonce)
+                    self.signInToFirebase(with: oAuthToken, rawNonce: rawNonce).asObservable()
                 }
         }
     }
     
-    func signInToFirebase(with oAuthToken: OAuthToken, rawNonce: String) -> Observable<Void> {
-        guard let idToken = oAuthToken.idToken else { return .empty() }
+    func signInToFirebase(with oAuthToken: OAuthToken, rawNonce: String) -> Single<Void> {
+        guard let idToken = oAuthToken.idToken else {
+            return .error(LoginViewModelError.LoginFailed)
+        }
         
         let providerID = "oidc.kakao" // Firebase console: Authentication 탭에서 설정한 OIDC 제공업체 ID
         let credential = OAuthProvider.credential(
@@ -104,7 +120,8 @@ private extension LoginViewModel {
             rawNonce: rawNonce
         )
         
-        return Auth.auth().rx.signIn(with: credential).asObservable().mapToVoid()
+        return Auth.auth().rx.signIn(with: credential)
+            .mapToVoid()
     }
     
     func randomNonceString(length: Int = 32) -> String {
@@ -137,5 +154,12 @@ private extension LoginViewModel {
         }
         
         return result
+    }
+}
+
+extension LoginViewModel {
+    
+    enum LoginViewModelError: Error {
+        case LoginFailed
     }
 }
