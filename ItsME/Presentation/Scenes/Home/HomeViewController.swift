@@ -331,8 +331,8 @@ struct ScrollPageController {
 private extension HomeViewController {
     
     func pushCVAddView() {
-        let cvAddViewModel: CVAddViewModel = .init(cvTitle: "", editingType: .new)
-        let viewController: CVAddViewController = .init(viewModel: cvAddViewModel)
+        let cvAddViewModel: CVEditViewModel = .init(cvTitle: "", editingType: .new)
+        let viewController: CVEditViewController = .init(viewModel: cvAddViewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -340,19 +340,26 @@ private extension HomeViewController {
         var menuItems: [UIAction] {
             return [
                 UIAction(title: "CV제목 편집", image: UIImage(systemName: "square.and.pencil.circle.fill"), identifier: UIAction.Identifier("CVTitleEditIdentifier"), handler: { [weak self] _ in
-                    let cvAddViewModel: CVAddViewModel = .init(cvTitle: cvInfo.title, editingType: .edit(uuid: cvInfo.uuid))
-                    let viewController: CVAddViewController = .init(viewModel: cvAddViewModel)
+                    let cvAddViewModel: CVEditViewModel = .init(cvTitle: cvInfo.title, editingType: .edit(uuid: cvInfo.uuid))
+                    let viewController: CVEditViewController = .init(viewModel: cvAddViewModel)
                     self?.navigationController?.pushViewController(viewController, animated: true)
                 }),
                 UIAction(title: "CV 삭제", image: UIImage(systemName: "minus.circle.fill"), identifier: UIAction.Identifier("CVRemoveIdentifier"), attributes: .destructive, handler: { [weak self] _ in
+                    guard let self = self else { return }
                     let title = "정말로 삭제하시겠습니까?"
                     let message = "소중한 회원님의 정보는 되돌릴 수 없습니다. 이 사실을 인지하고 삭제하시겠습니까?"
-                    self?.presentConfirmAlert(
+                    self.presentConfirmAlert(
                         title: title,
                         message: message,
                         cancelAction: .init(title: "아니오", style: .cancel),
-                        okAction: .init(title: "예", style: .default, handler: { _ in
+                        okAction: .init(title: "예", style: .destructive, handler: { _ in
                             print("CV삭제")
+                            self.viewModel.removeCV(cvInfo: cvInfo)
+                                .subscribe(onNext: { _ in
+//FIXME: - 추후에 HomeViewModel의 [cvsInfo]에 이벤트를 추가하는 방향으로 개선
+                                    self.bindViewModel()
+                                })
+                                .disposed(by: self.disposeBag)
                         })
                     )
                 })

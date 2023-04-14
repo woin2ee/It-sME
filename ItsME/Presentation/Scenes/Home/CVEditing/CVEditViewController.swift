@@ -1,5 +1,5 @@
 //
-//  CVAddViewController.swift
+//  CVEditViewController.swift
 //  ItsME
 //
 //  Created by MacBook Air on 2023/04/04.
@@ -10,10 +10,10 @@ import Then
 import UIKit
 import RxSwift
 
-class CVAddViewController: UIViewController {
+class CVEditViewController: UIViewController {
 
     private let disposeBag: DisposeBag = .init()
-    private let viewModel: CVAddViewModel
+    private let viewModel: CVEditViewModel
     
     // MARK: - UI Components
     private lazy var inputTableView: IntrinsicHeightTableView = .init(style: .insetGrouped).then {
@@ -41,7 +41,7 @@ class CVAddViewController: UIViewController {
     private lazy var completeBarButton: UIBarButtonItem = .init()
     
     // MARK: - Initalizer
-    init(viewModel: CVAddViewModel) {
+    init(viewModel: CVEditViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         bindViewModel()
@@ -52,11 +52,14 @@ class CVAddViewController: UIViewController {
     }
     
     // MARK: - Life Cycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNavigationBar()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemGroupedBackground
         configureSubviews()
-        configureNavigationBar()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -70,7 +73,7 @@ class CVAddViewController: UIViewController {
 }
 
 // MARK: - Private Functions
-private extension CVAddViewController {
+private extension CVEditViewController {
     
     func configureSubviews() {
         let safeArea = self.view.safeAreaLayoutGuide
@@ -96,10 +99,10 @@ private extension CVAddViewController {
 }
 
 //MARK: - Binding ViewModel
-private extension CVAddViewController {
+private extension CVEditViewController {
     func bindViewModel() {
         
-        let input: CVAddViewModel.Input = .init(
+        let input: CVEditViewModel.Input = .init(
             cvTitle: inputCell.contentsTextField.rx.text.orEmpty.asDriver(),
             doneTrigger: completeBarButton.rx.tap.asSignal(),
             removeTrigger: removeButton.rx.tap.flatMap {
@@ -129,7 +132,7 @@ private extension CVAddViewController {
             .forEach { $0.disposed(by: disposeBag) }
     }
     
-    var editingTypeBinding: Binder<CVAddViewModel.EditingType> {
+    var editingTypeBinding: Binder<CVEditViewModel.EditingType> {
         .init(self) { vc, editingType in
             switch editingType {
             case .edit:
@@ -145,7 +148,7 @@ private extension CVAddViewController {
     
 }
 // MARK: - UITableViewDataSource
-extension CVAddViewController: UITableViewDataSource {
+extension CVEditViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1

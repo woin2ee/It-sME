@@ -10,6 +10,8 @@ import RxCocoa
 
 final class HomeViewModel: ViewModelType {
     
+    private var disposeBag: DisposeBag = .init()
+    
     struct Input {
         let viewDidLoad: Signal<Void>
         let viewWillAppear: Signal<Void>
@@ -24,6 +26,10 @@ final class HomeViewModel: ViewModelType {
     private let cvRepository: CVRepository = .shared
     
     private(set) var userInfo: UserInfo = .empty
+    
+    func removeCV(cvInfo: CVInfo) -> Observable<Void> {
+       return self.cvRepository.removeCurrentCVInfo(cvInfo.uuid)
+    }
         
     func transform(input: Input) -> Output {
         let userInfo = Signal.merge(input.viewDidLoad, input.viewWillAppear.skip(1))

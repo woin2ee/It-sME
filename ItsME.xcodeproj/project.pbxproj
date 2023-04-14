@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		660DE69AE1704CC2A0EA2EA4 /* Pods_ItsME.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E376D8E0A70652A602521B80 /* Pods_ItsME.framework */; };
 		D0304B8E29DC07CA0017C529 /* AddCVButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0304B8D29DC07CA0017C529 /* AddCVButton.swift */; };
-		D0304B9129DC0C870017C529 /* CVAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0304B9029DC0C870017C529 /* CVAddViewController.swift */; };
-		D0304B9329DC0CEE0017C529 /* CVAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0304B9229DC0CEE0017C529 /* CVAddViewModel.swift */; };
+		D0304B9129DC0C870017C529 /* CVEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0304B9029DC0C870017C529 /* CVEditViewController.swift */; };
+		D0304B9329DC0CEE0017C529 /* CVEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0304B9229DC0CEE0017C529 /* CVEditViewModel.swift */; };
 		D0472F07296406BC00E83F61 /* TotalCVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0472F06296406BC00E83F61 /* TotalCVViewController.swift */; };
 		D0472F09296406CF00E83F61 /* TotalCVViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0472F08296406CF00E83F61 /* TotalCVViewModel.swift */; };
 		D04FAF95299CB3F60049DBAA /* CoverLetterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04FAF94299CB3F60049DBAA /* CoverLetterCell.swift */; };
@@ -148,8 +148,8 @@
 		B709BB6C1D55A620D660FFA3 /* Pods_ItsME_ItsMEUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ItsME_ItsMEUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5973950B0C881FD5D80F955 /* Pods-ItsME.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME.debug.xcconfig"; path = "Target Support Files/Pods-ItsME/Pods-ItsME.debug.xcconfig"; sourceTree = "<group>"; };
 		D0304B8D29DC07CA0017C529 /* AddCVButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCVButton.swift; sourceTree = "<group>"; };
-		D0304B9029DC0C870017C529 /* CVAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVAddViewController.swift; sourceTree = "<group>"; };
-		D0304B9229DC0CEE0017C529 /* CVAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVAddViewModel.swift; sourceTree = "<group>"; };
+		D0304B9029DC0C870017C529 /* CVEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVEditViewController.swift; sourceTree = "<group>"; };
+		D0304B9229DC0CEE0017C529 /* CVEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVEditViewModel.swift; sourceTree = "<group>"; };
 		D0472F06296406BC00E83F61 /* TotalCVViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalCVViewController.swift; sourceTree = "<group>"; };
 		D0472F08296406CF00E83F61 /* TotalCVViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalCVViewModel.swift; sourceTree = "<group>"; };
 		D04FAF94299CB3F60049DBAA /* CoverLetterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverLetterCell.swift; sourceTree = "<group>"; };
@@ -325,13 +325,13 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
-		D0304B8F29DC0C380017C529 /* CVAdding */ = {
+		D0304B8F29DC0C380017C529 /* CVEditing */ = {
 			isa = PBXGroup;
 			children = (
-				D0304B9029DC0C870017C529 /* CVAddViewController.swift */,
-				D0304B9229DC0CEE0017C529 /* CVAddViewModel.swift */,
+				D0304B9029DC0C870017C529 /* CVEditViewController.swift */,
+				D0304B9229DC0CEE0017C529 /* CVEditViewModel.swift */,
 			);
-			path = CVAdding;
+			path = CVEditing;
 			sourceTree = "<group>";
 		};
 		D0472F012964054400E83F61 /* TotalCV */ = {
@@ -714,7 +714,7 @@
 		DAAFB24D2918EC38007A8DF0 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				D0304B8F29DC0C380017C529 /* CVAdding */,
+				D0304B8F29DC0C380017C529 /* CVEditing */,
 				D0304B8C29DC06E20017C529 /* Component */,
 				D09AC9782918DE8B0081C0EC /* HomeViewController.swift */,
 				DAB06A3C291BA5B400E86163 /* HomeViewModel.swift */,
@@ -1137,7 +1137,7 @@
 				D04FAF95299CB3F60049DBAA /* CoverLetterCell.swift in Sources */,
 				D04FAF98299CB6690049DBAA /* CoverLetterHeaderView.swift in Sources */,
 				D0CCF4E3292604BE00AD4AE6 /* UIColor+.swift in Sources */,
-				D0304B9129DC0C870017C529 /* CVAddViewController.swift in Sources */,
+				D0304B9129DC0C870017C529 /* CVEditViewController.swift in Sources */,
 				DA018811296D1483002C5CB0 /* OtherItemEditingViewController.swift in Sources */,
 				D0CCF4E829260ED200AD4AE6 /* UserInfoItem.swift in Sources */,
 				DA708F0F29DC1F7400EF84F2 /* StoragePath.swift in Sources */,
@@ -1158,7 +1158,7 @@
 				DA6B3CE529B09D99002BB159 /* YearMonthPickerView.swift in Sources */,
 				DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */,
 				DA739DDC292398C3003AEE4C /* LoginViewModel.swift in Sources */,
-				D0304B9329DC0CEE0017C529 /* CVAddViewModel.swift in Sources */,
+				D0304B9329DC0CEE0017C529 /* CVEditViewModel.swift in Sources */,
 				DAE6090B2942095400481742 /* TotalUserInfoItemStackView.swift in Sources */,
 				D0CCF504292CCB4C00AD4AE6 /* CVCard.swift in Sources */,
 				DA708F1929DE864600EF84F2 /* IconCell.swift in Sources */,

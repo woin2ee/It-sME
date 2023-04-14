@@ -1,5 +1,5 @@
 //
-//  CVAddViewModel.swift
+//  CVEditViewModel.swift
 //  ItsME
 //
 //  Created by MacBook Air on 2023/04/04.
@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-final class CVAddViewModel: ViewModelType {
+final class CVEditViewModel: ViewModelType {
     
     //MARK: - Input & Output
     struct Input {
@@ -82,7 +82,7 @@ final class CVAddViewModel: ViewModelType {
 }
 
 //MARK: - EditingType
-extension CVAddViewModel {
+extension CVEditViewModel {
     
     enum EditingType {
         
