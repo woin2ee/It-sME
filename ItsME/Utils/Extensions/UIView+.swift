@@ -26,9 +26,11 @@ extension UIView {
     ///     - width: 테두리의 두께
     ///     - color: 테두리의 색깔
     ///     - offset: 뷰 하단을 기준으로 얼마나 떨어져 있는지 나타내는 offset 값
-    func addBottomBorder(width: CGFloat = 1.0, color: UIColor = .systemGray4, offset: CGFloat = 0) -> CALayer {
+    ///     - margin: 뷰 양옆으로 얼마나 떨어져 있는지 나타내는 값
+    @discardableResult
+    func addBottomBorder(width: CGFloat = 1.0, color: UIColor = .systemGray4, offset: CGFloat = 0, margin: CGFloat = 4.0) -> CALayer {
         let borderLayer: CALayer = .init()
-        let margin: CGFloat = 4.0
+        let margin: CGFloat = margin
         borderLayer.frame = .init(
             x: margin,
             y: self.bounds.height + offset,
