@@ -16,7 +16,7 @@ final class SignUpViewController: UIViewController {
     private let viewModel: SignUpViewModel = .init()
     
     private lazy var guideLabel: UILabel = .init().then {
-        $0.text = "필수 정보를 입력해주세요!"
+        $0.text = "이력서에 들어갈 필수 정보를 입력해주세요!"
     }
     
     override func viewDidLoad() {
