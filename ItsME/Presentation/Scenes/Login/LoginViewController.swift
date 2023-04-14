@@ -16,7 +16,7 @@ final class LoginViewController: UIViewController {
     
     private let viewModel: LoginViewModel = .init()
     
-    // MARK: - UI Components
+    // MARK: UI Components
     
     private let logoImageView: UIImageView = {
         return UIImageView.init(image: UIImage.init(named: "its_me_logo"))
@@ -29,6 +29,8 @@ final class LoginViewController: UIViewController {
         return button
     }()
     
+    // MARK: Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureAppearance()
@@ -37,15 +39,11 @@ final class LoginViewController: UIViewController {
     }
 }
 
-// MARK: - Private methods
+// MARK: - Binding ViewModel
 
-private extension LoginViewController {
+extension LoginViewController {
     
-    func configureAppearance() {
-        self.view.backgroundColor = .white
-    }
-    
-    func bindViewModel() {
+    private func bindViewModel() {
         let input = LoginViewModel.Input.init(
             kakaoLoginRequest: kakaoLoginButton.rx.tap.asSignal(),
             appleLoginRequest: appleLoginButton.rx.tap.asSignal()
@@ -59,8 +57,17 @@ private extension LoginViewController {
             })
             .disposed(by: disposeBag)
     }
+}
+
+// MARK: - Methods
+
+extension LoginViewController {
     
-    func configureSubviews() {
+    private func configureAppearance() {
+        self.view.backgroundColor = .white
+    }
+    
+    private func configureSubviews() {
         self.view.addSubview(logoImageView)
         self.view.addSubview(appleLoginButton)
         self.view.addSubview(kakaoLoginButton)
@@ -74,7 +81,7 @@ private extension LoginViewController {
         layoutLoginButtons()
     }
     
-    func layoutLoginButtons() {
+    private func layoutLoginButtons() {
         let screenWidth = self.view.safeAreaLayoutGuide.layoutFrame.size.width
         let widthInset: CGFloat = 60
         let buttonSpec: LoginButtonSpec = .init(width: screenWidth - widthInset)
@@ -93,9 +100,11 @@ private extension LoginViewController {
     }
 }
 
-private extension LoginViewController {
+// MARK: - LoginButtonSpec
+
+extension LoginViewController {
     
-    struct LoginButtonSpec {
+    private struct LoginButtonSpec {
         let ratio: CGFloat = 90/600
         let width: CGFloat
         var height: CGFloat {
