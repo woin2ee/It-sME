@@ -238,7 +238,7 @@ private extension ProfileEditingViewController {
         
         self.containerScrollView.addSubview(contentView)
         contentView.snp.makeConstraints { make in
-            make.top.bottom.width.equalToSuperview()
+            make.directionalEdges.width.equalToSuperview()
         }
         
         self.contentView.addSubview(profileImageView)
