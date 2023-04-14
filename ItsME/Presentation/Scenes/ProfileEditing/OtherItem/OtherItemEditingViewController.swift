@@ -24,10 +24,16 @@ final class OtherItemEditingViewController: UIViewController {
     private lazy var contentsInputCell: ContentsInputCell = .init()
     private lazy var completeButton: UIBarButtonItem = .init()
     private lazy var deleteButton: UIButton = .init(configuration: .bordered().with {
-        $0.baseBackgroundColor = .secondarySystemGroupedBackground
-        $0.baseForegroundColor = .systemRed
-        $0.title = "삭제"
+        $0.baseBackgroundColor = .systemRed
+        $0.baseForegroundColor = .white
+        let attributeContainer: AttributeContainer = .init(
+            [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18.0, weight: .bold)]
+        )
+        $0.attributedTitle = .init("삭제", attributes: attributeContainer)
         $0.cornerStyle = .large
+        $0.image = .init(systemName: "trash.fill")
+        $0.imagePadding = 2
+        $0.preferredSymbolConfigurationForImage = .init(scale: .medium)
     })
     
     // MARK: - Computed Properties
