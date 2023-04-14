@@ -10,8 +10,6 @@ import RxCocoa
 
 final class HomeViewModel: ViewModelType {
     
-    private var disposeBag: DisposeBag = .init()
-    
     struct Input {
         let viewDidLoad: Signal<Void>
         let viewWillAppear: Signal<Void>

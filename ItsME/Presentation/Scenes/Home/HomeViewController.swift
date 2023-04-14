@@ -172,13 +172,13 @@ private extension HomeViewController {
             
             cvsInfo.sorted(by: { $0.lastModified > $1.lastModified })
                 .enumerated()
-                .forEach { [weak self] (index, cvInfo) in
+                .forEach { (index, cvInfo) in
                     let cvCard = CVCard().then {
                         $0.cvTitle.text = cvInfo.title
                         $0.latestDate.text = "최근 수정일: " + cvInfo.lastModified
                         $0.layer.cornerRadius = 10
                         $0.backgroundColor = .mainColor
-                        $0.menuButton.menu = self?.addMenuItems(cvInfo: cvInfo)
+                        $0.menuButton.menu = self.addMenuItems(cvInfo: cvInfo)
                         $0.menuButton.showsMenuAsPrimaryAction = true
                     }
                     vc.hStackLayout.addArrangedSubview(cvCard)
@@ -352,8 +352,7 @@ private extension HomeViewController {
                         title: title,
                         message: message,
                         cancelAction: .init(title: "아니오", style: .cancel),
-                        okAction: .init(title: "예", style: .destructive, handler: { _ in
-                            print("CV삭제")
+                        okAction: .init(title: "삭제", style: .destructive, handler: { _ in
                             self.viewModel.removeCV(cvInfo: cvInfo)
                                 .subscribe(onNext: { _ in
 //FIXME: - 추후에 HomeViewModel의 [cvsInfo]에 이벤트를 추가하는 방향으로 개선
