@@ -14,13 +14,11 @@ final class CVEditViewModel: ViewModelType {
     struct Input {
         let cvTitle: Driver<String>
         let doneTrigger: Signal<Void>
-        let removeTrigger: Signal<Void>
     }
     
     struct Output {
         let cvTitle: Driver<String>
         let doneHandler: Signal<Void>
-        let removeHandler: Signal<Void>
         let editingType: Driver<EditingType>
     }
     private let cvRepository: CVRepository = CVRepository.shared
@@ -50,18 +48,9 @@ final class CVEditViewModel: ViewModelType {
         
         let editingType = Driver.just(editingType)
         
-        let removeHandler = input.removeTrigger
-            .flatMap { () in
-                guard case let .edit(uuid) = self.editingType else {
-                    return Signal<Void>.empty()
-                }
-                return self.cvRepository.removeCurrentCVInfo(uuid).asSignalOnErrorJustComplete()
-            }
-        
         return .init(
             cvTitle: cvTitle,
             doneHandler: doneHandler,
-            removeHandler: removeHandler,
             editingType: editingType
         )
     }

@@ -23,19 +23,9 @@ class CVEditViewController: UIViewController {
     
     var inputCell: ContentsInputCell = .init().then {
         $0.contentsTextField.placeholder = "제목을 입력하세요."
-        $0.titleLabel.text = "항목"
+        $0.titleLabel.text = "제목"
         $0.titleLabel.font = .systemFont(ofSize: 18, weight: .bold)
         $0.contentsTextField.font = .systemFont(ofSize: 18)
-    }
-    
-    lazy var removeButton = UIButton().then {
-        $0.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
-        $0.layer.cornerRadius = 10
-        $0.layer.masksToBounds = true
-        $0.tintColor = .white
-        $0.backgroundColor = .systemRed
-        $0.setTitle("CV 삭제", for: .normal)
-        $0.setImage(.init(systemName: "trash.fill"), for: .normal)
     }
     
     private lazy var completeBarButton: UIBarButtonItem = .init()
@@ -87,15 +77,6 @@ private extension CVEditViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationItem.rightBarButtonItem = completeBarButton
     }
-    
-    func addRemoveButton() {
-        view.addSubview(removeButton)
-        removeButton.snp.makeConstraints { make in
-            make.top.equalTo(inputTableView.snp.bottom).offset(10)
-            make.horizontalEdges.equalToSuperview().inset(20)
-            make.height.equalTo(40)
-        }
-    }
 }
 
 //MARK: - Binding ViewModel
@@ -104,14 +85,7 @@ private extension CVEditViewController {
         
         let input: CVEditViewModel.Input = .init(
             cvTitle: inputCell.contentsTextField.rx.text.orEmpty.asDriver(),
-            doneTrigger: completeBarButton.rx.tap.asSignal(),
-            removeTrigger: removeButton.rx.tap.flatMap {
-                return self.rx.presentConfirmAlert(
-                    title: "CV 삭제",
-                    message: "이 CV를 삭제하시겠습니까?",
-                    okAction: UIAlertAction(title: "삭제", style: .destructive)
-                )
-            }.asSignalOnErrorJustComplete()
+            doneTrigger: completeBarButton.rx.tap.asSignal()
         )
         
         let output = viewModel.transform(input: input)
@@ -119,10 +93,6 @@ private extension CVEditViewController {
         [ output.cvTitle
             .drive(inputCell.contentsTextField.rx.text),
           output.doneHandler
-            .emit(with: self, onNext: { owner, _ in
-                owner.navigationController?.popViewController(animated: true)
-            }),
-          output.removeHandler
             .emit(with: self, onNext: { owner, _ in
                 owner.navigationController?.popViewController(animated: true)
             }),
@@ -138,7 +108,6 @@ private extension CVEditViewController {
             case .edit:
                 vc.navigationItem.title = "편집"
                 vc.completeBarButton.title = "완료"
-                vc.addRemoveButton()
             case .new:
                 vc.navigationItem.title = "추가"
                 vc.completeBarButton.title = "추가"
