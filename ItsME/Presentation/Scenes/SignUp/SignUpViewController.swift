@@ -62,6 +62,7 @@ final class SignUpViewController: UIViewController {
         $0.contentHorizontalAlignment = .leading
         $0.datePickerMode = .date
         $0.preferredDatePickerStyle = .compact
+        $0.maximumDate = .now
     }
     private lazy var addressTextField: UITextField = .init().then {
         $0.placeholder = "주소를 입력해주세요."
