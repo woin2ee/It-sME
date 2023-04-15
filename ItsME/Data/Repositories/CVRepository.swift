@@ -50,17 +50,16 @@ final class CVRepository {
         return source
     }
     
-    func saveCVTitle(_ cvTitle: String, lastModified: String, uuid: String) -> Observable<Void> {
+    func saveCVTitle(_ cvTitle: String, lastModified: String, uuid: String) -> Single<Void> {
         guard let uid = Auth.auth().currentUser?.uid else {
-            return .empty()
+            return .error(AuthErrorCode(.nullUser))
         }
         return .create { observer in
             self.database.cvsRef(uid)
                 .child(uuid).child(CVInfo.CodingKeys.title.rawValue).setValue(cvTitle)
             self.database.cvsRef(uid)
                 .child(uuid).child(CVInfo.CodingKeys.lastModified.rawValue).setValue(lastModified)
-            observer.onNext(())
-            observer.onCompleted()
+            observer(.success(()))
             
             return Disposables.create()
         }

@@ -10,39 +10,29 @@ import RxCocoa
 
 final class CVEditViewModel: ViewModelType {
     
-    //MARK: - Input & Output
-    struct Input {
-        let cvTitle: Driver<String>
-        let doneTrigger: Signal<Void>
-    }
-    
-    struct Output {
-        let cvTitle: Driver<String>
-        let doneHandler: Signal<Void>
-        let editingType: Driver<EditingType>
-    }
     private let cvRepository: CVRepository = CVRepository.shared
     
-    let cvTitle: String
+    let initialCVTitle: String
     let editingType: EditingType
     
     init(
-        cvTitle: String,
+        initialCVTitle: String,
         editingType: EditingType
     ) {
-        self.cvTitle = cvTitle
+        self.initialCVTitle = initialCVTitle
         self.editingType = editingType
     }
     
     //MARK: - transform
     func transform(input: Input) -> Output {
         let cvTitle = input.cvTitle
-            .startWith(cvTitle)
+            .startWith(initialCVTitle)
         
         let doneHandler = input.doneTrigger
             .withLatestFrom(cvTitle)
             .flatMap { cvTitle -> Signal<Void> in
-                self.endEditing(with: cvTitle)
+                return self.endEditing(withCVTitle: cvTitle)
+                    .asSignalOnErrorJustComplete()
             }
             .mapToVoid()
         
@@ -55,22 +45,37 @@ final class CVEditViewModel: ViewModelType {
         )
     }
     
-    private func endEditing(with cvTitle: String) -> Signal<Void> {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy.MM.dd"
-        let todayString = dateFormatter.string(from: Date())
+    private func endEditing(withCVTitle title: String) -> Single<Void> {
+        let todayString = ItsMEDateFormatter.birthdayString(from: .now)
         
         switch editingType {
         case .edit(let uuid):
-            return cvRepository.saveCVTitle(cvTitle, lastModified: todayString, uuid: uuid).asSignalOnErrorJustComplete()
+            return cvRepository.saveCVTitle(title, lastModified: todayString, uuid: uuid)
         case .new:
-            let cvInfo: CVInfo = .init(title: cvTitle, resume: Resume.empty, coverLetter: CoverLetter.empty, lastModified: todayString)
-            return cvRepository.saveCVInfo(cvInfo).asSignalOnErrorJustComplete()
+            let cvInfo: CVInfo = .init(title: title, resume: Resume.empty, coverLetter: CoverLetter.empty, lastModified: todayString)
+            return cvRepository.saveCVInfo(cvInfo)
         }
     }
 }
 
-//MARK: - EditingType
+// MARK: - Input & Output
+
+extension CVEditViewModel {
+    
+    struct Input {
+        let cvTitle: Driver<String>
+        let doneTrigger: Signal<Void>
+    }
+    
+    struct Output {
+        let cvTitle: Driver<String>
+        let doneHandler: Signal<Void>
+        let editingType: Driver<EditingType>
+    }
+}
+
+// MARK: - EditingType
+
 extension CVEditViewModel {
     
     enum EditingType {
