@@ -190,14 +190,14 @@ extension SignUpViewController {
         }
         guideLabel.snp.makeConstraints { make in
             make.directionalHorizontalEdges.equalToSuperview().inset(20)
-            make.top.equalToSuperview().inset(20)
+            make.top.equalToSuperview().inset(34)
         }
         inputStackView.snp.makeConstraints { make in
-            make.top.equalTo(guideLabel.snp.bottom).offset(20)
+            make.top.equalTo(guideLabel.snp.bottom).offset(30)
             make.directionalHorizontalEdges.equalToSuperview().inset(20)
         }
         startButton.snp.makeConstraints { make in
-            make.top.equalTo(inputStackView.snp.bottom).offset(40)
+            make.top.equalTo(inputStackView.snp.bottom).offset(50)
             make.directionalHorizontalEdges.equalToSuperview().inset(24)
             make.bottom.equalToSuperview().inset(20)
         }
@@ -219,12 +219,22 @@ extension SignUpViewController {
         )
         let output = viewModel.transform(input: input)
         
-        output.signUpComplete
-            .emit(with: self, onNext: { owner, _ in
-                let homeViewController: HomeViewController = .init()
-                owner.navigationController?.setViewControllers([homeViewController], animated: true)
-            })
-            .disposed(by: disposeBag)
+        [
+            output.signUpComplete
+                .emit(with: self, onNext: { owner, _ in
+                    let homeViewController: HomeViewController = .init()
+                    owner.navigationController?.setViewControllers([homeViewController], animated: true)
+                }),
+            output.nameValidation
+                .emit(to: nameValidationLabel.rx.isHidden),
+            output.addressValidation
+                .emit(to: addressValidationLabel.rx.isHidden),
+            output.phoneNumberValidation
+                .emit(to: phoneNumberValidationLabel.rx.isHidden),
+            output.emailValidation
+                .emit(to: emailValidationLabel.rx.isHidden),
+        ]
+            .forEach { $0.disposed(by: disposeBag) }
     }
 }
 
