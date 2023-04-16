@@ -198,10 +198,6 @@ private extension HomeViewController {
                 }
             
             vc.cvCardStackView.addArrangedSubview(vc.addCVButton)
-            vc.addCVButton.snp.makeConstraints { make in
-                make.width.equalTo(vc.contentWidth)
-                make.verticalEdges.equalToSuperview()
-            }
         }
     }
 }
@@ -253,6 +249,10 @@ extension HomeViewController {
             make.height.equalTo(30)
             make.width.equalTo(50)
             make.centerX.equalTo(self.view.safeAreaLayoutGuide)
+        }
+        
+        addCVButton.snp.makeConstraints { make in
+            make.width.equalTo(contentWidth)
         }
         
         layoutAddCVButton()
