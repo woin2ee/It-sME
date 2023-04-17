@@ -17,7 +17,7 @@ final class HomeViewController: UIViewController {
     
     private let viewModel: HomeViewModel = .init()
     
-    let contentWidth = 250
+    let contentWidth: CGFloat = 250
     
     // MARK: UI Objects
     
@@ -224,13 +224,13 @@ extension HomeViewController {
         
         profileImageView.snp.makeConstraints { make in
             make.width.height.equalTo(self.view.snp.width).multipliedBy(0.4)
-            make.centerX.equalTo(self.view)
+            make.centerX.equalToSuperview()
             make.top.equalTo(profileEditingButton.snp.bottom).offset(20)
         }
         
         userBasicInfoStackView.snp.makeConstraints { make in
-            make.width.equalTo(self.view).multipliedBy(0.8)
-            make.centerX.equalTo(self.view.safeAreaLayoutGuide)
+            make.width.equalToSuperview().multipliedBy(0.8)
+            make.centerX.equalToSuperview()
             make.top.equalTo(self.profileImageView.snp.bottom).offset(20)
         }
         
@@ -240,7 +240,7 @@ extension HomeViewController {
         
         cardScrollView.snp.makeConstraints { make in
             make.top.equalTo(userBasicInfoStackView.snp.bottom).offset(30)
-            make.bottom.equalTo(self.view).offset(-30)
+            make.bottom.equalToSuperview().inset(30)
             make.width.equalToSuperview()
         }
         
