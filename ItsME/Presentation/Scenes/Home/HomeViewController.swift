@@ -17,7 +17,12 @@ final class HomeViewController: UIViewController {
     
     private let viewModel: HomeViewModel = .init()
     
-    let contentWidth: CGFloat = 250
+    private var deviceWidth: CGFloat {
+        return view.window?.windowScene?.screen.bounds.width ?? UIScreen.main.bounds.width
+    }
+    private var contentWidth: CGFloat {
+        return deviceWidth * 0.64
+    }
     
     // MARK: UI Objects
     
@@ -59,7 +64,7 @@ final class HomeViewController: UIViewController {
         $0.alignment = .fill
         $0.spacing = 30
         $0.isLayoutMarginsRelativeArrangement = true
-        let layoutMargin: CGFloat = 70.0
+        let layoutMargin: CGFloat = (deviceWidth - contentWidth) / 2
         $0.layoutMargins.right = layoutMargin
         $0.layoutMargins.left = layoutMargin
     }
@@ -314,13 +319,22 @@ extension HomeViewController: UIScrollViewDelegate {
         withVelocity velocity: CGPoint,
         targetContentOffset: UnsafeMutablePointer<CGPoint>
     ) {
-        if let pageOffset = ScrollPageController().pageOffset(
-            for: scrollView.contentOffset.x,
-            velocity: velocity.x,
-            in: pageOffsets(in: scrollView)
-        ) {
-            targetContentOffset.pointee.x = pageOffset
+        let stackViewSpacing: CGFloat = cvCardStackView.spacing
+        let stackViewMargin = cvCardStackView.layoutMargins.left
+        let contentCount = cvCardStackView.arrangedSubviews.count
+        
+        let centerCoordinates: [CGFloat] = (0..<contentCount).map { count in
+            let count = CGFloat(count)
+            return stackViewMargin + contentWidth * count + stackViewSpacing * count + contentWidth / 2
         }
+        
+        let targetContentCenterOffsetX = targetContentOffset.pointee.x + scrollView.bounds.width / 2
+        guard let closestCenterCoordinate = closestValue(targetContentCenterOffsetX, in: centerCoordinates) else {
+            return
+        }
+        
+        let destinationOffset = closestCenterCoordinate - (contentWidth / 2) - stackViewMargin
+        targetContentOffset.pointee.x = destinationOffset
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -337,31 +351,6 @@ extension HomeViewController: UIScrollViewDelegate {
 // MARK: - for Paging
 
 struct ScrollPageController {
-    
-    /// Computes page offset from page offsets array for given scroll offset and velocity
-    ///
-    /// - Parameters:
-    ///   - offset: current scroll offset
-    ///   - velocity: current scroll velocity
-    ///   - pageOffsets: page offsets array
-    /// - Returns: target page offset from array or nil if no page offets provided
-    func pageOffset(for offset: CGFloat, velocity: CGFloat, in pageOffsets: [CGFloat]) -> CGFloat? {
-        let pages = pageOffsets.enumerated().reduce([Int: CGFloat]()) {
-            var dict = $0
-            dict[$1.0] = $1.1
-            return dict
-        }
-        guard let page = pages.min(by: { abs($0.1 - offset) < abs($1.1 - offset) }) else {
-            return nil
-        }
-        if abs(velocity) < 0.2 {
-            return page.value
-        }
-        if velocity < 0 {
-            return pages[pageOffsets.index(before: page.key)] ?? page.value
-        }
-        return pages[pageOffsets.index(after: page.key)] ?? page.value
-    }
     
     /// Cumputes page fraction from page offsets array for given scroll offset
     ///
