@@ -14,6 +14,19 @@ func castOrThrow<T>(_ resultType: T.Type, _ object: Any) throws -> T {
     return returnValue
 }
 
+func closestValue<T: BinaryFloatingPoint>(_ target: T, in arr: [T]) -> T? {
+    if arr.isEmpty { return nil }
+    
+    let sorted = arr.sorted()
+    
+    let over = sorted.first(where: { $0 >= target }) ?? .infinity
+    let under = sorted.last(where: { $0 <= target }) ?? -.infinity
+    
+    let diffOver = over - target
+    let diffUnder = target - under
+    return (diffOver < diffUnder) ? over : under
+}
+
 struct ItsMEDateFormatter {
     
     private init() {}

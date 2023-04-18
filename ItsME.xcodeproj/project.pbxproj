@@ -79,6 +79,9 @@
 		DA708F1929DE864600EF84F2 /* IconCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F1829DE864600EF84F2 /* IconCell.swift */; };
 		DA708F2129E066FB00EF84F2 /* ItsMEUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F2029E066FB00EF84F2 /* ItsMEUserDefaults.swift */; };
 		DA71B5D429E9A2980033864C /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA71B5D329E9A2980033864C /* UIFont+.swift */; };
+		DA71B5D829EE67050033864C /* ItsMEUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA71B5D729EE67050033864C /* ItsMEUtilsTests.swift */; };
+		DA71B5D929EE677A0033864C /* ItsMEUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4FEC2B29E6D12C00D41CE1 /* ItsMEUtils.swift */; };
+		DA71B5DA29EE67940033864C /* ItsMEError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4FEC2D29E6D14000D41CE1 /* ItsMEError.swift */; };
 		DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */; };
 		DA7201EA29309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */; };
 		DA7201EC29309B9600A69519 /* AuthenticationServices+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */; };
@@ -230,6 +233,7 @@
 		DA708F1829DE864600EF84F2 /* IconCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCell.swift; sourceTree = "<group>"; };
 		DA708F2029E066FB00EF84F2 /* ItsMEUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMEUserDefaults.swift; sourceTree = "<group>"; };
 		DA71B5D329E9A2980033864C /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
+		DA71B5D729EE67050033864C /* ItsMEUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMEUtilsTests.swift; sourceTree = "<group>"; };
 		DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseReference+Rx.swift"; sourceTree = "<group>"; };
 		DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASAuthorizationControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationServices+Rx.swift"; sourceTree = "<group>"; };
@@ -664,6 +668,7 @@
 			isa = PBXGroup;
 			children = (
 				DA53B73929B5C304000BBB26 /* ExtensionTests.swift */,
+				DA71B5D729EE67050033864C /* ItsMEUtilsTests.swift */,
 			);
 			path = ItsMETestsWithoutApp;
 			sourceTree = "<group>";
@@ -1221,8 +1226,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA71B5DA29EE67940033864C /* ItsMEError.swift in Sources */,
 				DA90695629C823F200535A3D /* ExtensionTests.swift in Sources */,
+				DA71B5D829EE67050033864C /* ItsMEUtilsTests.swift in Sources */,
 				DA90695729C826F300535A3D /* Int+.swift in Sources */,
+				DA71B5D929EE677A0033864C /* ItsMEUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
