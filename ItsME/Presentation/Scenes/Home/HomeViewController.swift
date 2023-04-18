@@ -185,7 +185,12 @@ private extension HomeViewController {
                 .forEach { cvInfo in
                     let cvCard = CVCard().then {
                         $0.cvTitleLabel.text = cvInfo.title
-                        $0.lastModifiedLabel.text = "최근 수정일: " + cvInfo.lastModified
+                        if let date = ItsMEStandardDateFormatter.date(from: cvInfo.lastModified) {
+                            let simpleLastModified = ItsMESimpleDateFormatter.string(from: date)
+                            $0.lastModifiedLabel.text = "최근 수정일: " + simpleLastModified
+                        } else {
+                            $0.lastModifiedLabel.text = "최근 수정일: -"
+                        }
                         $0.contextMenuButton.menu = vc.makeContextMenu(with: cvInfo)
                     }
                     vc.cvCardStackView.addArrangedSubview(cvCard)

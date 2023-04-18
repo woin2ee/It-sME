@@ -46,7 +46,7 @@ final class CVEditViewModel: ViewModelType {
     }
     
     private func endEditing(withCVTitle title: String) -> Single<Void> {
-        let todayString = ItsMEDateFormatter.birthdayString(from: .now)
+        let todayString = ItsMEStandardDateFormatter.string(from: .now)
         
         switch editingType {
         case .edit(let uuid):

@@ -27,13 +27,38 @@ func closestValue<T: BinaryFloatingPoint>(_ target: T, in arr: [T]) -> T? {
     return (diffOver < diffUnder) ? over : under
 }
 
-struct ItsMEDateFormatter {
+struct ItsMEStandardDateFormatter {
+    
+    static let dateFormatter: DateFormatter = {
+        let dateFormatter: DateFormatter = .init()
+        dateFormatter.timeZone = .current
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return dateFormatter
+    }()
     
     private init() {}
     
-    static func birthdayString(from date: Date) -> String {
-        let dateFormatter = DateFormatter()
+    static func string(from date: Date) -> String {
+        return dateFormatter.string(from: date)
+    }
+    
+    static func date(from string: String) -> Date? {
+        return dateFormatter.date(from: string)
+    }
+}
+
+struct ItsMESimpleDateFormatter {
+    
+    static let dateFormatter: DateFormatter = {
+        let dateFormatter: DateFormatter = .init()
+        dateFormatter.timeZone = .current
         dateFormatter.dateFormat = "yyyy.MM.dd."
+        return dateFormatter
+    }()
+    
+    private init() {}
+    
+    static func string(from date: Date) -> String {
         return dateFormatter.string(from: date)
     }
 }
