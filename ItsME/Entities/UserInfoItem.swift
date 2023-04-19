@@ -38,6 +38,11 @@ enum UserInfoItemIcon: String, CaseIterable{
     case house = "house"
     case phone = "phone"
     case letter = "letter"
+    case email = "email"
+    case telephone = "telephone"
+    case book = "book"
+    case pencil = "pencil"
+    case thumbtack = "thumbtack"
     
     /// 현재 인스턴스에 할당된 이모지입니다.
     var toEmoji: String {
@@ -54,6 +59,16 @@ enum UserInfoItemIcon: String, CaseIterable{
             return "📱"
         case .letter:
             return "✉️"
+        case .email:
+            return "📧"
+        case .telephone:
+            return "📞"
+        case .book:
+            return "📚"
+        case .pencil:
+            return "✏️"
+        case .thumbtack:
+            return "📌"
         }
     }
     
