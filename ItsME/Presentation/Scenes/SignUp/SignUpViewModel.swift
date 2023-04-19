@@ -18,6 +18,24 @@ final class SignUpViewModel: ViewModelType {
     }
     
     func transform(input: Input) -> Output {
+        let nameValidation = input.startTrigger
+            .withLatestFrom(input.name)
+            .map { $0.isNotEmpty }
+        let addressValidation = input.startTrigger
+            .withLatestFrom(input.address)
+            .map { $0.isNotEmpty }
+        let phoneNumberValidation = input.startTrigger
+            .withLatestFrom(input.phoneNumber)
+            .map { $0.isNotEmpty }
+        let emailValidation = input.startTrigger
+            .withLatestFrom(input.email)
+            .map { $0.isNotEmpty }
+        let signUpValidation = Signal.combineLatest(nameValidation,
+                                                    addressValidation,
+                                                    phoneNumberValidation,
+                                                    emailValidation)
+            .map { $0 && $1 && $2 && $3 }
+        
         let birthday = input.birthday
             .map { ItsMEDateFormatter.birthdayString(from: $0) }
         
@@ -38,6 +56,8 @@ final class SignUpViewModel: ViewModelType {
             }
         
         let signUpComplete = input.startTrigger
+            .withLatestFrom(signUpValidation)
+            .filter { $0 == true }
             .withLatestFrom(userInfo)
             .flatMapFirst {
                 return self.userRepository.saveUserInfo($0) // TODO: Error handling
@@ -45,7 +65,13 @@ final class SignUpViewModel: ViewModelType {
             }
             .doOnNext { ItsMEUserDefaults.allowsAutoLogin = true }
         
-        return .init(signUpComplete: signUpComplete)
+        return .init(
+            signUpComplete: signUpComplete,
+            nameValidation: nameValidation,
+            addressValidation: addressValidation,
+            phoneNumberValidation: phoneNumberValidation,
+            emailValidation: emailValidation
+        )
     }
 }
 
@@ -64,5 +90,9 @@ extension SignUpViewModel {
     
     struct Output {
         let signUpComplete: Signal<Void>
+        let nameValidation: Signal<Bool>
+        let addressValidation: Signal<Bool>
+        let phoneNumberValidation: Signal<Bool>
+        let emailValidation: Signal<Bool>
     }
 }
