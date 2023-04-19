@@ -27,6 +27,7 @@ final class ResumeItemEditingViewController: UIViewController {
         $0.textField.placeholder = "제목"
         $0.textField.autocorrectionType = .no
         $0.textField.clearButtonMode = .whileEditing
+        $0.textField.delegate = self
         $0.backgroundColor = .secondarySystemGroupedBackground
         $0.selectionStyle = .none
     }
@@ -35,6 +36,7 @@ final class ResumeItemEditingViewController: UIViewController {
         $0.textField.placeholder = "부제목"
         $0.textField.autocorrectionType = .no
         $0.textField.clearButtonMode = .whileEditing
+        $0.textField.delegate = self
         $0.backgroundColor = .secondarySystemGroupedBackground
         $0.selectionStyle = .none
     }
@@ -51,6 +53,8 @@ final class ResumeItemEditingViewController: UIViewController {
         $0.textView.allowsEditingTextAttributes = true
         $0.textView.autocorrectionType = .no
         $0.textView.autocapitalizationType = .none
+        $0.textView.returnKeyType = .done
+        $0.textView.delegate = self
         $0.backgroundColor = .secondarySystemGroupedBackground
         $0.selectionStyle = .none
     }
@@ -143,9 +147,18 @@ private extension ResumeItemEditingViewController {
     }
     
     func configureSubviews() {
-        self.view.addSubview(inputTableView)
+        let containerScrollView: UIScrollView = .init().then {
+            $0.backgroundColor = .clear
+            $0.delegate = self
+        }
+        self.view.addSubview(containerScrollView)
+        containerScrollView.addSubview(inputTableView)
+        
+        containerScrollView.snp.makeConstraints { make in
+            make.directionalEdges.equalToSuperview()
+        }
         inputTableView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
+            make.directionalEdges.width.equalToSuperview()
         }
     }
     
@@ -281,7 +294,8 @@ private extension ResumeItemEditingViewController {
     }
 }
 
-// MARK: - TableView
+// MARK: - UITableViewDataSource, UITableViewDelegate
+
 extension ResumeItemEditingViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -302,5 +316,30 @@ extension ResumeItemEditingViewController: UITableViewDataSource, UITableViewDel
             return 44
         }
         return UITableView.automaticDimension
+    }
+}
+
+// MARK: - UITextFieldDelegate, UITextViewDelegate
+
+extension ResumeItemEditingViewController: UITextFieldDelegate, UITextViewDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.resignFirstResponder()
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+        }
+        return true
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension ResumeItemEditingViewController: UIScrollViewDelegate {
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.view.endEditing(true)
     }
 }
