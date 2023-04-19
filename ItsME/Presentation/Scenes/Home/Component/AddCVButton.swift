@@ -50,8 +50,12 @@ extension AddCVButton {
         borderLayer.fillColor = UIColor.clear.cgColor
         borderLayer.strokeColor = UIColor.mainColor.cgColor
         borderLayer.lineDashPattern = [10, 5]
-        borderLayer.lineWidth = 5
-        borderLayer.path = UIBezierPath.init(roundedRect: self.bounds, cornerRadius: 10).cgPath
+        let lineWidth: CGFloat = 5.0
+        borderLayer.lineWidth = lineWidth
+        borderLayer.path = UIBezierPath(
+            roundedRect: self.bounds.insetBy(dx: lineWidth / 2, dy: lineWidth / 2),
+            cornerRadius: 10
+        ).cgPath
         self.layer.addSublayer(borderLayer)
     }
 }
