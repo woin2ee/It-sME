@@ -25,8 +25,8 @@ final class HomeViewModel: ViewModelType {
     
     private(set) var userInfo: UserInfo = .empty
     
-    func removeCV(cvInfo: CVInfo) -> Observable<Void> {
-        return self.cvRepository.removeCV(by: cvInfo.uuid).asObservable()
+    func removeCV(cvInfo: CVInfo) -> Signal<Void> {
+        return self.cvRepository.removeCV(by: cvInfo.uuid).asSignalOnErrorJustComplete()
     }
         
     func transform(input: Input) -> Output {
