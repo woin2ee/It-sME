@@ -29,7 +29,7 @@ final class ProfileEditingViewController: UIViewController {
         $0.backgroundColor = .clear
     }
     
-    private lazy var profileImageView: UIImageView = .init(image: .init(named: "테스트이미지")).then {
+    private lazy var profileImageView: UIImageView = .init(image: .init(named: "기본 프로필")).then {
         $0.contentMode = .scaleAspectFill
     }
     
