@@ -15,38 +15,57 @@ class AddCVButton: UIControl {
     
     let cornerRadius = 10.0
     
-    lazy var addImage: UIImageView = .init()
+    lazy var addImageView: UIImageView = .init().then {
+        $0.image =  UIImage(systemName: "plus.rectangle.portrait.fill")
+    }
     
-    lazy var title = UILabel().then {
-        $0.text = ""
+    lazy var titleLabel = UILabel().then {
+        $0.text = "CV 추가"
+        $0.textColor = .mainColor
+        $0.textAlignment = .center
+        $0.font = .systemFont(ofSize: 30, weight: .bold)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        self.backgroundColor = .systemBackground
+        self.tintColor = .mainColor
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        setupConstraints()
+        configureBorder()
     }
 }
 
-// MARK: - Private Function
+// MARK: - Methods
+
 extension AddCVButton {
     
-    override func layoutSubviews() {
-        
-        configureBorder()
-        
-        self.addSubview(addImage)
-        addImage.snp.makeConstraints { make in
+    private func setupConstraints() {
+        self.addSubview(addImageView)
+        addImageView.snp.makeConstraints { make in
             make.width.equalToSuperview().multipliedBy(0.8)
-            make.height.equalTo(addImage.snp.width)
-            make.top.equalTo(self.snp.top).offset(20)
-            make.centerX.equalToSuperview().offset(5)
+            make.height.equalTo(addImageView.snp.width)
+            make.top.equalToSuperview().offset(20)
+            make.centerX.equalToSuperview()
         }
         
-        self.addSubview(title)
-        title.snp.makeConstraints { make in
-            make.width.equalTo(addImage)
-            make.top.equalTo(addImage.snp.bottom).offset(20)
-            make.bottom.equalTo(self.snp.bottom).offset(-20)
-            make.centerX.equalTo(addImage.snp.centerX)
+        self.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.width.equalTo(addImageView)
+            make.top.equalTo(addImageView.snp.bottom).offset(20)
+            make.bottom.equalToSuperview().offset(-20)
+            make.centerX.equalTo(addImageView)
         }
     }
     
-    func configureBorder() {
+    private func configureBorder() {
         borderLayer.fillColor = UIColor.clear.cgColor
         borderLayer.strokeColor = UIColor.mainColor.cgColor
         borderLayer.lineDashPattern = [10, 5]

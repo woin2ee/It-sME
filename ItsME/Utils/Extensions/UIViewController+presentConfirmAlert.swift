@@ -11,6 +11,13 @@ import UIKit
 
 extension UIViewController {
     
+    /// <#Description#>
+    /// - Parameters:
+    ///   - title: 화면에 띄울 `UIAlertController` 의 `title`.
+    ///   - message: 화면에 띄울 `UIAlertController` 의 `message`.
+    ///   - cancelAction: 취소 버튼에 해당하는 `UIAlertAction` 객체입니다. 기본 `title` 은 "아니오" 로 설정되어있습니다.
+    ///   - okAction: 확인 버튼에 해당하는 `UIAlertAction` 객체입니다.
+    ///   - animated: `AlertController` 를 화면에 띄울 때 애니메이션을 적용할지에 대한 여부입니다.
     func presentConfirmAlert(
         title: String,
         message: String? = nil,

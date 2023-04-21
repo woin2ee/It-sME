@@ -36,7 +36,6 @@
 		D0CCF4E3292604BE00AD4AE6 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E2292604BE00AD4AE6 /* UIColor+.swift */; };
 		D0CCF4E629260C2B00AD4AE6 /* ProfileInfoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E529260C2B00AD4AE6 /* ProfileInfoComponent.swift */; };
 		D0CCF4E829260ED200AD4AE6 /* UserInfoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E729260ED200AD4AE6 /* UserInfoItem.swift */; };
-		D0CCF4EB292A690600AD4AE6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0CCF4EA292A690600AD4AE6 /* GoogleService-Info.plist */; };
 		D0CCF504292CCB4C00AD4AE6 /* CVCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF503292CCB4C00AD4AE6 /* CVCard.swift */; };
 		D0E6FF6029B1BA23008CB451 /* CoverLetterEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6FF5F29B1BA23008CB451 /* CoverLetterEditingViewController.swift */; };
 		D0E6FF6329B1BA75008CB451 /* ResumeItemEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6FF6229B1BA75008CB451 /* ResumeItemEditingViewController.swift */; };
@@ -50,6 +49,7 @@
 		DA3302AC29ADCC9F00C36154 /* EducationEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3302AB29ADCC9F00C36154 /* EducationEditingViewController.swift */; };
 		DA3302AE29ADCCA700C36154 /* EducationEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3302AD29ADCCA700C36154 /* EducationEditingViewModel.swift */; };
 		DA3302B129ADD36000C36154 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3302B029ADD36000C36154 /* TextFieldCell.swift */; };
+		DA404A8129F259FB00211272 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DA404A8029F259FB00211272 /* GoogleService-Info.plist */; };
 		DA481D7F299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D7E299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift */; };
 		DA481D87299F735E00C8C734 /* UserInfoItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */; };
 		DA481D8929A4BFE500C8C734 /* IntrinsicHeightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */; };
@@ -79,6 +79,9 @@
 		DA708F1929DE864600EF84F2 /* IconCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F1829DE864600EF84F2 /* IconCell.swift */; };
 		DA708F2129E066FB00EF84F2 /* ItsMEUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA708F2029E066FB00EF84F2 /* ItsMEUserDefaults.swift */; };
 		DA71B5D429E9A2980033864C /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA71B5D329E9A2980033864C /* UIFont+.swift */; };
+		DA71B5D829EE67050033864C /* ItsMEUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA71B5D729EE67050033864C /* ItsMEUtilsTests.swift */; };
+		DA71B5D929EE677A0033864C /* ItsMEUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4FEC2B29E6D12C00D41CE1 /* ItsMEUtils.swift */; };
+		DA71B5DA29EE67940033864C /* ItsMEError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4FEC2D29E6D14000D41CE1 /* ItsMEError.swift */; };
 		DA7201E7292F6A0600A69519 /* DatabaseReference+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */; };
 		DA7201EA29309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */; };
 		DA7201EC29309B9600A69519 /* AuthenticationServices+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */; };
@@ -186,7 +189,6 @@
 		D0CCF4E2292604BE00AD4AE6 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		D0CCF4E529260C2B00AD4AE6 /* ProfileInfoComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoComponent.swift; sourceTree = "<group>"; };
 		D0CCF4E729260ED200AD4AE6 /* UserInfoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoItem.swift; sourceTree = "<group>"; };
-		D0CCF4EA292A690600AD4AE6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D0CCF503292CCB4C00AD4AE6 /* CVCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVCard.swift; sourceTree = "<group>"; };
 		D0E6FF5F29B1BA23008CB451 /* CoverLetterEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverLetterEditingViewController.swift; sourceTree = "<group>"; };
 		D0E6FF6229B1BA75008CB451 /* ResumeItemEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeItemEditingViewController.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 		DA3302AB29ADCC9F00C36154 /* EducationEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationEditingViewController.swift; sourceTree = "<group>"; };
 		DA3302AD29ADCCA700C36154 /* EducationEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationEditingViewModel.swift; sourceTree = "<group>"; };
 		DA3302B029ADD36000C36154 /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
+		DA404A8029F259FB00211272 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DA481D7E299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileEditingViewController+HeaderLabel.swift"; sourceTree = "<group>"; };
 		DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoItemCell.swift; sourceTree = "<group>"; };
 		DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrinsicHeightTextView.swift; sourceTree = "<group>"; };
@@ -230,6 +233,7 @@
 		DA708F1829DE864600EF84F2 /* IconCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCell.swift; sourceTree = "<group>"; };
 		DA708F2029E066FB00EF84F2 /* ItsMEUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMEUserDefaults.swift; sourceTree = "<group>"; };
 		DA71B5D329E9A2980033864C /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
+		DA71B5D729EE67050033864C /* ItsMEUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMEUtilsTests.swift; sourceTree = "<group>"; };
 		DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseReference+Rx.swift"; sourceTree = "<group>"; };
 		DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASAuthorizationControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationServices+Rx.swift"; sourceTree = "<group>"; };
@@ -401,7 +405,7 @@
 		D09AC9732918DE8B0081C0EC /* ItsME */ = {
 			isa = PBXGroup;
 			children = (
-				D0CCF4EA292A690600AD4AE6 /* GoogleService-Info.plist */,
+				DA404A8029F259FB00211272 /* GoogleService-Info.plist */,
 				DA739DDD2923B4D2003AEE4C /* ItsME.entitlements */,
 				DAAFB2492918E43B007A8DF0 /* Application */,
 				DAAFB2512918EE3D007A8DF0 /* Entities */,
@@ -664,6 +668,7 @@
 			isa = PBXGroup;
 			children = (
 				DA53B73929B5C304000BBB26 /* ExtensionTests.swift */,
+				DA71B5D729EE67050033864C /* ItsMEUtilsTests.swift */,
 			);
 			path = ItsMETestsWithoutApp;
 			sourceTree = "<group>";
@@ -961,7 +966,7 @@
 			files = (
 				D09AC9812918DE8C0081C0EC /* LaunchScreen.storyboard in Resources */,
 				D09AC97E2918DE8C0081C0EC /* Assets.xcassets in Resources */,
-				D0CCF4EB292A690600AD4AE6 /* GoogleService-Info.plist in Resources */,
+				DA404A8129F259FB00211272 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1221,8 +1226,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA71B5DA29EE67940033864C /* ItsMEError.swift in Sources */,
 				DA90695629C823F200535A3D /* ExtensionTests.swift in Sources */,
+				DA71B5D829EE67050033864C /* ItsMEUtilsTests.swift in Sources */,
 				DA90695729C826F300535A3D /* Int+.swift in Sources */,
+				DA71B5D929EE677A0033864C /* ItsMEUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1383,7 +1391,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItsME/ItsME.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 585F6TK5A8;
+				DEVELOPMENT_TEAM = 2AVC8X7323;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ItsME/Resources/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "프로필 사진으로 사용할 사진 선택";
@@ -1397,7 +1405,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ILGOB.It-sME";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ILGOB.ItsME;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1417,7 +1425,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItsME/ItsME.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 585F6TK5A8;
+				DEVELOPMENT_TEAM = 2AVC8X7323;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ItsME/Resources/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "프로필 사진으로 사용할 사진 선택";
@@ -1431,7 +1439,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ILGOB.It-sME";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ILGOB.ItsME;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

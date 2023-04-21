@@ -40,7 +40,7 @@ final class HomeViewModel: ViewModelType {
         let cvsInfo = Signal.merge(input.viewDidLoad, input.viewWillAppear.skip(1))
             .flatMapLatest { _ in
                 return self.cvRepository.getAllCV()
-                    .asDriver(onErrorDriveWith: .empty())
+                    .asDriver(onErrorJustReturn: [])
             }
         
         return Output(

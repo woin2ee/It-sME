@@ -37,7 +37,7 @@ final class SignUpViewModel: ViewModelType {
             .map { $0 && $1 && $2 && $3 }
         
         let birthday = input.birthday
-            .map { ItsMEDateFormatter.birthdayString(from: $0) }
+            .map { ItsMESimpleDateFormatter.string(from: $0) }
         
         let userInfo = Driver.combineLatest(input.name,
                                             birthday,
