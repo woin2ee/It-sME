@@ -246,6 +246,7 @@ extension HomeViewController {
         
         cvCardStackView.snp.makeConstraints { make in
             make.height.left.right.equalToSuperview()
+            make.width.greaterThanOrEqualTo(self.view)
         }
         
         cardScrollView.snp.makeConstraints { make in
@@ -264,8 +265,6 @@ extension HomeViewController {
         addCVButton.snp.makeConstraints { make in
             make.width.equalTo(contentWidth)
         }
-        
-        layoutAddCVButton()
     }
     
     private func makeContextMenu(with cvInfo: CVInfo) -> UIMenu {
