@@ -18,7 +18,7 @@ final class HomeViewController: UIViewController, UIScrollViewDelegate {
     private let viewModel: HomeViewModel = .init()
     
     private let profileImageView: UIImageView = {
-        let profileImageView: UIImageView = .init(image: UIImage.init(named: "테스트이미지"))
+        let profileImageView: UIImageView = .init(image: UIImage.init(named: "기본 프로필"))
         return profileImageView
     }()
     
@@ -276,6 +276,8 @@ private extension HomeViewController {
             make.width.equalTo(50)
             make.centerX.equalTo(self.view.safeAreaLayoutGuide)
         }
+        
+        layoutAddCVButton()
     }
 }
 // MARK: - for Paging

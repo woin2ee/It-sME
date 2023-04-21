@@ -7,6 +7,7 @@
 
 import RxSwift
 import RxCocoa
+import FirebaseStorage
 
 final class TotalCVViewModel: ViewModelType {
     
@@ -35,9 +36,15 @@ final class TotalCVViewModel: ViewModelType {
             }
         
         let cvInfoDriver = cvInfoRelay.asDriver()
+        
         let userInfoItems = userInfo.map { $0.defaultItems + $0.otherItems }
         
         let educationItems = userInfo.map { $0.educationItems }
+        
+        let profileImageData = userInfo.flatMap {
+            Storage.storage().reference().child($0.profileImageURL).rx.getData().map { $0 }
+                .asDriverOnErrorJustComplete()
+        }
                 
         let tappedEditingCompleteButton = input.doneTrigger
             .withLatestFrom(cvInfoDriver)
@@ -49,6 +56,7 @@ final class TotalCVViewModel: ViewModelType {
         return .init(
             userInfoItems: userInfoItems,
             educationItems: educationItems,
+            profileImageData: profileImageData,
             cvInfo: cvInfoDriver,
             tappedEditCompleteButton: tappedEditingCompleteButton
         )
@@ -74,6 +82,7 @@ extension TotalCVViewModel {
     struct Output {
         let userInfoItems: Driver<[UserInfoItem]>
         let educationItems: Driver<[EducationItem]>
+        let profileImageData: Driver<Data>
         let cvInfo: Driver<CVInfo>
         let tappedEditCompleteButton: Signal<Void>
     }

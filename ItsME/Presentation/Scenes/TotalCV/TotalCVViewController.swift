@@ -53,8 +53,7 @@ class TotalCVViewController: UIViewController {
         $0.layer.masksToBounds = true
     }
     
-    private lazy var profileImageView =  UIImageView().then {
-        $0.image = .init(named: "테스트이미지")
+    private lazy var profileImageView: UIImageView = .init(image: .init(named: "기본 프로필")).then {
         $0.contentMode = .scaleAspectFill
     }
     
@@ -238,6 +237,11 @@ private extension TotalCVViewController {
                 },
             output.cvInfo
                 .drive(cvsInfoBinding),
+            output.profileImageData
+                .map { imageData -> UIImage? in
+                    return UIImage(data: imageData)
+                }
+                .drive(profileImageView.rx.image),
             output.tappedEditCompleteButton
                 .emit(with: self, onNext: { owner, cvInfo in
                     owner.isEditingMode.toggle()
