@@ -1394,6 +1394,7 @@
 				DEVELOPMENT_TEAM = 2AVC8X7323;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ItsME/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "잇츠미";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "프로필 사진으로 사용할 사진 선택";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1428,6 +1429,7 @@
 				DEVELOPMENT_TEAM = 2AVC8X7323;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ItsME/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "잇츠미";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "프로필 사진으로 사용할 사진 선택";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
