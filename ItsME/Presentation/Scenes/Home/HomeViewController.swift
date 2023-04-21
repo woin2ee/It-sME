@@ -171,7 +171,11 @@ private extension HomeViewController {
                     return
                 }
 
-                viewController.profileImageView.image = .init(data: data)
+                guard let profileImage: UIImage = .init(data: data) else {
+                    return
+                }
+                
+                viewController.profileImageView.image = profileImage
             }
         }
     }
