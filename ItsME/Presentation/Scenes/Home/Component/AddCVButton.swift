@@ -20,7 +20,7 @@ class AddCVButton: UIControl {
     }
     
     lazy var titleLabel = UILabel().then {
-        $0.text = "CV 추가"
+        $0.text = "이력서 추가"
         $0.textColor = .mainColor
         $0.textAlignment = .center
         $0.font = .systemFont(ofSize: 30, weight: .bold)

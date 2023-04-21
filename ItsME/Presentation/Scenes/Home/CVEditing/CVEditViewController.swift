@@ -26,9 +26,12 @@ class CVEditViewController: UIViewController {
         $0.titleLabel.text = "제목"
         $0.titleLabel.font = .systemFont(ofSize: 18, weight: .bold)
         $0.contentsTextField.font = .systemFont(ofSize: 18)
+        $0.contentsTextField.keyboardType = .default
     }
     
-    private lazy var completeBarButton: UIBarButtonItem = .init()
+    private lazy var completeBarButton: UIBarButtonItem = .init().then {
+        $0.style = .done
+    }
     
     // MARK: - Initalizer
     init(viewModel: CVEditViewModel) {
@@ -106,10 +109,10 @@ private extension CVEditViewController {
         .init(self) { vc, editingType in
             switch editingType {
             case .edit:
-                vc.navigationItem.title = "편집"
+                vc.navigationItem.title = "제목 편집"
                 vc.completeBarButton.title = "완료"
             case .new:
-                vc.navigationItem.title = "추가"
+                vc.navigationItem.title = "이력서 추가"
                 vc.completeBarButton.title = "추가"
             }
         }
