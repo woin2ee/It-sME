@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>326768782502-32nqlfop7g7e78hoesucunbkrcsjt17r.apps.googleusercontent.com</string>
+	<string>326768782502-1i660omdmocfm21qjs3ntn3hlb2f4ak6.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.326768782502-32nqlfop7g7e78hoesucunbkrcsjt17r</string>
+	<string>com.googleusercontent.apps.326768782502-1i660omdmocfm21qjs3ntn3hlb2f4ak6</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBwAvjysCeV24xpVgKa6geuLXQDxzQHJ84</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.ILGOB.It-sME</string>
+	<string>com.ILGOB.ItsME</string>
 	<key>PROJECT_ID</key>
 	<string>itsme-30e1a</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:326768782502:ios:4e074e77f61d9474799867</string>
+	<string>1:326768782502:ios:f00af49fa93e118b799867</string>
+	<key>DATABASE_URL</key>
+	<string>https://itsme-30e1a-default-rtdb.asia-southeast1.firebasedatabase.app</string>
 </dict>
 </plist>

@@ -36,7 +36,6 @@
 		D0CCF4E3292604BE00AD4AE6 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E2292604BE00AD4AE6 /* UIColor+.swift */; };
 		D0CCF4E629260C2B00AD4AE6 /* ProfileInfoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E529260C2B00AD4AE6 /* ProfileInfoComponent.swift */; };
 		D0CCF4E829260ED200AD4AE6 /* UserInfoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E729260ED200AD4AE6 /* UserInfoItem.swift */; };
-		D0CCF4EB292A690600AD4AE6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0CCF4EA292A690600AD4AE6 /* GoogleService-Info.plist */; };
 		D0CCF504292CCB4C00AD4AE6 /* CVCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF503292CCB4C00AD4AE6 /* CVCard.swift */; };
 		D0E6FF6029B1BA23008CB451 /* CoverLetterEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6FF5F29B1BA23008CB451 /* CoverLetterEditingViewController.swift */; };
 		D0E6FF6329B1BA75008CB451 /* ResumeItemEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6FF6229B1BA75008CB451 /* ResumeItemEditingViewController.swift */; };
@@ -50,6 +49,7 @@
 		DA3302AC29ADCC9F00C36154 /* EducationEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3302AB29ADCC9F00C36154 /* EducationEditingViewController.swift */; };
 		DA3302AE29ADCCA700C36154 /* EducationEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3302AD29ADCCA700C36154 /* EducationEditingViewModel.swift */; };
 		DA3302B129ADD36000C36154 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3302B029ADD36000C36154 /* TextFieldCell.swift */; };
+		DA404A8129F259FB00211272 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DA404A8029F259FB00211272 /* GoogleService-Info.plist */; };
 		DA481D7F299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D7E299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift */; };
 		DA481D87299F735E00C8C734 /* UserInfoItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */; };
 		DA481D8929A4BFE500C8C734 /* IntrinsicHeightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */; };
@@ -186,7 +186,6 @@
 		D0CCF4E2292604BE00AD4AE6 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		D0CCF4E529260C2B00AD4AE6 /* ProfileInfoComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoComponent.swift; sourceTree = "<group>"; };
 		D0CCF4E729260ED200AD4AE6 /* UserInfoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoItem.swift; sourceTree = "<group>"; };
-		D0CCF4EA292A690600AD4AE6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D0CCF503292CCB4C00AD4AE6 /* CVCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVCard.swift; sourceTree = "<group>"; };
 		D0E6FF5F29B1BA23008CB451 /* CoverLetterEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverLetterEditingViewController.swift; sourceTree = "<group>"; };
 		D0E6FF6229B1BA75008CB451 /* ResumeItemEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeItemEditingViewController.swift; sourceTree = "<group>"; };
@@ -200,6 +199,7 @@
 		DA3302AB29ADCC9F00C36154 /* EducationEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationEditingViewController.swift; sourceTree = "<group>"; };
 		DA3302AD29ADCCA700C36154 /* EducationEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationEditingViewModel.swift; sourceTree = "<group>"; };
 		DA3302B029ADD36000C36154 /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
+		DA404A8029F259FB00211272 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DA481D7E299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileEditingViewController+HeaderLabel.swift"; sourceTree = "<group>"; };
 		DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoItemCell.swift; sourceTree = "<group>"; };
 		DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrinsicHeightTextView.swift; sourceTree = "<group>"; };
@@ -401,7 +401,7 @@
 		D09AC9732918DE8B0081C0EC /* ItsME */ = {
 			isa = PBXGroup;
 			children = (
-				D0CCF4EA292A690600AD4AE6 /* GoogleService-Info.plist */,
+				DA404A8029F259FB00211272 /* GoogleService-Info.plist */,
 				DA739DDD2923B4D2003AEE4C /* ItsME.entitlements */,
 				DAAFB2492918E43B007A8DF0 /* Application */,
 				DAAFB2512918EE3D007A8DF0 /* Entities */,
@@ -961,7 +961,7 @@
 			files = (
 				D09AC9812918DE8C0081C0EC /* LaunchScreen.storyboard in Resources */,
 				D09AC97E2918DE8C0081C0EC /* Assets.xcassets in Resources */,
-				D0CCF4EB292A690600AD4AE6 /* GoogleService-Info.plist in Resources */,
+				DA404A8129F259FB00211272 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
