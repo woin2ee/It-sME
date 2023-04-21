@@ -53,7 +53,8 @@ class TotalCVViewController: UIViewController {
         $0.layer.masksToBounds = true
     }
     
-    private lazy var profileImageView: UIImageView = .init(image: .init(named: "기본 프로필")).then {
+    private lazy var profileImageView: UIImageView = .init().then {
+        $0.image = .defaultProfileImage
         $0.contentMode = .scaleAspectFill
     }
     
@@ -238,8 +239,8 @@ private extension TotalCVViewController {
             output.cvInfo
                 .drive(cvsInfoBinding),
             output.profileImageData
-                .map { imageData -> UIImage? in
-                    return UIImage(data: imageData)
+                .map { imageData -> UIImage in
+                    return UIImage(data: imageData) ?? UIImage.defaultProfileImage
                 }
                 .drive(profileImageView.rx.image),
             output.tappedEditCompleteButton
