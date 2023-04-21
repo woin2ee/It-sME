@@ -50,6 +50,7 @@
 		DA3302AE29ADCCA700C36154 /* EducationEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3302AD29ADCCA700C36154 /* EducationEditingViewModel.swift */; };
 		DA3302B129ADD36000C36154 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3302B029ADD36000C36154 /* TextFieldCell.swift */; };
 		DA404A8129F259FB00211272 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DA404A8029F259FB00211272 /* GoogleService-Info.plist */; };
+		DA404A8329F275F800211272 /* UIImage+DefaultProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA404A8229F275F800211272 /* UIImage+DefaultProfileImage.swift */; };
 		DA481D7F299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D7E299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift */; };
 		DA481D87299F735E00C8C734 /* UserInfoItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */; };
 		DA481D8929A4BFE500C8C734 /* IntrinsicHeightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */; };
@@ -203,6 +204,7 @@
 		DA3302AD29ADCCA700C36154 /* EducationEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationEditingViewModel.swift; sourceTree = "<group>"; };
 		DA3302B029ADD36000C36154 /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
 		DA404A8029F259FB00211272 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DA404A8229F275F800211272 /* UIImage+DefaultProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+DefaultProfileImage.swift"; sourceTree = "<group>"; };
 		DA481D7E299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileEditingViewController+HeaderLabel.swift"; sourceTree = "<group>"; };
 		DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoItemCell.swift; sourceTree = "<group>"; };
 		DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrinsicHeightTextView.swift; sourceTree = "<group>"; };
@@ -651,6 +653,7 @@
 				DA708F0829D9FE1700EF84F2 /* FIRAuth+isLoggedIn.swift */,
 				D0CCF4E02925FB0100AD4AE6 /* UIView+.swift */,
 				D0CCF4E2292604BE00AD4AE6 /* UIColor+.swift */,
+				DA404A8229F275F800211272 /* UIImage+DefaultProfileImage.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1188,6 +1191,7 @@
 				D0C02E8829CAC34700BD3851 /* CategoryEditingViewModel.swift in Sources */,
 				DAFCFB6F2950693F006B287A /* IntrinsicHeightTableView.swift in Sources */,
 				D09AC9772918DE8B0081C0EC /* SceneDelegate.swift in Sources */,
+				DA404A8329F275F800211272 /* UIImage+DefaultProfileImage.swift in Sources */,
 				DAD1D03829C0B40100B12BF8 /* OSStatus+ToReadableString.swift in Sources */,
 				DA7201EE2931E7BB00A69519 /* CVRepository.swift in Sources */,
 				DAFCFB7529543D3B006B287A /* UIButton+.swift in Sources */,
@@ -1394,6 +1398,7 @@
 				DEVELOPMENT_TEAM = 2AVC8X7323;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ItsME/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "잇츠미";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "프로필 사진으로 사용할 사진 선택";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1428,6 +1433,7 @@
 				DEVELOPMENT_TEAM = 2AVC8X7323;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ItsME/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "잇츠미";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "프로필 사진으로 사용할 사진 선택";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

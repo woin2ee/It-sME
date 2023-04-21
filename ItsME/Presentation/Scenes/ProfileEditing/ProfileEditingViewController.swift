@@ -29,7 +29,8 @@ final class ProfileEditingViewController: UIViewController {
         $0.backgroundColor = .clear
     }
     
-    private lazy var profileImageView: UIImageView = .init(image: .init(named: "기본 프로필")).then {
+    private lazy var profileImageView: UIImageView = .init().then {
+        $0.image = .defaultProfileImage
         $0.contentMode = .scaleAspectFill
     }
     
@@ -186,11 +187,11 @@ private extension ProfileEditingViewController {
             output.viewDidLoad
                 .drive(),
             output.profileImageData
-                .map { imageData -> UIImage? in
-                    guard let imageData = imageData else {
-                        return UIImage() // FIXME: 기본 프로필 사진 이미지로 수정
+                .map { imageData -> UIImage in
+                    guard let imageData = imageData, let profileImage = UIImage(data: imageData) else {
+                        return UIImage.defaultProfileImage
                     }
-                    return UIImage(data: imageData)
+                    return profileImage
                 }
                 .drive(profileImageView.rx.image),
             output.userName

@@ -27,7 +27,7 @@ final class HomeViewController: UIViewController {
     // MARK: UI Objects
     
     private let profileImageView: UIImageView = .init().then {
-        $0.image = .init(named: "기본 프로필")
+        $0.image = .defaultProfileImage
         $0.contentMode = .scaleAspectFill
     }
     
@@ -171,7 +171,11 @@ private extension HomeViewController {
                     return
                 }
 
-                viewController.profileImageView.image = .init(data: data)
+                guard let profileImage: UIImage = .init(data: data) else {
+                    return
+                }
+                
+                viewController.profileImageView.image = profileImage
             }
         }
     }
