@@ -17,6 +17,10 @@ final class EducationEditingViewController: UIViewController {
     
     // MARK: UI Components
     
+    private lazy var containerScrollView: UIScrollView = .init().then {
+        $0.backgroundColor = .clear
+    }
+    
     private lazy var inputTableView: IntrinsicHeightTableView = .init(style: .insetGrouped).then {
         $0.dataSource = self
         $0.delegate = self
@@ -126,6 +130,7 @@ final class EducationEditingViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         bindViewModel()
+        bindNotificationsForKeyboard()
     }
     
     required init?(coder: NSCoder) {
@@ -142,28 +147,34 @@ final class EducationEditingViewController: UIViewController {
     }
 }
 
-// MARK: - Private Functions
+// MARK: - Methods
 
-private extension EducationEditingViewController {
+extension EducationEditingViewController {
     
-    func configureSubviews() {
-        self.view.addSubview(inputTableView)
-        inputTableView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-        }
+    private func configureSubviews() {
+        self.view.addSubview(containerScrollView)
+        containerScrollView.addSubview(inputTableView)
+        containerScrollView.addSubview(deleteButton)
         
-        self.view.addSubview(deleteButton)
+        containerScrollView.snp.makeConstraints { make in
+            make.directionalEdges.equalToSuperview()
+        }
+        inputTableView.snp.makeConstraints { make in
+            make.top.directionalHorizontalEdges.equalToSuperview()
+            make.width.equalTo(self.view.safeAreaLayoutGuide)
+        }
         deleteButton.snp.makeConstraints { make in
             make.top.equalTo(inputTableView.snp.bottom).offset(8)
             make.directionalHorizontalEdges.equalToSuperview().inset(20)
+            make.bottom.equalToSuperview()
         }
     }
     
-    func configureNavigationBar() {
+    private func configureNavigationBar() {
         self.navigationItem.rightBarButtonItem = completeButton
     }
     
-    func toggleEntranceDatePickerCell() {
+    private func toggleEntranceDatePickerCell() {
         if isShowingEntranceDatePickerCell {
             hideEntranceDatePickerCell()
         } else {
@@ -171,7 +182,7 @@ private extension EducationEditingViewController {
         }
     }
     
-    func hideEntranceDatePickerCell(withDuration duration: TimeInterval = 0.3) {
+    private func hideEntranceDatePickerCell(withDuration duration: TimeInterval = 0.3) {
         if isShowingEntranceDatePickerCell {
             let indexPath = entranceDatePickerCellIndexPath
             UIView.animate(withDuration: duration, animations: {
@@ -182,7 +193,7 @@ private extension EducationEditingViewController {
         }
     }
     
-    func showEntranceDatePickerCell(withDuration duration: TimeInterval = 0.3) {
+    private func showEntranceDatePickerCell(withDuration duration: TimeInterval = 0.3) {
         if !isShowingEntranceDatePickerCell {
             let indexPath = entranceDatePickerCellIndexPath
             UIView.animate(withDuration: duration, animations: {
@@ -193,7 +204,7 @@ private extension EducationEditingViewController {
         }
     }
     
-    func toggleGraduateDatePickerCell() {
+    private func toggleGraduateDatePickerCell() {
         if isShowingGraduateDatePickerCell {
             hideGraduateDatePickerCell()
         } else {
@@ -201,7 +212,7 @@ private extension EducationEditingViewController {
         }
     }
     
-    func hideGraduateDatePickerCell(withDuration duration: TimeInterval = 0.3) {
+    private func hideGraduateDatePickerCell(withDuration duration: TimeInterval = 0.3) {
         if isShowingGraduateDatePickerCell {
             let indexPath = graduateDatePickerCellIndexPath
             UIView.animate(withDuration: duration, animations: {
@@ -212,7 +223,7 @@ private extension EducationEditingViewController {
         }
     }
     
-    func showGraduateDatePickerCell(withDuration duration: TimeInterval = 0.3) {
+    private func showGraduateDatePickerCell(withDuration duration: TimeInterval = 0.3) {
         if !isShowingGraduateDatePickerCell {
             let indexPath = graduateDatePickerCellIndexPath
             UIView.animate(withDuration: duration, animations: {
@@ -223,7 +234,7 @@ private extension EducationEditingViewController {
         }
     }
     
-    func hideGraduateDateInputCells() {
+    private func hideGraduateDateInputCells() {
         inputTableView.beginUpdates()
         defer { inputTableView.endUpdates() }
         
@@ -241,7 +252,7 @@ private extension EducationEditingViewController {
         }
     }
     
-    func showGraduateDateInputCells() {
+    private func showGraduateDateInputCells() {
         let section = 1
         if inputTableViewDataSource[section].contains(graduateDateInputCell) { return }
         
@@ -252,20 +263,20 @@ private extension EducationEditingViewController {
         }
     }
     
-    @objc dynamic func tapEnrolledMenu() {
+    @objc dynamic private func tapEnrolledMenu() {
         self.hideGraduateDateInputCells()
     }
     
-    @objc dynamic func tapGraduatedMenu() {
+    @objc dynamic private func tapGraduatedMenu() {
         self.showGraduateDateInputCells()
     }
 }
 
 // MARK: - Binding ViewModel
 
-private extension EducationEditingViewController {
+extension EducationEditingViewController {
     
-    func bindViewModel() {
+    private func bindViewModel() {
         let input: EducationEditingViewModel.Input = makeInput()
         let output = viewModel.transform(input: input)
         [
@@ -301,7 +312,7 @@ private extension EducationEditingViewController {
             .forEach { $0.disposed(by: disposeBag) }
     }
     
-    func makeInput() -> EducationEditingViewModel.Input {
+    private func makeInput() -> EducationEditingViewModel.Input {
         return .init(
             title: titleInputCell.textField.rx.text.orEmpty.asDriver(),
             description: descriptionInputCell.textField.rx.text.orEmpty.asDriver(),
@@ -327,7 +338,7 @@ private extension EducationEditingViewController {
         )
     }
     
-    var editingTypeBinding: Binder<EducationEditingViewModel.EditingType> {
+    private var editingTypeBinding: Binder<EducationEditingViewModel.EditingType> {
         .init(self) { vc, editingType in
             switch editingType {
             case .edit:
@@ -342,7 +353,7 @@ private extension EducationEditingViewController {
         }
     }
     
-    var schoolEnrollmentStatusBinding: Binder<SchoolEnrollmentStatus> {
+    private var schoolEnrollmentStatusBinding: Binder<SchoolEnrollmentStatus> {
         return .init(self) { vc, status in
             switch status {
             case .enrolled:
@@ -351,6 +362,55 @@ private extension EducationEditingViewController {
             case .graduated:
                 vc.schoolEnrollmentStatusCell.menuTitleLabel.text = SchoolEnrollmentStatus.graduated.rawValue
                 vc.showGraduateDateInputCells()
+            }
+        }
+    }
+}
+
+// MARK: - Bind Nofiticaions
+
+extension EducationEditingViewController {
+    
+    private func bindNotificationsForKeyboard() {
+        NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification)
+            .bind(to: keyboardWillShowBinder)
+            .disposed(by: disposeBag)
+        NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification)
+            .bind(to: keyboardWillHideBinder)
+            .disposed(by: disposeBag)
+    }
+    
+    private var keyboardWillShowBinder: Binder<Notification> {
+        return .init(self) { vc, notification in
+            guard
+                let userInfo = notification.userInfo,
+                let keyboardHeight = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect)?.height,
+                let keyboardAnimationDuration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval)
+            else { return }
+            
+            let spacing: CGFloat = 20
+            
+            UIView.animate(withDuration: keyboardAnimationDuration) {
+                self.containerScrollView.snp.updateConstraints { make in
+                    make.bottom.equalToSuperview().inset(keyboardHeight + spacing)
+                }
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+    
+    private var keyboardWillHideBinder: Binder<Notification> {
+        return .init(self) { vc, notification in
+            guard
+                let userInfo = notification.userInfo,
+                let keyboardAnimationDuration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval)
+            else { return }
+            
+            UIView.animate(withDuration: keyboardAnimationDuration) {
+                self.containerScrollView.snp.updateConstraints { make in
+                    make.bottom.equalToSuperview().inset(0)
+                }
+                self.view.layoutIfNeeded()
             }
         }
     }
