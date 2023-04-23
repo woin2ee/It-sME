@@ -5,6 +5,7 @@
 //  Created by MacBook Air on 2023/02/08.
 //
 
+import SFSafeSymbols
 import SnapKit
 import Then
 import UIKit
@@ -38,11 +39,11 @@ class CategoryHeaderView: UITableViewHeaderFooterView {
     }
     
     lazy var editButton = UIImageView().then {
-        $0.image = UIImage(systemName: "rectangle.and.pencil.and.ellipsis")
+        $0.image = UIImage(systemSymbol: .rectangleAndPencilAndEllipsis)
     }
     
     lazy var addButton = UIButton().then {
-        $0.setImage(.init(systemName: "plus"), for: .normal)
+        $0.setImage(.init(systemSymbol: .plus), for: .normal)
     }
     
     override func awakeFromNib() {
