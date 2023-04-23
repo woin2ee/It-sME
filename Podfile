@@ -9,14 +9,14 @@ target 'ItsME' do
 	pod 'RxSwift', '6.5.0'
 	pod 'RxCocoa', '6.5.0'
 	pod 'SnapKit', '5.6.0'
-	pod 'RxKakaoSDK'
+	pod 'RxKakaoSDK', '2.13.0'
 	pod 'Firebase/Analytics' # Google Analytics
 	pod 'FirebaseAuth'
 	pod 'FirebaseDatabase' #Realtime Database
 	pod 'FirebaseStorage' # Cloud Storage
-	pod 'Then'
-	pod 'UITextView+Placeholder'
-	pod 'Keychaining'
+	pod 'Then', '~> 3.0.0'
+	pod 'UITextView+Placeholder', '~> 1.4.0'
+	pod 'SFSafeSymbols', '~> 4.1.1'
 
   target 'ItsMETests' do
     inherit! :search_paths

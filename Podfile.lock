@@ -119,7 +119,6 @@ PODS:
     - KakaoSDKCommon/Common (= 2.13.0)
   - KakaoSDKUser (2.13.0):
     - KakaoSDKAuth (= 2.13.0)
-  - Keychaining (0.7.0)
   - leveldb-library (1.22.1)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
@@ -178,6 +177,7 @@ PODS:
   - RxRelay (6.5.0):
     - RxSwift (= 6.5.0)
   - RxSwift (6.5.0)
+  - SFSafeSymbols (4.1.1)
   - SnapKit (5.6.0)
   - Then (3.0.0)
   - "UITextView+Placeholder (1.4.0)"
@@ -187,13 +187,13 @@ DEPENDENCIES:
   - FirebaseAuth
   - FirebaseDatabase
   - FirebaseStorage
-  - Keychaining
   - RxCocoa (= 6.5.0)
-  - RxKakaoSDK
+  - RxKakaoSDK (= 2.13.0)
   - RxSwift (= 6.5.0)
+  - SFSafeSymbols (~> 4.1.1)
   - SnapKit (= 5.6.0)
-  - Then
-  - "UITextView+Placeholder"
+  - Then (~> 3.0.0)
+  - "UITextView+Placeholder (~> 1.4.0)"
 
 SPEC REPOS:
   trunk:
@@ -221,7 +221,6 @@ SPEC REPOS:
     - KakaoSDKTalk
     - KakaoSDKTemplate
     - KakaoSDKUser
-    - Keychaining
     - leveldb-library
     - nanopb
     - PromisesObjC
@@ -237,6 +236,7 @@ SPEC REPOS:
     - RxKakaoSDKUser
     - RxRelay
     - RxSwift
+    - SFSafeSymbols
     - SnapKit
     - Then
     - "UITextView+Placeholder"
@@ -266,7 +266,6 @@ SPEC CHECKSUMS:
   KakaoSDKTalk: f448b999ed2c264dcea26924e508b52191e38b28
   KakaoSDKTemplate: a5d36f715edbc57069df530a3352dd5b48f9db79
   KakaoSDKUser: 7c2d98fc54f744da4784b554a383ada548fed0e5
-  Keychaining: efab9fad45b58f8227261ebb541551ef9b7eabf6
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
@@ -282,10 +281,11 @@ SPEC CHECKSUMS:
   RxKakaoSDKUser: 4e6337e462c85db629025be0fb6cfd2092d97270
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  SFSafeSymbols: 902576dbf8ea16b4c6152cef2a26e47b3f55defb
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
   "UITextView+Placeholder": d7b0c400921f66523f3a85d74f774512e14f6502
 
-PODFILE CHECKSUM: 69883f91679f316f5f4616434d5b575edaa010cf
+PODFILE CHECKSUM: 5b11a097a99384ea1f2d2bae2745e5818e6b2718
 
 COCOAPODS: 1.12.0
