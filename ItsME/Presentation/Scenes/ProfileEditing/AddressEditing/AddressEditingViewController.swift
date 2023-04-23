@@ -18,8 +18,8 @@ final class AddressEditingViewController: UIViewController {
     private lazy var addressTextView: IntrinsicHeightTextView = .init().then {
         $0.text = viewModel.currentAddress
         $0.backgroundColor = .secondarySystemGroupedBackground
-        $0.textContainerInset = .init(top: 10, left: 10, bottom: 10, right: 10)
-        $0.font = .systemFont(ofSize: 17)
+        $0.textContainerInset = .init(top: 10, left: 4, bottom: 10, right: 4)
+        $0.font = .systemFont(ofSize: 18)
         $0.keyboardType = .twitter
         $0.layer.cornerRadius = 12.0
     }
@@ -65,7 +65,7 @@ private extension AddressEditingViewController {
         let safeArea = self.view.safeAreaLayoutGuide
         self.view.addSubview(addressTextView)
         addressTextView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(safeArea).inset(20)
+            make.top.directionalHorizontalEdges.equalTo(safeArea).inset(20)
         }
     }
     
