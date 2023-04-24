@@ -178,7 +178,7 @@ private extension ProfileEditingViewController {
                     okAction: UIAlertAction(title: "예", style: .default)
                 ).asSignal()
             },
-            newProfileImageData: imagePickerController.rx.didFinishPickingImage
+            newProfileImageData: imagePickerController.rx.didFinishPickingImage(animated: true)
                 .map { $0?.jpegData(compressionQuality: 0.7) }
                 .asDriverOnErrorJustComplete()
         )
