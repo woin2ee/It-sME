@@ -103,6 +103,8 @@ final class ProfileEditingViewModel: ViewModelType {
                 ItsMEUserDefaults.allowsAutoLogin = false
             }
         
+        let deleteAccountComplete = input.deleteAccountTrigger
+        
         return .init(
             profileImageData: profileImageData,
             userName: userName,
@@ -110,7 +112,8 @@ final class ProfileEditingViewModel: ViewModelType {
             educationItems: educationItems,
             tappedEditingCompleteButton: tappedEditingCompleteButton,
             viewDidLoad: viewDidLoad,
-            logoutComplete: logoutComplete
+            logoutComplete: logoutComplete,
+            deleteAccountComplete: deleteAccountComplete
         )
     }
 }
@@ -124,6 +127,7 @@ extension ProfileEditingViewModel {
         let userName: Driver<String>
         let viewDidLoad: Driver<Void>
         let logoutTrigger: Signal<Void>
+        let deleteAccountTrigger: Signal<Void>
         let newProfileImageData: Driver<Data?>
     }
     
@@ -135,6 +139,7 @@ extension ProfileEditingViewModel {
         let tappedEditingCompleteButton: Signal<Void>
         let viewDidLoad: Driver<Void>
         let logoutComplete: Signal<Void>
+        let deleteAccountComplete: Signal<Void>
     }
 }
 
