@@ -6,6 +6,7 @@
 //
 
 import RxSwift
+import SFSafeSymbols
 import SnapKit
 import UIKit
 import Then
@@ -108,7 +109,7 @@ class TotalCVViewController: UIViewController {
     }
     
     private lazy var editModeButton: UIBarButtonItem = .init().then {
-        $0.image = UIImage(systemName: "wrench.and.screwdriver.fill")
+        $0.image = UIImage(systemSymbol: .wrenchAndScrewdriverFill)
         $0.style = .done
     }
     
@@ -134,7 +135,7 @@ class TotalCVViewController: UIViewController {
         config.titleAlignment = .center
         config.background.backgroundColor = .clear
         config.baseForegroundColor = .mainColor
-        config.image = UIImage(systemName: "plus.rectangle.fill", withConfiguration: UIImage.SymbolConfiguration.init(pointSize: 30, weight: .heavy, scale: .large))
+        config.image = UIImage(systemSymbol: .plusRectangleFill, withConfiguration: UIImage.SymbolConfiguration.init(pointSize: 30, weight: .heavy, scale: .large))
         config.imagePlacement = .bottom
         config.imagePadding = 10
         $0.setBackgroundColor(.systemBackground, for: .normal)
@@ -155,7 +156,7 @@ class TotalCVViewController: UIViewController {
         config.titleAlignment = .center
         config.background.backgroundColor = .systemBackground
         config.baseForegroundColor = .mainColor
-        config.image = UIImage(systemName: "plus.rectangle.fill", withConfiguration: UIImage.SymbolConfiguration.init(pointSize: 30, weight: .heavy, scale: .large))
+        config.image = UIImage(systemSymbol: .plusRectangleFill, withConfiguration: UIImage.SymbolConfiguration.init(pointSize: 30, weight: .heavy, scale: .large))
         config.imagePlacement = .bottom
         config.imagePadding = 10
         $0.setBackgroundColor(.systemGray4, for: .normal)
@@ -373,7 +374,7 @@ private extension TotalCVViewController {
             self.editModeButton.image = nil
             self.editModeButton.title = "수정 완료"
         } else {
-            self.editModeButton.image = UIImage(systemName: "wrench.and.screwdriver.fill")
+            self.editModeButton.image = UIImage(systemSymbol: .wrenchAndScrewdriverFill)
         }
     }
     

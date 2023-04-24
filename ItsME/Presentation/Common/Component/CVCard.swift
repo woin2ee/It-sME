@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SFSafeSymbols
 import SnapKit
 import Then
 
@@ -33,7 +34,7 @@ final class CVCard: UIControl {
     
     lazy var contextMenuButton = UIButton().then {
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .bold)
-        let image = UIImage(systemName: "ellipsis.circle.fill", withConfiguration: imageConfig)
+        let image = UIImage(systemSymbol: .ellipsisCircleFill, withConfiguration: imageConfig)
         $0.setImage(image, for: .normal)
         $0.tintColor = .white
         $0.showsMenuAsPrimaryAction = true

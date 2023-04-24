@@ -8,6 +8,7 @@
 import FirebaseStorage
 import UIKit
 import RxSwift
+import SFSafeSymbols
 import SnapKit
 import Then
 
@@ -283,7 +284,7 @@ extension HomeViewController {
         )
         let removeAction: UIAction = .init(
             title: "삭제",
-            image: UIImage(systemName: "minus.circle.fill"),
+            image: UIImage(systemSymbol: .minusCircleFill),
             attributes: .destructive,
             handler: { [weak self] _ in
                 guard let self = self else { return }
