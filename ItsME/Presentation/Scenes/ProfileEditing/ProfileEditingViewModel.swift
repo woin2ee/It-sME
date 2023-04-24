@@ -7,6 +7,7 @@
 
 import FirebaseAuth
 import FirebaseStorage
+import KakaoSDKUser
 import RxSwift
 import RxCocoa
 import Then
@@ -95,13 +96,7 @@ final class ProfileEditingViewModel: ViewModelType {
             }
             .asSignalOnErrorJustComplete()
         
-        let logoutComplete = input.logoutTrigger
-            .doOnNext {
-                try? Auth.auth().signOut()
-                ItsMEUserDefaults.removeAppleUserID()
-                ItsMEUserDefaults.isLoggedInAsApple = false
-                ItsMEUserDefaults.allowsAutoLogin = false
-            }
+        let logoutComplete = makeLogoutComplete(with: input.logoutTrigger)
         
         let deleteAccountComplete = input.deleteAccountTrigger
         
@@ -140,6 +135,31 @@ extension ProfileEditingViewModel {
         let viewDidLoad: Driver<Void>
         let logoutComplete: Signal<Void>
         let deleteAccountComplete: Signal<Void>
+    }
+}
+
+// MARK: - Private
+
+private extension ProfileEditingViewModel {
+    
+    func makeLogoutComplete(with input: Signal<Void>) -> Signal<Void> {
+        let logoutWithKakao = UserApi.shared.rx.logout()
+            .andThenJustOnNext()
+            .asSignal(onErrorJustReturn: ()) // TODO: 에러 발생 시 로그 심기
+        let signOutFromFIRAuth = Auth.auth().rx.signOut()
+            .andThenJustOnNext()
+            .asSignal(onErrorJustReturn: ()) // TODO: 에러 발생 시 로그 심기
+        
+        return input
+            .doOnNext {
+                ItsMEUserDefaults.removeAppleUserID()
+                ItsMEUserDefaults.isLoggedInAsApple = false
+                ItsMEUserDefaults.allowsAutoLogin = false
+            }
+            .flatMapFirst {
+                return Signal.zip(logoutWithKakao, signOutFromFIRAuth)
+                    .mapToVoid()
+            }
     }
 }
 
