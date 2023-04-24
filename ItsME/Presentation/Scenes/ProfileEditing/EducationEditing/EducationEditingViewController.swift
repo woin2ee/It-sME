@@ -165,8 +165,7 @@ extension EducationEditingViewController {
         }
         deleteButton.snp.makeConstraints { make in
             make.top.equalTo(inputTableView.snp.bottom).offset(8)
-            make.directionalHorizontalEdges.equalToSuperview().inset(20)
-            make.bottom.equalToSuperview()
+            make.directionalHorizontalEdges.bottom.equalToSuperview().inset(20)
         }
     }
     
@@ -388,11 +387,9 @@ extension EducationEditingViewController {
                 let keyboardAnimationDuration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval)
             else { return }
             
-            let spacing: CGFloat = 20
-            
             UIView.animate(withDuration: keyboardAnimationDuration) {
                 self.containerScrollView.snp.updateConstraints { make in
-                    make.bottom.equalToSuperview().inset(keyboardHeight + spacing)
+                    make.bottom.equalToSuperview().inset(keyboardHeight)
                 }
                 self.view.layoutIfNeeded()
             }
