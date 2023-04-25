@@ -171,12 +171,33 @@ private extension ProfileEditingViewModel {
             .asSignal(onErrorJustReturn: ()) // TODO: 에러 트래커 추가
         let deleteUserAuth = userRepository.deleteUser()
             .asSignal(onErrorJustReturn: ()) // TODO: 에러 트래커 추가
+        let revokeProvider = makeRevokeProviderWithCurrentProviderID()
         
         return input
             .flatMapFirst {
-                return Signal.zip(deleteUserInfo, deleteAllCVs, deleteUserAuth)
+                return Signal.zip(deleteUserInfo, deleteAllCVs, deleteUserAuth, revokeProvider)
                     .mapToVoid()
             }
+    }
+    
+    func makeRevokeProviderWithCurrentProviderID() -> Signal<Void> {
+        let source = Auth.auth().rx.currentUser
+            .map(\.providerData.first)
+            .unwrapOrThrow()
+            .map { AuthProviderID(rawValue: $0.providerID) }
+            .unwrapOrThrow()
+            .flatMap { providerID -> Single<Void> in
+                switch providerID {
+                case .kakao:
+                    return UserApi.shared.rx.unlink()
+                        .andThenJustOnNext()
+                case .apple:
+                    // TODO: 애플 서버로 토큰 해제 요청 (POST https://appleid.apple.com/auth/revoke)
+                    return .just(())
+                }
+            }
+            .asSignal(onErrorJustReturn: ()) // 과정 중 에러가 발생해도 사용자에게는 계정 삭제 처리가 완료된걸로 보여야 경험을 해치지 않음
+        return source
     }
 }
 
