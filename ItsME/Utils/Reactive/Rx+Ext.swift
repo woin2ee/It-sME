@@ -62,6 +62,10 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
     func doOnSuccess(_ block: ((Element) throws -> Void)?) -> PrimitiveSequence<Trait, Element> {
         return self.do(onSuccess: block)
     }
+    
+    func unwrapOrThrow<Result>() -> PrimitiveSequence<Trait, Result> where Element == Result? {
+        return self.map { try ItsME.unwrapOrThrow($0) }
+    }
 }
 
 extension PrimitiveSequenceType where Trait == MaybeTrait {

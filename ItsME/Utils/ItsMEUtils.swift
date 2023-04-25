@@ -14,6 +14,13 @@ func castOrThrow<T>(_ resultType: T.Type, _ object: Any) throws -> T {
     return returnValue
 }
 
+func unwrapOrThrow<T>(_ optionalValue: T?) throws -> T {
+    guard let unwrappedValue = optionalValue else {
+        throw ItsMEError.nilValue(object: optionalValue)
+    }
+    return unwrappedValue
+}
+
 func closestValue<T: BinaryFloatingPoint>(_ target: T, in arr: [T]) -> T? {
     if arr.isEmpty { return nil }
     

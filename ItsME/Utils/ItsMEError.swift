@@ -9,4 +9,5 @@ import Foundation
 
 enum ItsMEError: Error {
     case castingFailed(object: Any, targetType: Any.Type)
+    case nilValue(object: Any?)
 }
