@@ -236,7 +236,9 @@ private extension ProfileEditingViewController {
                     owner.navigationController?.setViewControllers([LoginViewController()], animated: false)
                 }),
             output.deleteAccountComplete
-                .emit(),
+                .emit(with: self, onNext: { owner, _ in
+                    owner.navigationController?.setViewControllers([LoginViewController()], animated: false)
+                }),
         ]
             .forEach { $0.disposed(by: disposeBag) }
     }

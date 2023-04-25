@@ -15,6 +15,7 @@ import Then
 final class ProfileEditingViewModel: ViewModelType {
     
     private let userRepository: UserRepository = .shared
+    private let cvRepository: CVRepository = .shared
     
     private let initalProfileImageData: Data?
     private let userInfoRelay: BehaviorRelay<UserInfo>
@@ -97,8 +98,7 @@ final class ProfileEditingViewModel: ViewModelType {
             .asSignalOnErrorJustComplete()
         
         let logoutComplete = makeLogoutComplete(with: input.logoutTrigger)
-        
-        let deleteAccountComplete = input.deleteAccountTrigger
+        let deleteAccountComplete = makeDeleteAccountComplete(with: input.deleteAccountTrigger)
         
         return .init(
             profileImageData: profileImageData,
@@ -158,6 +158,23 @@ private extension ProfileEditingViewModel {
             }
             .flatMapFirst {
                 return Signal.zip(logoutWithKakao, signOutFromFIRAuth)
+                    .mapToVoid()
+            }
+    }
+    
+    func makeDeleteAccountComplete(with input: Signal<Void>) -> Signal<Void> {
+        let deleteUserInfo = userRepository.deleteUserInfo()
+            .andThenJustOnNext()
+            .asSignal(onErrorJustReturn: ()) // TODO: 에러 트래커 추가
+        let deleteAllCVs = cvRepository.deleteAllCVs()
+            .andThenJustOnNext()
+            .asSignal(onErrorJustReturn: ()) // TODO: 에러 트래커 추가
+        let deleteUserAuth = userRepository.deleteUser()
+            .asSignal(onErrorJustReturn: ()) // TODO: 에러 트래커 추가
+        
+        return input
+            .flatMapFirst {
+                return Signal.zip(deleteUserInfo, deleteAllCVs, deleteUserAuth)
                     .mapToVoid()
             }
     }
