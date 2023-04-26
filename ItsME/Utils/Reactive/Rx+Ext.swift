@@ -32,6 +32,10 @@ extension ObservableType {
     func doOnCompleted(_ block: (() throws -> Void)?) -> Observable<Element> {
         return self.do(onCompleted: block)
     }
+    
+    func unwrapOrThrow<Result>() -> Observable<Result> where Element == Result? {
+        return self.map { try ItsME.unwrapOrThrow($0) }
+    }
 }
 
 extension SharedSequenceConvertibleType {
