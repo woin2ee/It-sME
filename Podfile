@@ -17,6 +17,7 @@ target 'ItsME' do
 	pod 'Then', '~> 3.0.0'
 	pod 'UITextView+Placeholder', '~> 1.4.0'
 	pod 'SFSafeSymbols', '~> 4.1.1'
+	pod 'Keychaining', '0.9.0'
 
   target 'ItsMETests' do
     inherit! :search_paths

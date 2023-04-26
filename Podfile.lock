@@ -119,6 +119,7 @@ PODS:
     - KakaoSDKCommon/Common (= 2.14.0)
   - KakaoSDKUser (2.14.0):
     - KakaoSDKAuth (= 2.14.0)
+  - Keychaining (0.9.0)
   - leveldb-library (1.22.1)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
@@ -187,6 +188,7 @@ DEPENDENCIES:
   - FirebaseAuth
   - FirebaseDatabase
   - FirebaseStorage
+  - Keychaining (= 0.9.0)
   - RxCocoa (= 6.5.0)
   - RxKakaoSDK (= 2.14.0)
   - RxSwift (= 6.5.0)
@@ -221,6 +223,7 @@ SPEC REPOS:
     - KakaoSDKTalk
     - KakaoSDKTemplate
     - KakaoSDKUser
+    - Keychaining
     - leveldb-library
     - nanopb
     - PromisesObjC
@@ -266,6 +269,7 @@ SPEC CHECKSUMS:
   KakaoSDKTalk: 6843127498cc01d4bda598e3da96e4c16070deb6
   KakaoSDKTemplate: 37fe90573759d54843da54fa66b8e21023b41fea
   KakaoSDKUser: 2ca18314ce72e6690f76cb1f6f9fbc771d31a803
+  Keychaining: aefafce82662b92a0f6aac3cea964fab642d9293
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
@@ -286,6 +290,6 @@ SPEC CHECKSUMS:
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
   "UITextView+Placeholder": d7b0c400921f66523f3a85d74f774512e14f6502
 
-PODFILE CHECKSUM: 67a510f92cae1fae9c831691bf98f8c1fdf5a7be
+PODFILE CHECKSUM: 42be87c1612637b81d10e23ac2fa164b2993d295
 
 COCOAPODS: 1.12.0
