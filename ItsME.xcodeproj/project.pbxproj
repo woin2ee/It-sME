@@ -52,6 +52,7 @@
 		DA404A8129F259FB00211272 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DA404A8029F259FB00211272 /* GoogleService-Info.plist */; };
 		DA404A8329F275F800211272 /* UIImage+DefaultProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA404A8229F275F800211272 /* UIImage+DefaultProfileImage.swift */; };
 		DA43162329F7C2AA004453B9 /* AuthProviderID.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43162229F7C2AA004453B9 /* AuthProviderID.swift */; };
+		DA43163229F94F64004453B9 /* Bundle+Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43163129F94F64004453B9 /* Bundle+Identifier.swift */; };
 		DA481D7F299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D7E299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift */; };
 		DA481D87299F735E00C8C734 /* UserInfoItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */; };
 		DA481D8929A4BFE500C8C734 /* IntrinsicHeightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */; };
@@ -207,6 +208,7 @@
 		DA404A8029F259FB00211272 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DA404A8229F275F800211272 /* UIImage+DefaultProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+DefaultProfileImage.swift"; sourceTree = "<group>"; };
 		DA43162229F7C2AA004453B9 /* AuthProviderID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthProviderID.swift; sourceTree = "<group>"; };
+		DA43163129F94F64004453B9 /* Bundle+Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Identifier.swift"; sourceTree = "<group>"; };
 		DA481D7E299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileEditingViewController+HeaderLabel.swift"; sourceTree = "<group>"; };
 		DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoItemCell.swift; sourceTree = "<group>"; };
 		DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrinsicHeightTextView.swift; sourceTree = "<group>"; };
@@ -794,6 +796,7 @@
 				DA4FEC2D29E6D14000D41CE1 /* ItsMEError.swift */,
 				DA71B5D329E9A2980033864C /* UIFont+.swift */,
 				DA43162229F7C2AA004453B9 /* AuthProviderID.swift */,
+				DA43163129F94F64004453B9 /* Bundle+Identifier.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1170,6 +1173,7 @@
 				DA7201F82931F8EB00A69519 /* CoverLetter.swift in Sources */,
 				DA708F1529DC465800EF84F2 /* StorageReference+Rx.swift in Sources */,
 				DA3302AC29ADCC9F00C36154 /* EducationEditingViewController.swift in Sources */,
+				DA43163229F94F64004453B9 /* Bundle+Identifier.swift in Sources */,
 				DA6B3CE029B06738002BB159 /* YearMonthPickerCell.swift in Sources */,
 				DA6B3CED29B1D453002BB159 /* YearMonthPickerViewDelegateProxy.swift in Sources */,
 				DA71B5D429E9A2980033864C /* UIFont+.swift in Sources */,
