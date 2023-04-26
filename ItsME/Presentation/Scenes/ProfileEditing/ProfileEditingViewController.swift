@@ -189,7 +189,7 @@ private extension ProfileEditingViewController {
                 guard let self = self else { return .empty() }
                 return self.rx.presentConfirmAlert(
                     title: "계정 삭제",
-                    message: "계정을 삭제하면 되돌릴 수 없습니다. 계정을 삭제하시겠습니까?",
+                    message: "계정을 삭제하면 관련된 모든 데이터가 삭제되어 되돌릴 수 없습니다.",
                     okAction: UIAlertAction(title: "삭제", style: .destructive)
                 ).asSignal()
             },
