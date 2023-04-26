@@ -178,7 +178,7 @@ private extension ProfileEditingViewController {
                     okAction: UIAlertAction(title: "예", style: .default)
                 ).asSignal()
             },
-            newProfileImageData: imagePickerController.rx.didFinishPickingImage
+            newProfileImageData: imagePickerController.rx.didFinishPickingImage(animated: true)
                 .map { $0?.jpegData(compressionQuality: 0.7) }
                 .asDriverOnErrorJustComplete()
         )
@@ -446,7 +446,10 @@ struct ProfileEditingViewControllerRepresenter: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> UIViewController {
         let navigationController: UINavigationController = .init(rootViewController: .init())
-        let profileEditingViewModel: ProfileEditingViewModel = .init(initalProfileImage: Data(), userInfo: .empty)
+        let profileEditingViewModel: ProfileEditingViewModel = .init(
+            initalProfileImageData: UIImage.defaultProfileImage.jpegData(compressionQuality: 1.0),
+            userInfo: .empty
+        )
         let profileEditingViewController: ProfileEditingViewController = .init(viewModel: profileEditingViewModel)
         navigationController.pushViewController(profileEditingViewController, animated: false)
         return navigationController

@@ -13,27 +13,9 @@ import Then
 
 final class ProfileEditingViewModel: ViewModelType {
     
-    struct Input {
-        let tapEditingCompleteButton: Signal<Void>
-        let userName: Driver<String>
-        let viewDidLoad: Driver<Void>
-        let logoutTrigger: Signal<Void>
-        let newProfileImageData: Driver<Data?>
-    }
-    
-    struct Output {
-        let profileImageData: Driver<Data?>
-        let userName: Driver<String>
-        let userInfoItems: Driver<[UserInfoItem]>
-        let educationItems: Driver<[EducationItem]>
-        let tappedEditingCompleteButton: Signal<Void>
-        let viewDidLoad: Driver<Void>
-        let logoutComplete: Signal<Void>
-    }
-    
     private let userRepository: UserRepository = .shared
     
-    private let initalProfileImage: Data
+    private let initalProfileImageData: Data?
     private let userInfoRelay: BehaviorRelay<UserInfo>
     
     var currentBirthday: Date {
@@ -62,8 +44,8 @@ final class ProfileEditingViewModel: ViewModelType {
         userInfoRelay.value.educationItems
     }
     
-    init(initalProfileImage: Data?, userInfo: UserInfo) {
-        self.initalProfileImage = initalProfileImage ?? .init()
+    init(initalProfileImageData: Data?, userInfo: UserInfo) {
+        self.initalProfileImageData = initalProfileImageData
         self.userInfoRelay = .init(value: userInfo)
     }
     
@@ -85,9 +67,12 @@ final class ProfileEditingViewModel: ViewModelType {
                 Storage.storage().reference().child($0.profileImageURL).rx.getData().map { $0 }
                     .asDriverOnErrorJustComplete()
             }
+                .asObservable()
+                .take(1)
+                .asDriverOnErrorJustComplete()
         )
-            .startWith(initalProfileImage)
-            
+            .startWith(initalProfileImageData)
+        
         let userName = Driver.merge(input.userName,
                                     userInfoDriver.map { $0.name })
             .startWith(userInfoRelay.value.name)
@@ -127,6 +112,29 @@ final class ProfileEditingViewModel: ViewModelType {
             viewDidLoad: viewDidLoad,
             logoutComplete: logoutComplete
         )
+    }
+}
+
+// MARK: - Input & Output
+
+extension ProfileEditingViewModel {
+    
+    struct Input {
+        let tapEditingCompleteButton: Signal<Void>
+        let userName: Driver<String>
+        let viewDidLoad: Driver<Void>
+        let logoutTrigger: Signal<Void>
+        let newProfileImageData: Driver<Data?>
+    }
+    
+    struct Output {
+        let profileImageData: Driver<Data?>
+        let userName: Driver<String>
+        let userInfoItems: Driver<[UserInfoItem]>
+        let educationItems: Driver<[EducationItem]>
+        let tappedEditingCompleteButton: Signal<Void>
+        let viewDidLoad: Driver<Void>
+        let logoutComplete: Signal<Void>
     }
 }
 
