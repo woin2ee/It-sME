@@ -74,5 +74,14 @@ final class CVRepository {
             }
         return source
     }
+    
+    /// 데이터베이스에 저장된 현재 사용자의 이력서 정보를 삭제합니다.
+    func deleteAllCVs() -> Completable {
+        let source = Auth.auth().rx.currentUser
+            .map(\.uid)
+            .flatMap { self.database.cvsRef($0).rx.removeValue() }
+            .asCompletable()
+        return source
+    }
 }
 

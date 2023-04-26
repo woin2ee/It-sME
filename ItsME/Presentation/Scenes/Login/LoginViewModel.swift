@@ -82,7 +82,7 @@ private extension LoginViewModel {
                 ItsMEUserDefaults.setAppleUserID(appleIDCredential.user)
                 
                 let credential = OAuthProvider.credential(
-                    withProviderID: "apple.com",
+                    withProviderID: AuthProviderID.apple.rawValue,
                     idToken: idTokenString,
                     rawNonce: rawNonce
                 )
@@ -113,7 +113,7 @@ private extension LoginViewModel {
             return .error(LoginViewModelError.LoginFailed)
         }
         
-        let providerID = "oidc.kakao" // Firebase console: Authentication 탭에서 설정한 OIDC 제공업체 ID
+        let providerID = AuthProviderID.kakao.rawValue // Firebase console: Authentication 탭에서 설정한 OIDC 제공업체 ID
         let credential = OAuthProvider.credential(
             withProviderID: providerID,
             idToken: idToken,

@@ -25,8 +25,12 @@ extension ObservableType {
         return self.map { _ in }
     }
     
-    func doOnNext(_ block: ((Element) -> Void)?) -> Observable<Element> {
+    func doOnNext(_ block: ((Element) throws -> Void)?) -> Observable<Element> {
         return self.do(onNext: block)
+    }
+    
+    func doOnCompleted(_ block: (() throws -> Void)?) -> Observable<Element> {
+        return self.do(onCompleted: block)
     }
 }
 
@@ -38,6 +42,10 @@ extension SharedSequenceConvertibleType {
     
     func doOnNext(_ block: ((Element) -> Void)?) -> SharedSequence<SharingStrategy, Element> {
         return self.do(onNext: block)
+    }
+    
+    func doOnCompleted(_ block: (() -> Void)?) -> SharedSequence<SharingStrategy, Element> {
+        return self.do(onCompleted: block)
     }
     
     func startWith(_ block: () -> Element) -> SharedSequence<SharingStrategy, Element> {
@@ -54,11 +62,22 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
     func doOnSuccess(_ block: ((Element) throws -> Void)?) -> PrimitiveSequence<Trait, Element> {
         return self.do(onSuccess: block)
     }
+    
+    func unwrapOrThrow<Result>() -> PrimitiveSequence<Trait, Result> where Element == Result? {
+        return self.map { try ItsME.unwrapOrThrow($0) }
+    }
 }
 
 extension PrimitiveSequenceType where Trait == MaybeTrait {
     
     func mapToVoid() -> PrimitiveSequence<Trait, Void> {
         return self.map { _ in }
+    }
+}
+
+extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Never {
+    
+    func andThenJustOnNext() -> Single<Void> {
+        return self.andThen(.just(()))
     }
 }
