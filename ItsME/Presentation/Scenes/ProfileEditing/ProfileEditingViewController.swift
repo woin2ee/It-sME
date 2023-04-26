@@ -237,7 +237,12 @@ private extension ProfileEditingViewController {
                 }),
             output.deleteAccountComplete
                 .emit(with: self, onNext: { owner, _ in
-                    owner.navigationController?.setViewControllers([LoginViewController()], animated: false)
+                    let alertController: UIAlertController = .init(title: "", message: "계정 삭제가 완료되었습니다.", preferredStyle: .alert)
+                    let okAction: UIAlertAction = .init(title: "확인", style: .default) { _ in
+                        owner.navigationController?.setViewControllers([LoginViewController()], animated: false)
+                    }
+                    alertController.addAction(okAction)
+                    owner.present(alertController, animated: true)
                 }),
         ]
             .forEach { $0.disposed(by: disposeBag) }
