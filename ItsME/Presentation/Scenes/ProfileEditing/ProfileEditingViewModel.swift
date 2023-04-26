@@ -14,6 +14,9 @@ import Then
 
 final class ProfileEditingViewModel: ViewModelType {
     
+    private let getAppleIDRefreshTokenFromKeychainUseCase: GetAppleIDRefreshTokenFromKeychainUseCase = .init()
+    private let revokeAppleIDTokenUseCase: RevokeAppleIDRefreshTokenUseCase = .init()
+    
     private let userRepository: UserRepository = .shared
     private let cvRepository: CVRepository = .shared
     
@@ -192,8 +195,8 @@ private extension ProfileEditingViewModel {
                     return UserApi.shared.rx.unlink()
                         .andThenJustOnNext()
                 case .apple:
-                    // TODO: 애플 서버로 토큰 해제 요청 (POST https://appleid.apple.com/auth/revoke)
-                    return .just(())
+                    let refreshToken = try self.getAppleIDRefreshTokenFromKeychainUseCase.execute()
+                    return self.revokeAppleIDTokenUseCase.execute(refreshToken: refreshToken)
                 }
             }
             .asSignal(onErrorJustReturn: ()) // 과정 중 에러가 발생해도 사용자에게는 계정 삭제 처리가 완료된걸로 보여야 경험을 해치지 않음

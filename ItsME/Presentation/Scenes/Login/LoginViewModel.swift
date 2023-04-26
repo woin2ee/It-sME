@@ -24,6 +24,8 @@ final class LoginViewModel: ViewModelType {
         let loggedInAndNeedSignUp: Signal<Bool>
     }
     
+    let saveAppleIDRefreshTokenToKeychainUseCase: SaveAppleIDRefreshTokenToKeychainUseCase = .init()
+    
     let userRepository: UserRepository = .shared
     
     func transform(input: Input) -> Output {
@@ -81,13 +83,15 @@ private extension LoginViewModel {
                 ItsMEUserDefaults.isLoggedInAsApple = true
                 ItsMEUserDefaults.setAppleUserID(appleIDCredential.user)
                 
-                let credential = OAuthProvider.credential(
-                    withProviderID: AuthProviderID.apple.rawValue,
-                    idToken: idTokenString,
-                    rawNonce: rawNonce
-                )
+                let authorizationCode: String = try {
+                    let codeData = try unwrapOrThrow(appleIDCredential.authorizationCode)
+                    return try unwrapOrThrow(String(data: codeData, encoding: .utf8))
+                }()
                 
-                return Auth.auth().rx.signIn(with: credential)
+                let signInToFirebase = self.signInToFirebase(withIDToken: idTokenString, providerID: .apple, rawNonce: rawNonce)
+                let saveAppleIDRefreshToken = self.saveAppleIDRefreshTokenToKeychainUseCase.execute(authorizationCode: authorizationCode)
+                
+                return Single.zip(signInToFirebase, saveAppleIDRefreshToken)
                     .mapToVoid()
             }
     }

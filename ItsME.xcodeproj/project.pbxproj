@@ -53,6 +53,9 @@
 		DA404A8329F275F800211272 /* UIImage+DefaultProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA404A8229F275F800211272 /* UIImage+DefaultProfileImage.swift */; };
 		DA43162329F7C2AA004453B9 /* AuthProviderID.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43162229F7C2AA004453B9 /* AuthProviderID.swift */; };
 		DA43163229F94F64004453B9 /* Bundle+Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43163129F94F64004453B9 /* Bundle+Identifier.swift */; };
+		DA43163529F9549A004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43163429F9549A004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase.swift */; };
+		DA43163729F95621004453B9 /* GetAppleIDRefreshTokenFromKeychainUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43163629F95621004453B9 /* GetAppleIDRefreshTokenFromKeychainUseCase.swift */; };
+		DA43163929F96615004453B9 /* RevokeAppleIDRefreshTokenUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43163829F96615004453B9 /* RevokeAppleIDRefreshTokenUseCase.swift */; };
 		DA481D7F299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D7E299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift */; };
 		DA481D87299F735E00C8C734 /* UserInfoItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */; };
 		DA481D8929A4BFE500C8C734 /* IntrinsicHeightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */; };
@@ -209,6 +212,9 @@
 		DA404A8229F275F800211272 /* UIImage+DefaultProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+DefaultProfileImage.swift"; sourceTree = "<group>"; };
 		DA43162229F7C2AA004453B9 /* AuthProviderID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthProviderID.swift; sourceTree = "<group>"; };
 		DA43163129F94F64004453B9 /* Bundle+Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Identifier.swift"; sourceTree = "<group>"; };
+		DA43163429F9549A004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveAppleIDRefreshTokenToKeychainUseCase.swift; sourceTree = "<group>"; };
+		DA43163629F95621004453B9 /* GetAppleIDRefreshTokenFromKeychainUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAppleIDRefreshTokenFromKeychainUseCase.swift; sourceTree = "<group>"; };
+		DA43163829F96615004453B9 /* RevokeAppleIDRefreshTokenUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokeAppleIDRefreshTokenUseCase.swift; sourceTree = "<group>"; };
 		DA481D7E299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileEditingViewController+HeaderLabel.swift"; sourceTree = "<group>"; };
 		DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoItemCell.swift; sourceTree = "<group>"; };
 		DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrinsicHeightTextView.swift; sourceTree = "<group>"; };
@@ -415,6 +421,7 @@
 				DA739DDD2923B4D2003AEE4C /* ItsME.entitlements */,
 				DAAFB2492918E43B007A8DF0 /* Application */,
 				DAAFB2512918EE3D007A8DF0 /* Entities */,
+				DA43163329F9544B004453B9 /* UseCases */,
 				DAAFB24B2918E49A007A8DF0 /* Presentation */,
 				DA0A88672921244400E9AE43 /* Data */,
 				DAAFB24A2918E44B007A8DF0 /* Resources */,
@@ -553,6 +560,16 @@
 				DA3302AD29ADCCA700C36154 /* EducationEditingViewModel.swift */,
 			);
 			path = EducationEditing;
+			sourceTree = "<group>";
+		};
+		DA43163329F9544B004453B9 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				DA43163429F9549A004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase.swift */,
+				DA43163629F95621004453B9 /* GetAppleIDRefreshTokenFromKeychainUseCase.swift */,
+				DA43163829F96615004453B9 /* RevokeAppleIDRefreshTokenUseCase.swift */,
+			);
+			path = UseCases;
 			sourceTree = "<group>";
 		};
 		DA481D7D299F5D7900C8C734 /* CommonView */ = {
@@ -1140,6 +1157,7 @@
 				DAD1D03229BF411A00B12BF8 /* OtherItemEditingViewModel.swift in Sources */,
 				DA0A88692921245000E9AE43 /* UserRepository.swift in Sources */,
 				DA708F0929D9FE1700EF84F2 /* FIRAuth+isLoggedIn.swift in Sources */,
+				DA43163529F9549A004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase.swift in Sources */,
 				D0CCF4E12925FB0100AD4AE6 /* UIView+.swift in Sources */,
 				D0CCF4E629260C2B00AD4AE6 /* ProfileInfoComponent.swift in Sources */,
 				DA7201EA29309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift in Sources */,
@@ -1166,6 +1184,8 @@
 				DAFCFB63294A9CD0006B287A /* EducationItem.swift in Sources */,
 				DA7201F22931F21100A69519 /* ResumeCategory.swift in Sources */,
 				DA3302B129ADD36000C36154 /* TextFieldCell.swift in Sources */,
+				DA43163729F95621004453B9 /* GetAppleIDRefreshTokenFromKeychainUseCase.swift in Sources */,
+				DA43163929F96615004453B9 /* RevokeAppleIDRefreshTokenUseCase.swift in Sources */,
 				DA018809296D146A002C5CB0 /* BirthdayEditingViewController.swift in Sources */,
 				DA6B3CEB29B1CCD9002BB159 /* YearMonthPickerView+Rx.swift in Sources */,
 				DAB06A3D291BA5B400E86163 /* HomeViewModel.swift in Sources */,
