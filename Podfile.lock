@@ -1,5 +1,8 @@
 PODS:
   - Alamofire (5.6.4)
+  - BlueCryptor (1.0.32)
+  - BlueECC (1.2.5)
+  - BlueRSA (1.0.200)
   - Firebase/Analytics (10.3.0):
     - Firebase/Core
   - Firebase/Core (10.3.0):
@@ -120,7 +123,12 @@ PODS:
   - KakaoSDKUser (2.14.0):
     - KakaoSDKAuth (= 2.14.0)
   - Keychaining (0.9.0)
+  - KituraContracts (1.2.1):
+    - LoggerAPI (~> 1.7)
   - leveldb-library (1.22.1)
+  - LoggerAPI (1.9.200):
+    - Logging (~> 1.1)
+  - Logging (1.4.0)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
     - nanopb/encode (= 2.30909.0)
@@ -180,6 +188,12 @@ PODS:
   - RxSwift (6.5.0)
   - SFSafeSymbols (4.1.1)
   - SnapKit (5.6.0)
+  - SwiftJWT (3.6.200):
+    - BlueCryptor (~> 1.0)
+    - BlueECC (~> 1.1)
+    - BlueRSA (~> 1.0)
+    - KituraContracts (~> 1.2)
+    - LoggerAPI (~> 1.7)
   - Then (3.0.0)
   - "UITextView+Placeholder (1.4.0)"
 
@@ -194,12 +208,16 @@ DEPENDENCIES:
   - RxSwift (= 6.5.0)
   - SFSafeSymbols (~> 4.1.1)
   - SnapKit (= 5.6.0)
+  - SwiftJWT (~> 3.6.2)
   - Then (~> 3.0.0)
   - "UITextView+Placeholder (~> 1.4.0)"
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - BlueCryptor
+    - BlueECC
+    - BlueRSA
     - Firebase
     - FirebaseAnalytics
     - FirebaseAppCheckInterop
@@ -224,7 +242,10 @@ SPEC REPOS:
     - KakaoSDKTemplate
     - KakaoSDKUser
     - Keychaining
+    - KituraContracts
     - leveldb-library
+    - LoggerAPI
+    - Logging
     - nanopb
     - PromisesObjC
     - RxAlamofire
@@ -241,11 +262,15 @@ SPEC REPOS:
     - RxSwift
     - SFSafeSymbols
     - SnapKit
+    - SwiftJWT
     - Then
     - "UITextView+Placeholder"
 
 SPEC CHECKSUMS:
   Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
+  BlueCryptor: b0aee3d9b8f367b49b30de11cda90e1735571c24
+  BlueECC: 0d18e93347d3ec6d41416de21c1ffa4d4cd3c2cc
+  BlueRSA: dfeef51db96bcc4edec654956c1581adbda4e6a3
   Firebase: f92fc551ead69c94168d36c2b26188263860acd9
   FirebaseAnalytics: 036232b6a1e2918e5f67572417be1173576245f3
   FirebaseAppCheckInterop: 8e907eea79958960a8bd2058e067f31e03a7914b
@@ -270,7 +295,10 @@ SPEC CHECKSUMS:
   KakaoSDKTemplate: 37fe90573759d54843da54fa66b8e21023b41fea
   KakaoSDKUser: 2ca18314ce72e6690f76cb1f6f9fbc771d31a803
   Keychaining: aefafce82662b92a0f6aac3cea964fab642d9293
+  KituraContracts: e845e60dc8627ad0a76fa55ef20a45451d8f830b
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
+  LoggerAPI: ad9c4a6f1e32f518fdb43a1347ac14d765ab5e3d
+  Logging: beeb016c9c80cf77042d62e83495816847ef108b
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   RxAlamofire: beb75a1c452d0de225651db4903f5d29d034a620
@@ -287,9 +315,10 @@ SPEC CHECKSUMS:
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   SFSafeSymbols: 902576dbf8ea16b4c6152cef2a26e47b3f55defb
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  SwiftJWT: 88c412708f58c169d431d344c87bc79a87c830ae
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
   "UITextView+Placeholder": d7b0c400921f66523f3a85d74f774512e14f6502
 
-PODFILE CHECKSUM: 42be87c1612637b81d10e23ac2fa164b2993d295
+PODFILE CHECKSUM: e7bdb38cd7be63ba114b15c68dba5becabe8b58f
 
 COCOAPODS: 1.12.0
