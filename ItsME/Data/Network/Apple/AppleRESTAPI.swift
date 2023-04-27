@@ -6,7 +6,9 @@
 //
 
 import Alamofire
+import FirebaseStorage
 import Foundation
+import SwiftJWT
 
 struct AppleRESTAPI {
     
@@ -19,23 +21,30 @@ struct AppleRESTAPI {
         withAuthorizationCode authorizationCode: String,
         completionHandler: @escaping ((Result<AppleIDTokenValidationResponseDTO, Error>) -> Void)
     ) {
-        let parameters: AppleIDTokenValidationRequestDTO = .init(
-            clientSecret: "eyJhbGciOiJFUzI1NiIsImtpZCI6IjVYM1pEN1I5MjcifQ.eyJpc3MiOiIyQVZDOFg3MzIzIiwiaWF0IjoxNjgyNDk3NDQ3LCJleHAiOjE2OTU0NTc0ODQsImF1ZCI6Imh0dHBzOi8vYXBwbGVpZC5hcHBsZS5jb20iLCJzdWIiOiJjb20uSUxHT0IuSXRzTUUifQ.WfEfiPD_aD-kh7nos0pfcM58rKbg9FIdYhaLHxrrvk3sqF2tMSvLoOiFiXdaoFEHrCf2QPzTsfziweUjDNh_vA", // 만료 기간: Sat Sep 23 2023 17:24:44 UTC+0900 (한국 표준시)
-            code: authorizationCode,
-            grantType: .authorizationCode
-        )
-        
-        AF.request(
-            EndPoint.token,
-            method: .post,
-            parameters: parameters,
-            encoder: URLEncodedFormParameterEncoder.default
-        )
-        .responseDecodable(of: AppleIDTokenValidationResponseDTO.self) { response in
-            do {
-                let tokenResponse = try unwrapOrThrow(response.value)
-                completionHandler(.success(tokenResponse))
-            } catch {
+        makeClientSecret { result in
+            switch result {
+            case .success(let clientSecret):
+                let parameters: AppleIDTokenValidationRequestDTO = .init(
+                    clientSecret: clientSecret,
+                    code: authorizationCode,
+                    grantType: .authorizationCode
+                )
+                
+                AF.request(
+                    EndPoint.token,
+                    method: .post,
+                    parameters: parameters,
+                    encoder: URLEncodedFormParameterEncoder.default
+                )
+                .responseDecodable(of: AppleIDTokenValidationResponseDTO.self) { response in
+                    do {
+                        let tokenResponse = try unwrapOrThrow(response.value)
+                        completionHandler(.success(tokenResponse))
+                    } catch {
+                        completionHandler(.failure(error))
+                    }
+                }
+            case .failure(let error):
                 completionHandler(.failure(error))
             }
         }
@@ -46,25 +55,74 @@ struct AppleRESTAPI {
         tokenTypeHint: AppleIDTokenRevocationRequestDTO.TokenTypeHint,
         completionHandler: @escaping ((Result<Void, Error>) -> Void)
     ) {
-        let parameters: AppleIDTokenRevocationRequestDTO = .init(
-            clientSecret: "eyJhbGciOiJFUzI1NiIsImtpZCI6IjVYM1pEN1I5MjcifQ.eyJpc3MiOiIyQVZDOFg3MzIzIiwiaWF0IjoxNjgyNDk3NDQ3LCJleHAiOjE2OTU0NTc0ODQsImF1ZCI6Imh0dHBzOi8vYXBwbGVpZC5hcHBsZS5jb20iLCJzdWIiOiJjb20uSUxHT0IuSXRzTUUifQ.WfEfiPD_aD-kh7nos0pfcM58rKbg9FIdYhaLHxrrvk3sqF2tMSvLoOiFiXdaoFEHrCf2QPzTsfziweUjDNh_vA",
-            token: token,
-            tokenTypeHint: tokenTypeHint
-        )
-        
-        AF.request(
-            EndPoint.revoke,
-            method: .post,
-            parameters: parameters,
-            encoder: URLEncodedFormParameterEncoder.default
-        )
-        .response { response in
-            switch response.result {
-            case .success(_):
-                completionHandler(.success(()))
+        makeClientSecret { result in
+            switch result {
+            case .success(let clientSecret):
+                let parameters: AppleIDTokenRevocationRequestDTO = .init(
+                    clientSecret: clientSecret,
+                    token: token,
+                    tokenTypeHint: tokenTypeHint
+                )
+                
+                AF.request(
+                    EndPoint.revoke,
+                    method: .post,
+                    parameters: parameters,
+                    encoder: URLEncodedFormParameterEncoder.default
+                )
+                .response { response in
+                    switch response.result {
+                    case .success(_):
+                        completionHandler(.success(()))
+                    case .failure(let error):
+                        completionHandler(.failure(error))
+                    }
+                }
             case .failure(let error):
                 completionHandler(.failure(error))
             }
         }
+        
+    }
+}
+
+extension AppleRESTAPI {
+    
+    private static func makeClientSecret(completionHandler: @escaping ((Result<String, Error>) -> Void)) {
+        
+        struct ClientSecretClaims: Claims {
+            let iss: String
+            let iat: Date
+            let exp: Date
+            let aud: String
+            let sub: String
+        }
+        
+        let header = Header(kid: Bundle.main.signInAppleKeyID)
+        let now: Date = .now
+        let claims = ClientSecretClaims(
+            iss: Bundle.main.teamID,
+            iat: now,
+            exp: now.addingTimeInterval(300),
+            aud: "https://appleid.apple.com",
+            sub: Bundle.main.identifier
+        )
+        var jwt = JWT(header: header, claims: claims)
+        
+        Storage.storage().reference().child("credentials").child("AuthKey_5X3ZD7R927.p8")
+            .getData(maxSize: 1 * 1024) { result in
+                switch result {
+                case .success(let privateKeyData):
+                    let jwtSigner = JWTSigner.es256(privateKey: privateKeyData)
+                    do {
+                        let signedJWT = try jwt.sign(using: jwtSigner)
+                        completionHandler(.success(signedJWT))
+                    } catch {
+                        completionHandler(.failure(error))
+                    }
+                case .failure(let error):
+                    completionHandler(.failure(error))
+                }
+            }
     }
 }
