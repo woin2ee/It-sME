@@ -28,6 +28,8 @@
 	</array>
 	<key>Localization native development region</key>
 	<string>Korea</string>
+	<key>SignInAppleKeyID</key>
+	<string>5X3ZD7R927</string>
 	<key>TeamID</key>
 	<string>$(AppIdentifierPrefix)</string>
 	<key>UIApplicationSceneManifest</key>
