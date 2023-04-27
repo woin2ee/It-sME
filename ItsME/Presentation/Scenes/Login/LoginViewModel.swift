@@ -89,7 +89,7 @@ private extension LoginViewModel {
                 }()
                 
                 let signInToFirebase = self.signInToFirebase(withIDToken: idTokenString, providerID: .apple, rawNonce: rawNonce)
-                let saveAppleIDRefreshToken = self.saveAppleIDRefreshTokenToKeychainUseCase.execute(authorizationCode: authorizationCode)
+                let saveAppleIDRefreshToken = self.saveAppleIDRefreshTokenToKeychainUseCase.rx.execute(authorizationCode: authorizationCode)
                 
                 return Single.zip(signInToFirebase, saveAppleIDRefreshToken)
                     .mapToVoid()

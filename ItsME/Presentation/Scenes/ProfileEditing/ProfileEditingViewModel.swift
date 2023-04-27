@@ -196,7 +196,7 @@ private extension ProfileEditingViewModel {
                         .andThenJustOnNext()
                 case .apple:
                     let refreshToken = try self.getAppleIDRefreshTokenFromKeychainUseCase.execute()
-                    return self.revokeAppleIDTokenUseCase.execute(refreshToken: refreshToken)
+                    return self.revokeAppleIDTokenUseCase.rx.execute(refreshToken: refreshToken)
                 }
             }
             .asSignal(onErrorJustReturn: ()) // 과정 중 에러가 발생해도 사용자에게는 계정 삭제 처리가 완료된걸로 보여야 경험을 해치지 않음

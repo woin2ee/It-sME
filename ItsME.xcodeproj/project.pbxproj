@@ -57,6 +57,13 @@
 		DA43163729F95621004453B9 /* GetAppleIDRefreshTokenFromKeychainUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43163629F95621004453B9 /* GetAppleIDRefreshTokenFromKeychainUseCase.swift */; };
 		DA43163929F96615004453B9 /* RevokeAppleIDRefreshTokenUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43163829F96615004453B9 /* RevokeAppleIDRefreshTokenUseCase.swift */; };
 		DA43165029FA47BA004453B9 /* Bundle+TeamID.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43164F29FA47BA004453B9 /* Bundle+TeamID.swift */; };
+		DA43165629FA4D84004453B9 /* AppleRESTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43165529FA4D84004453B9 /* AppleRESTAPI.swift */; };
+		DA43165A29FA50FA004453B9 /* AppleIDTokenValidationRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43165929FA50FA004453B9 /* AppleIDTokenValidationRequestDTO.swift */; };
+		DA43165C29FA5127004453B9 /* AppleIDTokenValidationResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43165B29FA5127004453B9 /* AppleIDTokenValidationResponseDTO.swift */; };
+		DA43165E29FA5137004453B9 /* AppleIDTokenRevocationRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43165D29FA5137004453B9 /* AppleIDTokenRevocationRequestDTO.swift */; };
+		DA43166029FA5413004453B9 /* AppleRESTAPI+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43165F29FA5413004453B9 /* AppleRESTAPI+Rx.swift */; };
+		DA43166329FA5A15004453B9 /* RevokeAppleIDRefreshTokenUseCase+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43166229FA5A15004453B9 /* RevokeAppleIDRefreshTokenUseCase+Rx.swift */; };
+		DA43166629FA5E5D004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43166529FA5E5D004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase+Rx.swift */; };
 		DA481D7F299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D7E299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift */; };
 		DA481D87299F735E00C8C734 /* UserInfoItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */; };
 		DA481D8929A4BFE500C8C734 /* IntrinsicHeightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */; };
@@ -217,6 +224,13 @@
 		DA43163629F95621004453B9 /* GetAppleIDRefreshTokenFromKeychainUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAppleIDRefreshTokenFromKeychainUseCase.swift; sourceTree = "<group>"; };
 		DA43163829F96615004453B9 /* RevokeAppleIDRefreshTokenUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokeAppleIDRefreshTokenUseCase.swift; sourceTree = "<group>"; };
 		DA43164F29FA47BA004453B9 /* Bundle+TeamID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+TeamID.swift"; sourceTree = "<group>"; };
+		DA43165529FA4D84004453B9 /* AppleRESTAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleRESTAPI.swift; sourceTree = "<group>"; };
+		DA43165929FA50FA004453B9 /* AppleIDTokenValidationRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleIDTokenValidationRequestDTO.swift; sourceTree = "<group>"; };
+		DA43165B29FA5127004453B9 /* AppleIDTokenValidationResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleIDTokenValidationResponseDTO.swift; sourceTree = "<group>"; };
+		DA43165D29FA5137004453B9 /* AppleIDTokenRevocationRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleIDTokenRevocationRequestDTO.swift; sourceTree = "<group>"; };
+		DA43165F29FA5413004453B9 /* AppleRESTAPI+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppleRESTAPI+Rx.swift"; sourceTree = "<group>"; };
+		DA43166229FA5A15004453B9 /* RevokeAppleIDRefreshTokenUseCase+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RevokeAppleIDRefreshTokenUseCase+Rx.swift"; sourceTree = "<group>"; };
+		DA43166529FA5E5D004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SaveAppleIDRefreshTokenToKeychainUseCase+Rx.swift"; sourceTree = "<group>"; };
 		DA481D7E299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileEditingViewController+HeaderLabel.swift"; sourceTree = "<group>"; };
 		DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoItemCell.swift; sourceTree = "<group>"; };
 		DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrinsicHeightTextView.swift; sourceTree = "<group>"; };
@@ -548,6 +562,7 @@
 		DA0A88672921244400E9AE43 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				DA43165329FA4D72004453B9 /* Network */,
 				DA708F1C29DFF1E200EF84F2 /* Repositories */,
 				DA6BCE5F292F04930059E95D /* Firebase */,
 				DA708F2029E066FB00EF84F2 /* ItsMEUserDefaults.swift */,
@@ -567,11 +582,57 @@
 		DA43163329F9544B004453B9 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				DA43163429F9549A004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase.swift */,
-				DA43163629F95621004453B9 /* GetAppleIDRefreshTokenFromKeychainUseCase.swift */,
-				DA43163829F96615004453B9 /* RevokeAppleIDRefreshTokenUseCase.swift */,
+				DA43166429FA5E03004453B9 /* Normal */,
+				DA43166129FA5A05004453B9 /* Rx */,
 			);
 			path = UseCases;
+			sourceTree = "<group>";
+		};
+		DA43165329FA4D72004453B9 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				DA43165729FA50ED004453B9 /* Apple */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		DA43165729FA50ED004453B9 /* Apple */ = {
+			isa = PBXGroup;
+			children = (
+				DA43165529FA4D84004453B9 /* AppleRESTAPI.swift */,
+				DA43165F29FA5413004453B9 /* AppleRESTAPI+Rx.swift */,
+				DA43165829FA50F2004453B9 /* DTO */,
+			);
+			path = Apple;
+			sourceTree = "<group>";
+		};
+		DA43165829FA50F2004453B9 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				DA43165929FA50FA004453B9 /* AppleIDTokenValidationRequestDTO.swift */,
+				DA43165B29FA5127004453B9 /* AppleIDTokenValidationResponseDTO.swift */,
+				DA43165D29FA5137004453B9 /* AppleIDTokenRevocationRequestDTO.swift */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		DA43166129FA5A05004453B9 /* Rx */ = {
+			isa = PBXGroup;
+			children = (
+				DA43166229FA5A15004453B9 /* RevokeAppleIDRefreshTokenUseCase+Rx.swift */,
+				DA43166529FA5E5D004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase+Rx.swift */,
+			);
+			path = Rx;
+			sourceTree = "<group>";
+		};
+		DA43166429FA5E03004453B9 /* Normal */ = {
+			isa = PBXGroup;
+			children = (
+				DA43163629F95621004453B9 /* GetAppleIDRefreshTokenFromKeychainUseCase.swift */,
+				DA43163829F96615004453B9 /* RevokeAppleIDRefreshTokenUseCase.swift */,
+				DA43163429F9549A004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase.swift */,
+			);
+			path = Normal;
 			sourceTree = "<group>";
 		};
 		DA481D7D299F5D7900C8C734 /* CommonView */ = {
@@ -1133,6 +1194,7 @@
 				DAAB20C1299B6AEF00D5338D /* Reusable.swift in Sources */,
 				DAD1D03029B759CE00B12BF8 /* Calendar+Current.swift in Sources */,
 				DA708F0729D9F11900EF84F2 /* FIRAuth+Rx.swift in Sources */,
+				DA43166629FA5E5D004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase+Rx.swift in Sources */,
 				DAE6090D29420D9900481742 /* ItemAddButton.swift in Sources */,
 				DAAF1BDF299A1E8100728376 /* Array+SafeIndex.swift in Sources */,
 				DA53B73E29B5DB55000BBB26 /* ContextMenuCell.swift in Sources */,
@@ -1149,11 +1211,13 @@
 				D09AC9792918DE8B0081C0EC /* HomeViewController.swift in Sources */,
 				DA7201F02931EEE600A69519 /* CVInfo.swift in Sources */,
 				DADDEEA629A8AD9A00D31B02 /* InsetTextField.swift in Sources */,
+				DA43165C29FA5127004453B9 /* AppleIDTokenValidationResponseDTO.swift in Sources */,
 				DAB06A40291BA61100E86163 /* ViewModelType.swift in Sources */,
 				DA4FEC2529E40C4C00D41CE1 /* ItsMELogger.swift in Sources */,
 				DAAC7A5C29715C0A0083A8E9 /* Rx+Ext.swift in Sources */,
 				D0A965C829B6F9D50071FB3D /* ResumeItemEditingViewModel.swift in Sources */,
 				DA481D87299F735E00C8C734 /* UserInfoItemCell.swift in Sources */,
+				DA43165A29FA50FA004453B9 /* AppleIDTokenValidationRequestDTO.swift in Sources */,
 				D055229C29B9AA81000ED03C /* CoverLetterEditingViewModel.swift in Sources */,
 				DAFCFB67294AC00C006B287A /* UIStackView+.swift in Sources */,
 				DA7201FA2931F90900A69519 /* Resume.swift in Sources */,
@@ -1176,6 +1240,7 @@
 				DA4FEC2C29E6D12C00D41CE1 /* ItsMEUtils.swift in Sources */,
 				DA6B3CE229B08E95002BB159 /* SnapKit+.swift in Sources */,
 				DA01880F296D147D002C5CB0 /* EmailEditingViewController.swift in Sources */,
+				DA43165629FA4D84004453B9 /* AppleRESTAPI.swift in Sources */,
 				D0472F09296406CF00E83F61 /* TotalCVViewModel.swift in Sources */,
 				DA3302AE29ADCCA700C36154 /* EducationEditingViewModel.swift in Sources */,
 				D09AC9752918DE8B0081C0EC /* AppDelegate.swift in Sources */,
@@ -1204,10 +1269,12 @@
 				D0BED20029C1A07E0027EAE5 /* CategoryEditingViewController.swift in Sources */,
 				DA43162329F7C2AA004453B9 /* AuthProviderID.swift in Sources */,
 				D04FAF95299CB3F60049DBAA /* CoverLetterCell.swift in Sources */,
+				DA43165E29FA5137004453B9 /* AppleIDTokenRevocationRequestDTO.swift in Sources */,
 				D04FAF98299CB6690049DBAA /* CoverLetterHeaderView.swift in Sources */,
 				DA43165029FA47BA004453B9 /* Bundle+TeamID.swift in Sources */,
 				D0CCF4E3292604BE00AD4AE6 /* UIColor+.swift in Sources */,
 				D0304B9129DC0C870017C529 /* CVEditViewController.swift in Sources */,
+				DA43166029FA5413004453B9 /* AppleRESTAPI+Rx.swift in Sources */,
 				DA018811296D1483002C5CB0 /* OtherItemEditingViewController.swift in Sources */,
 				D0CCF4E829260ED200AD4AE6 /* UserInfoItem.swift in Sources */,
 				DA708F0F29DC1F7400EF84F2 /* StoragePath.swift in Sources */,
@@ -1216,6 +1283,7 @@
 				D0E6FF6029B1BA23008CB451 /* CoverLetterEditingViewController.swift in Sources */,
 				D0304B8E29DC07CA0017C529 /* AddCVButton.swift in Sources */,
 				DA4FEC2A29E5582F00D41CE1 /* SignUpViewModel.swift in Sources */,
+				DA43166329FA5A15004453B9 /* RevokeAppleIDRefreshTokenUseCase+Rx.swift in Sources */,
 				D05522A029B9B1A3000ED03C /* CoverLetterTitleCell.swift in Sources */,
 				DA7201F62931F41100A69519 /* ResumeItem.swift in Sources */,
 				DA53B73829B5BDA1000BBB26 /* Int+.swift in Sources */,
