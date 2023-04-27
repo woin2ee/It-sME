@@ -172,13 +172,20 @@ private extension ProfileEditingViewModel {
         let deleteAllCVs = cvRepository.deleteAllCVs()
             .andThenJustOnNext()
             .asSignal(onErrorJustReturn: ()) // TODO: 에러 트래커 추가
+        let deleteStorage = Single<Void>.just(())
+            .map { try StoragePath().userProfileImage }
+            .flatMap {
+                return Storage.storage().reference().child($0).rx.delete()
+                    .andThenJustOnNext()
+            }
+            .asSignal(onErrorJustReturn: ())
         let deleteUserAuth = userRepository.deleteUser()
             .asSignal(onErrorJustReturn: ()) // TODO: 에러 트래커 추가
         let revokeProvider = makeRevokeProviderWithCurrentProviderID()
         
         return input
             .flatMapFirst {
-                return Signal.zip(deleteUserInfo, deleteAllCVs, deleteUserAuth, revokeProvider)
+                return Signal.zip(deleteUserInfo, deleteAllCVs, deleteStorage, deleteUserAuth, revokeProvider)
                     .mapToVoid()
             }
     }
