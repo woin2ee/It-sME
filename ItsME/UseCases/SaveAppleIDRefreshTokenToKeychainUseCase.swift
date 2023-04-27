@@ -54,6 +54,8 @@ struct SaveAppleIDRefreshTokenToKeychainUseCase {
     }
 }
 
+// MARK: - AppleIDTokenValidationRequestDTO
+
 extension SaveAppleIDRefreshTokenToKeychainUseCase {
     
     final class AppleIDTokenValidationRequestDTO: Encodable {
@@ -88,6 +90,8 @@ extension SaveAppleIDRefreshTokenToKeychainUseCase {
         }
     }
 }
+
+// MARK: - AppleIDTokenValidationResponseDTO
 
 extension SaveAppleIDRefreshTokenToKeychainUseCase {
     

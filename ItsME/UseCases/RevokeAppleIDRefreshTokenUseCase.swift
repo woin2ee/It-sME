@@ -49,6 +49,8 @@ struct RevokeAppleIDRefreshTokenUseCase {
     }
 }
 
+// MARK: - AppleIDTokenRevocationRequestDTO
+
 extension RevokeAppleIDRefreshTokenUseCase {
     
     final class AppleIDTokenRevocationRequestDTO: Encodable {
