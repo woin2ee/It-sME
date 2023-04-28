@@ -5,9 +5,7 @@
 //  Created by Jaewon Yun on 2022/12/01.
 //
 
-import FirebaseAuth
 import FirebaseStorage
-import KakaoSDKUser
 import RxSwift
 import RxCocoa
 import Then
@@ -21,6 +19,7 @@ final class ProfileEditingViewModel: ViewModelType {
         revokeAppleIDTokenUseCase: .init(),
         getCurrentAuthProviderIDUseCase: .init()
     )
+    private let logoutUseCase: LogoutUseCase = .init(getCurrentAuthProviderIDUseCase: .init())
     
     private let userRepository: UserProfileRepository = .shared
     private let cvRepository: CVRepository = .shared
@@ -105,7 +104,12 @@ final class ProfileEditingViewModel: ViewModelType {
             }
             .asSignalOnErrorJustComplete()
         
-        let logoutComplete = makeLogoutComplete(with: input.logoutTrigger)
+        let logoutComplete = input.logoutTrigger
+            .flatMapFirst { _ in
+                return self.logoutUseCase.rx.execute()
+                    .andThenJustOnNext()
+                    .asSignal(onErrorJustReturn: ())
+            }
         let deleteAccountComplete = input.deleteAccountTrigger
             .flatMapFirst { _ in
                 return self.deleteAccountUseCase.rx.execute()
@@ -148,31 +152,6 @@ extension ProfileEditingViewModel {
         let viewDidLoad: Driver<Void>
         let logoutComplete: Signal<Void>
         let deleteAccountComplete: Signal<Void>
-    }
-}
-
-// MARK: - Private
-
-private extension ProfileEditingViewModel {
-    
-    func makeLogoutComplete(with input: Signal<Void>) -> Signal<Void> {
-        let logoutWithKakao = UserApi.shared.rx.logout()
-            .andThenJustOnNext()
-            .asSignalOnErrorJustNext() // TODO: 에러 발생 시 로그 심기
-        let signOutFromFIRAuth = Auth.auth().rx.signOut()
-            .andThenJustOnNext()
-            .asSignalOnErrorJustNext() // TODO: 에러 발생 시 로그 심기
-        
-        return input
-            .doOnNext {
-                ItsMEUserDefaults.removeAppleUserID()
-                ItsMEUserDefaults.isLoggedInAsApple = false
-                ItsMEUserDefaults.allowsAutoLogin = false
-            }
-            .flatMapFirst {
-                return Signal.zip(logoutWithKakao, signOutFromFIRAuth)
-                    .mapToVoid()
-            }
     }
 }
 

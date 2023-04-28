@@ -74,6 +74,8 @@
 		DA43167829FBAE94004453B9 /* GetNicknameAndEmailForKakaoUseCase+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43167729FBAE94004453B9 /* GetNicknameAndEmailForKakaoUseCase+Rx.swift */; };
 		DA43167A29FBF19A004453B9 /* DeleteAccountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43167929FBF19A004453B9 /* DeleteAccountUseCase.swift */; };
 		DA43167C29FBF1E1004453B9 /* DeleteAccountUseCase+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43167B29FBF1E1004453B9 /* DeleteAccountUseCase+Rx.swift */; };
+		DA43167E29FBFD9D004453B9 /* LogoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43167D29FBFD9D004453B9 /* LogoutUseCase.swift */; };
+		DA43168029FBFDA8004453B9 /* LogoutUseCase+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43167F29FBFDA8004453B9 /* LogoutUseCase+Rx.swift */; };
 		DA43168229FBFEB2004453B9 /* GetCurrentAuthProviderIDUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43168129FBFEB2004453B9 /* GetCurrentAuthProviderIDUseCase.swift */; };
 		DA43168429FBFEBD004453B9 /* GetCurrentAuthProviderIDUseCase+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43168329FBFEBD004453B9 /* GetCurrentAuthProviderIDUseCase+Rx.swift */; };
 		DA481D7F299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D7E299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift */; };
@@ -254,6 +256,8 @@
 		DA43167729FBAE94004453B9 /* GetNicknameAndEmailForKakaoUseCase+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GetNicknameAndEmailForKakaoUseCase+Rx.swift"; sourceTree = "<group>"; };
 		DA43167929FBF19A004453B9 /* DeleteAccountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountUseCase.swift; sourceTree = "<group>"; };
 		DA43167B29FBF1E1004453B9 /* DeleteAccountUseCase+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DeleteAccountUseCase+Rx.swift"; sourceTree = "<group>"; };
+		DA43167D29FBFD9D004453B9 /* LogoutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUseCase.swift; sourceTree = "<group>"; };
+		DA43167F29FBFDA8004453B9 /* LogoutUseCase+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogoutUseCase+Rx.swift"; sourceTree = "<group>"; };
 		DA43168129FBFEB2004453B9 /* GetCurrentAuthProviderIDUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCurrentAuthProviderIDUseCase.swift; sourceTree = "<group>"; };
 		DA43168329FBFEBD004453B9 /* GetCurrentAuthProviderIDUseCase+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GetCurrentAuthProviderIDUseCase+Rx.swift"; sourceTree = "<group>"; };
 		DA481D7E299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileEditingViewController+HeaderLabel.swift"; sourceTree = "<group>"; };
@@ -660,6 +664,7 @@
 				DA43167329FB99AD004453B9 /* LoginWithKakaoUseCase+Rx.swift */,
 				DA43167729FBAE94004453B9 /* GetNicknameAndEmailForKakaoUseCase+Rx.swift */,
 				DA43167B29FBF1E1004453B9 /* DeleteAccountUseCase+Rx.swift */,
+				DA43167F29FBFDA8004453B9 /* LogoutUseCase+Rx.swift */,
 				DA43168329FBFEBD004453B9 /* GetCurrentAuthProviderIDUseCase+Rx.swift */,
 			);
 			path = Rx;
@@ -676,6 +681,7 @@
 				DA43167129FB99A2004453B9 /* LoginWithKakaoUseCase.swift */,
 				DA43167529FBAE82004453B9 /* GetNicknameAndEmailForKakaoUseCase.swift */,
 				DA43167929FBF19A004453B9 /* DeleteAccountUseCase.swift */,
+				DA43167D29FBFD9D004453B9 /* LogoutUseCase.swift */,
 				DA43168129FBFEB2004453B9 /* GetCurrentAuthProviderIDUseCase.swift */,
 			);
 			path = Normal;
@@ -1255,6 +1261,7 @@
 				DA43166A29FB950D004453B9 /* LoginWithAppleUseCase+Rx.swift in Sources */,
 				DA9069D629CDA64B00535A3D /* Collection+isNotEmpty.swift in Sources */,
 				DA7201EC29309B9600A69519 /* AuthenticationServices+Rx.swift in Sources */,
+				DA43167E29FBFD9D004453B9 /* LogoutUseCase.swift in Sources */,
 				DA708F1129DC32BB00EF84F2 /* UIImagePickerController+Rx.swift in Sources */,
 				DA43167A29FBF19A004453B9 /* DeleteAccountUseCase.swift in Sources */,
 				DAF516FE29D5765E00BDAD68 /* UIButton.Configuration+Then.swift in Sources */,
@@ -1321,6 +1328,7 @@
 				DA43163229F94F64004453B9 /* Bundle+.swift in Sources */,
 				DA6B3CE029B06738002BB159 /* YearMonthPickerCell.swift in Sources */,
 				DA6B3CED29B1D453002BB159 /* YearMonthPickerViewDelegateProxy.swift in Sources */,
+				DA43168029FBFDA8004453B9 /* LogoutUseCase+Rx.swift in Sources */,
 				DA71B5D429E9A2980033864C /* UIFont+.swift in Sources */,
 				DA7201F42931F25500A69519 /* CoverLetterItem.swift in Sources */,
 				D0BED20029C1A07E0027EAE5 /* CategoryEditingViewController.swift in Sources */,
