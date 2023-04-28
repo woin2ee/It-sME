@@ -203,7 +203,7 @@ extension SignUpViewController {
         
         output.signUpComplete
             .emit(with: self, onNext: { owner, _ in
-                let homeViewController: HomeViewController = .init()
+                let homeViewController = DIContainer.makeHomeViewController()
                 owner.navigationController?.setViewControllers([homeViewController], animated: true)
             })
             .disposed(by: disposeBag)
@@ -254,8 +254,7 @@ import SwiftUI
 struct SignUpViewControllerRepresenter: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> UIViewController {
-        let signUpViewModel: SignUpViewModel = .init(userNameForSignUp: "", userEmailForSignUp: "")
-        let signUpViewController: SignUpViewController = .init(viewModel: signUpViewModel)
+        let signUpViewController = DIContainer.mock.makeSignUpViewController()
         let navigationController: UINavigationController = .init(rootViewController: signUpViewController)
         return navigationController
     }

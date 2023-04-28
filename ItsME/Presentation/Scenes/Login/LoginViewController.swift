@@ -14,7 +14,7 @@ final class LoginViewController: UIViewController {
     
     private let disposeBag: DisposeBag = .init()
     
-    private let viewModel: LoginViewModel = .init()
+    private let viewModel: LoginViewModel
     
     // MARK: UI Components
     
@@ -28,6 +28,17 @@ final class LoginViewController: UIViewController {
         button.setImage(image, for: .normal)
         return button
     }()
+    
+    // MARK: Initializers
+    
+    init(viewModel: LoginViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: Life Cycle
     
@@ -54,11 +65,10 @@ extension LoginViewController {
             .emit(with: self) { owner, needsSignUp in
                 switch needsSignUp {
                 case .needed(name: let name, email: let email):
-                    let viewModel: SignUpViewModel = .init(userNameForSignUp: name, userEmailForSignUp: email)
-                    let signUpViewController: SignUpViewController = .init(viewModel: viewModel)
+                    let signUpViewController = DIContainer.makeSignUpViewController(nameAndEmailForSignUp: (name, email))
                     owner.navigationController?.setViewControllers([signUpViewController], animated: false)
                 case .notNeeded:
-                    let homeViewController: HomeViewController = .init()
+                    let homeViewController = DIContainer.makeHomeViewController()
                     owner.navigationController?.setViewControllers([homeViewController], animated: false)
                 }
             }

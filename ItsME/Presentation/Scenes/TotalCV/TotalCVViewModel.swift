@@ -11,8 +11,8 @@ import FirebaseStorage
 
 final class TotalCVViewModel: ViewModelType {
     
-    private let userRepository: UserProfileRepository = .shared
-    private let cvRepository: CVRepository = .shared
+    private let userRepository: UserProfileRepository
+    private let cvRepository: CVRepository
     
     private let cvInfoRelay: BehaviorRelay<CVInfo>
     
@@ -24,7 +24,9 @@ final class TotalCVViewModel: ViewModelType {
         cvInfoRelay.value.coverLetter
     }
     
-    init(cvInfo: CVInfo) {
+    init(userRepository: UserProfileRepository, cvRepository: CVRepository, cvInfo: CVInfo) {
+        self.userRepository = userRepository
+        self.cvRepository = cvRepository
         self.cvInfoRelay = .init(value: cvInfo)
     }
     

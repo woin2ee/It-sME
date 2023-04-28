@@ -91,7 +91,7 @@ extension SceneDelegate {
     
     private func handleAppleIDLogout() {
         DispatchQueue.main.async {
-            let loginViewController: LoginViewController = .init()
+            let loginViewController = DIContainer.makeLoginViewController()
             self.rootNavigationController.setViewControllers([loginViewController], animated: false)
             self.logoutWithAppleUseCase.execute()
         }
@@ -105,13 +105,16 @@ extension SceneDelegate {
            let index = launchArguments.firstIndex(of: "-TARGET_VIEW_CONTROLLER") {
             switch launchArguments[index + 1] {
             case "HOME_VIEW_CONTROLLER":
-                rootViewController = HomeViewController()
+                rootViewController = DIContainer.makeHomeViewController()
             default:
                 fatalError("올바른 argument 를 입력해주세요.")
             }
         } else {
-            rootViewController = (Auth.auth().isLoggedIn &&
-                                  ItsMEUserDefaults.allowsAutoLogin) ? HomeViewController() : LoginViewController()
+            rootViewController = (Auth.auth().isLoggedIn && ItsMEUserDefaults.allowsAutoLogin) ? {
+                return DIContainer.makeHomeViewController()
+            }() : {
+                return DIContainer.makeLoginViewController()
+            }()
         }
         
         rootNavigationController.setViewControllers([rootViewController], animated: false)

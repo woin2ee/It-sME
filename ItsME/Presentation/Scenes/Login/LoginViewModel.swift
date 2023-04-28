@@ -13,13 +13,29 @@ final class LoginViewModel: ViewModelType {
     
     // MARK: UseCases
     
-    let saveAppleIDRefreshTokenToKeychainUseCase: SaveAppleIDRefreshTokenToKeychainUseCase = .init()
-    let loginWithAppleUseCase: LoginWithAppleUseCase = .init()
-    let loginWithKakaoUseCase: LoginWithKakaoUseCase = .init()
-    let signInToFirebaseUseCase: SignInToFirebaseUseCase = .init()
-    let getNicknameAndEmailForKakaoUseCase: GetNicknameAndEmailForKakaoUseCase = .init()
+    let saveAppleIDRefreshTokenToKeychainUseCase: SaveAppleIDRefreshTokenToKeychainUseCaseProtocol
+    let loginWithAppleUseCase: LoginWithAppleUseCaseProtocol
+    let loginWithKakaoUseCase: LoginWithKakaoUseCaseProtocol
+    let signInToFirebaseUseCase: SignInToFirebaseUseCaseProtocol
+    let getNicknameAndEmailForKakaoUseCase: GetNicknameAndEmailForKakaoUseCaseProtocol
     
-    let userRepository: UserProfileRepository = .shared
+    let userRepository: UserProfileRepositoryProtocol
+    
+    init(
+        saveAppleIDRefreshTokenToKeychainUseCase: SaveAppleIDRefreshTokenToKeychainUseCaseProtocol,
+        loginWithAppleUseCase: LoginWithAppleUseCaseProtocol,
+        loginWithKakaoUseCase: LoginWithKakaoUseCaseProtocol,
+        signInToFirebaseUseCase: SignInToFirebaseUseCaseProtocol,
+        getNicknameAndEmailForKakaoUseCase: GetNicknameAndEmailForKakaoUseCaseProtocol,
+        userRepository: UserProfileRepositoryProtocol
+    ) {
+        self.saveAppleIDRefreshTokenToKeychainUseCase = saveAppleIDRefreshTokenToKeychainUseCase
+        self.loginWithAppleUseCase = loginWithAppleUseCase
+        self.loginWithKakaoUseCase = loginWithKakaoUseCase
+        self.signInToFirebaseUseCase = signInToFirebaseUseCase
+        self.getNicknameAndEmailForKakaoUseCase = getNicknameAndEmailForKakaoUseCase
+        self.userRepository = userRepository
+    }
     
     func transform(input: Input) -> Output {
         let loggedInWithKakao = input.kakaoLoginRequest

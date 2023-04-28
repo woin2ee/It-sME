@@ -50,23 +50,14 @@ final class ProfileEditingViewModel: ViewModelType {
     }
     
     init(
-        deleteAccountUseCase: DeleteAccountUseCaseProtocol = DeleteAccountUseCase(
-            userProfileRepository: .shared,
-            cvRepository: .shared,
-            getAppleIDRefreshTokenFromKeychainUseCase: GetAppleIDRefreshTokenFromKeychainUseCase(),
-            revokeAppleIDTokenUseCase: RevokeAppleIDRefreshTokenUseCase(),
-            getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCase()
-        ),
-        logoutUseCase: LogoutUseCaseProtocol = LogoutUseCase(
-            getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCase(),
-            logoutWithAppleUseCase: LogoutWithAppleUseCase()
-        ),
-        saveProfileImageUseCase: SaveProfileImageUseCaseProtocol = SaveProfileImageUseCase(),
-        getProfileImageUseCase: GetProfileImageUseCaseProtocol = GetProfileImageUseCase(),
-        userRepository: UserProfileRepositoryProtocol = UserProfileRepository.shared,
-        cvRepository: CVRepositoryProtocol = CVRepository.shared,
+        deleteAccountUseCase: DeleteAccountUseCaseProtocol,
+        logoutUseCase: LogoutUseCaseProtocol,
+        saveProfileImageUseCase: SaveProfileImageUseCaseProtocol,
+        getProfileImageUseCase: GetProfileImageUseCaseProtocol,
+        userRepository: UserProfileRepositoryProtocol,
+        cvRepository: CVRepositoryProtocol,
         initalProfileImageData: Data?,
-        userInfo: UserProfile
+        userProfile: UserProfile
     ) {
         self.deleteAccountUseCase = deleteAccountUseCase
         self.logoutUseCase = logoutUseCase
@@ -75,7 +66,7 @@ final class ProfileEditingViewModel: ViewModelType {
         self.userRepository = userRepository
         self.cvRepository = cvRepository
         self.initalProfileImageData = initalProfileImageData
-        self.userInfoRelay = .init(value: userInfo)
+        self.userInfoRelay = .init(value: userProfile)
     }
     
     func transform(input: Input) -> Output {

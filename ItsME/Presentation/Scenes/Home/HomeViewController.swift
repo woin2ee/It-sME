@@ -16,7 +16,7 @@ final class HomeViewController: UIViewController {
     
     private let disposeBag: DisposeBag = .init()
     
-    private let viewModel: HomeViewModel = .init()
+    private let viewModel: HomeViewModel
     
     private var deviceWidth: CGFloat {
         return view.window?.windowScene?.screen.bounds.width ?? UIScreen.main.bounds.width
@@ -34,11 +34,10 @@ final class HomeViewController: UIViewController {
     
     private lazy var profileEditingButton: UIButton = {
         let action = UIAction { _ in
-            let profileEditingViewModel: ProfileEditingViewModel = .init(
+            let profileEditingViewController = DIContainer.makeProfileEditingViewController(
                 initalProfileImageData: self.profileImageView.image?.jpegData(compressionQuality: 1.0),
-                userInfo: self.viewModel.userInfo
+                initialUserProfile: self.viewModel.userInfo
             )
-            let profileEditingViewController: ProfileEditingViewController = .init(viewModel: profileEditingViewModel)
             let profileEditingNavigationController: UINavigationController = .init(rootViewController: profileEditingViewController)
             profileEditingNavigationController.modalTransitionStyle = .coverVertical
             profileEditingNavigationController.modalPresentationStyle = .fullScreen
@@ -88,11 +87,21 @@ final class HomeViewController: UIViewController {
     
     private lazy var addCVButton: AddCVButton = .init().then {
         let action: UIAction = .init { [weak self] _ in
-            let cvEditViewModel: CVEditViewModel = .init(editingType: .new)
-            let cvEditviewController: CVEditViewController = .init(viewModel: cvEditViewModel)
+            let cvEditviewController = DIContainer.makeCVEditViewController(editingType: .new)
             self?.navigationController?.pushViewController(cvEditviewController, animated: true)
         }
         $0.addAction(action, for: .touchUpInside)
+    }
+    
+    // MARK: Initializers
+    
+    init(viewModel: HomeViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: Life Cycle
@@ -206,9 +215,8 @@ private extension HomeViewController {
                     }
                     
                     let pushAction: UIAction = .init { _ in
-                        let totalCVViewModel: TotalCVViewModel = .init(cvInfo: cvInfo)
-                        let totalCVVC: TotalCVViewController = .init(viewModel: totalCVViewModel)
-                        vc.navigationController?.pushViewController(totalCVVC, animated: true)
+                        let totalCVViewController = DIContainer.makeTotalCVViewController(cvInfo: cvInfo)
+                        vc.navigationController?.pushViewController(totalCVViewController, animated: true)
                     }
                     cvCard.addAction(pushAction, for: .touchUpInside)
                 }
@@ -278,10 +286,7 @@ extension HomeViewController {
             title: "제목 편집",
             image: UIImage(systemSymbol: .pencilCircleFill),
             handler: { [weak self] _ in
-                let cvEditViewModel: CVEditViewModel = .init(
-                    editingType: .edit(uuid: cvInfo.uuid, initialCVTitle: cvInfo.title)
-                )
-                let cvEditViewController: CVEditViewController = .init(viewModel: cvEditViewModel)
+                let cvEditViewController = DIContainer.makeCVEditViewController(editingType: .edit(uuid: cvInfo.uuid, initialCVTitle: cvInfo.title))
                 self?.navigationController?.pushViewController(cvEditViewController, animated: true)
             }
         )
