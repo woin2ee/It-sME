@@ -14,6 +14,9 @@ import Then
 
 final class ProfileEditingViewModel: ViewModelType {
     
+    private let getAppleIDRefreshTokenFromKeychainUseCase: GetAppleIDRefreshTokenFromKeychainUseCase = .init()
+    private let revokeAppleIDTokenUseCase: RevokeAppleIDRefreshTokenUseCase = .init()
+    
     private let userRepository: UserRepository = .shared
     private let cvRepository: CVRepository = .shared
     
@@ -169,13 +172,20 @@ private extension ProfileEditingViewModel {
         let deleteAllCVs = cvRepository.deleteAllCVs()
             .andThenJustOnNext()
             .asSignal(onErrorJustReturn: ()) // TODO: 에러 트래커 추가
+        let deleteStorage = Single<Void>.just(())
+            .map { try StoragePath().userProfileImage }
+            .flatMap {
+                return Storage.storage().reference().child($0).rx.delete()
+                    .andThenJustOnNext()
+            }
+            .asSignal(onErrorJustReturn: ())
         let deleteUserAuth = userRepository.deleteUser()
             .asSignal(onErrorJustReturn: ()) // TODO: 에러 트래커 추가
         let revokeProvider = makeRevokeProviderWithCurrentProviderID()
         
         return input
             .flatMapFirst {
-                return Signal.zip(deleteUserInfo, deleteAllCVs, deleteUserAuth, revokeProvider)
+                return Signal.zip(deleteUserInfo, deleteAllCVs, deleteStorage, deleteUserAuth, revokeProvider)
                     .mapToVoid()
             }
     }
@@ -192,8 +202,8 @@ private extension ProfileEditingViewModel {
                     return UserApi.shared.rx.unlink()
                         .andThenJustOnNext()
                 case .apple:
-                    // TODO: 애플 서버로 토큰 해제 요청 (POST https://appleid.apple.com/auth/revoke)
-                    return .just(())
+                    let refreshToken = try self.getAppleIDRefreshTokenFromKeychainUseCase.execute()
+                    return self.revokeAppleIDTokenUseCase.rx.execute(refreshToken: refreshToken)
                 }
             }
             .asSignal(onErrorJustReturn: ()) // 과정 중 에러가 발생해도 사용자에게는 계정 삭제 처리가 완료된걸로 보여야 경험을 해치지 않음

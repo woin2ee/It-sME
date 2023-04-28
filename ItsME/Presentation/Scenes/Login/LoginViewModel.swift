@@ -24,6 +24,8 @@ final class LoginViewModel: ViewModelType {
         let loggedInAndNeedSignUp: Signal<Bool>
     }
     
+    let saveAppleIDRefreshTokenToKeychainUseCase: SaveAppleIDRefreshTokenToKeychainUseCase = .init()
+    
     let userRepository: UserRepository = .shared
     
     func transform(input: Input) -> Output {
@@ -81,14 +83,17 @@ private extension LoginViewModel {
                 ItsMEUserDefaults.isLoggedInAsApple = true
                 ItsMEUserDefaults.setAppleUserID(appleIDCredential.user)
                 
-                let credential = OAuthProvider.credential(
-                    withProviderID: AuthProviderID.apple.rawValue,
-                    idToken: idTokenString,
-                    rawNonce: rawNonce
-                )
+                let authorizationCode: String = try {
+                    let codeData = try unwrapOrThrow(appleIDCredential.authorizationCode)
+                    return try unwrapOrThrow(String(data: codeData, encoding: .utf8))
+                }()
                 
-                return Auth.auth().rx.signIn(with: credential)
-                    .mapToVoid()
+                let signInToFirebase = self.signInToFirebase(withIDToken: idTokenString, providerID: .apple, rawNonce: rawNonce)
+                let saveAppleIDRefreshToken = self.saveAppleIDRefreshTokenToKeychainUseCase.rx.execute(authorizationCode: authorizationCode)
+                
+                return signInToFirebase.flatMap { _ in
+                    return saveAppleIDRefreshToken
+                }
             }
     }
     
@@ -97,25 +102,24 @@ private extension LoginViewModel {
         
         if (UserApi.isKakaoTalkLoginAvailable()) {
             return UserApi.shared.rx.loginWithKakaoTalk(nonce: sha256(rawNonce))
-                .flatMapFirst { oAuthToken in
-                    self.signInToFirebase(with: oAuthToken, rawNonce: rawNonce).asObservable()
+                .map(\.idToken)
+                .unwrapOrThrow()
+                .flatMapFirst { idToken in
+                    self.signInToFirebase(withIDToken: idToken, providerID: .kakao, rawNonce: rawNonce).asObservable()
                 }
         } else {
             return UserApi.shared.rx.loginWithKakaoAccount(nonce: sha256(rawNonce))
-                .flatMapFirst { oAuthToken in
-                    self.signInToFirebase(with: oAuthToken, rawNonce: rawNonce).asObservable()
+                .map(\.idToken)
+                .unwrapOrThrow()
+                .flatMapFirst { idToken in
+                    self.signInToFirebase(withIDToken: idToken, providerID: .kakao, rawNonce: rawNonce).asObservable()
                 }
         }
     }
     
-    func signInToFirebase(with oAuthToken: OAuthToken, rawNonce: String) -> Single<Void> {
-        guard let idToken = oAuthToken.idToken else {
-            return .error(LoginViewModelError.LoginFailed)
-        }
-        
-        let providerID = AuthProviderID.kakao.rawValue // Firebase console: Authentication 탭에서 설정한 OIDC 제공업체 ID
+    func signInToFirebase(withIDToken idToken: String, providerID: AuthProviderID, rawNonce: String) -> Single<Void> {
         let credential = OAuthProvider.credential(
-            withProviderID: providerID,
+            withProviderID: providerID.rawValue,
             idToken: idToken,
             rawNonce: rawNonce
         )
