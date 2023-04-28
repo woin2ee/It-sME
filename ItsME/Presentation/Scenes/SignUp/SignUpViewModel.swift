@@ -61,7 +61,7 @@ final class SignUpViewModel: ViewModelType {
 extension SignUpViewModel {
     
     struct Input {
-        let birthday: Driver<Date>
+        let birthday: Driver<Date?>
         let address: Driver<String>
         let phoneNumber: Driver<String>
         let startTrigger: Signal<Void>
