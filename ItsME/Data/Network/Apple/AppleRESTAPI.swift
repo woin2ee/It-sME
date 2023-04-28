@@ -82,7 +82,6 @@ struct AppleRESTAPI {
                 completionHandler(.failure(error))
             }
         }
-        
     }
 }
 
