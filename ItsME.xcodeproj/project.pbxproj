@@ -724,14 +724,14 @@
 			path = Repositories;
 			sourceTree = "<group>";
 		};
-		DA708F1D29DFF81500EF84F2 /* Reactive */ = {
+		DA708F1D29DFF81500EF84F2 /* Rx */ = {
 			isa = PBXGroup;
 			children = (
 				DA708F1F29DFF96100EF84F2 /* DelegateProxy */,
 				DA708F1E29DFF84500EF84F2 /* BaseExtensions */,
 				DAAC7A5B29715C0A0083A8E9 /* Rx+Ext.swift */,
 			);
-			path = Reactive;
+			path = Rx;
 			sourceTree = "<group>";
 		};
 		DA708F1E29DFF84500EF84F2 /* BaseExtensions */ = {
@@ -905,7 +905,7 @@
 		DAB06A3E291BA5E600E86163 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				DA708F1D29DFF81500EF84F2 /* Reactive */,
+				DA708F1D29DFF81500EF84F2 /* Rx */,
 				DA7201E5292F684900A69519 /* Extensions */,
 				DAB06A41291BA8C800E86163 /* Protocols */,
 				DA26989B298A4709008A5D30 /* LoggedJsonDecoder.swift */,
