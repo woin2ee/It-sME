@@ -187,7 +187,7 @@ extension SignUpViewController {
     private func bindViewModel() {
         let input = SignUpViewModel.Input(
             birthday: birthdayDatePicker.rx.text.orEmpty.asDriver().map({ stringDate in
-                ItsMESimpleDateFormatter.date(from: stringDate) ?? Date.now
+                ItsMESimpleDateFormatter.date(from: stringDate)
             }),
             address: addressTextField.rx.text.orEmpty.asDriver(),
             phoneNumber: phoneNumberTextField.rx.text.orEmpty.asDriver(),

@@ -101,6 +101,11 @@ struct ItsMESimpleDateFormatter {
         return dateFormatter.string(from: date)
     }
     
+    static func string(from date: Date?) -> String {
+        guard let date = date else { return "" }
+        return dateFormatter.string(from: date)
+    }
+    
     static func date(from string: String) -> Date? {
         return dateFormatter.date(from: string)
     }
