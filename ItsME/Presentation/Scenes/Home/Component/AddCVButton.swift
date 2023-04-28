@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SFSafeSymbols
 import SnapKit
 import Then
 
@@ -16,7 +17,7 @@ class AddCVButton: UIControl {
     let cornerRadius = 10.0
     
     lazy var addImageView: UIImageView = .init().then {
-        $0.image =  UIImage(systemName: "plus.rectangle.portrait.fill")
+        $0.image =  UIImage(systemSymbol: .plusRectanglePortraitFill)
     }
     
     lazy var titleLabel = UILabel().then {

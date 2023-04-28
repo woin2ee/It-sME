@@ -8,6 +8,7 @@
 import FirebaseStorage
 import UIKit
 import RxSwift
+import SFSafeSymbols
 import SnapKit
 import Then
 
@@ -34,7 +35,7 @@ final class HomeViewController: UIViewController {
     private lazy var profileEditingButton: UIButton = {
         let action = UIAction { _ in
             let profileEditingViewModel: ProfileEditingViewModel = .init(
-                initalProfileImage: self.profileImageView.image?.jpegData(compressionQuality: 1.0),
+                initalProfileImageData: self.profileImageView.image?.jpegData(compressionQuality: 1.0),
                 userInfo: self.viewModel.userInfo
             )
             let profileEditingViewController: ProfileEditingViewController = .init(viewModel: profileEditingViewModel)
@@ -283,7 +284,7 @@ extension HomeViewController {
         )
         let removeAction: UIAction = .init(
             title: "삭제",
-            image: UIImage(systemName: "minus.circle.fill"),
+            image: UIImage(systemSymbol: .minusCircleFill),
             attributes: .destructive,
             handler: { [weak self] _ in
                 guard let self = self else { return }

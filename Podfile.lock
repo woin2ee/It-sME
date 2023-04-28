@@ -1,5 +1,8 @@
 PODS:
   - Alamofire (5.6.4)
+  - BlueCryptor (1.0.32)
+  - BlueECC (1.2.5)
+  - BlueRSA (1.0.200)
   - Firebase/Analytics (10.3.0):
     - Firebase/Core
   - Firebase/Core (10.3.0):
@@ -94,33 +97,38 @@ PODS:
   - GoogleUtilities/UserDefaults (7.10.0):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (3.0.0)
-  - KakaoSDKAuth (2.13.0):
-    - KakaoSDKCommon (= 2.13.0)
-  - KakaoSDKCommon (2.13.0):
-    - KakaoSDKCommon/Common (= 2.13.0)
-    - KakaoSDKCommon/Network (= 2.13.0)
-  - KakaoSDKCommon/Common (2.13.0)
-  - KakaoSDKCommon/Network (2.13.0):
+  - KakaoSDKAuth (2.14.0):
+    - KakaoSDKCommon (= 2.14.0)
+  - KakaoSDKCommon (2.14.0):
+    - KakaoSDKCommon/Common (= 2.14.0)
+    - KakaoSDKCommon/Network (= 2.14.0)
+  - KakaoSDKCommon/Common (2.14.0)
+  - KakaoSDKCommon/Network (2.14.0):
     - Alamofire (~> 5.1)
-    - KakaoSDKCommon/Common (= 2.13.0)
-  - KakaoSDKFriend (2.13.0):
-    - KakaoSDKUser (= 2.13.0)
-  - KakaoSDKNavi (2.13.0):
-    - KakaoSDKCommon/Common (= 2.13.0)
-  - KakaoSDKShare (2.13.0):
-    - KakaoSDKCommon (= 2.13.0)
-    - KakaoSDKTemplate (= 2.13.0)
-  - KakaoSDKStory (2.13.0):
-    - KakaoSDKUser (= 2.13.0)
-  - KakaoSDKTalk (2.13.0):
-    - KakaoSDKTemplate (= 2.13.0)
-    - KakaoSDKUser (= 2.13.0)
-  - KakaoSDKTemplate (2.13.0):
-    - KakaoSDKCommon/Common (= 2.13.0)
-  - KakaoSDKUser (2.13.0):
-    - KakaoSDKAuth (= 2.13.0)
-  - Keychaining (0.7.0)
+    - KakaoSDKCommon/Common (= 2.14.0)
+  - KakaoSDKFriend (2.14.0):
+    - KakaoSDKUser (= 2.14.0)
+  - KakaoSDKNavi (2.14.0):
+    - KakaoSDKCommon/Common (= 2.14.0)
+  - KakaoSDKShare (2.14.0):
+    - KakaoSDKCommon (= 2.14.0)
+    - KakaoSDKTemplate (= 2.14.0)
+  - KakaoSDKStory (2.14.0):
+    - KakaoSDKUser (= 2.14.0)
+  - KakaoSDKTalk (2.14.0):
+    - KakaoSDKTemplate (= 2.14.0)
+    - KakaoSDKUser (= 2.14.0)
+  - KakaoSDKTemplate (2.14.0):
+    - KakaoSDKCommon/Common (= 2.14.0)
+  - KakaoSDKUser (2.14.0):
+    - KakaoSDKAuth (= 2.14.0)
+  - Keychaining (0.9.0)
+  - KituraContracts (1.2.1):
+    - LoggerAPI (~> 1.7)
   - leveldb-library (1.22.1)
+  - LoggerAPI (1.9.200):
+    - Logging (~> 1.1)
+  - Logging (1.4.0)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
     - nanopb/encode (= 2.30909.0)
@@ -135,50 +143,57 @@ PODS:
   - RxCocoa (6.5.0):
     - RxRelay (= 6.5.0)
     - RxSwift (= 6.5.0)
-  - RxKakaoSDK (2.13.0):
-    - KakaoSDKNavi (= 2.13.0)
-    - KakaoSDKTemplate (= 2.13.0)
-    - RxKakaoSDKAuth (= 2.13.0)
-    - RxKakaoSDKCommon (= 2.13.0)
-    - RxKakaoSDKFriend (= 2.13.0)
-    - RxKakaoSDKShare (= 2.13.0)
-    - RxKakaoSDKStory (= 2.13.0)
-    - RxKakaoSDKTalk (= 2.13.0)
-    - RxKakaoSDKUser (= 2.13.0)
-  - RxKakaoSDKAuth (2.13.0):
-    - KakaoSDKAuth (= 2.13.0)
-    - RxKakaoSDKCommon (= 2.13.0)
-  - RxKakaoSDKCommon (2.13.0):
-    - RxKakaoSDKCommon/Common (= 2.13.0)
-    - RxKakaoSDKCommon/Network (= 2.13.0)
-  - RxKakaoSDKCommon/Common (2.13.0):
-    - KakaoSDKCommon/Common (= 2.13.0)
+  - RxKakaoSDK (2.14.0):
+    - KakaoSDKNavi (= 2.14.0)
+    - KakaoSDKTemplate (= 2.14.0)
+    - RxKakaoSDKAuth (= 2.14.0)
+    - RxKakaoSDKCommon (= 2.14.0)
+    - RxKakaoSDKFriend (= 2.14.0)
+    - RxKakaoSDKShare (= 2.14.0)
+    - RxKakaoSDKStory (= 2.14.0)
+    - RxKakaoSDKTalk (= 2.14.0)
+    - RxKakaoSDKUser (= 2.14.0)
+  - RxKakaoSDKAuth (2.14.0):
+    - KakaoSDKAuth (= 2.14.0)
+    - RxKakaoSDKCommon (= 2.14.0)
+  - RxKakaoSDKCommon (2.14.0):
+    - RxKakaoSDKCommon/Common (= 2.14.0)
+    - RxKakaoSDKCommon/Network (= 2.14.0)
+  - RxKakaoSDKCommon/Common (2.14.0):
+    - KakaoSDKCommon/Common (= 2.14.0)
     - RxCocoa
     - RxSwift (~> 6.0)
-  - RxKakaoSDKCommon/Network (2.13.0):
-    - KakaoSDKCommon/Network (= 2.13.0)
+  - RxKakaoSDKCommon/Network (2.14.0):
+    - KakaoSDKCommon/Network (= 2.14.0)
     - RxAlamofire (~> 6.0)
-    - RxKakaoSDKCommon/Common (= 2.13.0)
-  - RxKakaoSDKFriend (2.13.0):
-    - KakaoSDKFriend (= 2.13.0)
-    - RxKakaoSDKUser (= 2.13.0)
-  - RxKakaoSDKShare (2.13.0):
-    - KakaoSDKShare (= 2.13.0)
-    - RxKakaoSDKCommon (= 2.13.0)
-  - RxKakaoSDKStory (2.13.0):
-    - KakaoSDKStory (= 2.13.0)
-    - RxKakaoSDKUser (= 2.13.0)
-  - RxKakaoSDKTalk (2.13.0):
-    - KakaoSDKTalk (= 2.13.0)
-    - KakaoSDKTemplate (= 2.13.0)
-    - RxKakaoSDKUser (= 2.13.0)
-  - RxKakaoSDKUser (2.13.0):
-    - KakaoSDKUser (= 2.13.0)
-    - RxKakaoSDKAuth (= 2.13.0)
+    - RxKakaoSDKCommon/Common (= 2.14.0)
+  - RxKakaoSDKFriend (2.14.0):
+    - KakaoSDKFriend (= 2.14.0)
+    - RxKakaoSDKUser (= 2.14.0)
+  - RxKakaoSDKShare (2.14.0):
+    - KakaoSDKShare (= 2.14.0)
+    - RxKakaoSDKCommon (= 2.14.0)
+  - RxKakaoSDKStory (2.14.0):
+    - KakaoSDKStory (= 2.14.0)
+    - RxKakaoSDKUser (= 2.14.0)
+  - RxKakaoSDKTalk (2.14.0):
+    - KakaoSDKTalk (= 2.14.0)
+    - KakaoSDKTemplate (= 2.14.0)
+    - RxKakaoSDKUser (= 2.14.0)
+  - RxKakaoSDKUser (2.14.0):
+    - KakaoSDKUser (= 2.14.0)
+    - RxKakaoSDKAuth (= 2.14.0)
   - RxRelay (6.5.0):
     - RxSwift (= 6.5.0)
   - RxSwift (6.5.0)
+  - SFSafeSymbols (4.1.1)
   - SnapKit (5.6.0)
+  - SwiftJWT (3.6.200):
+    - BlueCryptor (~> 1.0)
+    - BlueECC (~> 1.1)
+    - BlueRSA (~> 1.0)
+    - KituraContracts (~> 1.2)
+    - LoggerAPI (~> 1.7)
   - Then (3.0.0)
   - "UITextView+Placeholder (1.4.0)"
 
@@ -187,17 +202,22 @@ DEPENDENCIES:
   - FirebaseAuth
   - FirebaseDatabase
   - FirebaseStorage
-  - Keychaining
+  - Keychaining (= 0.9.0)
   - RxCocoa (= 6.5.0)
-  - RxKakaoSDK
+  - RxKakaoSDK (= 2.14.0)
   - RxSwift (= 6.5.0)
+  - SFSafeSymbols (~> 4.1.1)
   - SnapKit (= 5.6.0)
-  - Then
-  - "UITextView+Placeholder"
+  - SwiftJWT (~> 3.6.2)
+  - Then (~> 3.0.0)
+  - "UITextView+Placeholder (~> 1.4.0)"
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - BlueCryptor
+    - BlueECC
+    - BlueRSA
     - Firebase
     - FirebaseAnalytics
     - FirebaseAppCheckInterop
@@ -222,7 +242,10 @@ SPEC REPOS:
     - KakaoSDKTemplate
     - KakaoSDKUser
     - Keychaining
+    - KituraContracts
     - leveldb-library
+    - LoggerAPI
+    - Logging
     - nanopb
     - PromisesObjC
     - RxAlamofire
@@ -237,12 +260,17 @@ SPEC REPOS:
     - RxKakaoSDKUser
     - RxRelay
     - RxSwift
+    - SFSafeSymbols
     - SnapKit
+    - SwiftJWT
     - Then
     - "UITextView+Placeholder"
 
 SPEC CHECKSUMS:
   Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
+  BlueCryptor: b0aee3d9b8f367b49b30de11cda90e1735571c24
+  BlueECC: 0d18e93347d3ec6d41416de21c1ffa4d4cd3c2cc
+  BlueRSA: dfeef51db96bcc4edec654956c1581adbda4e6a3
   Firebase: f92fc551ead69c94168d36c2b26188263860acd9
   FirebaseAnalytics: 036232b6a1e2918e5f67572417be1173576245f3
   FirebaseAppCheckInterop: 8e907eea79958960a8bd2058e067f31e03a7914b
@@ -257,35 +285,40 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: c7d6fff39bf2d829587d74088d582e32d75133c3
   GoogleUtilities: bad72cb363809015b1f7f19beb1f1cd23c589f95
   GTMSessionFetcher: c1edebe64e9fb4e8f6415d018edf1fd3eac074a1
-  KakaoSDKAuth: 59b694eb81dda10a971beba64bb5842dcb985c81
-  KakaoSDKCommon: 74c422d32200032e4e57f70e065e221296bced71
-  KakaoSDKFriend: e537454b31b543c95ed507c74c863ac359427aff
-  KakaoSDKNavi: 17c6be60cc6038ea92aa1377bf1f0037d19a89a0
-  KakaoSDKShare: 4548573aeb5d5025b9013c8f4f96808c9be9266a
-  KakaoSDKStory: 3f848503f5ba8a373c708b89f3441196aa05043c
-  KakaoSDKTalk: f448b999ed2c264dcea26924e508b52191e38b28
-  KakaoSDKTemplate: a5d36f715edbc57069df530a3352dd5b48f9db79
-  KakaoSDKUser: 7c2d98fc54f744da4784b554a383ada548fed0e5
-  Keychaining: efab9fad45b58f8227261ebb541551ef9b7eabf6
+  KakaoSDKAuth: 8fca87815de22062a23297983f327613b087b8bb
+  KakaoSDKCommon: 0ce638f7a2e49704943c0b74a087a9f8067bba1c
+  KakaoSDKFriend: 9b742a3a4d96ba9b8c20958476e3a871685fa607
+  KakaoSDKNavi: 5dbacc78b915ddb80359b3f041e7428a44e11a82
+  KakaoSDKShare: 342acc83d47a26c73855555ce070c6d55db37f83
+  KakaoSDKStory: 61472ba65d11945796635652a2e200487d279e91
+  KakaoSDKTalk: 6843127498cc01d4bda598e3da96e4c16070deb6
+  KakaoSDKTemplate: 37fe90573759d54843da54fa66b8e21023b41fea
+  KakaoSDKUser: 2ca18314ce72e6690f76cb1f6f9fbc771d31a803
+  Keychaining: aefafce82662b92a0f6aac3cea964fab642d9293
+  KituraContracts: e845e60dc8627ad0a76fa55ef20a45451d8f830b
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
+  LoggerAPI: ad9c4a6f1e32f518fdb43a1347ac14d765ab5e3d
+  Logging: beeb016c9c80cf77042d62e83495816847ef108b
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   RxAlamofire: beb75a1c452d0de225651db4903f5d29d034a620
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
-  RxKakaoSDK: a626191f22a600b2af9d036662eebf7843c87dfc
-  RxKakaoSDKAuth: 30b8c188b0d0558d1c8637516c458e54461518ba
-  RxKakaoSDKCommon: a9f1d2e470136254feacefc7e2d7bae6f1c0e47f
-  RxKakaoSDKFriend: d24cc033e1ff6d58b7ef2129b6befbea4ddd5f16
-  RxKakaoSDKShare: e7c35c0ab8f9f02cb5a807780ba6a3ac4da2a2fb
-  RxKakaoSDKStory: 47f19cec6fddb7cef22daf81da10d23d44019a0b
-  RxKakaoSDKTalk: 09d20df372b2be07eebfe56c810e15112161de30
-  RxKakaoSDKUser: 4e6337e462c85db629025be0fb6cfd2092d97270
+  RxKakaoSDK: 9699ac058d7849b23a5ae396b4fc712c037dd08e
+  RxKakaoSDKAuth: c9ac42898307ac3e33e57670b5555b26dc687b3b
+  RxKakaoSDKCommon: c601aecad9efcb41f3971357a73e47c108bc9c95
+  RxKakaoSDKFriend: 66dfa1c55825b9ccaea3e088abad0c8bc60b15a6
+  RxKakaoSDKShare: 5e836d10f5db9f86938b3c18ca1506804707fe2e
+  RxKakaoSDKStory: 5f6d459cd5f8eef6925da6b592466542b39bdffd
+  RxKakaoSDKTalk: 3933c3362cf4c4ba3eea16cad43afa8e51f091b4
+  RxKakaoSDKUser: ef3d2df1fd1728278ede2ce45adf92eef4f2dbb6
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  SFSafeSymbols: 902576dbf8ea16b4c6152cef2a26e47b3f55defb
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  SwiftJWT: 88c412708f58c169d431d344c87bc79a87c830ae
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
   "UITextView+Placeholder": d7b0c400921f66523f3a85d74f774512e14f6502
 
-PODFILE CHECKSUM: 69883f91679f316f5f4616434d5b575edaa010cf
+PODFILE CHECKSUM: 88a8c75e61fb0f2e3f1eae03a4c51ee97c0e6f30
 
 COCOAPODS: 1.12.0

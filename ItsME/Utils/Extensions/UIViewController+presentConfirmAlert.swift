@@ -50,12 +50,20 @@ extension Reactive where Base: UIViewController {
         animated: Bool = true
     ) -> ControlEvent<Void> {
         let source: Observable<Void> = .create { observer in
+            MainScheduler.ensureRunningOnMainThread()
+            
             let okActionProxy: UIAlertAction = .init(title: okAction.title, style: okAction.style) { _ in
                 observer.onNext(())
                 observer.onCompleted()
             }
-            self.base.presentConfirmAlert(title: title, message: message, cancelAction: cancelAction, okAction: okActionProxy, animated: animated)
-            
+            let cancelActionProxy: UIAlertAction = .init(title: cancelAction.title, style: cancelAction.style) { _ in
+                observer.onCompleted()
+            }
+            self.base.presentConfirmAlert(title: title,
+                                          message: message,
+                                          cancelAction: cancelActionProxy,
+                                          okAction: okActionProxy,
+                                          animated: animated)
             return Disposables.create()
         }
         

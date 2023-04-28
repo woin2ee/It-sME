@@ -24,6 +24,18 @@ extension Reactive where Base: Auth {
         }
     }
     
+    func signOut() -> Completable {
+        return .create { observer in
+            do {
+                try self.base.signOut()
+                observer(.completed)
+            } catch {
+                observer(.error(error))
+            }
+            return Disposables.create()
+        }
+    }
+    
     var currentUser: Single<User> {
         guard let currentUser = Auth.auth().currentUser else {
             return .error(AuthErrorCode(.nullUser))

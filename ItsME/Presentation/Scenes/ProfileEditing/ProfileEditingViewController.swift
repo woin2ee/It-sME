@@ -106,6 +106,13 @@ final class ProfileEditingViewController: UIViewController {
         $0.buttonSize = .medium
     })
     
+    private lazy var deleteAccountButton: UIButton = .init(configuration: .bordered().with {
+        $0.baseBackgroundColor = .systemRed
+        $0.baseForegroundColor = .white
+        $0.title = "계정 삭제하기"
+        $0.buttonSize = .medium
+    })
+    
     private lazy var editingCompleteButton: UIBarButtonItem = .init(title: "수정완료").then {
         $0.style = .done
     }
@@ -178,7 +185,15 @@ private extension ProfileEditingViewController {
                     okAction: UIAlertAction(title: "예", style: .default)
                 ).asSignal()
             },
-            newProfileImageData: imagePickerController.rx.didFinishPickingImage
+            deleteAccountTrigger: deleteAccountButton.rx.tap.asSignal().flatMapFirst { [weak self] _ in
+                guard let self = self else { return .empty() }
+                return self.rx.presentConfirmAlert(
+                    title: "계정 삭제",
+                    message: "계정을 삭제하면 관련된 모든 데이터가 삭제되어 되돌릴 수 없습니다.",
+                    okAction: UIAlertAction(title: "삭제", style: .destructive)
+                ).asSignal()
+            },
+            newProfileImageData: imagePickerController.rx.didFinishPickingImage(animated: true)
                 .map { $0?.jpegData(compressionQuality: 0.7) }
                 .asDriverOnErrorJustComplete()
         )
@@ -219,7 +234,16 @@ private extension ProfileEditingViewController {
             output.logoutComplete
                 .emit(with: self, onNext: { owner, _ in
                     owner.navigationController?.setViewControllers([LoginViewController()], animated: false)
-                })
+                }),
+            output.deleteAccountComplete
+                .emit(with: self, onNext: { owner, _ in
+                    let alertController: UIAlertController = .init(title: "", message: "계정 삭제가 완료되었습니다.", preferredStyle: .alert)
+                    let okAction: UIAlertAction = .init(title: "확인", style: .default) { _ in
+                        owner.navigationController?.setViewControllers([LoginViewController()], animated: false)
+                    }
+                    alertController.addAction(okAction)
+                    owner.present(alertController, animated: true)
+                }),
         ]
             .forEach { $0.disposed(by: disposeBag) }
     }
@@ -309,8 +333,14 @@ private extension ProfileEditingViewController {
         self.contentView.addSubview(logoutButton)
         logoutButton.snp.makeConstraints { make in
             make.directionalHorizontalEdges.equalToSuperview().inset(additionButtonHorizontalInset)
-            make.top.equalTo(educationItemAddButton.snp.bottom).offset(30)
-            make.bottom.equalToSuperview().offset(-20)
+            make.top.equalTo(educationItemAddButton.snp.bottom).offset(40)
+        }
+        
+        self.contentView.addSubview(deleteAccountButton)
+        deleteAccountButton.snp.makeConstraints { make in
+            make.directionalHorizontalEdges.equalToSuperview().inset(additionButtonHorizontalInset)
+            make.top.equalTo(logoutButton.snp.bottom).offset(20)
+            make.bottom.equalToSuperview().inset(20)
         }
     }
     
@@ -446,7 +476,10 @@ struct ProfileEditingViewControllerRepresenter: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> UIViewController {
         let navigationController: UINavigationController = .init(rootViewController: .init())
-        let profileEditingViewModel: ProfileEditingViewModel = .init(initalProfileImage: Data(), userInfo: .empty)
+        let profileEditingViewModel: ProfileEditingViewModel = .init(
+            initalProfileImageData: UIImage.defaultProfileImage.jpegData(compressionQuality: 1.0),
+            userInfo: .empty
+        )
         let profileEditingViewController: ProfileEditingViewController = .init(viewModel: profileEditingViewModel)
         navigationController.pushViewController(profileEditingViewController, animated: false)
         return navigationController

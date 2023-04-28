@@ -7,33 +7,20 @@
 
 import FirebaseAuth
 import FirebaseStorage
+import KakaoSDKUser
 import RxSwift
 import RxCocoa
 import Then
 
 final class ProfileEditingViewModel: ViewModelType {
     
-    struct Input {
-        let tapEditingCompleteButton: Signal<Void>
-        let userName: Driver<String>
-        let viewDidLoad: Driver<Void>
-        let logoutTrigger: Signal<Void>
-        let newProfileImageData: Driver<Data?>
-    }
-    
-    struct Output {
-        let profileImageData: Driver<Data?>
-        let userName: Driver<String>
-        let userInfoItems: Driver<[UserInfoItem]>
-        let educationItems: Driver<[EducationItem]>
-        let tappedEditingCompleteButton: Signal<Void>
-        let viewDidLoad: Driver<Void>
-        let logoutComplete: Signal<Void>
-    }
+    private let getAppleIDRefreshTokenFromKeychainUseCase: GetAppleIDRefreshTokenFromKeychainUseCase = .init()
+    private let revokeAppleIDTokenUseCase: RevokeAppleIDRefreshTokenUseCase = .init()
     
     private let userRepository: UserRepository = .shared
+    private let cvRepository: CVRepository = .shared
     
-    private let initalProfileImage: Data
+    private let initalProfileImageData: Data?
     private let userInfoRelay: BehaviorRelay<UserInfo>
     
     var currentBirthday: Date {
@@ -62,8 +49,8 @@ final class ProfileEditingViewModel: ViewModelType {
         userInfoRelay.value.educationItems
     }
     
-    init(initalProfileImage: Data?, userInfo: UserInfo) {
-        self.initalProfileImage = initalProfileImage ?? .init()
+    init(initalProfileImageData: Data?, userInfo: UserInfo) {
+        self.initalProfileImageData = initalProfileImageData
         self.userInfoRelay = .init(value: userInfo)
     }
     
@@ -85,9 +72,12 @@ final class ProfileEditingViewModel: ViewModelType {
                 Storage.storage().reference().child($0.profileImageURL).rx.getData().map { $0 }
                     .asDriverOnErrorJustComplete()
             }
+                .asObservable()
+                .take(1)
+                .asDriverOnErrorJustComplete()
         )
-            .startWith(initalProfileImage)
-            
+            .startWith(initalProfileImageData)
+        
         let userName = Driver.merge(input.userName,
                                     userInfoDriver.map { $0.name })
             .startWith(userInfoRelay.value.name)
@@ -110,13 +100,8 @@ final class ProfileEditingViewModel: ViewModelType {
             }
             .asSignalOnErrorJustComplete()
         
-        let logoutComplete = input.logoutTrigger
-            .doOnNext {
-                try? Auth.auth().signOut()
-                ItsMEUserDefaults.removeAppleUserID()
-                ItsMEUserDefaults.isLoggedInAsApple = false
-                ItsMEUserDefaults.allowsAutoLogin = false
-            }
+        let logoutComplete = makeLogoutComplete(with: input.logoutTrigger)
+        let deleteAccountComplete = makeDeleteAccountComplete(with: input.deleteAccountTrigger)
         
         return .init(
             profileImageData: profileImageData,
@@ -125,8 +110,104 @@ final class ProfileEditingViewModel: ViewModelType {
             educationItems: educationItems,
             tappedEditingCompleteButton: tappedEditingCompleteButton,
             viewDidLoad: viewDidLoad,
-            logoutComplete: logoutComplete
+            logoutComplete: logoutComplete,
+            deleteAccountComplete: deleteAccountComplete
         )
+    }
+}
+
+// MARK: - Input & Output
+
+extension ProfileEditingViewModel {
+    
+    struct Input {
+        let tapEditingCompleteButton: Signal<Void>
+        let userName: Driver<String>
+        let viewDidLoad: Driver<Void>
+        let logoutTrigger: Signal<Void>
+        let deleteAccountTrigger: Signal<Void>
+        let newProfileImageData: Driver<Data?>
+    }
+    
+    struct Output {
+        let profileImageData: Driver<Data?>
+        let userName: Driver<String>
+        let userInfoItems: Driver<[UserInfoItem]>
+        let educationItems: Driver<[EducationItem]>
+        let tappedEditingCompleteButton: Signal<Void>
+        let viewDidLoad: Driver<Void>
+        let logoutComplete: Signal<Void>
+        let deleteAccountComplete: Signal<Void>
+    }
+}
+
+// MARK: - Private
+
+private extension ProfileEditingViewModel {
+    
+    func makeLogoutComplete(with input: Signal<Void>) -> Signal<Void> {
+        let logoutWithKakao = UserApi.shared.rx.logout()
+            .andThenJustOnNext()
+            .asSignal(onErrorJustReturn: ()) // TODO: 에러 발생 시 로그 심기
+        let signOutFromFIRAuth = Auth.auth().rx.signOut()
+            .andThenJustOnNext()
+            .asSignal(onErrorJustReturn: ()) // TODO: 에러 발생 시 로그 심기
+        
+        return input
+            .doOnNext {
+                ItsMEUserDefaults.removeAppleUserID()
+                ItsMEUserDefaults.isLoggedInAsApple = false
+                ItsMEUserDefaults.allowsAutoLogin = false
+            }
+            .flatMapFirst {
+                return Signal.zip(logoutWithKakao, signOutFromFIRAuth)
+                    .mapToVoid()
+            }
+    }
+    
+    func makeDeleteAccountComplete(with input: Signal<Void>) -> Signal<Void> {
+        let deleteUserInfo = userRepository.deleteUserInfo()
+            .andThenJustOnNext()
+            .asSignal(onErrorJustReturn: ()) // TODO: 에러 트래커 추가
+        let deleteAllCVs = cvRepository.deleteAllCVs()
+            .andThenJustOnNext()
+            .asSignal(onErrorJustReturn: ()) // TODO: 에러 트래커 추가
+        let deleteStorage = Single<Void>.just(())
+            .map { try StoragePath().userProfileImage }
+            .flatMap {
+                return Storage.storage().reference().child($0).rx.delete()
+                    .andThenJustOnNext()
+            }
+            .asSignal(onErrorJustReturn: ())
+        let deleteUserAuth = userRepository.deleteUser()
+            .asSignal(onErrorJustReturn: ()) // TODO: 에러 트래커 추가
+        let revokeProvider = makeRevokeProviderWithCurrentProviderID()
+        
+        return input
+            .flatMapFirst {
+                return Signal.zip(deleteUserInfo, deleteAllCVs, deleteStorage, deleteUserAuth, revokeProvider)
+                    .mapToVoid()
+            }
+    }
+    
+    func makeRevokeProviderWithCurrentProviderID() -> Signal<Void> {
+        let source = Auth.auth().rx.currentUser
+            .map(\.providerData.first)
+            .unwrapOrThrow()
+            .map { AuthProviderID(rawValue: $0.providerID) }
+            .unwrapOrThrow()
+            .flatMap { providerID -> Single<Void> in
+                switch providerID {
+                case .kakao:
+                    return UserApi.shared.rx.unlink()
+                        .andThenJustOnNext()
+                case .apple:
+                    let refreshToken = try self.getAppleIDRefreshTokenFromKeychainUseCase.execute()
+                    return self.revokeAppleIDTokenUseCase.rx.execute(refreshToken: refreshToken)
+                }
+            }
+            .asSignal(onErrorJustReturn: ()) // 과정 중 에러가 발생해도 사용자에게는 계정 삭제 처리가 완료된걸로 보여야 경험을 해치지 않음
+        return source
     }
 }
 

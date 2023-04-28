@@ -14,16 +14,16 @@ extension Reactive where Base: UIImagePickerController {
         return UIImagePickerControllerDelegateProxy.proxy(for: self.base)
     }
     
-    var didFinishPickingImage: Observable<UIImage?> {
+    func didFinishPickingImage(animated: Bool) -> Observable<UIImage?> {
         let selector = #selector(UIImagePickerControllerDelegate.imagePickerController(_:didFinishPickingMediaWithInfo:))
         return delegateProxy
             .methodInvoked(selector)
             .map { parameters in
-                self.base.dismiss(animated: true)
+                self.base.dismiss(animated: animated)
                 
                 guard let info = parameters[1] as? [UIImagePickerController.InfoKey: Any] else {
-                    assertionFailure("delegate 함수의 파라미터 타입이 일치하지 않습니다.")
-                    return nil
+                    throw RxCocoaError.castingError(object: parameters[1],
+                                                    targetType: [UIImagePickerController.InfoKey: Any].self)
                 }
                 if let image = info[.editedImage] as? UIImage {
                     return image

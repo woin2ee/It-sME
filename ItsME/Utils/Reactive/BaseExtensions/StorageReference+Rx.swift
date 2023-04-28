@@ -45,4 +45,18 @@ extension Reactive where Base: StorageReference {
             }
         }
     }
+    
+    func delete() -> Completable {
+        return .create { observer in
+            Task {
+                do {
+                    try await self.base.delete()
+                    observer(.completed)
+                } catch {
+                    observer(.error(error))
+                }
+            }
+            return Disposables.create()
+        }
+    }
 }
