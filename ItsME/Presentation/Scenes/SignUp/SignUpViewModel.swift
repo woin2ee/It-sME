@@ -13,8 +13,13 @@ final class SignUpViewModel: ViewModelType {
     
     private let userRepository: UserRepository
     
-    init() {
-        self.userRepository = .shared
+    private let userNameForSignUp: String
+    private let userEmailForSignUp: String
+    
+    init(userRepository: UserRepository = .shared, userNameForSignUp: String, userEmailForSignUp: String) {
+        self.userRepository = userRepository
+        self.userNameForSignUp = userNameForSignUp
+        self.userEmailForSignUp = userEmailForSignUp
     }
     
     func transform(input: Input) -> Output {

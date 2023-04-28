@@ -13,7 +13,7 @@ import UIKit
 final class SignUpViewController: UIViewController {
     
     private let disposeBag: DisposeBag = .init()
-    private let viewModel: SignUpViewModel = .init()
+    private let viewModel: SignUpViewModel
     
     // MARK: Data Sources
     
@@ -85,6 +85,17 @@ final class SignUpViewController: UIViewController {
         $0.baseForegroundColor = .white
         $0.buttonSize = .large
     })
+    
+    // MARK: Initializers
+    
+    init(viewModel: SignUpViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: Override
     
@@ -205,7 +216,8 @@ import SwiftUI
 struct SignUpViewControllerRepresenter: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> UIViewController {
-        let signUpViewController: SignUpViewController = .init()
+        let signUpViewModel: SignUpViewModel = .init(userNameForSignUp: "", userEmailForSignUp: "")
+        let signUpViewController: SignUpViewController = .init(viewModel: signUpViewModel)
         let navigationController: UINavigationController = .init(rootViewController: signUpViewController)
         return navigationController
     }
