@@ -29,11 +29,7 @@ extension Reactive where Base == DeleteAccountUseCase {
                 return Storage.storage().reference().child($0).rx.delete()
                     .andThenJustOnNext()
             }
-        let unlinkProvider = Auth.auth().rx.currentUser
-            .map(\.providerData.first)
-            .unwrapOrThrow()
-            .map { AuthProviderID(rawValue: $0.providerID) }
-            .unwrapOrThrow()
+        let unlinkProvider = self.base.getCurrentAuthProviderIDUseCase.rx.execute()
             .flatMap { providerID -> Single<Void> in
                 switch providerID {
                 case .kakao:

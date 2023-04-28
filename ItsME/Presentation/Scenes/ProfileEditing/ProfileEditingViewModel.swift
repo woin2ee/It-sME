@@ -14,7 +14,13 @@ import Then
 
 final class ProfileEditingViewModel: ViewModelType {
     
-    private let deleteAccountUseCase: DeleteAccountUseCase = .init(userProfileRepository: .shared, cvRepository: .shared)
+    private let deleteAccountUseCase: DeleteAccountUseCase = .init(
+        userProfileRepository: .shared,
+        cvRepository: .shared,
+        getAppleIDRefreshTokenFromKeychainUseCase: .init(),
+        revokeAppleIDTokenUseCase: .init(),
+        getCurrentAuthProviderIDUseCase: .init()
+    )
     
     private let userRepository: UserProfileRepository = .shared
     private let cvRepository: CVRepository = .shared
