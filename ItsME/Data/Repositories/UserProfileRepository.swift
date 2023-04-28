@@ -24,7 +24,7 @@ final class UserProfileRepository {
     
     // MARK: API
     
-    var hasUserInfo: Single<Bool> {
+    var hasUserProfile: Single<Bool> {
         let source = Auth.auth().rx.currentUser
             .map { $0.uid }
             .flatMap { self.database.userRef($0).rx.dataSnapshot }
@@ -32,7 +32,7 @@ final class UserProfileRepository {
         return source
     }
     
-    func getUserInfo() -> Single<UserProfile> {
+    func getUserProfile() -> Single<UserProfile> {
         let source = Auth.auth().rx.currentUser
             .map { $0.uid }
             .flatMap { self.database.userRef($0).rx.dataSnapshot }
@@ -42,7 +42,7 @@ final class UserProfileRepository {
         return source
     }
     
-    func saveUserInfo(_ userInfo: UserProfile) -> Single<Void> {
+    func saveUserProfile(_ userInfo: UserProfile) -> Single<Void> {
         let source = Auth.auth().rx.currentUser
             .map { $0.uid }
             .flatMap { uid in
@@ -54,7 +54,7 @@ final class UserProfileRepository {
     }
     
     /// 데이터베이스에 저장된 현재 사용자의 프로필 정보를 삭제합니다.
-    func deleteUserInfo() -> Completable {
+    func deleteUserProfile() -> Completable {
         let source = Auth.auth().rx.currentUser
             .map(\.uid)
             .flatMap { self.database.userRef($0).rx.removeValue() }
@@ -63,7 +63,7 @@ final class UserProfileRepository {
     }
     
     /// 현재 사용자의 계정을 Firebase Authentication 에서 삭제합니다.
-    func deleteUser() -> Single<Void> {
+    func deleteAccount() -> Single<Void> {
         let source = Auth.auth().rx.currentUser
             .flatMap { user -> Single<Void> in
                 return .create { observer in

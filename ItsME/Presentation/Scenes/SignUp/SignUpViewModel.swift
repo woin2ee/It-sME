@@ -47,7 +47,7 @@ final class SignUpViewModel: ViewModelType {
         let signUpComplete = input.startTrigger
             .withLatestFrom(userInfo)
             .flatMapFirst {
-                return self.userRepository.saveUserInfo($0) // TODO: Error handling
+                return self.userRepository.saveUserProfile($0) // TODO: Error handling
                     .asSignalOnErrorJustComplete()
             }
             .doOnNext { ItsMEUserDefaults.allowsAutoLogin = true }

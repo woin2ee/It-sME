@@ -31,7 +31,7 @@ final class TotalCVViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let userInfo = input.viewDidLoad
             .flatMapLatest { _ in
-                return self.userRepository.getUserInfo()
+                return self.userRepository.getUserProfile()
                     .asDriver(onErrorDriveWith: .empty())
             }
         

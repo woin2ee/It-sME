@@ -60,7 +60,7 @@ final class ProfileEditingViewModel: ViewModelType {
         let viewDidLoad = input.viewDidLoad
             .filter { self.userInfoRelay.value == .empty }
             .flatMapLatest { _ -> Driver<Void> in
-                return self.userRepository.getUserInfo()
+                return self.userRepository.getUserProfile()
                     .doOnSuccess { self.userInfoRelay.accept($0) }
                     .mapToVoid()
                     .asDriverOnErrorJustComplete()
@@ -96,7 +96,7 @@ final class ProfileEditingViewModel: ViewModelType {
             .flatMap { path in
                 let userInfo = self.userInfoRelay.value
                 userInfo.profileImageURL = path
-                return self.userRepository.saveUserInfo(userInfo)
+                return self.userRepository.saveUserProfile(userInfo)
             }
             .asSignalOnErrorJustComplete()
         
@@ -166,7 +166,7 @@ private extension ProfileEditingViewModel {
     }
     
     func makeDeleteAccountComplete(with input: Signal<Void>) -> Signal<Void> {
-        let deleteUserInfo = userRepository.deleteUserInfo()
+        let deleteUserInfo = userRepository.deleteUserProfile()
             .andThenJustOnNext()
             .asSignal(onErrorJustReturn: ()) // TODO: 에러 트래커 추가
         let deleteAllCVs = cvRepository.deleteAllCVs()
@@ -179,7 +179,7 @@ private extension ProfileEditingViewModel {
                     .andThenJustOnNext()
             }
             .asSignal(onErrorJustReturn: ())
-        let deleteUserAuth = userRepository.deleteUser()
+        let deleteUserAuth = userRepository.deleteAccount()
             .asSignal(onErrorJustReturn: ()) // TODO: 에러 트래커 추가
         let revokeProvider = makeRevokeProviderWithCurrentProviderID()
         

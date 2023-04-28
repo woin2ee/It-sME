@@ -72,7 +72,7 @@ final class LoginViewModel: ViewModelType {
         
         let loggedInAndNeedsSignUp = Signal.merge(loggedInWithKakao, loggedInWithApple)
             .flatMapFirst { nameAndEmail in
-                return self.userRepository.hasUserInfo
+                return self.userRepository.hasUserProfile
                     .doOnSuccess { hasUserInfo in
                         ItsMEUserDefaults.allowsAutoLogin = hasUserInfo
                     }

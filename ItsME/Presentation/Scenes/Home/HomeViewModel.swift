@@ -32,7 +32,7 @@ final class HomeViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let userInfo = Signal.merge(input.viewDidLoad, input.viewWillAppear.skip(1))
             .flatMap { _ in
-                return self.userRepository.getUserInfo()
+                return self.userRepository.getUserProfile()
                     .asDriverOnErrorJustComplete()
                     .doOnNext { self.userInfo = $0 }
             }
