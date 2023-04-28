@@ -68,4 +68,8 @@ struct ItsMESimpleDateFormatter {
     static func string(from date: Date) -> String {
         return dateFormatter.string(from: date)
     }
+    
+    static func date(from string: String) -> Date? {
+        return dateFormatter.date(from: string)
+    }
 }

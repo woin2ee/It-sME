@@ -18,16 +18,16 @@ final class SignUpViewController: UIViewController {
     // MARK: Data Sources
     
     var inputTitleLabelTexts: [String] {
-        ["이름", "생일", "주소", "전화번호", "이메일"]
+        ["주소", "전화번호", "생일"]
     }
     
     // MARK: Appearance
     
     let inputTitleLabelFont: UIFont = .preferredFont(forTextStyle: .headline, weight: .semibold)
     let inputTextFieldFont: UIFont = .preferredFont(forTextStyle: .body)
-    let inputValidationLabelFont: UIFont = .preferredFont(forTextStyle: .caption1)
+    let inputValidationLabelFont: UIFont = .preferredFont(forTextStyle: .subheadline)
     
-    let inputValidationLabelColor: UIColor = .systemRed
+    let inputValidationLabelColor: UIColor = .placeholderText
     
     // MARK: UI Objects
     
@@ -39,30 +39,17 @@ final class SignUpViewController: UIViewController {
         }
     }
     private lazy var guideLabel: UILabel = .init().then {
-        $0.text = "이력서에 들어갈 필수 정보를 입력해주세요!"
+        $0.text = "이력서에 들어갈 정보를 입력해주세요!"
         $0.font = .preferredFont(forTextStyle: .title1, weight: .bold)
         $0.adjustsFontForContentSizeCategory = true
         $0.numberOfLines = 0
         $0.lineBreakStrategy = .hangulWordPriority
     }
-    private lazy var nameTextField: UITextField = .init().then {
-        $0.placeholder = "이름을 입력해주세요."
+    private lazy var birthdayDatePicker: DatePickerTextField = .init().then {
+        $0.placeholder = "생년월일 입력(선택)"
         $0.borderStyle = .roundedRect
         $0.font = inputTextFieldFont
         $0.adjustsFontForContentSizeCategory = true
-    }
-    private lazy var nameValidationLabel: UILabel = .init().then {
-        $0.text = "필수 항목입니다."
-        $0.textColor = inputValidationLabelColor
-        $0.isHidden = true
-        $0.font = inputValidationLabelFont
-        $0.adjustsFontForContentSizeCategory = true
-    }
-    private lazy var birthdayDatePicker: UIDatePicker = .init().then {
-        $0.contentHorizontalAlignment = .leading
-        $0.datePickerMode = .date
-        $0.preferredDatePickerStyle = .compact
-        $0.maximumDate = .now
     }
     private lazy var addressTextField: UITextField = .init().then {
         $0.placeholder = "주소를 입력해주세요."
@@ -71,9 +58,8 @@ final class SignUpViewController: UIViewController {
         $0.adjustsFontForContentSizeCategory = true
     }
     private lazy var addressValidationLabel: UILabel = .init().then {
-        $0.text = "필수 항목입니다."
+        $0.text = "선택 사항입니다."
         $0.textColor = inputValidationLabelColor
-        $0.isHidden = true
         $0.font = inputValidationLabelFont
         $0.adjustsFontForContentSizeCategory = true
     }
@@ -84,25 +70,12 @@ final class SignUpViewController: UIViewController {
         $0.adjustsFontForContentSizeCategory = true
     }
     private lazy var phoneNumberValidationLabel: UILabel = .init().then {
-        $0.text = "필수 항목입니다."
+        $0.text = "선택 사항입니다."
         $0.textColor = inputValidationLabelColor
-        $0.isHidden = true
         $0.font = inputValidationLabelFont
         $0.adjustsFontForContentSizeCategory = true
     }
-    private lazy var emailTextField: UITextField = .init().then {
-        $0.placeholder = "이메일을 입력해주세요."
-        $0.borderStyle = .roundedRect
-        $0.font = inputTextFieldFont
-        $0.adjustsFontForContentSizeCategory = true
-    }
-    private lazy var emailValidationLabel: UILabel = .init().then {
-        $0.text = "필수 항목입니다."
-        $0.textColor = inputValidationLabelColor
-        $0.isHidden = true
-        $0.font = inputValidationLabelFont
-        $0.adjustsFontForContentSizeCategory = true
-    }
+    
     private lazy var startButton: UIButton = .init(configuration: .filled().with {
         let attributes: AttributeContainer = .init([
             NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title2, weight: .bold)
@@ -156,30 +129,22 @@ extension SignUpViewController {
         containerScrollView.addSubview(contentView)
         contentView.addSubview(guideLabel)
         contentView.addSubview(inputStackView)
+        
         inputStackView.addArrangedSubview(makeInnerStackView().then {
             $0.addArrangedSubview(inputTitleLabels[0])
-            $0.addArrangedSubview(nameTextField)
-            $0.addArrangedSubview(nameValidationLabel)
-        })
-        inputStackView.addArrangedSubview(makeInnerStackView().then {
-            $0.addArrangedSubview(inputTitleLabels[1])
-            $0.addArrangedSubview(birthdayDatePicker)
-        })
-        inputStackView.addArrangedSubview(makeInnerStackView().then {
-            $0.addArrangedSubview(inputTitleLabels[2])
             $0.addArrangedSubview(addressTextField)
             $0.addArrangedSubview(addressValidationLabel)
         })
         inputStackView.addArrangedSubview(makeInnerStackView().then {
-            $0.addArrangedSubview(inputTitleLabels[3])
+            $0.addArrangedSubview(inputTitleLabels[1])
             $0.addArrangedSubview(phoneNumberTextField)
             $0.addArrangedSubview(phoneNumberValidationLabel)
         })
         inputStackView.addArrangedSubview(makeInnerStackView().then {
-            $0.addArrangedSubview(inputTitleLabels[4])
-            $0.addArrangedSubview(emailTextField)
-            $0.addArrangedSubview(emailValidationLabel)
+            $0.addArrangedSubview(inputTitleLabels[2])
+            $0.addArrangedSubview(birthdayDatePicker)
         })
+        
         contentView.addSubview(startButton)
         // Constraints
         containerScrollView.snp.makeConstraints { make in
@@ -210,11 +175,11 @@ extension SignUpViewController {
     
     private func bindViewModel() {
         let input = SignUpViewModel.Input(
-            name: nameTextField.rx.text.orEmpty.asDriver(),
-            birthday: birthdayDatePicker.rx.date.asDriver(),
+            birthday: birthdayDatePicker.rx.text.orEmpty.asDriver().map({ stringDate in
+                ItsMESimpleDateFormatter.date(from: stringDate) ?? Date.now
+            }),
             address: addressTextField.rx.text.orEmpty.asDriver(),
             phoneNumber: phoneNumberTextField.rx.text.orEmpty.asDriver(),
-            email: emailTextField.rx.text.orEmpty.asDriver(),
             startTrigger: startButton.rx.tap.asSignal()
         )
         let output = viewModel.transform(input: input)
@@ -225,14 +190,6 @@ extension SignUpViewController {
                     let homeViewController: HomeViewController = .init()
                     owner.navigationController?.setViewControllers([homeViewController], animated: true)
                 }),
-            output.nameValidation
-                .emit(to: nameValidationLabel.rx.isHidden),
-            output.addressValidation
-                .emit(to: addressValidationLabel.rx.isHidden),
-            output.phoneNumberValidation
-                .emit(to: phoneNumberValidationLabel.rx.isHidden),
-            output.emailValidation
-                .emit(to: emailValidationLabel.rx.isHidden),
         ]
             .forEach { $0.disposed(by: disposeBag) }
     }
