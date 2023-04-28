@@ -14,8 +14,7 @@ import Then
 
 final class ProfileEditingViewModel: ViewModelType {
     
-    private let getAppleIDRefreshTokenFromKeychainUseCase: GetAppleIDRefreshTokenFromKeychainUseCase = .init()
-    private let revokeAppleIDTokenUseCase: RevokeAppleIDRefreshTokenUseCase = .init()
+    private let deleteAccountUseCase: DeleteAccountUseCase = .init(userProfileRepository: .shared, cvRepository: .shared)
     
     private let userRepository: UserProfileRepository = .shared
     private let cvRepository: CVRepository = .shared
@@ -101,7 +100,12 @@ final class ProfileEditingViewModel: ViewModelType {
             .asSignalOnErrorJustComplete()
         
         let logoutComplete = makeLogoutComplete(with: input.logoutTrigger)
-        let deleteAccountComplete = makeDeleteAccountComplete(with: input.deleteAccountTrigger)
+        let deleteAccountComplete = input.deleteAccountTrigger
+            .flatMapFirst { _ in
+                return self.deleteAccountUseCase.rx.execute()
+                    .andThenJustOnNext()
+                    .asSignal(onErrorJustReturn: ())
+            }
         
         return .init(
             profileImageData: profileImageData,
@@ -163,51 +167,6 @@ private extension ProfileEditingViewModel {
                 return Signal.zip(logoutWithKakao, signOutFromFIRAuth)
                     .mapToVoid()
             }
-    }
-    
-    func makeDeleteAccountComplete(with input: Signal<Void>) -> Signal<Void> {
-        let deleteUserInfo = userRepository.deleteUserProfile()
-            .andThenJustOnNext()
-            .asSignalOnErrorJustNext() // TODO: 에러 트래커 추가
-        let deleteAllCVs = cvRepository.deleteAllCVs()
-            .andThenJustOnNext()
-            .asSignalOnErrorJustNext() // TODO: 에러 트래커 추가
-        let deleteStorage = Single<Void>.just(())
-            .map { try StoragePath().userProfileImage }
-            .flatMap {
-                return Storage.storage().reference().child($0).rx.delete()
-                    .andThenJustOnNext()
-            }
-            .asSignalOnErrorJustNext()
-        let deleteUserAuth = userRepository.deleteAccount()
-            .asSignalOnErrorJustNext() // TODO: 에러 트래커 추가
-        let revokeProvider = makeRevokeProviderWithCurrentProviderID()
-        
-        return input
-            .flatMapFirst {
-                return Signal.zip(deleteUserInfo, deleteAllCVs, deleteStorage, deleteUserAuth, revokeProvider)
-                    .mapToVoid()
-            }
-    }
-    
-    func makeRevokeProviderWithCurrentProviderID() -> Signal<Void> {
-        let source = Auth.auth().rx.currentUser
-            .map(\.providerData.first)
-            .unwrapOrThrow()
-            .map { AuthProviderID(rawValue: $0.providerID) }
-            .unwrapOrThrow()
-            .flatMap { providerID -> Single<Void> in
-                switch providerID {
-                case .kakao:
-                    return UserApi.shared.rx.unlink()
-                        .andThenJustOnNext()
-                case .apple:
-                    let refreshToken = try self.getAppleIDRefreshTokenFromKeychainUseCase.execute()
-                    return self.revokeAppleIDTokenUseCase.rx.execute(refreshToken: refreshToken)
-                }
-            }
-            .asSignalOnErrorJustNext() // 과정 중 에러가 발생해도 사용자에게는 계정 삭제 처리가 완료된걸로 보여야 경험을 해치지 않음
-        return source
     }
 }
 
