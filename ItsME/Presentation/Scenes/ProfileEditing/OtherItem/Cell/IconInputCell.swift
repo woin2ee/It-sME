@@ -48,7 +48,7 @@ final class IconInputCell: UITableViewCell {
     
     // MARK: Properties
     
-    var icon: UserInfoItemIcon = .default {
+    var icon: UserBasicProfileInfoIcon = .default {
         willSet {
             iconLabel.text = newValue.toEmoji
         }
@@ -67,7 +67,7 @@ final class IconInputCell: UITableViewCell {
     private var isAnimating: Bool = false
     private let iconCellSize: CGSize = .init(width: 50, height: 50)
     private let itemCountPerLine = 4
-    private var itemLineCount: Int { (UserInfoItemIcon.allCases.count + itemCountPerLine) / itemCountPerLine }
+    private var itemLineCount: Int { (UserBasicProfileInfoIcon.allCases.count + itemCountPerLine) / itemCountPerLine }
     private let animationDuration: TimeInterval = 0.5
     private let dampingRatio: CGFloat = 0.8
     private let initialSpringVelocity: CGFloat = 0.3
@@ -199,12 +199,12 @@ extension IconInputCell {
 extension IconInputCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        UserInfoItemIcon.allCases.count
+        UserBasicProfileInfoIcon.allCases.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: IconCell.reuseIdentifier, for: indexPath) as! IconCell
-        cell.icon = UserInfoItemIcon.allCases[indexPath.row]
+        cell.icon = UserBasicProfileInfoIcon.allCases[indexPath.row]
         return cell
     }
 }
@@ -214,7 +214,7 @@ extension IconInputCell: UICollectionViewDataSource {
 extension IconInputCell: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedIcon = UserInfoItemIcon.allCases[indexPath.row]
+        let selectedIcon = UserBasicProfileInfoIcon.allCases[indexPath.row]
         self.icon = selectedIcon
         hideIconPickerView()
     }
@@ -224,9 +224,9 @@ extension IconInputCell: UICollectionViewDelegate {
 
 extension Reactive where Base: IconInputCell {
     
-    var icon: ControlEvent<UserInfoItemIcon> {
+    var icon: ControlEvent<UserBasicProfileInfoIcon> {
         let source = self.base.iconPickerView.rx.itemSelected
-            .map { UserInfoItemIcon.allCases[$0.row] }
+            .map { UserBasicProfileInfoIcon.allCases[$0.row] }
         return .init(events: source)
     }
 }

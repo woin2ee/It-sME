@@ -11,10 +11,10 @@ import RxCocoa
 protocol OtherItemEditingViewModelDelegate: AnyObject {
     
     /// 항목 편집이 완료됐을때 호출되는 함수입니다.
-    func otherItemEditingViewModelDidEndEditing(with otherItem: UserInfoItem, at index: IndexPath.Index)
+    func otherItemEditingViewModelDidEndEditing(with otherItem: UserBasicProfileInfo, at index: IndexPath.Index)
     
     /// 항목 추가가 완료됐을때 호출되는 함수입니다.
-    func otherItemEditingViewModelDidAppend(otherItem: UserInfoItem)
+    func otherItemEditingViewModelDidAppend(otherItem: UserBasicProfileInfo)
     
     /// 항목을 삭제할때 호출되는 함수입니다.
     func otherItemEditingViewModelDidDeleteOtherItem(at index: IndexPath.Index)
@@ -22,12 +22,12 @@ protocol OtherItemEditingViewModelDelegate: AnyObject {
 
 final class OtherItemEditingViewModel: ViewModelType {
     
-    let initalOtherItem: UserInfoItem
+    let initalOtherItem: UserBasicProfileInfo
     let editingType: EditingType
     private weak var delegate: OtherItemEditingViewModelDelegate?
     
     init(
-        initalOtherItem: UserInfoItem,
+        initalOtherItem: UserBasicProfileInfo,
         editingType: EditingType,
         delegate: OtherItemEditingViewModelDelegate? = nil
     ) {
@@ -41,7 +41,7 @@ final class OtherItemEditingViewModel: ViewModelType {
             input.icon.startWith(initalOtherItem.icon),
             input.contents.startWith(initalOtherItem.contents)
         ) {
-            UserInfoItem.init(icon: $0, contents: $1)
+            UserBasicProfileInfo.init(icon: $0, contents: $1)
         }
         let editingType = Driver.just(editingType)
         let doneCompleted = input.doneTrigger
@@ -70,7 +70,7 @@ extension OtherItemEditingViewModel {
     
     struct Input {
         let doneTrigger: Signal<Void>
-        let icon: Driver<UserInfoItemIcon>
+        let icon: Driver<UserBasicProfileInfoIcon>
         let contents: Driver<String>
         let deleteTrigger: Signal<Void>
     }
@@ -78,7 +78,7 @@ extension OtherItemEditingViewModel {
     struct Output {
         let editingType: Driver<EditingType>
         let doneCompleted: Signal<Void>
-        let userInfoItem: Driver<UserInfoItem>
+        let userInfoItem: Driver<UserBasicProfileInfo>
         let deleteComplete: Signal<Void>
     }
 }
@@ -87,7 +87,7 @@ extension OtherItemEditingViewModel {
 
 private extension OtherItemEditingViewModel {
     
-    func endEditing(with otherItem: UserInfoItem) {
+    func endEditing(with otherItem: UserBasicProfileInfo) {
         switch editingType {
         case .edit(let index):
             delegate?.otherItemEditingViewModelDidEndEditing(with: otherItem, at: index)

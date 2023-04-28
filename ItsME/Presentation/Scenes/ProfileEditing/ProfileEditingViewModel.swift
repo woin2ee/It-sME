@@ -17,11 +17,11 @@ final class ProfileEditingViewModel: ViewModelType {
     private let getAppleIDRefreshTokenFromKeychainUseCase: GetAppleIDRefreshTokenFromKeychainUseCase = .init()
     private let revokeAppleIDTokenUseCase: RevokeAppleIDRefreshTokenUseCase = .init()
     
-    private let userRepository: UserRepository = .shared
+    private let userRepository: UserProfileRepository = .shared
     private let cvRepository: CVRepository = .shared
     
     private let initalProfileImageData: Data?
-    private let userInfoRelay: BehaviorRelay<UserInfo>
+    private let userInfoRelay: BehaviorRelay<UserProfile>
     
     var currentBirthday: Date {
         let birthday = userInfoRelay.value.birthday.contents
@@ -39,17 +39,17 @@ final class ProfileEditingViewModel: ViewModelType {
     var currentAddress: String {
         userInfoRelay.value.address.contents
     }
-    var currentOtherItems: [UserInfoItem] {
+    var currentOtherItems: [UserBasicProfileInfo] {
         userInfoRelay.value.otherItems
     }
-    var currentAllItems: [UserInfoItem] {
+    var currentAllItems: [UserBasicProfileInfo] {
         userInfoRelay.value.allItems
     }
-    var currentEducationItems: [EducationItem] {
+    var currentEducationItems: [Education] {
         userInfoRelay.value.educationItems
     }
     
-    init(initalProfileImageData: Data?, userInfo: UserInfo) {
+    init(initalProfileImageData: Data?, userInfo: UserProfile) {
         self.initalProfileImageData = initalProfileImageData
         self.userInfoRelay = .init(value: userInfo)
     }
@@ -132,8 +132,8 @@ extension ProfileEditingViewModel {
     struct Output {
         let profileImageData: Driver<Data?>
         let userName: Driver<String>
-        let userInfoItems: Driver<[UserInfoItem]>
-        let educationItems: Driver<[EducationItem]>
+        let userInfoItems: Driver<[UserBasicProfileInfo]>
+        let educationItems: Driver<[Education]>
         let tappedEditingCompleteButton: Signal<Void>
         let viewDidLoad: Driver<Void>
         let logoutComplete: Signal<Void>
@@ -221,7 +221,7 @@ extension ProfileEditingViewModel {
         userInfoRelay.accept(userInfo)
     }
     
-    func updateBirthday(_ userInfoItem: UserInfoItem) {
+    func updateBirthday(_ userInfoItem: UserBasicProfileInfo) {
         let userInfo = userInfoRelay.value
         userInfo.birthday = userInfoItem
         userInfoRelay.accept(userInfo)
@@ -250,7 +250,7 @@ extension ProfileEditingViewModel {
 
 extension ProfileEditingViewModel: EducationEditingViewModelDelegate {
     
-    func educationEditingViewModelDidEndEditing(with educationItem: EducationItem, at index: IndexPath.Index) {
+    func educationEditingViewModelDidEndEditing(with educationItem: Education, at index: IndexPath.Index) {
         let userInfo = userInfoRelay.value
         if userInfo.educationItems.indices ~= index {
             userInfo.educationItems[index] = educationItem
@@ -258,7 +258,7 @@ extension ProfileEditingViewModel: EducationEditingViewModelDelegate {
         }
     }
     
-    func educationEditingViewModelDidAppend(educationItem: EducationItem) {
+    func educationEditingViewModelDidAppend(educationItem: Education) {
         let userInfo = userInfoRelay.value
         userInfo.educationItems.append(educationItem)
         userInfoRelay.accept(userInfo)
@@ -275,7 +275,7 @@ extension ProfileEditingViewModel: EducationEditingViewModelDelegate {
 
 extension ProfileEditingViewModel: OtherItemEditingViewModelDelegate {
     
-    func otherItemEditingViewModelDidEndEditing(with otherItem: UserInfoItem, at index: IndexPath.Index) {
+    func otherItemEditingViewModelDidEndEditing(with otherItem: UserBasicProfileInfo, at index: IndexPath.Index) {
         let userInfo = userInfoRelay.value
         if userInfo.otherItems.indices ~= index {
             userInfo.otherItems[index] = otherItem
@@ -283,7 +283,7 @@ extension ProfileEditingViewModel: OtherItemEditingViewModelDelegate {
         }
     }
     
-    func otherItemEditingViewModelDidAppend(otherItem: UserInfoItem) {
+    func otherItemEditingViewModelDidAppend(otherItem: UserBasicProfileInfo) {
         let userInfo = userInfoRelay.value
         userInfo.otherItems.append(otherItem)
         userInfoRelay.accept(userInfo)

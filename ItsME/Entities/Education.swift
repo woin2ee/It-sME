@@ -1,5 +1,5 @@
 //
-//  EducationItem.swift
+//  Education.swift
 //  ItsME
 //
 //  Created by Jaewon Yun on 2022/12/15.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class EducationItem: Codable {
+final class Education: Codable {
     let period: String
     let title: String
     let description: String
@@ -47,18 +47,18 @@ final class EducationItem: Codable {
 
 // MARK: - Equatable
 
-extension EducationItem: Equatable {
+extension Education: Equatable {
     
-    static func == (lhs: EducationItem, rhs: EducationItem) -> Bool {
+    static func == (lhs: Education, rhs: Education) -> Bool {
         lhs.period == rhs.period &&
         lhs.title == rhs.title &&
         lhs.description == rhs.description
     }
 }
 
-extension EducationItem {
+extension Education {
     
-    static var empty: EducationItem {
+    static var empty: Education {
         .init(period: "", title: "", description: "")
     }
 }

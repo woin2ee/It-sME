@@ -51,7 +51,7 @@ final class EducationCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func bind(educationItem: EducationItem) {
+    func bind(educationItem: Education) {
         periodLabel.text = educationItem.period
         titleLabel.text = educationItem.title
         descriptionLabel.text = educationItem.description

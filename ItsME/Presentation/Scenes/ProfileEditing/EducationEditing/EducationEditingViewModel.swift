@@ -14,8 +14,8 @@ enum SchoolEnrollmentStatus: String {
 }
 
 protocol EducationEditingViewModelDelegate: AnyObject {
-    func educationEditingViewModelDidEndEditing(with educationItem: EducationItem, at index: IndexPath.Index)
-    func educationEditingViewModelDidAppend(educationItem: EducationItem)
+    func educationEditingViewModelDidEndEditing(with educationItem: Education, at index: IndexPath.Index)
+    func educationEditingViewModelDidAppend(educationItem: Education)
     func educationEditingViewModelDidDeleteEducationItem(at index: IndexPath.Index)
 }
 
@@ -103,7 +103,7 @@ final class EducationEditingViewModel: ViewModelType {
             case .graduated:
                 period = "\(entranceDateString) - \(graduateDateString)"
             }
-            return EducationItem(period: period,
+            return Education(period: period,
                                  title: title,
                                  description: description)
         }
@@ -132,7 +132,7 @@ final class EducationEditingViewModel: ViewModelType {
         )
     }
     
-    private func endEditing(with educationItem: EducationItem) {
+    private func endEditing(with educationItem: Education) {
         switch editingType {
         case .edit(let index, _):
             delegate?.educationEditingViewModelDidEndEditing(with: educationItem, at: index)
@@ -175,7 +175,7 @@ extension EducationEditingViewModel {
     enum EditingType {
         
         /// 기존 학력 정보를 수정할 때 사용하는 열거형 값입니다.
-        case edit(index: IndexPath.Index, target: EducationItem)
+        case edit(index: IndexPath.Index, target: Education)
         
         /// 새 학력 정보를 추가할 때 사용하는 열거형 값입니다.
         case new

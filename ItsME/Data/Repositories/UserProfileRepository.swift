@@ -1,5 +1,5 @@
 //
-//  UserRepository.swift
+//  UserProfileRepository.swift
 //  ItsME
 //
 //  Created by Jaewon Yun on 2022/11/13.
@@ -8,11 +8,11 @@
 import FirebaseAuth
 import RxSwift
 
-final class UserRepository {
+final class UserProfileRepository {
     
     // MARK: Make to Singleton
     
-    static let shared: UserRepository = .init()
+    static let shared: UserProfileRepository = .init()
     
     private init() {
         self.database = .shared
@@ -32,17 +32,17 @@ final class UserRepository {
         return source
     }
     
-    func getUserInfo() -> Single<UserInfo> {
+    func getUserInfo() -> Single<UserProfile> {
         let source = Auth.auth().rx.currentUser
             .map { $0.uid }
             .flatMap { self.database.userRef($0).rx.dataSnapshot }
             .map { dataSnapshot in
-                return try LoggedJsonDecoder.decode(UserInfo.self, withJSONObject: dataSnapshot.value)
+                return try LoggedJsonDecoder.decode(UserProfile.self, withJSONObject: dataSnapshot.value)
             }
         return source
     }
     
-    func saveUserInfo(_ userInfo: UserInfo) -> Single<Void> {
+    func saveUserInfo(_ userInfo: UserProfile) -> Single<Void> {
         let source = Auth.auth().rx.currentUser
             .map { $0.uid }
             .flatMap { uid in

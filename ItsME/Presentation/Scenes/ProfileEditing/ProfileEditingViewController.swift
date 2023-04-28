@@ -373,7 +373,7 @@ private extension ProfileEditingViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func pushOtherItemEditingViewController(with otherItem: UserInfoItem) {
+    func pushOtherItemEditingViewController(with otherItem: UserBasicProfileInfo) {
         guard let indexOfItem = viewModel.currentOtherItems.firstIndex(where: { $0 === otherItem }) else {
             return
         }

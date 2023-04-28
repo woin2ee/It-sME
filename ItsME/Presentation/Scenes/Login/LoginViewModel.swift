@@ -19,7 +19,7 @@ final class LoginViewModel: ViewModelType {
     let signInToFirebaseUseCase: SignInToFirebaseUseCase = .init()
     let getNicknameAndEmailForKakaoUseCase: GetNicknameAndEmailForKakaoUseCase = .init()
     
-    let userRepository: UserRepository = .shared
+    let userRepository: UserProfileRepository = .shared
     
     func transform(input: Input) -> Output {
         let loggedInWithKakao = input.kakaoLoginRequest

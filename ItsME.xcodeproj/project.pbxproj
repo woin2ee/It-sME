@@ -36,7 +36,7 @@
 		D0CCF4E12925FB0100AD4AE6 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E02925FB0100AD4AE6 /* UIView+.swift */; };
 		D0CCF4E3292604BE00AD4AE6 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E2292604BE00AD4AE6 /* UIColor+.swift */; };
 		D0CCF4E629260C2B00AD4AE6 /* ProfileInfoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E529260C2B00AD4AE6 /* ProfileInfoComponent.swift */; };
-		D0CCF4E829260ED200AD4AE6 /* UserInfoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E729260ED200AD4AE6 /* UserInfoItem.swift */; };
+		D0CCF4E829260ED200AD4AE6 /* UserBasicProfileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E729260ED200AD4AE6 /* UserBasicProfileInfo.swift */; };
 		D0CCF504292CCB4C00AD4AE6 /* CVCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF503292CCB4C00AD4AE6 /* CVCard.swift */; };
 		D0E6FF6029B1BA23008CB451 /* CoverLetterEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6FF5F29B1BA23008CB451 /* CoverLetterEditingViewController.swift */; };
 		D0E6FF6329B1BA75008CB451 /* ResumeItemEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6FF6229B1BA75008CB451 /* ResumeItemEditingViewController.swift */; };
@@ -45,7 +45,7 @@
 		DA01880D296D1477002C5CB0 /* PhoneNumberEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA01880C296D1477002C5CB0 /* PhoneNumberEditingViewController.swift */; };
 		DA01880F296D147D002C5CB0 /* EmailEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA01880E296D147D002C5CB0 /* EmailEditingViewController.swift */; };
 		DA018811296D1483002C5CB0 /* OtherItemEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA018810296D1483002C5CB0 /* OtherItemEditingViewController.swift */; };
-		DA0A88692921245000E9AE43 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0A88682921245000E9AE43 /* UserRepository.swift */; };
+		DA0A88692921245000E9AE43 /* UserProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0A88682921245000E9AE43 /* UserProfileRepository.swift */; };
 		DA26989C298A4709008A5D30 /* LoggedJsonDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA26989B298A4709008A5D30 /* LoggedJsonDecoder.swift */; };
 		DA3302AC29ADCC9F00C36154 /* EducationEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3302AB29ADCC9F00C36154 /* EducationEditingViewController.swift */; };
 		DA3302AE29ADCCA700C36154 /* EducationEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3302AD29ADCCA700C36154 /* EducationEditingViewModel.swift */; };
@@ -129,7 +129,7 @@
 		DAAB20C7299B7A5600D5338D /* ContentsInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAB20C6299B7A5600D5338D /* ContentsInputCell.swift */; };
 		DAAC7A5C29715C0A0083A8E9 /* Rx+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAC7A5B29715C0A0083A8E9 /* Rx+Ext.swift */; };
 		DAAF1BDF299A1E8100728376 /* Array+SafeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF1BDE299A1E8100728376 /* Array+SafeIndex.swift */; };
-		DAAFB2532918EE5A007A8DF0 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAFB2522918EE5A007A8DF0 /* UserInfo.swift */; };
+		DAAFB2532918EE5A007A8DF0 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAFB2522918EE5A007A8DF0 /* UserProfile.swift */; };
 		DAB06A3D291BA5B400E86163 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06A3C291BA5B400E86163 /* HomeViewModel.swift */; };
 		DAB06A40291BA61100E86163 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06A3F291BA61100E86163 /* ViewModelType.swift */; };
 		DAD1D03029B759CE00B12BF8 /* Calendar+Current.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD1D02F29B759CE00B12BF8 /* Calendar+Current.swift */; };
@@ -139,7 +139,7 @@
 		DAE6090B2942095400481742 /* TotalUserInfoItemStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE6090A2942095400481742 /* TotalUserInfoItemStackView.swift */; };
 		DAE6090D29420D9900481742 /* ItemAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE6090C29420D9900481742 /* ItemAddButton.swift */; };
 		DAF516FE29D5765E00BDAD68 /* UIButton.Configuration+Then.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF516FD29D5765E00BDAD68 /* UIButton.Configuration+Then.swift */; };
-		DAFCFB63294A9CD0006B287A /* EducationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB62294A9CD0006B287A /* EducationItem.swift */; };
+		DAFCFB63294A9CD0006B287A /* Education.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB62294A9CD0006B287A /* Education.swift */; };
 		DAFCFB67294AC00C006B287A /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB66294AC00C006B287A /* UIStackView+.swift */; };
 		DAFCFB6C294C3666006B287A /* EducationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB6B294C3666006B287A /* EducationCell.swift */; };
 		DAFCFB6F2950693F006B287A /* IntrinsicHeightTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB6E2950693F006B287A /* IntrinsicHeightTableView.swift */; };
@@ -213,7 +213,7 @@
 		D0CCF4E02925FB0100AD4AE6 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		D0CCF4E2292604BE00AD4AE6 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		D0CCF4E529260C2B00AD4AE6 /* ProfileInfoComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoComponent.swift; sourceTree = "<group>"; };
-		D0CCF4E729260ED200AD4AE6 /* UserInfoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoItem.swift; sourceTree = "<group>"; };
+		D0CCF4E729260ED200AD4AE6 /* UserBasicProfileInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBasicProfileInfo.swift; sourceTree = "<group>"; };
 		D0CCF503292CCB4C00AD4AE6 /* CVCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVCard.swift; sourceTree = "<group>"; };
 		D0E6FF5F29B1BA23008CB451 /* CoverLetterEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverLetterEditingViewController.swift; sourceTree = "<group>"; };
 		D0E6FF6229B1BA75008CB451 /* ResumeItemEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeItemEditingViewController.swift; sourceTree = "<group>"; };
@@ -222,7 +222,7 @@
 		DA01880C296D1477002C5CB0 /* PhoneNumberEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberEditingViewController.swift; sourceTree = "<group>"; };
 		DA01880E296D147D002C5CB0 /* EmailEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailEditingViewController.swift; sourceTree = "<group>"; };
 		DA018810296D1483002C5CB0 /* OtherItemEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherItemEditingViewController.swift; sourceTree = "<group>"; };
-		DA0A88682921245000E9AE43 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		DA0A88682921245000E9AE43 /* UserProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileRepository.swift; sourceTree = "<group>"; };
 		DA26989B298A4709008A5D30 /* LoggedJsonDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedJsonDecoder.swift; sourceTree = "<group>"; };
 		DA3302AB29ADCC9F00C36154 /* EducationEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationEditingViewController.swift; sourceTree = "<group>"; };
 		DA3302AD29ADCCA700C36154 /* EducationEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationEditingViewModel.swift; sourceTree = "<group>"; };
@@ -304,7 +304,7 @@
 		DAAB20C6299B7A5600D5338D /* ContentsInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentsInputCell.swift; sourceTree = "<group>"; };
 		DAAC7A5B29715C0A0083A8E9 /* Rx+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx+Ext.swift"; sourceTree = "<group>"; };
 		DAAF1BDE299A1E8100728376 /* Array+SafeIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+SafeIndex.swift"; sourceTree = "<group>"; };
-		DAAFB2522918EE5A007A8DF0 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		DAAFB2522918EE5A007A8DF0 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		DAB06A3C291BA5B400E86163 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		DAB06A3F291BA61100E86163 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		DAD1D02F29B759CE00B12BF8 /* Calendar+Current.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+Current.swift"; sourceTree = "<group>"; };
@@ -314,7 +314,7 @@
 		DAE6090A2942095400481742 /* TotalUserInfoItemStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalUserInfoItemStackView.swift; sourceTree = "<group>"; };
 		DAE6090C29420D9900481742 /* ItemAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemAddButton.swift; sourceTree = "<group>"; };
 		DAF516FD29D5765E00BDAD68 /* UIButton.Configuration+Then.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton.Configuration+Then.swift"; sourceTree = "<group>"; };
-		DAFCFB62294A9CD0006B287A /* EducationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationItem.swift; sourceTree = "<group>"; };
+		DAFCFB62294A9CD0006B287A /* Education.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Education.swift; sourceTree = "<group>"; };
 		DAFCFB66294AC00C006B287A /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		DAFCFB6B294C3666006B287A /* EducationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationCell.swift; sourceTree = "<group>"; };
 		DAFCFB6E2950693F006B287A /* IntrinsicHeightTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrinsicHeightTableView.swift; sourceTree = "<group>"; };
@@ -718,7 +718,7 @@
 		DA708F1C29DFF1E200EF84F2 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				DA0A88682921245000E9AE43 /* UserRepository.swift */,
+				DA0A88682921245000E9AE43 /* UserProfileRepository.swift */,
 				DA7201ED2931E7BB00A69519 /* CVRepository.swift */,
 			);
 			path = Repositories;
@@ -877,15 +877,15 @@
 		DAAFB2512918EE3D007A8DF0 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				DAAFB2522918EE5A007A8DF0 /* UserInfo.swift */,
-				D0CCF4E729260ED200AD4AE6 /* UserInfoItem.swift */,
+				DAAFB2522918EE5A007A8DF0 /* UserProfile.swift */,
+				D0CCF4E729260ED200AD4AE6 /* UserBasicProfileInfo.swift */,
 				DA7201EF2931EEE600A69519 /* CVInfo.swift */,
 				DA7201F92931F90900A69519 /* Resume.swift */,
 				DA7201F12931F21100A69519 /* ResumeCategory.swift */,
 				DA7201F52931F41100A69519 /* ResumeItem.swift */,
 				DA7201F72931F8EB00A69519 /* CoverLetter.swift */,
 				DA7201F32931F25500A69519 /* CoverLetterItem.swift */,
-				DAFCFB62294A9CD0006B287A /* EducationItem.swift */,
+				DAFCFB62294A9CD0006B287A /* Education.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -1241,7 +1241,7 @@
 				DAA5B9652938825A00BAB04E /* ProfileEditingViewController.swift in Sources */,
 				D0E6FF6329B1BA75008CB451 /* ResumeItemEditingViewController.swift in Sources */,
 				DAAB20C7299B7A5600D5338D /* ContentsInputCell.swift in Sources */,
-				DAAFB2532918EE5A007A8DF0 /* UserInfo.swift in Sources */,
+				DAAFB2532918EE5A007A8DF0 /* UserProfile.swift in Sources */,
 				DAFCFB6C294C3666006B287A /* EducationCell.swift in Sources */,
 				DA43166A29FB950D004453B9 /* LoginWithAppleUseCase+Rx.swift in Sources */,
 				DA9069D629CDA64B00535A3D /* Collection+isNotEmpty.swift in Sources */,
@@ -1263,7 +1263,7 @@
 				DAFCFB67294AC00C006B287A /* UIStackView+.swift in Sources */,
 				DA7201FA2931F90900A69519 /* Resume.swift in Sources */,
 				DAD1D03229BF411A00B12BF8 /* OtherItemEditingViewModel.swift in Sources */,
-				DA0A88692921245000E9AE43 /* UserRepository.swift in Sources */,
+				DA0A88692921245000E9AE43 /* UserProfileRepository.swift in Sources */,
 				DA43166E29FB9812004453B9 /* SignInToFirebaseUseCase.swift in Sources */,
 				DA708F0929D9FE1700EF84F2 /* FIRAuth+isLoggedIn.swift in Sources */,
 				DA43166829FA7453004453B9 /* Bundle+SignInAppleKeyID.swift in Sources */,
@@ -1294,7 +1294,7 @@
 				DA6B3CDB29ADEE33002BB159 /* UIEdgeInsets+All.swift in Sources */,
 				DA43167429FB99AD004453B9 /* LoginWithKakaoUseCase+Rx.swift in Sources */,
 				DA6B3CD929ADE36B002BB159 /* ButtonCell.swift in Sources */,
-				DAFCFB63294A9CD0006B287A /* EducationItem.swift in Sources */,
+				DAFCFB63294A9CD0006B287A /* Education.swift in Sources */,
 				DA7201F22931F21100A69519 /* ResumeCategory.swift in Sources */,
 				DA3302B129ADD36000C36154 /* TextFieldCell.swift in Sources */,
 				DA43163729F95621004453B9 /* GetAppleIDRefreshTokenFromKeychainUseCase.swift in Sources */,
@@ -1323,7 +1323,7 @@
 				D0304B9129DC0C870017C529 /* CVEditViewController.swift in Sources */,
 				DA43166029FA5413004453B9 /* AppleRESTAPI+Rx.swift in Sources */,
 				DA018811296D1483002C5CB0 /* OtherItemEditingViewController.swift in Sources */,
-				D0CCF4E829260ED200AD4AE6 /* UserInfoItem.swift in Sources */,
+				D0CCF4E829260ED200AD4AE6 /* UserBasicProfileInfo.swift in Sources */,
 				DA708F0F29DC1F7400EF84F2 /* StoragePath.swift in Sources */,
 				D0A078EA29BF00B800EBD41C /* TextViewCell.swift in Sources */,
 				DA4FEC2E29E6D14000D41CE1 /* ItsMEError.swift in Sources */,

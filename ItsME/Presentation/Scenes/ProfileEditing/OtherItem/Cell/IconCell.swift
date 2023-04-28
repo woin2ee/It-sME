@@ -16,7 +16,7 @@ final class IconCell: UICollectionViewCell {
         $0.font = .systemFont(ofSize: 20)
     }
     
-    var icon: UserInfoItemIcon = .default {
+    var icon: UserBasicProfileInfoIcon = .default {
         willSet {
             iconLabel.text = newValue.toEmoji
         }

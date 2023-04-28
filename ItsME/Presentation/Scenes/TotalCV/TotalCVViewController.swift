@@ -261,13 +261,13 @@ private extension TotalCVViewController {
             .forEach { $0.disposed(by: disposeBag) }
     }
     
-    var userInfoBinding: Binder<[UserInfoItem]> {
+    var userInfoBinding: Binder<[UserBasicProfileInfo]> {
         return .init(self) { viewController, userInfoItems in
             self.totalUserInfoItemStackView.bind(userInfoItems: userInfoItems)
         }
     }
     
-    var educationBinding: Binder<[EducationItem]> {
+    var educationBinding: Binder<[Education]> {
         return .init(self) { viewController, education in
             
         }

@@ -16,7 +16,7 @@ final class ProfileInfoComponent: UIStackView {
      
      Component 의 내용을 변경하고 싶다면 이 프로퍼티에 새 객체를 할당하십시오.
      */
-    var userInfoItem: UserInfoItem {
+    var userInfoItem: UserBasicProfileInfo {
         didSet {
             icon.text = userInfoItem.icon.toEmoji
             contents.text = userInfoItem.contents
@@ -46,7 +46,7 @@ final class ProfileInfoComponent: UIStackView {
     
     // MARK: - Initialization
     
-    init(userInfoItem: UserInfoItem) {
+    init(userInfoItem: UserBasicProfileInfo) {
         self.userInfoItem = userInfoItem
         super.init(frame: .zero)
         

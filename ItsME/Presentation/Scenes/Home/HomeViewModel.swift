@@ -16,14 +16,14 @@ final class HomeViewModel: ViewModelType {
     }
     
     struct Output {
-        let userInfo: Driver<UserInfo>
+        let userInfo: Driver<UserProfile>
         let cvsInfo: Driver<[CVInfo]>
     }
     
-    private let userRepository: UserRepository = .shared
+    private let userRepository: UserProfileRepository = .shared
     private let cvRepository: CVRepository = .shared
     
-    private(set) var userInfo: UserInfo = .empty
+    private(set) var userInfo: UserProfile = .empty
     
     func removeCV(cvInfo: CVInfo) -> Signal<Void> {
         return self.cvRepository.removeCV(by: cvInfo.uuid).asSignalOnErrorJustComplete()

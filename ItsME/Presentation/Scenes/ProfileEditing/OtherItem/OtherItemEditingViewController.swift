@@ -152,7 +152,7 @@ private extension OtherItemEditingViewController {
         }
     }
     
-    var userInfoItemBinding: Binder<UserInfoItem> {
+    var userInfoItemBinding: Binder<UserBasicProfileInfo> {
         .init(self) { vc, userInfoItem in
             vc.iconInputCell.icon = userInfoItem.icon
             vc.contentsInputCell.contentsTextField.text = userInfoItem.contents
