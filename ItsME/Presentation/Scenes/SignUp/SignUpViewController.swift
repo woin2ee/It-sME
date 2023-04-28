@@ -195,14 +195,12 @@ extension SignUpViewController {
         )
         let output = viewModel.transform(input: input)
         
-        [
-            output.signUpComplete
-                .emit(with: self, onNext: { owner, _ in
-                    let homeViewController: HomeViewController = .init()
-                    owner.navigationController?.setViewControllers([homeViewController], animated: true)
-                }),
-        ]
-            .forEach { $0.disposed(by: disposeBag) }
+        output.signUpComplete
+            .emit(with: self, onNext: { owner, _ in
+                let homeViewController: HomeViewController = .init()
+                owner.navigationController?.setViewControllers([homeViewController], animated: true)
+            })
+            .disposed(by: disposeBag)
     }
 }
 
