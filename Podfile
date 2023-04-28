@@ -30,9 +30,16 @@ target 'ItsME' do
 end
 
 post_install do |installer|
-  installer.pods_project.targets.each do |target|
-      target.build_configurations.each do |config|
-        config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
-      end
+
+  # Configure the Pods project
+  installer.pods_project.build_configurations.each do |config|
+    config.build_settings['DEAD_CODE_STRIPPING'] = 'YES'
   end
+
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+    end
+  end
+
 end
