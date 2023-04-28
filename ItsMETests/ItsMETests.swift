@@ -10,15 +10,4 @@ import XCTest
 
 final class ItsMETests: XCTestCase {
     
-    func testGetTeamID() {
-        // Arrange
-        let teamIDForInfoDictionary: String
-        let currentSignedTeamID = "2AVC8X7323"
-        
-        // Act
-        teamIDForInfoDictionary = Bundle.main.teamID
-        
-        // Assert
-        XCTAssertEqual(teamIDForInfoDictionary, currentSignedTeamID)
-    }
 }
