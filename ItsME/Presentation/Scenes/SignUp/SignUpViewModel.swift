@@ -18,33 +18,17 @@ final class SignUpViewModel: ViewModelType {
     }
     
     func transform(input: Input) -> Output {
-        let nameValidation = input.startTrigger
-            .withLatestFrom(input.name)
-            .map { $0.isNotEmpty }
-        let addressValidation = input.startTrigger
-            .withLatestFrom(input.address)
-            .map { $0.isNotEmpty }
-        let phoneNumberValidation = input.startTrigger
-            .withLatestFrom(input.phoneNumber)
-            .map { $0.isNotEmpty }
-        let emailValidation = input.startTrigger
-            .withLatestFrom(input.email)
-            .map { $0.isNotEmpty }
-        let signUpValidation = Signal.combineLatest(nameValidation,
-                                                    addressValidation,
-                                                    phoneNumberValidation,
-                                                    emailValidation)
-            .map { $0 && $1 && $2 && $3 }
         
         let birthday = input.birthday
             .map { ItsMESimpleDateFormatter.string(from: $0) }
         
-        let userInfo = Driver.combineLatest(input.name,
-                                            birthday,
+        let name = "testName" ?? ""
+        let email = "testEmail" ?? ""
+        
+        let userInfo = Driver.combineLatest(birthday,
                                             input.address,
-                                            input.phoneNumber,
-                                            input.email)
-            .map { name, birthday, address, phoneNumber, email in
+                                            input.phoneNumber)
+            .map { birthday, address, phoneNumber in
                 return UserInfo(name: name,
                                 profileImageURL: "",
                                 birthday: .init(icon: .cake, contents: birthday),
@@ -56,8 +40,6 @@ final class SignUpViewModel: ViewModelType {
             }
         
         let signUpComplete = input.startTrigger
-            .withLatestFrom(signUpValidation)
-            .filter { $0 == true }
             .withLatestFrom(userInfo)
             .flatMapFirst {
                 return self.userRepository.saveUserInfo($0) // TODO: Error handling
@@ -66,11 +48,7 @@ final class SignUpViewModel: ViewModelType {
             .doOnNext { ItsMEUserDefaults.allowsAutoLogin = true }
         
         return .init(
-            signUpComplete: signUpComplete,
-            nameValidation: nameValidation,
-            addressValidation: addressValidation,
-            phoneNumberValidation: phoneNumberValidation,
-            emailValidation: emailValidation
+            signUpComplete: signUpComplete
         )
     }
 }
@@ -80,19 +58,13 @@ final class SignUpViewModel: ViewModelType {
 extension SignUpViewModel {
     
     struct Input {
-        let name: Driver<String>
         let birthday: Driver<Date>
         let address: Driver<String>
         let phoneNumber: Driver<String>
-        let email: Driver<String>
         let startTrigger: Signal<Void>
     }
     
     struct Output {
         let signUpComplete: Signal<Void>
-        let nameValidation: Signal<Bool>
-        let addressValidation: Signal<Bool>
-        let phoneNumberValidation: Signal<Bool>
-        let emailValidation: Signal<Bool>
     }
 }

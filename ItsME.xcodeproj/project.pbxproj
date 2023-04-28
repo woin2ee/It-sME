@@ -30,6 +30,7 @@
 		D0A965C829B6F9D50071FB3D /* ResumeItemEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A965C729B6F9D50071FB3D /* ResumeItemEditingViewModel.swift */; };
 		D0B1BA862988DA75003ACD41 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B1BA852988DA75003ACD41 /* CategoryCell.swift */; };
 		D0BED20029C1A07E0027EAE5 /* CategoryEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BED1FF29C1A07E0027EAE5 /* CategoryEditingViewController.swift */; };
+		D0BEEB1729FB961700BF9E31 /* DatePickerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BEEB1629FB961700BF9E31 /* DatePickerTextField.swift */; };
 		D0C02E8829CAC34700BD3851 /* CategoryEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C02E8729CAC34700BD3851 /* CategoryEditingViewModel.swift */; };
 		D0C755B629AC889F0070FC08 /* EditModeAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C755B529AC889F0070FC08 /* EditModeAddButton.swift */; };
 		D0CCF4E12925FB0100AD4AE6 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF4E02925FB0100AD4AE6 /* UIView+.swift */; };
@@ -185,6 +186,7 @@
 		D0A965C729B6F9D50071FB3D /* ResumeItemEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeItemEditingViewModel.swift; sourceTree = "<group>"; };
 		D0B1BA852988DA75003ACD41 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		D0BED1FF29C1A07E0027EAE5 /* CategoryEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryEditingViewController.swift; sourceTree = "<group>"; };
+		D0BEEB1629FB961700BF9E31 /* DatePickerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerTextField.swift; sourceTree = "<group>"; };
 		D0C02E8729CAC34700BD3851 /* CategoryEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryEditingViewModel.swift; sourceTree = "<group>"; };
 		D0C755B529AC889F0070FC08 /* EditModeAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModeAddButton.swift; sourceTree = "<group>"; };
 		D0CCF4E02925FB0100AD4AE6 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
@@ -447,6 +449,14 @@
 			path = CategoryEditing;
 			sourceTree = "<group>";
 		};
+		D0BEEB1529FB95DD00BF9E31 /* DatePickerTextField */ = {
+			isa = PBXGroup;
+			children = (
+				D0BEEB1629FB961700BF9E31 /* DatePickerTextField.swift */,
+			);
+			path = DatePickerTextField;
+			sourceTree = "<group>";
+		};
 		D0CCF4E429260AF300AD4AE6 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -573,6 +583,7 @@
 		DA4FEC2629E5581000D41CE1 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
+				D0BEEB1529FB95DD00BF9E31 /* DatePickerTextField */,
 				DA4FEC2729E5582600D41CE1 /* SignUpViewController.swift */,
 				DA4FEC2929E5582F00D41CE1 /* SignUpViewModel.swift */,
 			);
@@ -1108,6 +1119,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAAB20C1299B6AEF00D5338D /* Reusable.swift in Sources */,
+				D0BEEB1729FB961700BF9E31 /* DatePickerTextField.swift in Sources */,
 				DAD1D03029B759CE00B12BF8 /* Calendar+Current.swift in Sources */,
 				DA708F0729D9F11900EF84F2 /* FIRAuth+Rx.swift in Sources */,
 				DAE6090D29420D9900481742 /* ItemAddButton.swift in Sources */,
