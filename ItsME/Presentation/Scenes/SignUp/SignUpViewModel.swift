@@ -13,22 +13,27 @@ final class SignUpViewModel: ViewModelType {
     
     private let userRepository: UserRepository
     
-    init() {
-        self.userRepository = .shared
+    private let userNameForSignUp: String
+    private let userEmailForSignUp: String
+    
+    init(userRepository: UserRepository = .shared, userNameForSignUp: String, userEmailForSignUp: String) {
+        self.userRepository = userRepository
+        self.userNameForSignUp = userNameForSignUp
+        self.userEmailForSignUp = userEmailForSignUp
     }
     
     func transform(input: Input) -> Output {
-        
+        let name = Driver<String>.just(userNameForSignUp)
+        let email = Driver<String>.just(userEmailForSignUp)
         let birthday = input.birthday
             .map { ItsMESimpleDateFormatter.string(from: $0) }
         
-        let name = "testName" ?? ""
-        let email = "testEmail" ?? ""
-        
-        let userInfo = Driver.combineLatest(birthday,
+        let userInfo = Driver.combineLatest(name,
+                                            birthday,
                                             input.address,
-                                            input.phoneNumber)
-            .map { birthday, address, phoneNumber in
+                                            input.phoneNumber,
+                                            email)
+            .map { name, birthday, address, phoneNumber, email in
                 return UserInfo(name: name,
                                 profileImageURL: "",
                                 birthday: .init(icon: .cake, contents: birthday),
@@ -47,9 +52,7 @@ final class SignUpViewModel: ViewModelType {
             }
             .doOnNext { ItsMEUserDefaults.allowsAutoLogin = true }
         
-        return .init(
-            signUpComplete: signUpComplete
-        )
+        return .init(signUpComplete: signUpComplete)
     }
 }
 

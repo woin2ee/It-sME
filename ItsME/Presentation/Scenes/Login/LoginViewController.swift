@@ -50,11 +50,18 @@ extension LoginViewController {
         )
         let output = viewModel.transform(input: input)
         
-        output.loggedInAndNeedSignUp
-            .emit(onNext: { [weak self] needsSignUp in
-                let nextViewController = needsSignUp ? SignUpViewController() : HomeViewController()
-                self?.navigationController?.setViewControllers([nextViewController], animated: false)
-            })
+        output.loggedInAndNeedsSignUp
+            .emit(with: self) { owner, needsSignUp in
+                switch needsSignUp {
+                case .needed(name: let name, email: let email):
+                    let viewModel: SignUpViewModel = .init(userNameForSignUp: name, userEmailForSignUp: email)
+                    let signUpViewController: SignUpViewController = .init(viewModel: viewModel)
+                    owner.navigationController?.setViewControllers([signUpViewController], animated: false)
+                case .notNeeded:
+                    let homeViewController: HomeViewController = .init()
+                    owner.navigationController?.setViewControllers([homeViewController], animated: false)
+                }
+            }
             .disposed(by: disposeBag)
     }
 }
