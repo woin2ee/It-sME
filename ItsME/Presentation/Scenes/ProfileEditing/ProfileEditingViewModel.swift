@@ -244,6 +244,14 @@ extension ProfileEditingViewModel {
         userInfo.address.contents = address
         userInfoRelay.accept(userInfo)
     }
+    
+    func swapEducation(at sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        userInfoRelay.value.educationItems.swapAt(sourceIndexPath.row, destinationIndexPath.row)
+    }
+    
+    func endSwapEducation() {
+        userInfoRelay.accept(userInfoRelay.value)
+    }
 }
 
 // MARK: - EducationEditingViewModelDelegate
