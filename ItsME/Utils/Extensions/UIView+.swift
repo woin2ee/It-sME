@@ -45,4 +45,14 @@ extension UIView {
         
         return borderLayer
     }
+    
+    /// 뷰의 스냅샷을 `UIImage` 객체로 변환합니다.
+    /// - Returns: 변환한 이미지 객체입니다.
+    func asImage() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(bounds: self.bounds)
+        let image = renderer.image { imageRendererContext in
+            self.layer.render(in: imageRendererContext.cgContext)
+        }
+        return image
+    }
 }
