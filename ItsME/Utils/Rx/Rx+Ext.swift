@@ -19,6 +19,13 @@ extension ObservableConvertibleType {
     }
 }
 
+extension ObservableConvertibleType where Element == Void {
+    
+    func asSignalOnErrorJustNext() -> Signal<Element> {
+        return self.asSignal(onErrorJustReturn: ())
+    }
+}
+
 extension ObservableType {
     
     func mapToVoid() -> Observable<Void> {
