@@ -24,10 +24,10 @@ struct LogoutUseCase: LogoutUseCaseProtocol {
     
     init(
         getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCaseProtocol,
-        logoutWithApple: LogoutWithAppleUseCaseProtocol
+        logoutWithAppleUseCase: LogoutWithAppleUseCaseProtocol
     ) {
         self.getCurrentAuthProviderIDUseCase = getCurrentAuthProviderIDUseCase
-        self.logoutWithAppleUseCase = logoutWithApple
+        self.logoutWithAppleUseCase = logoutWithAppleUseCase
     }
     
     func execute() -> Completable {

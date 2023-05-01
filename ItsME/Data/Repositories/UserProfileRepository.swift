@@ -8,7 +8,22 @@
 import FirebaseAuth
 import RxSwift
 
-final class UserProfileRepository {
+protocol UserProfileRepositoryProtocol {
+    
+    var hasUserProfile: Single<Bool> { get }
+    
+    func getUserProfile() -> Single<UserProfile>
+    
+    func saveUserProfile(_ userInfo: UserProfile) -> Single<Void>
+    
+    /// 데이터베이스에 저장된 현재 사용자의 프로필 정보를 삭제합니다.
+    func deleteUserProfile() -> Completable
+    
+    /// 현재 사용자의 계정을 Firebase Authentication 에서 삭제합니다.
+    func deleteAccount() -> Single<Void>
+}
+
+final class UserProfileRepository: UserProfileRepositoryProtocol {
     
     // MARK: Make to Singleton
     
@@ -53,7 +68,6 @@ final class UserProfileRepository {
         return source
     }
     
-    /// 데이터베이스에 저장된 현재 사용자의 프로필 정보를 삭제합니다.
     func deleteUserProfile() -> Completable {
         let source = Auth.auth().rx.currentUser
             .map(\.uid)
@@ -62,7 +76,6 @@ final class UserProfileRepository {
         return source
     }
     
-    /// 현재 사용자의 계정을 Firebase Authentication 에서 삭제합니다.
     func deleteAccount() -> Single<Void> {
         let source = Auth.auth().rx.currentUser
             .flatMap { user -> Single<Void> in
