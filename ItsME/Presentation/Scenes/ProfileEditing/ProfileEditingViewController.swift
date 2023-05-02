@@ -85,6 +85,8 @@ final class ProfileEditingViewController: UIViewController {
         $0.isScrollEnabled = false
         let cellType = EducationCell.self
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(respondToLongPressGesture))
+        $0.addGestureRecognizer(longPressGestureRecognizer)
     }
     
     private lazy var educationItemAddButton: ItemAddButton = .init().then {
@@ -131,6 +133,10 @@ final class ProfileEditingViewController: UIViewController {
             )
         })
     }
+    
+    private var sourceIndexPath: IndexPath?
+    private var educationCellSnapshot: UIImageView?
+    private var centerYOffset: CGFloat?
     
     // MARK: - Initializer
     
@@ -410,6 +416,67 @@ private extension ProfileEditingViewController {
             if let otherItem = viewModel.currentAllItems[ifExists: index] {
                 pushOtherItemEditingViewController(with: otherItem)
             }
+        }
+    }
+    
+    @objc func respondToLongPressGesture(sender: UILongPressGestureRecognizer) {
+        let pointInTableView = sender.location(in: educationTableView)
+        
+        switch sender.state {
+        case .began:
+            guard let selectedIndexPath = educationTableView.indexPathForRow(at: pointInTableView),
+                  let selectedCell = educationTableView.cellForRow(at: selectedIndexPath)
+            else { return }
+            
+            selectedCell.setHighlighted(false, animated: false)
+            
+            sourceIndexPath = selectedIndexPath
+            centerYOffset = pointInTableView.y - selectedCell.center.y
+            educationCellSnapshot = UIImageView(image: selectedCell.asImage())
+            
+            guard let educationCellSnapshot = educationCellSnapshot else { return }
+            
+            let centerX = selectedCell.convert(selectedCell.center, to: educationTableView).x
+            let centerY = selectedCell.center.y
+            educationCellSnapshot.center = .init(x: centerX, y: centerY)
+            
+            educationTableView.addSubview(educationCellSnapshot)
+            
+            UIView.animate(withDuration: 0.2) {
+                educationCellSnapshot.transform = .init(scaleX: 1.03, y: 1.03)
+                educationCellSnapshot.alpha = 0.8
+                
+                selectedCell.isHidden = true
+            }
+            
+        case .changed:
+            guard let selectedIndexPath = educationTableView.indexPathForRow(at: pointInTableView),
+                  let selectedCell = educationTableView.cellForRow(at: selectedIndexPath),
+                  let educationCellSnapshot = educationCellSnapshot,
+                  let centerYOffset = centerYOffset,
+                  let sourceIndexPath = sourceIndexPath
+            else { return }
+            
+            let centerX = selectedCell.convert(selectedCell.center, to: educationTableView).x
+            let centerY = pointInTableView.y - centerYOffset
+            educationCellSnapshot.center = .init(x: centerX, y: centerY)
+            
+            if sourceIndexPath != selectedIndexPath {
+                educationTableView.moveRow(at: sourceIndexPath, to: selectedIndexPath)
+                viewModel.swapEducation(at: sourceIndexPath, to: selectedIndexPath)
+                self.sourceIndexPath = selectedIndexPath
+            }
+            
+        default:
+            if let sourceIndexPath = sourceIndexPath,
+               let sourceCell = educationTableView.cellForRow(at: sourceIndexPath) {
+                viewModel.endSwapEducation()
+                sourceCell.isHidden = false
+            }
+            
+            educationCellSnapshot?.removeFromSuperview()
+            educationCellSnapshot = nil
+            sourceIndexPath = nil
         }
     }
 }

@@ -5,6 +5,7 @@
 //  Created by Jaewon Yun on 2022/12/16.
 //
 
+import SFSafeSymbols
 import SnapKit
 import Then
 import UIKit
@@ -31,10 +32,12 @@ final class EducationCell: UITableViewCell {
         $0.textColor = .secondaryLabel
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        fatalError("awakeFromNib() has not been implemented")
+    private lazy var line3ImageView: UIImageView = .init().then {
+        let colorConfig: UIImage.SymbolConfiguration = .init(hierarchicalColor: .systemGray2)
+        $0.image = .init(systemSymbol: .line3Horizontal, withConfiguration: colorConfig)
     }
+    
+    // MARK: Initializers
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -47,8 +50,6 @@ final class EducationCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(false, animated: false)
-        
-        // Configure the view for the selected state
     }
     
     func bind(educationItem: Education) {
@@ -67,6 +68,7 @@ private extension EducationCell {
         self.contentView.addSubview(periodLabel)
         self.contentView.addSubview(titleLabel)
         self.contentView.addSubview(descriptionLabel)
+        self.contentView.addSubview(line3ImageView)
         
         let verticalInsetValue = 5
         let horizontalInsetValue = 15
@@ -79,7 +81,6 @@ private extension EducationCell {
         titleLabel.snp.makeConstraints { make in
             make.leading.trailing.equalTo(descriptionLabel)
             make.top.equalToSuperview().inset(verticalInsetValue)
-            make.trailing.equalToSuperview().inset(horizontalInsetValue)
             make.bottom.equalTo(descriptionLabel.snp.top)
             make.leading.equalTo(periodLabel.snp.trailing).offset(14)
             make.width.equalTo(periodLabel).multipliedBy(2.3)
@@ -87,6 +88,13 @@ private extension EducationCell {
         
         descriptionLabel.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(verticalInsetValue)
+        }
+        
+        line3ImageView.snp.makeConstraints { make in
+            make.width.equalTo(30)
+            make.height.equalTo(24)
+            make.leading.equalTo(titleLabel.snp.trailing).offset(4)
+            make.centerY.equalToSuperview()
             make.trailing.equalToSuperview().inset(horizontalInsetValue)
         }
     }
