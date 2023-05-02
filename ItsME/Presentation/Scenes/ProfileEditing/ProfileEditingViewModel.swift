@@ -148,10 +148,10 @@ private extension ProfileEditingViewModel {
     func makeLogoutComplete(with input: Signal<Void>) -> Signal<Void> {
         let logoutWithKakao = UserApi.shared.rx.logout()
             .andThenJustOnNext()
-            .asSignal(onErrorJustReturn: ()) // TODO: 에러 발생 시 로그 심기
+            .asSignalOnErrorJustNext() // TODO: 에러 발생 시 로그 심기
         let signOutFromFIRAuth = Auth.auth().rx.signOut()
             .andThenJustOnNext()
-            .asSignal(onErrorJustReturn: ()) // TODO: 에러 발생 시 로그 심기
+            .asSignalOnErrorJustNext() // TODO: 에러 발생 시 로그 심기
         
         return input
             .doOnNext {
@@ -168,19 +168,19 @@ private extension ProfileEditingViewModel {
     func makeDeleteAccountComplete(with input: Signal<Void>) -> Signal<Void> {
         let deleteUserInfo = userRepository.deleteUserProfile()
             .andThenJustOnNext()
-            .asSignal(onErrorJustReturn: ()) // TODO: 에러 트래커 추가
+            .asSignalOnErrorJustNext() // TODO: 에러 트래커 추가
         let deleteAllCVs = cvRepository.deleteAllCVs()
             .andThenJustOnNext()
-            .asSignal(onErrorJustReturn: ()) // TODO: 에러 트래커 추가
+            .asSignalOnErrorJustNext() // TODO: 에러 트래커 추가
         let deleteStorage = Single<Void>.just(())
             .map { try StoragePath().userProfileImage }
             .flatMap {
                 return Storage.storage().reference().child($0).rx.delete()
                     .andThenJustOnNext()
             }
-            .asSignal(onErrorJustReturn: ())
+            .asSignalOnErrorJustNext()
         let deleteUserAuth = userRepository.deleteAccount()
-            .asSignal(onErrorJustReturn: ()) // TODO: 에러 트래커 추가
+            .asSignalOnErrorJustNext() // TODO: 에러 트래커 추가
         let revokeProvider = makeRevokeProviderWithCurrentProviderID()
         
         return input
@@ -206,7 +206,7 @@ private extension ProfileEditingViewModel {
                     return self.revokeAppleIDTokenUseCase.rx.execute(refreshToken: refreshToken)
                 }
             }
-            .asSignal(onErrorJustReturn: ()) // 과정 중 에러가 발생해도 사용자에게는 계정 삭제 처리가 완료된걸로 보여야 경험을 해치지 않음
+            .asSignalOnErrorJustNext() // 과정 중 에러가 발생해도 사용자에게는 계정 삭제 처리가 완료된걸로 보여야 경험을 해치지 않음
         return source
     }
 }
