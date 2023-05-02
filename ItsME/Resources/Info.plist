@@ -19,6 +19,8 @@
 			<array/>
 		</dict>
 	</array>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>KAKAO_NATIVE_APP_KEY</key>
 	<string>ff28d124ec4c8b9e53c3bc5697ec592f</string>
 	<key>LSApplicationQueriesSchemes</key>

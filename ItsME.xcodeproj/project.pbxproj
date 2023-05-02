@@ -53,11 +53,10 @@
 		DA404A8129F259FB00211272 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DA404A8029F259FB00211272 /* GoogleService-Info.plist */; };
 		DA404A8329F275F800211272 /* UIImage+DefaultProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA404A8229F275F800211272 /* UIImage+DefaultProfileImage.swift */; };
 		DA43162329F7C2AA004453B9 /* AuthProviderID.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43162229F7C2AA004453B9 /* AuthProviderID.swift */; };
-		DA43163229F94F64004453B9 /* Bundle+Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43163129F94F64004453B9 /* Bundle+Identifier.swift */; };
+		DA43163229F94F64004453B9 /* Bundle+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43163129F94F64004453B9 /* Bundle+.swift */; };
 		DA43163529F9549A004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43163429F9549A004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase.swift */; };
 		DA43163729F95621004453B9 /* GetAppleIDRefreshTokenFromKeychainUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43163629F95621004453B9 /* GetAppleIDRefreshTokenFromKeychainUseCase.swift */; };
 		DA43163929F96615004453B9 /* RevokeAppleIDRefreshTokenUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43163829F96615004453B9 /* RevokeAppleIDRefreshTokenUseCase.swift */; };
-		DA43165029FA47BA004453B9 /* Bundle+TeamID.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43164F29FA47BA004453B9 /* Bundle+TeamID.swift */; };
 		DA43165629FA4D84004453B9 /* AppleRESTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43165529FA4D84004453B9 /* AppleRESTAPI.swift */; };
 		DA43165A29FA50FA004453B9 /* AppleIDTokenValidationRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43165929FA50FA004453B9 /* AppleIDTokenValidationRequestDTO.swift */; };
 		DA43165C29FA5127004453B9 /* AppleIDTokenValidationResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43165B29FA5127004453B9 /* AppleIDTokenValidationResponseDTO.swift */; };
@@ -65,7 +64,6 @@
 		DA43166029FA5413004453B9 /* AppleRESTAPI+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43165F29FA5413004453B9 /* AppleRESTAPI+Rx.swift */; };
 		DA43166329FA5A15004453B9 /* RevokeAppleIDRefreshTokenUseCase+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43166229FA5A15004453B9 /* RevokeAppleIDRefreshTokenUseCase+Rx.swift */; };
 		DA43166629FA5E5D004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43166529FA5E5D004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase+Rx.swift */; };
-		DA43166829FA7453004453B9 /* Bundle+SignInAppleKeyID.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43166729FA7453004453B9 /* Bundle+SignInAppleKeyID.swift */; };
 		DA43166A29FB950D004453B9 /* LoginWithAppleUseCase+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43166929FB950D004453B9 /* LoginWithAppleUseCase+Rx.swift */; };
 		DA43166C29FB9527004453B9 /* LoginWithAppleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43166B29FB9527004453B9 /* LoginWithAppleUseCase.swift */; };
 		DA43166E29FB9812004453B9 /* SignInToFirebaseUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43166D29FB9812004453B9 /* SignInToFirebaseUseCase.swift */; };
@@ -230,11 +228,10 @@
 		DA404A8029F259FB00211272 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DA404A8229F275F800211272 /* UIImage+DefaultProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+DefaultProfileImage.swift"; sourceTree = "<group>"; };
 		DA43162229F7C2AA004453B9 /* AuthProviderID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthProviderID.swift; sourceTree = "<group>"; };
-		DA43163129F94F64004453B9 /* Bundle+Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Identifier.swift"; sourceTree = "<group>"; };
+		DA43163129F94F64004453B9 /* Bundle+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+.swift"; sourceTree = "<group>"; };
 		DA43163429F9549A004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveAppleIDRefreshTokenToKeychainUseCase.swift; sourceTree = "<group>"; };
 		DA43163629F95621004453B9 /* GetAppleIDRefreshTokenFromKeychainUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAppleIDRefreshTokenFromKeychainUseCase.swift; sourceTree = "<group>"; };
 		DA43163829F96615004453B9 /* RevokeAppleIDRefreshTokenUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokeAppleIDRefreshTokenUseCase.swift; sourceTree = "<group>"; };
-		DA43164F29FA47BA004453B9 /* Bundle+TeamID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+TeamID.swift"; sourceTree = "<group>"; };
 		DA43165529FA4D84004453B9 /* AppleRESTAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleRESTAPI.swift; sourceTree = "<group>"; };
 		DA43165929FA50FA004453B9 /* AppleIDTokenValidationRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleIDTokenValidationRequestDTO.swift; sourceTree = "<group>"; };
 		DA43165B29FA5127004453B9 /* AppleIDTokenValidationResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleIDTokenValidationResponseDTO.swift; sourceTree = "<group>"; };
@@ -242,7 +239,6 @@
 		DA43165F29FA5413004453B9 /* AppleRESTAPI+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppleRESTAPI+Rx.swift"; sourceTree = "<group>"; };
 		DA43166229FA5A15004453B9 /* RevokeAppleIDRefreshTokenUseCase+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RevokeAppleIDRefreshTokenUseCase+Rx.swift"; sourceTree = "<group>"; };
 		DA43166529FA5E5D004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SaveAppleIDRefreshTokenToKeychainUseCase+Rx.swift"; sourceTree = "<group>"; };
-		DA43166729FA7453004453B9 /* Bundle+SignInAppleKeyID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+SignInAppleKeyID.swift"; sourceTree = "<group>"; };
 		DA43166929FB950D004453B9 /* LoginWithAppleUseCase+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginWithAppleUseCase+Rx.swift"; sourceTree = "<group>"; };
 		DA43166B29FB9527004453B9 /* LoginWithAppleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWithAppleUseCase.swift; sourceTree = "<group>"; };
 		DA43166D29FB9812004453B9 /* SignInToFirebaseUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInToFirebaseUseCase.swift; sourceTree = "<group>"; };
@@ -724,14 +720,14 @@
 			path = Repositories;
 			sourceTree = "<group>";
 		};
-		DA708F1D29DFF81500EF84F2 /* Reactive */ = {
+		DA708F1D29DFF81500EF84F2 /* Rx */ = {
 			isa = PBXGroup;
 			children = (
 				DA708F1F29DFF96100EF84F2 /* DelegateProxy */,
 				DA708F1E29DFF84500EF84F2 /* BaseExtensions */,
 				DAAC7A5B29715C0A0083A8E9 /* Rx+Ext.swift */,
 			);
-			path = Reactive;
+			path = Rx;
 			sourceTree = "<group>";
 		};
 		DA708F1E29DFF84500EF84F2 /* BaseExtensions */ = {
@@ -760,23 +756,23 @@
 		DA7201E5292F684900A69519 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DAFCFB66294AC00C006B287A /* UIStackView+.swift */,
-				DAFCFB7429543D3B006B287A /* UIButton+.swift */,
 				DAAF1BDE299A1E8100728376 /* Array+SafeIndex.swift */,
-				DA6B3CDA29ADEE33002BB159 /* UIEdgeInsets+All.swift */,
-				DA6B3CE129B08E95002BB159 /* SnapKit+.swift */,
-				DA53B73729B5BDA1000BBB26 /* Int+.swift */,
+				DA43163129F94F64004453B9 /* Bundle+.swift */,
 				DAD1D02F29B759CE00B12BF8 /* Calendar+Current.swift */,
-				DAD1D03729C0B40100B12BF8 /* OSStatus+ToReadableString.swift */,
 				DA9069D529CDA64B00535A3D /* Collection+isNotEmpty.swift */,
-				DAF516FD29D5765E00BDAD68 /* UIButton.Configuration+Then.swift */,
-				DA708F0229D6EDBF00EF84F2 /* UIViewController+presentConfirmAlert.swift */,
 				DA708F0829D9FE1700EF84F2 /* FIRAuth+isLoggedIn.swift */,
-				D0CCF4E02925FB0100AD4AE6 /* UIView+.swift */,
+				DA53B73729B5BDA1000BBB26 /* Int+.swift */,
+				DAD1D03729C0B40100B12BF8 /* OSStatus+ToReadableString.swift */,
+				DA6B3CE129B08E95002BB159 /* SnapKit+.swift */,
+				DAF516FD29D5765E00BDAD68 /* UIButton.Configuration+Then.swift */,
+				DAFCFB7429543D3B006B287A /* UIButton+.swift */,
 				D0CCF4E2292604BE00AD4AE6 /* UIColor+.swift */,
+				DA6B3CDA29ADEE33002BB159 /* UIEdgeInsets+All.swift */,
+				DA71B5D329E9A2980033864C /* UIFont+.swift */,
 				DA404A8229F275F800211272 /* UIImage+DefaultProfileImage.swift */,
-				DA43164F29FA47BA004453B9 /* Bundle+TeamID.swift */,
-				DA43166729FA7453004453B9 /* Bundle+SignInAppleKeyID.swift */,
+				DAFCFB66294AC00C006B287A /* UIStackView+.swift */,
+				D0CCF4E02925FB0100AD4AE6 /* UIView+.swift */,
+				DA708F0229D6EDBF00EF84F2 /* UIViewController+presentConfirmAlert.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -905,7 +901,7 @@
 		DAB06A3E291BA5E600E86163 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				DA708F1D29DFF81500EF84F2 /* Reactive */,
+				DA708F1D29DFF81500EF84F2 /* Rx */,
 				DA7201E5292F684900A69519 /* Extensions */,
 				DAB06A41291BA8C800E86163 /* Protocols */,
 				DA26989B298A4709008A5D30 /* LoggedJsonDecoder.swift */,
@@ -913,9 +909,7 @@
 				DA4FEC2429E40C4C00D41CE1 /* ItsMELogger.swift */,
 				DA4FEC2B29E6D12C00D41CE1 /* ItsMEUtils.swift */,
 				DA4FEC2D29E6D14000D41CE1 /* ItsMEError.swift */,
-				DA71B5D329E9A2980033864C /* UIFont+.swift */,
 				DA43162229F7C2AA004453B9 /* AuthProviderID.swift */,
-				DA43163129F94F64004453B9 /* Bundle+Identifier.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1266,7 +1260,6 @@
 				DA0A88692921245000E9AE43 /* UserRepository.swift in Sources */,
 				DA43166E29FB9812004453B9 /* SignInToFirebaseUseCase.swift in Sources */,
 				DA708F0929D9FE1700EF84F2 /* FIRAuth+isLoggedIn.swift in Sources */,
-				DA43166829FA7453004453B9 /* Bundle+SignInAppleKeyID.swift in Sources */,
 				DA43163529F9549A004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase.swift in Sources */,
 				D0CCF4E12925FB0100AD4AE6 /* UIView+.swift in Sources */,
 				D0CCF4E629260C2B00AD4AE6 /* ProfileInfoComponent.swift in Sources */,
@@ -1307,7 +1300,7 @@
 				DA7201F82931F8EB00A69519 /* CoverLetter.swift in Sources */,
 				DA708F1529DC465800EF84F2 /* StorageReference+Rx.swift in Sources */,
 				DA3302AC29ADCC9F00C36154 /* EducationEditingViewController.swift in Sources */,
-				DA43163229F94F64004453B9 /* Bundle+Identifier.swift in Sources */,
+				DA43163229F94F64004453B9 /* Bundle+.swift in Sources */,
 				DA6B3CE029B06738002BB159 /* YearMonthPickerCell.swift in Sources */,
 				DA6B3CED29B1D453002BB159 /* YearMonthPickerViewDelegateProxy.swift in Sources */,
 				DA71B5D429E9A2980033864C /* UIFont+.swift in Sources */,
@@ -1318,7 +1311,6 @@
 				D04FAF95299CB3F60049DBAA /* CoverLetterCell.swift in Sources */,
 				DA43165E29FA5137004453B9 /* AppleIDTokenRevocationRequestDTO.swift in Sources */,
 				D04FAF98299CB6690049DBAA /* CoverLetterHeaderView.swift in Sources */,
-				DA43165029FA47BA004453B9 /* Bundle+TeamID.swift in Sources */,
 				D0CCF4E3292604BE00AD4AE6 /* UIColor+.swift in Sources */,
 				D0304B9129DC0C870017C529 /* CVEditViewController.swift in Sources */,
 				DA43166029FA5413004453B9 /* AppleRESTAPI+Rx.swift in Sources */,
