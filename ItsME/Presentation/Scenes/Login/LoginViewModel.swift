@@ -19,7 +19,7 @@ final class LoginViewModel: ViewModelType {
     let signInToFirebaseUseCase: SignInToFirebaseUseCase = .init()
     let getNicknameAndEmailForKakaoUseCase: GetNicknameAndEmailForKakaoUseCase = .init()
     
-    let userRepository: UserRepository = .shared
+    let userRepository: UserProfileRepository = .shared
     
     func transform(input: Input) -> Output {
         let loggedInWithKakao = input.kakaoLoginRequest
@@ -72,7 +72,7 @@ final class LoginViewModel: ViewModelType {
         
         let loggedInAndNeedsSignUp = Signal.merge(loggedInWithKakao, loggedInWithApple)
             .flatMapFirst { nameAndEmail in
-                return self.userRepository.hasUserInfo
+                return self.userRepository.hasUserProfile
                     .doOnSuccess { hasUserInfo in
                         ItsMEUserDefaults.allowsAutoLogin = hasUserInfo
                     }

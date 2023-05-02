@@ -11,7 +11,7 @@ import FirebaseStorage
 
 final class TotalCVViewModel: ViewModelType {
     
-    private let userRepository: UserRepository = .shared
+    private let userRepository: UserProfileRepository = .shared
     private let cvRepository: CVRepository = .shared
     
     private let cvInfoRelay: BehaviorRelay<CVInfo>
@@ -31,7 +31,7 @@ final class TotalCVViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let userInfo = input.viewDidLoad
             .flatMapLatest { _ in
-                return self.userRepository.getUserInfo()
+                return self.userRepository.getUserProfile()
                     .asDriver(onErrorDriveWith: .empty())
             }
         
@@ -80,8 +80,8 @@ extension TotalCVViewModel {
     }
     
     struct Output {
-        let userInfoItems: Driver<[UserInfoItem]>
-        let educationItems: Driver<[EducationItem]>
+        let userInfoItems: Driver<[UserBasicProfileInfo]>
+        let educationItems: Driver<[Education]>
         let profileImageData: Driver<Data>
         let cvInfo: Driver<CVInfo>
         let tappedEditCompleteButton: Signal<Void>

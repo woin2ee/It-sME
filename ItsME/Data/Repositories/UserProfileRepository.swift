@@ -1,5 +1,5 @@
 //
-//  UserRepository.swift
+//  UserProfileRepository.swift
 //  ItsME
 //
 //  Created by Jaewon Yun on 2022/11/13.
@@ -8,11 +8,11 @@
 import FirebaseAuth
 import RxSwift
 
-final class UserRepository {
+final class UserProfileRepository {
     
     // MARK: Make to Singleton
     
-    static let shared: UserRepository = .init()
+    static let shared: UserProfileRepository = .init()
     
     private init() {
         self.database = .shared
@@ -24,7 +24,7 @@ final class UserRepository {
     
     // MARK: API
     
-    var hasUserInfo: Single<Bool> {
+    var hasUserProfile: Single<Bool> {
         let source = Auth.auth().rx.currentUser
             .map { $0.uid }
             .flatMap { self.database.userRef($0).rx.dataSnapshot }
@@ -32,17 +32,17 @@ final class UserRepository {
         return source
     }
     
-    func getUserInfo() -> Single<UserInfo> {
+    func getUserProfile() -> Single<UserProfile> {
         let source = Auth.auth().rx.currentUser
             .map { $0.uid }
             .flatMap { self.database.userRef($0).rx.dataSnapshot }
             .map { dataSnapshot in
-                return try LoggedJsonDecoder.decode(UserInfo.self, withJSONObject: dataSnapshot.value)
+                return try LoggedJsonDecoder.decode(UserProfile.self, withJSONObject: dataSnapshot.value)
             }
         return source
     }
     
-    func saveUserInfo(_ userInfo: UserInfo) -> Single<Void> {
+    func saveUserProfile(_ userInfo: UserProfile) -> Single<Void> {
         let source = Auth.auth().rx.currentUser
             .map { $0.uid }
             .flatMap { uid in
@@ -54,7 +54,7 @@ final class UserRepository {
     }
     
     /// 데이터베이스에 저장된 현재 사용자의 프로필 정보를 삭제합니다.
-    func deleteUserInfo() -> Completable {
+    func deleteUserProfile() -> Completable {
         let source = Auth.auth().rx.currentUser
             .map(\.uid)
             .flatMap { self.database.userRef($0).rx.removeValue() }
@@ -63,7 +63,7 @@ final class UserRepository {
     }
     
     /// 현재 사용자의 계정을 Firebase Authentication 에서 삭제합니다.
-    func deleteUser() -> Single<Void> {
+    func deleteAccount() -> Single<Void> {
         let source = Auth.auth().rx.currentUser
             .flatMap { user -> Single<Void> in
                 return .create { observer in

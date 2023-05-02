@@ -148,7 +148,7 @@ private extension HomeViewController {
         )
     }
     
-    var userInfoBinding: Binder<UserInfo> {
+    var userInfoBinding: Binder<UserProfile> {
         return .init(self) { viewController, userInfo in
             self.userBasicInfoStackView.removeAllArrangedSubviews()
             

@@ -11,12 +11,12 @@ import RxCocoa
 
 final class SignUpViewModel: ViewModelType {
     
-    private let userRepository: UserRepository
+    private let userRepository: UserProfileRepository
     
     private let userNameForSignUp: String
     private let userEmailForSignUp: String
     
-    init(userRepository: UserRepository = .shared, userNameForSignUp: String, userEmailForSignUp: String) {
+    init(userRepository: UserProfileRepository = .shared, userNameForSignUp: String, userEmailForSignUp: String) {
         self.userRepository = userRepository
         self.userNameForSignUp = userNameForSignUp
         self.userEmailForSignUp = userEmailForSignUp
@@ -34,7 +34,7 @@ final class SignUpViewModel: ViewModelType {
                                             input.phoneNumber,
                                             email)
             .map { name, birthday, address, phoneNumber, email in
-                return UserInfo(name: name,
+                return UserProfile(name: name,
                                 profileImageURL: "",
                                 birthday: .init(icon: .cake, contents: birthday),
                                 address: .init(icon: .house, contents: address),
@@ -47,7 +47,7 @@ final class SignUpViewModel: ViewModelType {
         let signUpComplete = input.startTrigger
             .withLatestFrom(userInfo)
             .flatMapFirst {
-                return self.userRepository.saveUserInfo($0) // TODO: Error handling
+                return self.userRepository.saveUserProfile($0) // TODO: Error handling
                     .asSignalOnErrorJustComplete()
             }
             .doOnNext { ItsMEUserDefaults.allowsAutoLogin = true }

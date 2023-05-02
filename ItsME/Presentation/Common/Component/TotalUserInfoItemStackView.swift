@@ -47,7 +47,7 @@ final class TotalUserInfoItemStackView: UIStackView {
         }
     }
     
-    func bind(userInfoItems: [UserInfoItem]) {
+    func bind(userInfoItems: [UserBasicProfileInfo]) {
         self.removeAllArrangedSubviews()
         
         userInfoItems.forEach { userInfoItem in

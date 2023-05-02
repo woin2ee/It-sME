@@ -16,14 +16,14 @@ final class HomeViewModel: ViewModelType {
     }
     
     struct Output {
-        let userInfo: Driver<UserInfo>
+        let userInfo: Driver<UserProfile>
         let cvsInfo: Driver<[CVInfo]>
     }
     
-    private let userRepository: UserRepository = .shared
+    private let userRepository: UserProfileRepository = .shared
     private let cvRepository: CVRepository = .shared
     
-    private(set) var userInfo: UserInfo = .empty
+    private(set) var userInfo: UserProfile = .empty
     
     func removeCV(cvInfo: CVInfo) -> Signal<Void> {
         return self.cvRepository.removeCV(by: cvInfo.uuid).asSignalOnErrorJustComplete()
@@ -32,7 +32,7 @@ final class HomeViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let userInfo = Signal.merge(input.viewDidLoad, input.viewWillAppear.skip(1))
             .flatMap { _ in
-                return self.userRepository.getUserInfo()
+                return self.userRepository.getUserProfile()
                     .asDriverOnErrorJustComplete()
                     .doOnNext { self.userInfo = $0 }
             }

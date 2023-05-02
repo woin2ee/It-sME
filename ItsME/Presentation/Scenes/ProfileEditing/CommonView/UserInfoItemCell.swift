@@ -32,7 +32,7 @@ final class UserInfoItemCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func bind(userInfoItem: UserInfoItem) {
+    func bind(userInfoItem: UserBasicProfileInfo) {
         iconLabel.text = userInfoItem.icon.toEmoji
         contentsLabel.text = userInfoItem.contents
     }

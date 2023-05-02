@@ -111,7 +111,7 @@ private extension BirthdayEditingViewController {
             $0.dateFormat = "yyyy.MM.dd."
         }
         let birthday: String = dateFormatter.string(from: date)
-        let newItem: UserInfoItem = .init(
+        let newItem: UserBasicProfileInfo = .init(
             icon: .cake,
             contents: birthday
         )
