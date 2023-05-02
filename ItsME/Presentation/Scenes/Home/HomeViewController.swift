@@ -275,7 +275,7 @@ extension HomeViewController {
     private func makeContextMenu(with cvInfo: CVInfo) -> UIMenu {
         let editAction: UIAction = .init(
             title: "제목 편집",
-            image: UIImage(systemName: "square.and.pencil.circle.fill"),
+            image: UIImage(systemSymbol: .pencilCircleFill),
             handler: { [weak self] _ in
                 let cvEditViewModel: CVEditViewModel = .init(initialCVTitle: cvInfo.title, editingType: .edit(uuid: cvInfo.uuid))
                 let cvEditViewController: CVEditViewController = .init(viewModel: cvEditViewModel)
