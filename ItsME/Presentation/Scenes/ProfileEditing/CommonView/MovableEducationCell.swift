@@ -1,43 +1,27 @@
 //
-//  EducationCell.swift
+//  MovableEducationCell.swift
 //  ItsME
 //
-//  Created by Jaewon Yun on 2022/12/16.
+//  Created by Jaewon Yun on 2023/05/03.
 //
 
-import SFSafeSymbols
 import SnapKit
 import Then
 import UIKit
 
-class EducationCell: UITableViewCell {
+final class MovableEducationCell: EducationCell {
     
     // MARK: - UI Components
     
-    lazy var periodLabel: UILabel = {
-        let label: UILabel = .init()
-        label.text = "Period"
-        label.numberOfLines = 0
-        label.textColor = .label
-        return label
-    }()
-    
-    lazy var titleLabel: UILabel = .init().then {
-        $0.text = "Title"
-        $0.textColor = .label
-    }
-    
-    lazy var descriptionLabel: UILabel = .init().then {
-        $0.text = "Description"
-        $0.textColor = .secondaryLabel
+    lazy var line3ImageView: UIImageView = .init().then {
+        let colorConfig: UIImage.SymbolConfiguration = .init(hierarchicalColor: .systemGray2)
+        $0.image = .init(systemSymbol: .line3Horizontal, withConfiguration: colorConfig)
     }
     
     // MARK: Initializers
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubviews()
-        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -46,17 +30,12 @@ class EducationCell: UITableViewCell {
     
     // MARK: Methods
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(false, animated: false)
+    override func addSubviews() {
+        self.addSubview(line3ImageView)
+        super.addSubviews()
     }
     
-    func addSubviews() {
-        self.contentView.addSubview(periodLabel)
-        self.contentView.addSubview(titleLabel)
-        self.contentView.addSubview(descriptionLabel)
-    }
-    
-    func setupConstraints() {
+    override func setupConstraints() {
         let verticalInsetValue = 5
         let horizontalInsetValue = 15
         
@@ -73,13 +52,13 @@ class EducationCell: UITableViewCell {
         }
         descriptionLabel.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(verticalInsetValue)
-            make.trailing.equalToSuperview().inset(horizontalInsetValue)
         }
-    }
-    
-    func bind(educationItem: Education) {
-        periodLabel.text = educationItem.period
-        titleLabel.text = educationItem.title
-        descriptionLabel.text = educationItem.description
+        line3ImageView.snp.makeConstraints { make in
+            make.width.equalTo(30)
+            make.height.equalTo(24)
+            make.leading.equalTo(titleLabel.snp.trailing).offset(4)
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().inset(10)
+        }
     }
 }
