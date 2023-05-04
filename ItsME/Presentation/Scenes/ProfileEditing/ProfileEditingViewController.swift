@@ -371,6 +371,7 @@ private extension ProfileEditingViewController {
     }
     
     func presentPhoneNumberEditingView() {
+        let viewModel: PhoneNumberEditingViewModel = .init(initialPhoneNumber: viewModel.currentPhoneNumber, delegate: viewModel)
         let viewController: PhoneNumberEditingViewController = .init(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
