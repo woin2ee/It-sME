@@ -89,7 +89,7 @@ extension EmailEditingViewController {
             output.email
                 .drive(inputCell.contentsTextField.rx.text),
             output.email
-                .map { !$0.isEmpty }
+                .map(\.isNotEmpty)
                 .drive(completeBarButton.rx.isEnabled),
             output.saveComplete
                 .emit(with: self, onNext: { owner, _ in

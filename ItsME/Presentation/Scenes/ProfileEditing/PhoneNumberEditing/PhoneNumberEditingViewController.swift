@@ -92,7 +92,7 @@ extension PhoneNumberEditingViewController {
             output.phoneNumber
                 .drive(inputCell.contentsTextField.rx.text),
             output.phoneNumber
-                .map { !$0.isEmpty }
+                .map(\.isNotEmpty)
                 .drive(completeBarButton.rx.isEnabled),
             output.saveComplete
                 .emit(with: self, onNext: { owner, _ in
