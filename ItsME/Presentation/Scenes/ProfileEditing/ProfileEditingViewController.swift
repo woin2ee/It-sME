@@ -377,6 +377,7 @@ private extension ProfileEditingViewController {
     }
     
     func presentEmailEditingView() {
+        let viewModel: EmailEditingViewModel = .init(initialEmail: viewModel.currentEmail, delegate: viewModel)
         let viewController: EmailEditingViewController = .init(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }

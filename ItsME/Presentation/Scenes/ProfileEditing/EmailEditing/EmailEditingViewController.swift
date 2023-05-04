@@ -5,13 +5,15 @@
 //  Created by Jaewon Yun on 2023/01/10.
 //
 
+import RxSwift
 import SnapKit
 import Then
 import UIKit
 
 final class EmailEditingViewController: UIViewController {
     
-    private let viewModel: ProfileEditingViewModel
+    private let disposeBag: DisposeBag = .init()
+    private let viewModel: EmailEditingViewModel
     
     // MARK: - UI Components
     
@@ -20,20 +22,15 @@ final class EmailEditingViewController: UIViewController {
         $0.backgroundColor = .clear
     }
     
-    var inputCell: ContentsInputCell? {
-        inputTableView.visibleCells[ifExists: 0] as? ContentsInputCell
+    private lazy var inputCell: ContentsInputCell = .init().then {
+        $0.titleLabel.text = "이메일"
     }
     
-    private lazy var completeBarButton: UIBarButtonItem = .init().then {
-        $0.primaryAction = .init(title: "완료", handler: { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
-            self?.updateEmail()
-        })
-    }
+    private lazy var completeBarButton: UIBarButtonItem = .init(title: "완료")
     
     // MARK: - Initalizer
     
-    init(viewModel: ProfileEditingViewModel) {
+    init(viewModel: EmailEditingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -49,11 +46,12 @@ final class EmailEditingViewController: UIViewController {
         self.view.backgroundColor = .systemGroupedBackground
         configureSubviews()
         configureNavigationBar()
+        bindViewModel()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        inputCell?.contentsTextField.becomeFirstResponder()
+        inputCell.contentsTextField.becomeFirstResponder()
     }
 }
 
@@ -74,10 +72,31 @@ private extension EmailEditingViewController {
         self.navigationItem.rightBarButtonItem = completeBarButton
         self.navigationItem.rightBarButtonItem?.style = .done
     }
+}
+
+// MARK: - Binding ViewModel
+
+extension EmailEditingViewController {
     
-    func updateEmail() {
-        let email = inputCell?.contentsTextField.text ?? ""
-        viewModel.updateEmail(email)
+    private func bindViewModel() {
+        let input: EmailEditingViewModel.Input = .init(
+            email: inputCell.contentsTextField.rx.text.orEmpty.asDriver(),
+            saveTrigger: completeBarButton.rx.tap.asSignal()
+        )
+        let output = viewModel.transform(input: input)
+        
+        [
+            output.email
+                .drive(inputCell.contentsTextField.rx.text),
+            output.email
+                .map { !$0.isEmpty }
+                .drive(completeBarButton.rx.isEnabled),
+            output.saveComplete
+                .emit(with: self, onNext: { owner, _ in
+                    owner.navigationController?.popViewController(animated: true)
+                }),
+        ]
+            .forEach { $0.disposed(by: disposeBag) }
     }
 }
 
@@ -90,9 +109,6 @@ extension EmailEditingViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: ContentsInputCell = .init()
-        cell.titleLabel.text = "이메일"
-        cell.contentsTextField.text = viewModel.currentEmail
-        return cell
+        return inputCell
     }
 }

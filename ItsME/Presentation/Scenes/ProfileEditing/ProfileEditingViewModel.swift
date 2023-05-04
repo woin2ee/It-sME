@@ -171,12 +171,6 @@ extension ProfileEditingViewModel {
         userInfoRelay.accept(userInfo)
     }
     
-    func updateEmail(_ email: String) {
-        let userInfo = userInfoRelay.value
-        userInfo.email.contents = email
-        userInfoRelay.accept(userInfo)
-    }
-    
     func swapEducation(at sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         userInfoRelay.value.educationItems.swapAt(sourceIndexPath.row, destinationIndexPath.row)
     }
@@ -254,6 +248,17 @@ extension ProfileEditingViewModel: PhoneNumberEditingViewModelDelegate {
     func phoneNumberEditingViewModelDidEndEditing(with phoneNumber: String) {
         let userInfo = userInfoRelay.value
         userInfo.phoneNumber.contents = phoneNumber
+        userInfoRelay.accept(userInfo)
+    }
+}
+
+// MARK: - EmailEditingViewModelDelegate
+
+extension ProfileEditingViewModel: EmailEditingViewModelDelegate {
+    
+    func emailEditingViewModelDidEndEditing(with email: String) {
+        let userInfo = userInfoRelay.value
+        userInfo.email.contents = email
         userInfoRelay.accept(userInfo)
     }
 }
