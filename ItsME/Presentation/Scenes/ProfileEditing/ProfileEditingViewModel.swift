@@ -183,12 +183,6 @@ extension ProfileEditingViewModel {
         userInfoRelay.accept(userInfo)
     }
     
-    func updateAddress(_ address: String) {
-        let userInfo = userInfoRelay.value
-        userInfo.address.contents = address
-        userInfoRelay.accept(userInfo)
-    }
-    
     func swapEducation(at sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         userInfoRelay.value.educationItems.swapAt(sourceIndexPath.row, destinationIndexPath.row)
     }
@@ -244,6 +238,17 @@ extension ProfileEditingViewModel: OtherItemEditingViewModelDelegate {
     func otherItemEditingViewModelDidDeleteOtherItem(at index: IndexPath.Index) {
         let userInfo = userInfoRelay.value
         userInfo.otherItems.remove(at: index)
+        userInfoRelay.accept(userInfo)
+    }
+}
+
+// MARK: - AddressEditingViewModelDelegate
+
+extension ProfileEditingViewModel: AddressEditingViewModelDelegate {
+    
+    func addressEditingViewModelDidEndEditing(with address: String) {
+        let userInfo = userInfoRelay.value
+        userInfo.address.contents = address
         userInfoRelay.accept(userInfo)
     }
 }

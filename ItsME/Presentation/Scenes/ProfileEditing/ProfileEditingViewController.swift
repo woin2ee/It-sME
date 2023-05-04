@@ -365,6 +365,7 @@ private extension ProfileEditingViewController {
     }
     
     func presentAddressEditingView() {
+        let viewModel: AddressEditingViewModel = .init(initialAddress: viewModel.currentAddress, delegate: viewModel)
         let viewController: AddressEditingViewController = .init(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
