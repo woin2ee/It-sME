@@ -40,6 +40,7 @@
 		D0CCF504292CCB4C00AD4AE6 /* CVCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCF503292CCB4C00AD4AE6 /* CVCard.swift */; };
 		D0E6FF6029B1BA23008CB451 /* CoverLetterEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6FF5F29B1BA23008CB451 /* CoverLetterEditingViewController.swift */; };
 		D0E6FF6329B1BA75008CB451 /* ResumeItemEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6FF6229B1BA75008CB451 /* ResumeItemEditingViewController.swift */; };
+		DA00EFE62A03853900297501 /* ItsMEFunctionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA00EFE52A03853900297501 /* ItsMEFunctionsTests.swift */; };
 		DA018809296D146A002C5CB0 /* BirthdayEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA018808296D146A002C5CB0 /* BirthdayEditingViewController.swift */; };
 		DA01880B296D1471002C5CB0 /* AddressEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA01880A296D1471002C5CB0 /* AddressEditingViewController.swift */; };
 		DA01880D296D1477002C5CB0 /* PhoneNumberEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA01880C296D1477002C5CB0 /* PhoneNumberEditingViewController.swift */; };
@@ -222,6 +223,7 @@
 		D0CCF503292CCB4C00AD4AE6 /* CVCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVCard.swift; sourceTree = "<group>"; };
 		D0E6FF5F29B1BA23008CB451 /* CoverLetterEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverLetterEditingViewController.swift; sourceTree = "<group>"; };
 		D0E6FF6229B1BA75008CB451 /* ResumeItemEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeItemEditingViewController.swift; sourceTree = "<group>"; };
+		DA00EFE52A03853900297501 /* ItsMEFunctionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMEFunctionsTests.swift; sourceTree = "<group>"; };
 		DA018808296D146A002C5CB0 /* BirthdayEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayEditingViewController.swift; sourceTree = "<group>"; };
 		DA01880A296D1471002C5CB0 /* AddressEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressEditingViewController.swift; sourceTree = "<group>"; };
 		DA01880C296D1477002C5CB0 /* PhoneNumberEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberEditingViewController.swift; sourceTree = "<group>"; };
@@ -812,6 +814,7 @@
 			children = (
 				DA53B73929B5C304000BBB26 /* ExtensionTests.swift */,
 				DA71B5D729EE67050033864C /* ItsMEUtilsTests.swift */,
+				DA00EFE52A03853900297501 /* ItsMEFunctionsTests.swift */,
 			);
 			path = ItsMETestsWithoutApp;
 			sourceTree = "<group>";
@@ -1398,6 +1401,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA00EFE62A03853900297501 /* ItsMEFunctionsTests.swift in Sources */,
 				DA71B5DA29EE67940033864C /* ItsMEError.swift in Sources */,
 				DA90695629C823F200535A3D /* ExtensionTests.swift in Sources */,
 				DA71B5D829EE67050033864C /* ItsMEUtilsTests.swift in Sources */,
