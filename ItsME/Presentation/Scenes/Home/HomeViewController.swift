@@ -87,7 +87,7 @@ final class HomeViewController: UIViewController {
     
     private lazy var addCVButton: AddCVButton = .init().then {
         let action: UIAction = .init { [weak self] _ in
-            let cvEditViewModel: CVEditViewModel = .init(initialCVTitle: "", editingType: .new)
+            let cvEditViewModel: CVEditViewModel = .init(editingType: .new)
             let cvEditviewController: CVEditViewController = .init(viewModel: cvEditViewModel)
             self?.navigationController?.pushViewController(cvEditviewController, animated: true)
         }
@@ -277,7 +277,9 @@ extension HomeViewController {
             title: "제목 편집",
             image: UIImage(systemSymbol: .pencilCircleFill),
             handler: { [weak self] _ in
-                let cvEditViewModel: CVEditViewModel = .init(initialCVTitle: cvInfo.title, editingType: .edit(uuid: cvInfo.uuid))
+                let cvEditViewModel: CVEditViewModel = .init(
+                    editingType: .edit(uuid: cvInfo.uuid, initialCVTitle: cvInfo.title)
+                )
                 let cvEditViewController: CVEditViewController = .init(viewModel: cvEditViewModel)
                 self?.navigationController?.pushViewController(cvEditViewController, animated: true)
             }

@@ -10,7 +10,7 @@ import Then
 import UIKit
 import RxSwift
 
-class CVEditViewController: UIViewController {
+final class CVEditViewController: UIViewController {
 
     private let disposeBag: DisposeBag = .init()
     private let viewModel: CVEditViewModel
@@ -37,7 +37,6 @@ class CVEditViewController: UIViewController {
     init(viewModel: CVEditViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        bindViewModel()
     }
     
     required init?(coder: NSCoder) {
@@ -49,10 +48,12 @@ class CVEditViewController: UIViewController {
         super.viewWillAppear(animated)
         configureNavigationBar()
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemGroupedBackground
         configureSubviews()
+        bindViewModel()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -66,6 +67,7 @@ class CVEditViewController: UIViewController {
 }
 
 // MARK: - Private Functions
+
 private extension CVEditViewController {
     
     func configureSubviews() {
@@ -83,7 +85,9 @@ private extension CVEditViewController {
 }
 
 //MARK: - Binding ViewModel
+
 private extension CVEditViewController {
+    
     func bindViewModel() {
         
         let input: CVEditViewModel.Input = .init(
@@ -95,7 +99,7 @@ private extension CVEditViewController {
         
         [ output.cvTitle
             .drive(inputCell.contentsTextField.rx.text),
-          output.doneHandler
+          output.doneComplete
             .emit(with: self, onNext: { owner, _ in
                 owner.navigationController?.popViewController(animated: true)
             }),
