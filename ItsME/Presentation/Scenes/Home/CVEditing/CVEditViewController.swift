@@ -99,6 +99,9 @@ private extension CVEditViewController {
         
         [ output.cvTitle
             .drive(inputCell.contentsTextField.rx.text),
+          output.cvTitle
+            .map(\.isNotEmpty)
+            .drive(completeBarButton.rx.isEnabled),
           output.doneComplete
             .emit(with: self, onNext: { owner, _ in
                 owner.navigationController?.popViewController(animated: true)
