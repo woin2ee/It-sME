@@ -78,4 +78,74 @@ final class ItsMEUtilsTests: XCTestCase {
             XCTAssertNil(value)
         }
     }
+    
+    func test_castOrThrow() throws {
+    SuccessCase:
+        do {
+            // Arrange
+            let value: Any = 1
+            var result: Int = 0
+            
+            // Act
+            result = try castOrThrow(Int.self, value)
+            
+            // Assert
+            XCTAssertEqual(result, value as! Int)
+        }
+    FailureCase:
+        do {
+            // Arrange
+            let value: Any = "value"
+            
+            // Act
+            do {
+                _ = try castOrThrow(Int.self, value)
+                XCTFail("String as? Int 을 성공함.")
+            }
+            
+            // Assert
+            catch {
+                XCTAssert(true)
+            }
+        }
+    }
+    
+    func test_unwrapOrThrow() throws {
+    SuccessCase:
+        do {
+            // Arrange
+            let value: Int? = 1
+            var result: Int = -1
+            
+            // Act
+            result = try unwrapOrThrow(value)
+            
+            // Assert
+            XCTAssertEqual(result, value)
+        }
+    FailureCase:
+        do {
+            // Arrange
+            let value: Int? = nil
+            
+            // Act
+            do {
+                _ = try unwrapOrThrow(value)
+                XCTFail("nil 언래핑 성공.")
+            }
+            
+            // Assert
+            catch {
+                XCTAssert(true)
+            }
+        }
+    }
+    
+    func test_randomNonceString() {
+        // Act
+        let nonce = randomNonceString()
+        
+        // Assert
+        XCTAssertNotEqual(nonce.count, 0)
+    }
 }
