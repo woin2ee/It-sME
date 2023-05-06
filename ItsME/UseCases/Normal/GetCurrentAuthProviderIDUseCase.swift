@@ -8,9 +8,9 @@
 import FirebaseAuth
 import Foundation
 
-struct GetCurrentAuthProviderIDUseCase {
+struct GetCurrentAuthProviderIDUseCase: UseCase {
     
-    func execute() -> AuthProviderID? {
+    func execute(input: Void = ()) -> AuthProviderID? {
         guard let providerID = Auth.auth().currentUser?.providerData.first?.providerID else {
             return nil
         }

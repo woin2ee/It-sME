@@ -8,10 +8,15 @@
 import Foundation
 import Keychaining
 
-struct SaveAppleIDRefreshTokenToKeychainUseCase {
+struct SaveAppleIDRefreshTokenToKeychainUseCase: UseCase {
     
-    func execute(authorizationCode: String, completion: @escaping ((Result<(), Error>) -> Void)) {
-        AppleRESTAPI.validateToken(withAuthorizationCode: authorizationCode) { result in
+    struct Input {
+        let authorizationCode: String
+        let completionHandler: (Result<Void, Error>) -> Void
+    }
+    
+    func execute(input: Input) -> Void {
+        AppleRESTAPI.validateToken(withAuthorizationCode: input.authorizationCode) { result in
             switch result {
             case .success(let response):
                 do {
@@ -19,12 +24,12 @@ struct SaveAppleIDRefreshTokenToKeychainUseCase {
                         .setLabel("refreshToken")
                         .setValueType(.data(for: response.refreshToken), forKey: .valueData)
                         .execute()
-                    completion(.success(()))
+                    input.completionHandler(.success(()))
                 } catch {
-                    completion(.failure(error))
+                    input.completionHandler(.failure(error))
                 }
             case .failure(let error):
-                completion(.failure(error))
+                input.completionHandler(.failure(error))
             }
         }
     }

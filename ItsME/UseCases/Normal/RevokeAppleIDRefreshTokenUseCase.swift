@@ -7,9 +7,18 @@
 
 import Foundation
 
-struct RevokeAppleIDRefreshTokenUseCase {
+struct RevokeAppleIDRefreshTokenUseCase: UseCase {
     
-    func execute(refreshToken: String, completion: @escaping ((Result<(), Error>) -> Void)) {
-        AppleRESTAPI.revokeToken(refreshToken, tokenTypeHint: .refreshToken, completionHandler: completion)
+    struct Input {
+        let refreshToken: String
+        let completionHandler: (Result<Void, Error>) -> Void
+    }
+    
+    func execute(input: Input) -> Void {
+        AppleRESTAPI.revokeToken(
+            input.refreshToken,
+            tokenTypeHint: .refreshToken,
+            completionHandler: input.completionHandler
+        )
     }
 }

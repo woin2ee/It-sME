@@ -14,7 +14,7 @@ extension Reactive where Base == SaveAppleIDRefreshTokenToKeychainUseCase {
     
     func execute(authorizationCode: String) -> Single<Void> {
         return .create { observer in
-            self.base.execute(authorizationCode: authorizationCode) { result in
+            let input: Base.Input = .init(authorizationCode: authorizationCode) { result in
                 switch result {
                 case .success(_):
                     observer(.success(()))
@@ -22,6 +22,7 @@ extension Reactive where Base == SaveAppleIDRefreshTokenToKeychainUseCase {
                     observer(.failure(error))
                 }
             }
+            self.base.execute(input: input)
             return Disposables.create()
         }
     }
