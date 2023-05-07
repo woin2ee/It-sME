@@ -83,7 +83,7 @@ final class ProfileEditingViewController: UIViewController {
         $0.delegate = self
         $0.backgroundColor = .clear
         $0.isScrollEnabled = false
-        let cellType = EducationCell.self
+        let cellType = MovableEducationCell.self
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(respondToLongPressGesture))
         $0.addGestureRecognizer(longPressGestureRecognizer)
@@ -229,7 +229,7 @@ private extension ProfileEditingViewController {
                 },
             output.educationItems
                 .drive(
-                    educationTableView.rx.items(cellIdentifier: EducationCell.reuseIdentifier, cellType: EducationCell.self)
+                    educationTableView.rx.items(cellIdentifier: MovableEducationCell.reuseIdentifier, cellType: MovableEducationCell.self)
                 ) { (index, educationItem, cell) in
                     cell.bind(educationItem: educationItem)
                 },
