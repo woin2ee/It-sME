@@ -10,12 +10,12 @@ import Foundation
 
 final class MockDelegate {
     
-    var didCalledDelegateMethod: Bool = false
+    var didCalledDelegateMethod: Int = 0
 }
 
 extension MockDelegate: PhoneNumberEditingViewModelDelegate {
     
     func phoneNumberEditingViewModelDidEndEditing(with phoneNumber: String) {
-        didCalledDelegateMethod = true
+        didCalledDelegateMethod += 1
     }
 }

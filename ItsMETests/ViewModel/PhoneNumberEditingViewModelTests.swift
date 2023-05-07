@@ -64,7 +64,7 @@ final class PhoneNumberEditingViewModelTests: XCTestCase {
         saveTrigger.onNext(())
         
         // Assert
-        XCTAssertTrue(mockDelegate.didCalledDelegateMethod)
+        XCTAssertEqual(mockDelegate.didCalledDelegateMethod, 1)
         XCTAssertTrue(saveComplete)
     }
 }
