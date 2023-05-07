@@ -46,6 +46,7 @@
 		DA00EFF92A07C19C00297501 /* PhoneNumberEditingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA00EFF42A079DF000297501 /* PhoneNumberEditingViewModelTests.swift */; };
 		DA00EFFB2A07C1A600297501 /* MockDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA00EFF62A07A61B00297501 /* MockDelegate.swift */; };
 		DA00F0022A080AD900297501 /* SaveProfileImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA00F0012A080AD900297501 /* SaveProfileImageUseCase.swift */; };
+		DA00F0002A07FD0100297501 /* ProfileEditingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA00EFFF2A07FD0100297501 /* ProfileEditingViewModelTests.swift */; };
 		DA018809296D146A002C5CB0 /* BirthdayEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA018808296D146A002C5CB0 /* BirthdayEditingViewController.swift */; };
 		DA01880B296D1471002C5CB0 /* AddressEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA01880A296D1471002C5CB0 /* AddressEditingViewController.swift */; };
 		DA01880D296D1477002C5CB0 /* PhoneNumberEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA01880C296D1477002C5CB0 /* PhoneNumberEditingViewController.swift */; };
@@ -226,6 +227,7 @@
 		DA00EFF42A079DF000297501 /* PhoneNumberEditingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberEditingViewModelTests.swift; sourceTree = "<group>"; };
 		DA00EFF62A07A61B00297501 /* MockDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDelegate.swift; sourceTree = "<group>"; };
 		DA00F0012A080AD900297501 /* SaveProfileImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveProfileImageUseCase.swift; sourceTree = "<group>"; };
+		DA00EFFF2A07FD0100297501 /* ProfileEditingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditingViewModelTests.swift; sourceTree = "<group>"; };
 		DA018808296D146A002C5CB0 /* BirthdayEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayEditingViewController.swift; sourceTree = "<group>"; };
 		DA01880A296D1471002C5CB0 /* AddressEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressEditingViewController.swift; sourceTree = "<group>"; };
 		DA01880C296D1477002C5CB0 /* PhoneNumberEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberEditingViewController.swift; sourceTree = "<group>"; };
@@ -572,6 +574,7 @@
 		DA00EFF82A07C13700297501 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				DA00EFFF2A07FD0100297501 /* ProfileEditingViewModelTests.swift */,
 				DA00EFF42A079DF000297501 /* PhoneNumberEditingViewModelTests.swift */,
 				DA00EFF62A07A61B00297501 /* MockDelegate.swift */,
 			);
@@ -1389,6 +1392,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA00F0002A07FD0100297501 /* ProfileEditingViewModelTests.swift in Sources */,
 				DA00EFFB2A07C1A600297501 /* MockDelegate.swift in Sources */,
 				DA00EFF92A07C19C00297501 /* PhoneNumberEditingViewModelTests.swift in Sources */,
 			);
