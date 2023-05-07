@@ -9,7 +9,6 @@ import SnapKit
 import Then
 import UIKit
 
-
 final class PhoneNumberEditingViewController: UIViewController {
     
     private let viewModel: ProfileEditingViewModel
@@ -89,10 +88,39 @@ extension PhoneNumberEditingViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: ContentsInputCell = .init()
-        cell.titleLabel.text = "전화번호"
-        cell.contentsTextField.text = viewModel.currentPhoneNumber
-        cell.contentsTextField.placeholder = "전화"
+        let cell: ContentsInputCell = .init().then {
+            $0.titleLabel.text = "전화번호"
+            $0.contentsTextField.text = viewModel.currentPhoneNumber
+            $0.contentsTextField.placeholder = "전화"
+            $0.contentsTextField.keyboardType = .phonePad
+            $0.contentsTextField.delegate = self
+        }
         return cell
+    }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension PhoneNumberEditingViewController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if range.length > 0 {
+            guard
+                var currentText = textField.text,
+                let removeRange = Range<String.Index>.init(range, in: currentText)
+            else {
+                return true
+            }
+            
+            currentText.removeSubrange(removeRange)
+            let formattedText = formatPhoneNumber(currentText)
+            textField.text = formattedText
+            return false
+        } else {
+            let expectedText = (textField.text ?? "") + string
+            let formattedText = formatPhoneNumber(expectedText)
+            textField.text = formattedText
+            return false
+        }
     }
 }
