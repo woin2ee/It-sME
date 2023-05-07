@@ -1,5 +1,5 @@
 //
-//  LogoutUseCase+Rx.swift
+//  LogoutUseCase.swift
 //  ItsME
 //
 //  Created by Jaewon Yun on 2023/04/28.
@@ -11,16 +11,26 @@ import KakaoSDKUser
 import RxKakaoSDKUser
 import RxSwift
 
-extension LogoutUseCase: ReactiveCompatible {}
+protocol LogoutUseCaseProtocol {
+    func execute() -> Completable
+}
 
-extension Reactive where Base == LogoutUseCase {
+struct LogoutUseCase: LogoutUseCaseProtocol {
+    
+    // MARK: Dependencies
+    
+    let getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCase
+    
+    init(getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCase) {
+        self.getCurrentAuthProviderIDUseCase = getCurrentAuthProviderIDUseCase
+    }
     
     func execute() -> Completable {
         ItsMEUserDefaults.allowsAutoLogin = false
         
         let signOutFromFIRAuth = Auth.auth().rx.signOut()
         
-        return self.base.getCurrentAuthProviderIDUseCase.rx.execute()
+        return getCurrentAuthProviderIDUseCase.execute()
             .flatMapCompletable { providerID in
                 switch providerID {
                 case .kakao:

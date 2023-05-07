@@ -1,17 +1,18 @@
 //
-//  LoginWithAppleUseCase+Rx.swift
+//  LoginWithAppleUseCase.swift
 //  ItsME
 //
 //  Created by Jaewon Yun on 2023/04/28.
 //
 
 import AuthenticationServices
-import Foundation
 import RxSwift
 
-extension LoginWithAppleUseCase: ReactiveCompatible {}
+protocol LoginWithAppleUseCaseProtocol {
+    func execute(withRawNonce rawNonce: String) -> Observable<ASAuthorization>
+}
 
-extension Reactive where Base == LoginWithAppleUseCase {
+struct LoginWithAppleUseCase: LoginWithAppleUseCaseProtocol {
     
     func execute(withRawNonce rawNonce: String) -> Observable<ASAuthorization> {
         let appleIDProvider = ASAuthorizationAppleIDProvider.init()
