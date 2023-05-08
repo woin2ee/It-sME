@@ -8,6 +8,7 @@
 import Foundation
 
 final class ResumeCategory: Codable {
+    
     var title: String
     var items: [ResumeItem]
     
@@ -20,13 +21,17 @@ final class ResumeCategory: Codable {
 // MARK: - CodingKeys
 
 extension ResumeCategory {
+    
     enum CodingKeys: CodingKey {
-    case title
-    case items
+        case title
+        case items
     }
 }
 
+// MARK: - Empty
+
 extension ResumeCategory {
+    
     static var empty: ResumeCategory {
         .init(
             title: "",
