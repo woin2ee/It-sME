@@ -8,6 +8,7 @@
 import Foundation
 
 final class ResumeItem: Codable {
+    
     var period: String
     var title: String
     var secondTitle: String
@@ -47,20 +48,23 @@ final class ResumeItem: Codable {
 // MARK: - CodingKeys
 
 extension ResumeItem {
+    
     enum CodingKeys: CodingKey {
-    case period
-    case title
-    case secondTitle
-    case description
+        case period
+        case title
+        case secondTitle
+        case description
     }
 }
 
+// MARK: - Empty
+
 extension ResumeItem {
+    
     static var empty: ResumeItem {
-        .init(
-            period: "",
-            title: "",
-            secondTitle: "",
-            description: "")
+        .init(period: "",
+              title: "",
+              secondTitle: "",
+              description: "")
     }
 }
