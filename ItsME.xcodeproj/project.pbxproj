@@ -44,8 +44,8 @@
 		DA00EFEA2A03AE4700297501 /* PhoneNumberEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA00EFE92A03AE4700297501 /* PhoneNumberEditingViewModel.swift */; };
 		DA00EFEC2A03B17300297501 /* EmailEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA00EFEB2A03B17300297501 /* EmailEditingViewModel.swift */; };
 		DA00EFF92A07C19C00297501 /* PhoneNumberEditingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA00EFF42A079DF000297501 /* PhoneNumberEditingViewModelTests.swift */; };
-		DA00EFFB2A07C1A600297501 /* MockDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA00EFF62A07A61B00297501 /* MockDelegate.swift */; };
 		DA00F0022A080AD900297501 /* SaveProfileImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA00F0012A080AD900297501 /* SaveProfileImageUseCase.swift */; };
+		DA00EFFB2A07C1A600297501 /* DelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA00EFF62A07A61B00297501 /* DelegateMock.swift */; };
 		DA00F0002A07FD0100297501 /* ProfileEditingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA00EFFF2A07FD0100297501 /* ProfileEditingViewModelTests.swift */; };
 		DA018809296D146A002C5CB0 /* BirthdayEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA018808296D146A002C5CB0 /* BirthdayEditingViewController.swift */; };
 		DA01880B296D1471002C5CB0 /* AddressEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA01880A296D1471002C5CB0 /* AddressEditingViewController.swift */; };
@@ -225,8 +225,8 @@
 		DA00EFE92A03AE4700297501 /* PhoneNumberEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberEditingViewModel.swift; sourceTree = "<group>"; };
 		DA00EFEB2A03B17300297501 /* EmailEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailEditingViewModel.swift; sourceTree = "<group>"; };
 		DA00EFF42A079DF000297501 /* PhoneNumberEditingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberEditingViewModelTests.swift; sourceTree = "<group>"; };
-		DA00EFF62A07A61B00297501 /* MockDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDelegate.swift; sourceTree = "<group>"; };
 		DA00F0012A080AD900297501 /* SaveProfileImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveProfileImageUseCase.swift; sourceTree = "<group>"; };
+		DA00EFF62A07A61B00297501 /* DelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateMock.swift; sourceTree = "<group>"; };
 		DA00EFFF2A07FD0100297501 /* ProfileEditingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditingViewModelTests.swift; sourceTree = "<group>"; };
 		DA018808296D146A002C5CB0 /* BirthdayEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayEditingViewController.swift; sourceTree = "<group>"; };
 		DA01880A296D1471002C5CB0 /* AddressEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressEditingViewController.swift; sourceTree = "<group>"; };
@@ -576,7 +576,7 @@
 			children = (
 				DA00EFFF2A07FD0100297501 /* ProfileEditingViewModelTests.swift */,
 				DA00EFF42A079DF000297501 /* PhoneNumberEditingViewModelTests.swift */,
-				DA00EFF62A07A61B00297501 /* MockDelegate.swift */,
+				DA00EFF62A07A61B00297501 /* DelegateMock.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1393,7 +1393,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA00F0002A07FD0100297501 /* ProfileEditingViewModelTests.swift in Sources */,
-				DA00EFFB2A07C1A600297501 /* MockDelegate.swift in Sources */,
+				DA00EFFB2A07C1A600297501 /* DelegateMock.swift in Sources */,
 				DA00EFF92A07C19C00297501 /* PhoneNumberEditingViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

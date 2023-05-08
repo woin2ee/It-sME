@@ -13,7 +13,7 @@ import XCTest
 final class PhoneNumberEditingViewModelTests: XCTestCase {
     
     var disposeBag: DisposeBag!
-    var mockDelegate: MockDelegate!
+    var delegateMock: DelegateMock!
     
     var sut: PhoneNumberEditingViewModel!
     
@@ -21,14 +21,14 @@ final class PhoneNumberEditingViewModelTests: XCTestCase {
         super.setUp()
         
         disposeBag = .init()
-        mockDelegate = .init()
+        delegateMock = .init()
     }
     
     override func tearDown() {
         super.tearDown()
         
         disposeBag = nil
-        mockDelegate = nil
+        delegateMock = nil
         sut = nil
     }
     
@@ -36,7 +36,7 @@ final class PhoneNumberEditingViewModelTests: XCTestCase {
     func test_transformInitialPhoneNumberToOutput() {
         // Arrange
         let initialPhoneNumber = "010-1234-5678"
-        sut = .init(initialPhoneNumber: initialPhoneNumber, delegate: mockDelegate)
+        sut = .init(initialPhoneNumber: initialPhoneNumber, delegate: delegateMock)
         let input: PhoneNumberEditingViewModel.Input = .init(phoneNumber: .never(), saveTrigger: .never())
         let output = sut.transform(input: input)
         
@@ -51,7 +51,7 @@ final class PhoneNumberEditingViewModelTests: XCTestCase {
     func test_callDelegateAndTransformToOutputOnSaveTrigger() {
         // Arrange
         let saveTrigger: PublishSubject<Void> = .init()
-        sut = .init(initialPhoneNumber: "", delegate: mockDelegate)
+        sut = .init(initialPhoneNumber: "", delegate: delegateMock)
         let input: PhoneNumberEditingViewModel.Input = .init(phoneNumber: .never(), saveTrigger: saveTrigger.asSignalOnErrorJustComplete())
         let output = sut.transform(input: input)
         var saveComplete: Bool = false
@@ -64,7 +64,7 @@ final class PhoneNumberEditingViewModelTests: XCTestCase {
         saveTrigger.onNext(())
         
         // Assert
-        XCTAssertEqual(mockDelegate.didCalledDelegateMethod, 1)
+        XCTAssertEqual(delegateMock.didCalledDelegateMethod, 1)
         XCTAssertTrue(saveComplete)
     }
 }
