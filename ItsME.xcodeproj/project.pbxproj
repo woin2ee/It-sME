@@ -127,7 +127,7 @@
 		DA739DDA292398BE003AEE4C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DD9292398BE003AEE4C /* LoginViewController.swift */; };
 		DA739DDC292398C3003AEE4C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA739DDB292398C3003AEE4C /* LoginViewModel.swift */; };
 		DA739DE62925E35A003AEE4C /* ItsMEUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9952918DE8C0081C0EC /* ItsMEUITests.swift */; };
-		DA90695629C823F200535A3D /* ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53B73929B5C304000BBB26 /* ExtensionTests.swift */; };
+		DA90695629C823F200535A3D /* IntExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53B73929B5C304000BBB26 /* IntExtensionsTests.swift */; };
 		DA90695729C826F300535A3D /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53B73729B5BDA1000BBB26 /* Int+.swift */; };
 		DA9069D629CDA64B00535A3D /* Collection+isNotEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9069D529CDA64B00535A3D /* Collection+isNotEmpty.swift */; };
 		DAA44AC929FD58D3000CD1A4 /* CGPoint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA44AC829FD58D3000CD1A4 /* CGPoint+.swift */; };
@@ -278,7 +278,7 @@
 		DA4FEC2B29E6D12C00D41CE1 /* ItsMEUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMEUtils.swift; sourceTree = "<group>"; };
 		DA4FEC2D29E6D14000D41CE1 /* ItsMEError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMEError.swift; sourceTree = "<group>"; };
 		DA53B73729B5BDA1000BBB26 /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
-		DA53B73929B5C304000BBB26 /* ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionTests.swift; sourceTree = "<group>"; };
+		DA53B73929B5C304000BBB26 /* IntExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExtensionsTests.swift; sourceTree = "<group>"; };
 		DA53B73D29B5DB55000BBB26 /* ContextMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuCell.swift; sourceTree = "<group>"; };
 		DA6B3CD829ADE36B002BB159 /* ButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		DA6B3CDA29ADEE33002BB159 /* UIEdgeInsets+All.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+All.swift"; sourceTree = "<group>"; };
@@ -313,7 +313,7 @@
 		DA739DD9292398BE003AEE4C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DA739DDB292398C3003AEE4C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		DA739DDD2923B4D2003AEE4C /* ItsME.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ItsME.entitlements; sourceTree = "<group>"; };
-		DA90694D29C8234600535A3D /* ItsMETestsWithoutApp.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ItsMETestsWithoutApp.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA90694D29C8234600535A3D /* ItsMENoneHostAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ItsMENoneHostAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA9069D529CDA64B00535A3D /* Collection+isNotEmpty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+isNotEmpty.swift"; sourceTree = "<group>"; };
 		DAA44AC829FD58D3000CD1A4 /* CGPoint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+.swift"; sourceTree = "<group>"; };
 		DAA5B9642938825A00BAB04E /* ProfileEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditingViewController.swift; sourceTree = "<group>"; };
@@ -451,7 +451,7 @@
 			children = (
 				D09AC9732918DE8B0081C0EC /* ItsME */,
 				D09AC98A2918DE8C0081C0EC /* ItsMETests */,
-				DA90694E29C8234600535A3D /* ItsMETestsWithoutApp */,
+				DA90694E29C8234600535A3D /* ItsMENoneHostAppTests */,
 				D09AC9942918DE8C0081C0EC /* ItsMEUITests */,
 				D09AC9722918DE8B0081C0EC /* Products */,
 				52102F58560B24E2E84059BE /* Pods */,
@@ -465,7 +465,7 @@
 				D09AC9712918DE8B0081C0EC /* ItsME.app */,
 				D09AC9872918DE8C0081C0EC /* ItsMETests.xctest */,
 				D09AC9912918DE8C0081C0EC /* ItsMEUITests.xctest */,
-				DA90694D29C8234600535A3D /* ItsMETestsWithoutApp.xctest */,
+				DA90694D29C8234600535A3D /* ItsMENoneHostAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -573,6 +573,14 @@
 				D0A965C729B6F9D50071FB3D /* ResumeItemEditingViewModel.swift */,
 			);
 			path = ResumeItemEditing;
+			sourceTree = "<group>";
+		};
+		DA00EFF12A06933900297501 /* ExtensionsTests */ = {
+			isa = PBXGroup;
+			children = (
+				DA53B73929B5C304000BBB26 /* IntExtensionsTests.swift */,
+			);
+			path = ExtensionsTests;
 			sourceTree = "<group>";
 		};
 		DA018803296D0E39002C5CB0 /* BirthdayEditing */ = {
@@ -821,14 +829,14 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		DA90694E29C8234600535A3D /* ItsMETestsWithoutApp */ = {
+		DA90694E29C8234600535A3D /* ItsMENoneHostAppTests */ = {
 			isa = PBXGroup;
 			children = (
-				DA53B73929B5C304000BBB26 /* ExtensionTests.swift */,
+				DA00EFF12A06933900297501 /* ExtensionsTests */,
 				DA71B5D729EE67050033864C /* ItsMEUtilsTests.swift */,
 				DA00EFE52A03853900297501 /* ItsMEFunctionsTests.swift */,
 			);
-			path = ItsMETestsWithoutApp;
+			path = ItsMENoneHostAppTests;
 			sourceTree = "<group>";
 		};
 		DAA5B9632938760900BAB04E /* ProfileEditing */ = {
@@ -1051,9 +1059,9 @@
 			productReference = D09AC9912918DE8C0081C0EC /* ItsMEUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		DA90694C29C8234600535A3D /* ItsMETestsWithoutApp */ = {
+		DA90694C29C8234600535A3D /* ItsMENoneHostAppTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DA90695329C8234600535A3D /* Build configuration list for PBXNativeTarget "ItsMETestsWithoutApp" */;
+			buildConfigurationList = DA90695329C8234600535A3D /* Build configuration list for PBXNativeTarget "ItsMENoneHostAppTests" */;
 			buildPhases = (
 				DA90694929C8234600535A3D /* Sources */,
 				DA90694A29C8234600535A3D /* Frameworks */,
@@ -1064,9 +1072,9 @@
 			dependencies = (
 				DA90695229C8234600535A3D /* PBXTargetDependency */,
 			);
-			name = ItsMETestsWithoutApp;
+			name = ItsMENoneHostAppTests;
 			productName = ItsMETestsWithoutApp;
-			productReference = DA90694D29C8234600535A3D /* ItsMETestsWithoutApp.xctest */;
+			productReference = DA90694D29C8234600535A3D /* ItsMENoneHostAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -1112,7 +1120,7 @@
 				D09AC9702918DE8B0081C0EC /* ItsME */,
 				D09AC9862918DE8C0081C0EC /* ItsMETests */,
 				D09AC9902918DE8C0081C0EC /* ItsMEUITests */,
-				DA90694C29C8234600535A3D /* ItsMETestsWithoutApp */,
+				DA90694C29C8234600535A3D /* ItsMENoneHostAppTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1419,7 +1427,7 @@
 			files = (
 				DA00EFE62A03853900297501 /* ItsMEFunctionsTests.swift in Sources */,
 				DA71B5DA29EE67940033864C /* ItsMEError.swift in Sources */,
-				DA90695629C823F200535A3D /* ExtensionTests.swift in Sources */,
+				DA90695629C823F200535A3D /* IntExtensionsTests.swift in Sources */,
 				DA71B5D829EE67050033864C /* ItsMEUtilsTests.swift in Sources */,
 				DA90695729C826F300535A3D /* Int+.swift in Sources */,
 				DA71B5D929EE677A0033864C /* ItsMEUtils.swift in Sources */,
@@ -1815,7 +1823,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DA90695329C8234600535A3D /* Build configuration list for PBXNativeTarget "ItsMETestsWithoutApp" */ = {
+		DA90695329C8234600535A3D /* Build configuration list for PBXNativeTarget "ItsMENoneHostAppTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA90695429C8234600535A3D /* Debug */,

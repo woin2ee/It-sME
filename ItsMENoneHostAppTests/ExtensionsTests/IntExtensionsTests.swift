@@ -1,5 +1,5 @@
 //
-//  ExtensionTests.swift
+//  IntExtensionsTests.swift
 //  ItsMETests
 //
 //  Created by Jaewon Yun on 2023/03/06.
@@ -8,7 +8,7 @@
 import XCTest
 @testable import ItsME
 
-final class ExtensionTests: XCTestCase {
+final class IntExtensionsTests: XCTestCase {
     
     func test_toLeadingZero_보통상황() {
         // Arrange

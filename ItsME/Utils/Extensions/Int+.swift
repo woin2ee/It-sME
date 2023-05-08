@@ -24,9 +24,8 @@ extension Int {
         let absNumString = String(abs(self))
         if absNumString.count >= digit {
             return self >= 0 ? absNumString : "-\(absNumString)"
-        } else {
-            let leadingZeroString = String(repeating: "0", count: Int(digit) - absNumString.count) + absNumString
-            return self >= 0 ? leadingZeroString : "-\(leadingZeroString)"
         }
+        let leadingZeroString = String(repeating: "0", count: Int(digit) - absNumString.count) + absNumString
+        return self >= 0 ? leadingZeroString : "-\(leadingZeroString)"
     }
 }
