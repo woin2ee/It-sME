@@ -252,12 +252,13 @@ private extension ResumeItemEditingViewController {
                 .mapToVoid()
                 .asDriverOnErrorJustComplete()
         )
-        
         let output = viewModel.transform(input: input)
-        
         [
             output.resumeItem
                 .drive(resumeItemBinding),
+            output.resumeItem
+                .map(\.title.isNotEmpty)
+                .drive(completeBarButton.rx.isEnabled),
             output.doneHandler
                 .emit(with: self, onNext: { owner, _ in
                     owner.navigationController?.popViewController(animated: true)

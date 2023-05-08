@@ -12,21 +12,23 @@ final class CVEditViewModel: ViewModelType {
     
     private let cvRepository: CVRepository = CVRepository.shared
     
-    let initialCVTitle: String
     let editingType: EditingType
     
-    init(
-        initialCVTitle: String,
-        editingType: EditingType
-    ) {
-        self.initialCVTitle = initialCVTitle
+    init(editingType: EditingType) {
         self.editingType = editingType
     }
     
-    //MARK: - transform
+    // MARK: transform
+    
     func transform(input: Input) -> Output {
         let cvTitle = input.cvTitle
-            .startWith(initialCVTitle)
+            .startWith {
+                if case let .edit(_, initialCVTitle) = self.editingType {
+                    return initialCVTitle
+                } else {
+                    return ""
+                }
+            }
         
         let doneHandler = input.doneTrigger
             .withLatestFrom(cvTitle)
@@ -40,7 +42,7 @@ final class CVEditViewModel: ViewModelType {
         
         return .init(
             cvTitle: cvTitle,
-            doneHandler: doneHandler,
+            doneComplete: doneHandler,
             editingType: editingType
         )
     }
@@ -49,7 +51,7 @@ final class CVEditViewModel: ViewModelType {
         let todayString = ItsMEStandardDateFormatter.string(from: .now)
         
         switch editingType {
-        case .edit(let uuid):
+        case .edit(let uuid, _):
             return cvRepository.saveCVTitle(title, lastModified: todayString, uuid: uuid)
         case .new:
             let cvInfo: CVInfo = .init(title: title, resume: Resume.empty, coverLetter: CoverLetter.empty, lastModified: todayString)
@@ -69,7 +71,7 @@ extension CVEditViewModel {
     
     struct Output {
         let cvTitle: Driver<String>
-        let doneHandler: Signal<Void>
+        let doneComplete: Signal<Void>
         let editingType: Driver<EditingType>
     }
 }
@@ -81,7 +83,7 @@ extension CVEditViewModel {
     enum EditingType {
         
         /// 기존 CV 정보를 수정할 때 사용하는 열거형 값입니다.
-        case edit(uuid: String)
+        case edit(uuid: String, initialCVTitle: String)
         
         /// 새 CV를 추가할 때 사용하는 열거형 값입니다.
         case new

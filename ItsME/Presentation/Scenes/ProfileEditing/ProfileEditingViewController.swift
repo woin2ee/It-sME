@@ -365,16 +365,19 @@ private extension ProfileEditingViewController {
     }
     
     func presentAddressEditingView() {
+        let viewModel: AddressEditingViewModel = .init(initialAddress: viewModel.currentAddress, delegate: viewModel)
         let viewController: AddressEditingViewController = .init(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func presentPhoneNumberEditingView() {
+        let viewModel: PhoneNumberEditingViewModel = .init(initialPhoneNumber: viewModel.currentPhoneNumber, delegate: viewModel)
         let viewController: PhoneNumberEditingViewController = .init(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func presentEmailEditingView() {
+        let viewModel: EmailEditingViewModel = .init(initialEmail: viewModel.currentEmail, delegate: viewModel)
         let viewController: EmailEditingViewController = .init(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }

@@ -118,6 +118,9 @@ private extension CoverLetterEditingViewController {
         [
             output.coverLetterItem
                 .drive(coverLetterItemBinding),
+            output.coverLetterItem
+                .map(\.title.isNotEmpty)
+                .drive(completeBarButton.rx.isEnabled),
             output.doneHandler
                 .emit(with: self, onNext: { owner, _ in
                     owner.navigationController?.popViewController(animated: true)

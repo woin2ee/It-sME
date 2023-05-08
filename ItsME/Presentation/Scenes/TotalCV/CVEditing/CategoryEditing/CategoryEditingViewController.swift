@@ -102,7 +102,6 @@ private extension CategoryEditingViewController {
 private extension CategoryEditingViewController {
     
     func bindViewModel() {
-        
         let input: CategoryEditingViewModel.Input = .init(
             title: inputCell.contentsTextField.rx.text.orEmpty.asDriver(),
             doneTrigger: completeBarButton.rx.tap.asSignal(),
@@ -114,21 +113,23 @@ private extension CategoryEditingViewController {
                 )
             }.asSignalOnErrorJustComplete()
         )
-        
         let output = viewModel.transform(input: input)
-        
-        [ output.title
-            .drive(inputCell.contentsTextField.rx.text),
-          output.doneHandler
-            .emit(with: self, onNext: { owner, _ in
-                owner.navigationController?.popViewController(animated: true)
-            }),
-          output.removeHandler
-            .emit(with: self, onNext: { owner, _ in
-                owner.navigationController?.popViewController(animated: true)
-            }),
-          output.editingType
-            .drive(editingTypeBinding),
+        [
+            output.title
+                .drive(inputCell.contentsTextField.rx.text),
+            output.title
+                .map(\.isNotEmpty)
+                .drive(completeBarButton.rx.isEnabled),
+            output.doneHandler
+                .emit(with: self, onNext: { owner, _ in
+                    owner.navigationController?.popViewController(animated: true)
+                }),
+            output.removeHandler
+                .emit(with: self, onNext: { owner, _ in
+                    owner.navigationController?.popViewController(animated: true)
+                }),
+            output.editingType
+                .drive(editingTypeBinding),
         ]
             .forEach { $0.disposed(by: disposeBag) }
     }

@@ -109,6 +109,9 @@ private extension OtherItemEditingViewController {
                 .drive(editingTypeBinding),
             output.userInfoItem
                 .drive(userInfoItemBinding),
+            output.userInfoItem
+                .map(\.contents.isNotEmpty)
+                .drive(completeButton.rx.isEnabled),
             output.doneCompleted
                 .emit(with: self, onNext: { owner, _ in
                     owner.navigationController?.popViewController(animated: true)
