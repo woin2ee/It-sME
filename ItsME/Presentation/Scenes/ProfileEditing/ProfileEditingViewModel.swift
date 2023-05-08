@@ -21,6 +21,7 @@ final class ProfileEditingViewModel: ViewModelType {
     )
     private let logoutUseCase: LogoutUseCase = .init(getCurrentAuthProviderIDUseCase: .init())
     private let saveProfileImageUseCase: SaveProfileImageUseCase = .init()
+    private let getProfileImageUseCase: GetProfileImageUseCaseProtocol = GetProfileImageUseCase()
     
     private let userRepository: UserProfileRepository = .shared
     private let cvRepository: CVRepository = .shared
@@ -74,7 +75,7 @@ final class ProfileEditingViewModel: ViewModelType {
         let profileImageData = Driver.merge(
             input.newProfileImageData,
             userInfoDriver.flatMap {
-                Storage.storage().reference().child($0.profileImageURL).rx.getData().map { $0 }
+                return self.getProfileImageUseCase.execute(withStoragePath: $0.profileImageURL).map { $0 }
                     .asDriverOnErrorJustComplete()
             }
                 .asObservable()
