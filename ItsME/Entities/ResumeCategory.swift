@@ -16,6 +16,17 @@ final class ResumeCategory: Codable {
         self.title = title
         self.items = items
     }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.title = try container.decode(String.self, forKey: .title)
+        do {
+            self.items = try container.decode([ResumeItem].self, forKey: .items)
+        } catch {
+            self.items = []
+        }
+    }
 }
 
 // MARK: - CodingKeys
