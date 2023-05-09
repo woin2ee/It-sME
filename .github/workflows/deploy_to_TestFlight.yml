@@ -21,8 +21,8 @@ jobs:
       CERTIFICATE_EXPORT_KEY: ${{ secrets.CERTIFICATE_EXPORT_PWD }}
     
       # Provisioning
-      ENCRYPTED_PROVISIONING_FILE_PATH: ${{ '.github/secrets/iOSAppStorecomILGOBItsME.mobileprovision.gpg' }}
-      DECRYPTED_PROVISIONING_FILE_PATH: ${{ '.github/secrets/iOSAppStorecomILGOBItsME.mobileprovision' }}
+      ENCRYPTED_PROVISIONING_FILE_PATH: ${{ '.github/secrets/AppStore_comILGOBItsME.mobileprovision.gpg' }}
+      DECRYPTED_PROVISIONING_FILE_PATH: ${{ '.github/secrets/AppStore_comILGOBItsME.mobileprovision' }}
       PROVISIONING_ENCRYPTION_KEY: ${{ secrets.PROVISIONING_ENCRYPTION_KEY }}
       
       KEYCHAIN: ${{ 'ItsME.temp.keychain' }}
