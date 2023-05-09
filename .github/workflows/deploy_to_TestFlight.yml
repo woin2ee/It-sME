@@ -59,7 +59,7 @@ jobs:
             cp "./$PROVISION" "$HOME/Library/MobileDevice/Provisioning Profiles/$UUID.mobileprovision"
           done
       - name: Check Cache
-        uses: actions/cache@v1.2.1
+        uses: actions/cache@v3
         id: cocoapods-cache
         with:
           path: ./Pods
