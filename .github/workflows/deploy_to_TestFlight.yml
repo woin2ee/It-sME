@@ -69,7 +69,7 @@ jobs:
         run: |
           echo 'cache hit!'
       - name: Pod Install
-        if: steps.cocoapods-cache.outputs.cache-hit == 'false'
+        if: steps.cocoapods-cache.outputs.cache-hit != 'true'
         run: |
           echo 'cache missed!'
           pod install --repo-update --clean-install
