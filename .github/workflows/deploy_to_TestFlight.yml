@@ -58,9 +58,21 @@ jobs:
             UUID=`/usr/libexec/PlistBuddy -c 'Print :UUID' /dev/stdin <<< $(security cms -D -i ./$PROVISION)`
             cp "./$PROVISION" "$HOME/Library/MobileDevice/Provisioning Profiles/$UUID.mobileprovision"
           done
+      - name: Install Pods
+        uses: actions/cache@v1.2.1
+        id: cocoapods-cache
+        with:
+          path: ./Pods
+          key: ${{ runner.os }}-cocoapods-${{ hashFiles('./Podfile.lock') }}
+      - if: steps.cocoapods-cache.outputs.cache-hit == 'true'
+        run: |
+          echo 'cache hit!'
+      - if: steps.npm-cache.outputs.cache-hit == 'false'
+        run: |
+          echo 'cache missed!'
+          pod install --repo-update --clean-install
       - name: Archive app
         run: |
-          pod install --repo-update --clean-install
           xcodebuild clean archive -workspace $XC_WORKSPACE -scheme $XC_SCHEME -configuration release -archivePath $XC_ARCHIVE
       - name: Export app
         run: |
