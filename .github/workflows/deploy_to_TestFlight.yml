@@ -67,7 +67,7 @@ jobs:
       - if: steps.cocoapods-cache.outputs.cache-hit == 'true'
         run: |
           echo 'cache hit!'
-      - if: steps.npm-cache.outputs.cache-hit == 'false'
+      - if: steps.cocoapods-cache.outputs.cache-hit == 'false'
         run: |
           echo 'cache missed!'
           pod install --repo-update --clean-install
