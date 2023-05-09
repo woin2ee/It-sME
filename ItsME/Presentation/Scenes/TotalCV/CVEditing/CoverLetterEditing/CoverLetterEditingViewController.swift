@@ -28,6 +28,9 @@ final class CoverLetterEditingViewController: UIViewController {
         $0.titleTextField.placeholder = "제목"
         $0.titleTextField.autocorrectionType = .no
         $0.titleTextField.clearButtonMode = .whileEditing
+        $0.titleTextField.returnKeyType = .continue
+        $0.titleTextField.keyboardType = .default
+        $0.titleTextField.delegate = self
         $0.backgroundColor = .secondarySystemGroupedBackground
         $0.selectionStyle = .none
     }
@@ -161,5 +164,15 @@ extension CoverLetterEditingViewController :UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return inputTableViewDataSource[indexPath.row]
+    }
+}
+
+//MARK: - Delgate
+extension CoverLetterEditingViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == coverLetterTitleCell.titleTextField {
+            coverLetterContentCell.content.becomeFirstResponder()
+        }
+        return true
     }
 }

@@ -27,7 +27,7 @@ final class ContextMenuCell: UITableViewCell {
         $0.contentMode = .scaleAspectFit
     }
     
-    private lazy var wrappingButton: UIButton = .init().then {
+    lazy var wrappingButton: UIButton = .init().then {
         $0.backgroundColor = .clear
         $0.showsMenuAsPrimaryAction = true
     }

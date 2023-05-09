@@ -21,8 +21,8 @@ class TextViewCell: UITableViewCell {
             self.setNeedsLayout()
         }
     }
-
-//MARK: - UI Component
+    
+    //MARK: - UI Component
     lazy var textView: UITextView = .init()
     
     override init(style: UITableViewCell.CellStyle = .default, reuseIdentifier: String? = nil) {
