@@ -11,10 +11,10 @@
 	<key>provisioningProfiles</key>
 	<dict>
 		<key>com.ILGOB.ItsME</key>
-		<string>AppStore-com.ILGOB.ItsME</string>
+		<string>App-Store_com.ILGOB.ItsME</string>
 	</dict>
 	<key>signingCertificate</key>
-	<string>8F0F78D4F2238721625549CA9FDDB5E2973654B2</string>
+	<string>FDEDD41799E5AC12884C2E3990828106EC51A956</string>
 	<key>signingStyle</key>
 	<string>manual</string>
 	<key>stripSwiftSymbols</key>

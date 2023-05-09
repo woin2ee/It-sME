@@ -21,8 +21,8 @@ jobs:
       CERTIFICATE_EXPORT_KEY: ${{ secrets.CERTIFICATE_EXPORT_PWD }}
     
       # Provisioning
-      ENCRYPTED_PROVISIONING_FILE_PATH: ${{ '.github/secrets/AppStorecomILGOBItsME.mobileprovision.gpg' }}
-      DECRYPTED_PROVISIONING_FILE_PATH: ${{ '.github/secrets/AppStorecomILGOBItsME.mobileprovision' }}
+      ENCRYPTED_PROVISIONING_FILE_PATH: ${{ '.github/secrets/AppStore_comILGOBItsME.mobileprovision.gpg' }}
+      DECRYPTED_PROVISIONING_FILE_PATH: ${{ '.github/secrets/AppStore_comILGOBItsME.mobileprovision' }}
       PROVISIONING_ENCRYPTION_KEY: ${{ secrets.PROVISIONING_ENCRYPTION_KEY }}
       
       KEYCHAIN: ${{ 'ItsME.temp.keychain' }}
@@ -58,9 +58,23 @@ jobs:
             UUID=`/usr/libexec/PlistBuddy -c 'Print :UUID' /dev/stdin <<< $(security cms -D -i ./$PROVISION)`
             cp "./$PROVISION" "$HOME/Library/MobileDevice/Provisioning Profiles/$UUID.mobileprovision"
           done
+      - name: Check Cache
+        uses: actions/cache@v3
+        id: cocoapods-cache
+        with:
+          path: ./Pods
+          key: ${{ runner.os }}-cocoapods-${{ hashFiles('./Podfile.lock') }}
+      - name: Pass Pod Install
+        if: steps.cocoapods-cache.outputs.cache-hit == 'true'
+        run: |
+          echo 'cache hit!'
+      - name: Pod Install
+        if: steps.cocoapods-cache.outputs.cache-hit != 'true'
+        run: |
+          echo 'cache missed!'
+          pod install --repo-update --clean-install
       - name: Archive app
         run: |
-          pod install --repo-update --clean-install
           xcodebuild clean archive -workspace $XC_WORKSPACE -scheme $XC_SCHEME -configuration release -archivePath $XC_ARCHIVE
       - name: Export app
         run: |
