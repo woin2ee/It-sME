@@ -61,7 +61,7 @@ jobs:
       - name: Archive app
         run: |
           pod install --repo-update --clean-install
-          xcodebuild clean archive -workspace $XC_WORKSPACE -scheme $XC_SCHEME -destination 'platform=iOS,name=generic/iOS' -configuration release -archivePath $XC_ARCHIVE
+          xcodebuild clean archive -workspace $XC_WORKSPACE -scheme $XC_SCHEME -configuration release -archivePath $XC_ARCHIVE
       - name: Export app
         run: |
           xcodebuild -exportArchive -archivePath $XC_ARCHIVE -exportOptionsPlist ExportOptions.plist -exportPath . -allowProvisioningUpdates
