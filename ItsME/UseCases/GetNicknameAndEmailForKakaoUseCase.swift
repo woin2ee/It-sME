@@ -1,5 +1,5 @@
 //
-//  GetNicknameAndEmailForKakaoUseCase+Rx.swift
+//  GetNicknameAndEmailForKakaoUseCase.swift
 //  ItsME
 //
 //  Created by Jaewon Yun on 2023/04/28.
@@ -11,9 +11,11 @@ import KakaoSDKUser
 import RxKakaoSDKUser
 import RxSwift
 
-extension GetNicknameAndEmailForKakaoUseCase: ReactiveCompatible {}
+protocol GetNicknameAndEmailForKakaoUseCaseProtocol {
+    func execute() -> Single<(name: String, email: String)>
+}
 
-extension Reactive where Base == GetNicknameAndEmailForKakaoUseCase {
+struct GetNicknameAndEmailForKakaoUseCase {
     
     func execute() -> Single<(name: String, email: String)> {
         return UserApi.shared.rx.me()

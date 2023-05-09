@@ -1,5 +1,5 @@
 //
-//  GetCurrentAuthProviderIDUseCase+Rx.swift
+//  GetCurrentAuthProviderIDUseCase.swift
 //  ItsME
 //
 //  Created by Jaewon Yun on 2023/04/28.
@@ -9,9 +9,11 @@ import FirebaseAuth
 import Foundation
 import RxSwift
 
-extension GetCurrentAuthProviderIDUseCase: ReactiveCompatible {}
+protocol GetCurrentAuthProviderIDUseCaseProtocol {
+    func execute() -> Single<AuthProviderID>
+}
 
-extension Reactive where Base == GetCurrentAuthProviderIDUseCase {
+struct GetCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCaseProtocol {
     
     func execute() -> Single<AuthProviderID> {
         return Auth.auth().rx.currentUser

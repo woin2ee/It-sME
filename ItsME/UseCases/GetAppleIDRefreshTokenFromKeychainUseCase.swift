@@ -8,7 +8,11 @@
 import Foundation
 import Keychaining
 
-struct GetAppleIDRefreshTokenFromKeychainUseCase {
+protocol GetAppleIDRefreshTokenFromKeychainUseCaseProtocol {
+    func execute() throws -> String
+}
+
+struct GetAppleIDRefreshTokenFromKeychainUseCase: GetAppleIDRefreshTokenFromKeychainUseCaseProtocol {
     
     func execute() throws -> String {
         let refreshTokenData = try Keychain.genericPassword.makeSearchQuery()

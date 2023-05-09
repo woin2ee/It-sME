@@ -20,6 +20,8 @@ final class ProfileEditingViewModel: ViewModelType {
         getCurrentAuthProviderIDUseCase: .init()
     )
     private let logoutUseCase: LogoutUseCase = .init(getCurrentAuthProviderIDUseCase: .init())
+    private let saveProfileImageUseCase: SaveProfileImageUseCase = .init()
+    private let getProfileImageUseCase: GetProfileImageUseCaseProtocol = GetProfileImageUseCase()
     
     private let userRepository: UserProfileRepository = .shared
     private let cvRepository: CVRepository = .shared
@@ -73,7 +75,7 @@ final class ProfileEditingViewModel: ViewModelType {
         let profileImageData = Driver.merge(
             input.newProfileImageData,
             userInfoDriver.flatMap {
-                Storage.storage().reference().child($0.profileImageURL).rx.getData().map { $0 }
+                return self.getProfileImageUseCase.execute(withStoragePath: $0.profileImageURL).map { $0 }
                     .asDriverOnErrorJustComplete()
             }
                 .asObservable()
@@ -92,10 +94,7 @@ final class ProfileEditingViewModel: ViewModelType {
             .asObservable()
             .withLatestFrom(profileImageData)
             .compactMap { $0 }
-            .flatMap { data in
-                let path = try StoragePath().userProfileImage
-                return Storage.storage().reference().child(path).rx.putData(data)
-            }
+            .flatMapFirst { self.saveProfileImageUseCase.execute(withImageData: $0) }
             .compactMap { $0.path }
             .flatMap { path in
                 let userInfo = self.userInfoRelay.value
@@ -106,13 +105,13 @@ final class ProfileEditingViewModel: ViewModelType {
         
         let logoutComplete = input.logoutTrigger
             .flatMapFirst { _ in
-                return self.logoutUseCase.rx.execute()
+                return self.logoutUseCase.execute()
                     .andThenJustOnNext()
                     .asSignal(onErrorJustReturn: ())
             }
         let deleteAccountComplete = input.deleteAccountTrigger
             .flatMapFirst { _ in
-                return self.deleteAccountUseCase.rx.execute()
+                return self.deleteAccountUseCase.execute()
                     .andThenJustOnNext()
                     .asSignal(onErrorJustReturn: ())
             }
