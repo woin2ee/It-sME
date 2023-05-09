@@ -45,7 +45,7 @@ final class TotalCVViewModel: ViewModelType {
             Storage.storage().reference().child($0.profileImageURL).rx.getData().map { $0 }
                 .asDriverOnErrorJustComplete()
         }
-                
+        
         let tappedEditingCompleteButton = input.doneTrigger
             .withLatestFrom(cvInfoDriver)
             .flatMapFirst { cvInfo in
@@ -63,15 +63,18 @@ final class TotalCVViewModel: ViewModelType {
     }
 }
 
-// MARK: - International Function
+// MARK: - Methods
+
 extension TotalCVViewModel {
+    
     func removeResumeCategory(indexPath: IndexPath, resumeCatgory: ResumeCategory) {
         let changedCVInfo = cvInfoRelay.value
         changedCVInfo.resume.category.remove(at: indexPath.section)
     }
 }
 
-//MARK: - Input & Output
+// MARK: - Input & Output
+
 extension TotalCVViewModel {
     
     struct Input {
@@ -88,21 +91,26 @@ extension TotalCVViewModel {
     }
 }
 
-// MARK: - Extension Delegate
-extension TotalCVViewModel:
-    CoverLetterEditingViewModelDelegate, CategoryEditingViewModelDelegate, ResumeItemEditingViewModelDelegate {
+// MARK: - CoverLetterEditingViewModelDelegate
+
+extension TotalCVViewModel: CoverLetterEditingViewModelDelegate {
     
-    func resumeItemEditingViewModelDidEndEditing(with resumeItem: ResumeItem, at indexPath: IndexPath) {
+    func coverLetterEditingViewModelDidEndEditing(with coverLetterItem: CoverLetterItem, at indexPath: IndexPath) {
         let changedCVInfo = cvInfoRelay.value
-        changedCVInfo.resume.category[indexPath.section].items[indexPath.row] = resumeItem
+        changedCVInfo.coverLetter.items[indexPath.row] = coverLetterItem
         cvInfoRelay.accept(changedCVInfo)
     }
     
-    func resumeItemEditingViewModelDidAppend(with resumeItem: ResumeItem, at section: Int) {
+    func coverLetterEditingViewModelDidAppend(coverLetterItem: CoverLetterItem) {
         let changedCVInfo = cvInfoRelay.value
-        changedCVInfo.resume.category[section].items.append(resumeItem)
+        changedCVInfo.coverLetter.items.append(coverLetterItem)
         cvInfoRelay.accept(changedCVInfo)
     }
+}
+
+// MARK: - CategoryEditingViewModelDelegate
+
+extension TotalCVViewModel: CategoryEditingViewModelDelegate {
     
     func categoryEditingViewModelDidEndEditing(with title: String, at section: Int) {
         let changedCVInfo = cvInfoRelay.value
@@ -121,16 +129,21 @@ extension TotalCVViewModel:
         changedCVInfo.resume.category.remove(at: section)
         cvInfoRelay.accept(changedCVInfo)
     }
+}
+
+// MARK: - ResumeItemEditingViewModelDelegate
+
+extension TotalCVViewModel: ResumeItemEditingViewModelDelegate {
     
-    func coverLetterEditingViewModelDidEndEditing(with coverLetterItem: CoverLetterItem, at indexPath: IndexPath) {
+    func resumeItemEditingViewModelDidEndEditing(with resumeItem: ResumeItem, at indexPath: IndexPath) {
         let changedCVInfo = cvInfoRelay.value
-        changedCVInfo.coverLetter.items[indexPath.row] = coverLetterItem
+        changedCVInfo.resume.category[indexPath.section].items[indexPath.row] = resumeItem
         cvInfoRelay.accept(changedCVInfo)
     }
     
-    func coverLetterEditingViewModelDidAppend(coverLetterItem: CoverLetterItem) {
+    func resumeItemEditingViewModelDidAppend(with resumeItem: ResumeItem, at section: Int) {
         let changedCVInfo = cvInfoRelay.value
-        changedCVInfo.coverLetter.items.append(coverLetterItem)
+        changedCVInfo.resume.category[section].items.append(resumeItem)
         cvInfoRelay.accept(changedCVInfo)
     }
 }
