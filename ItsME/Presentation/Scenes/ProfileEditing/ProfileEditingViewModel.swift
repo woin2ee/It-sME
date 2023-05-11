@@ -109,14 +109,14 @@ final class ProfileEditingViewModel: ViewModelType {
         let logoutComplete = input.logoutTrigger
             .flatMapFirst { _ in
                 return self.logoutUseCase.execute()
-                    .andThenJustOnNext()
-                    .asSignal(onErrorJustReturn: ())
+                    .andThenJustNext()
+                    .asSignalOnErrorJustNext()
             }
         let deleteAccountComplete = input.deleteAccountTrigger
             .flatMapFirst { _ in
                 return self.deleteAccountUseCase.execute()
-                    .andThenJustOnNext()
-                    .asSignal(onErrorJustReturn: ())
+                    .andThenJustNext()
+                    .asSignalOnErrorJustNext()
             }
         
         return .init(

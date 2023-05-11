@@ -88,7 +88,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
 
 extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Never {
     
-    func andThenJustOnNext() -> Single<Void> {
+    func andThenJustNext() -> Single<Void> {
         return self.andThen(.just(()))
     }
 }
