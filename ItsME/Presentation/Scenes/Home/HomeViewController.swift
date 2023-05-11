@@ -51,6 +51,7 @@ final class HomeViewController: UIViewController {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 10
+        button.accessibilityIdentifier = "HOME_EDIT_PROFILE"
         return button
     }()
     

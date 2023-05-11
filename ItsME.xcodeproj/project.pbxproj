@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37E3481872DF6359091E995B /* Pods_ItsME_ItsMEUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 976AC160000F5B7165C2A728 /* Pods_ItsME_ItsMEUITests.framework */; };
 		660DE69AE1704CC2A0EA2EA4 /* Pods_ItsME.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E376D8E0A70652A602521B80 /* Pods_ItsME.framework */; };
 		D0304B8E29DC07CA0017C529 /* AddCVButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0304B8D29DC07CA0017C529 /* AddCVButton.swift */; };
 		D0304B9129DC0C870017C529 /* CVEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0304B9029DC0C870017C529 /* CVEditViewController.swift */; };
@@ -24,7 +25,6 @@
 		D09AC9792918DE8B0081C0EC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9782918DE8B0081C0EC /* HomeViewController.swift */; };
 		D09AC97E2918DE8C0081C0EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D09AC97D2918DE8C0081C0EC /* Assets.xcassets */; };
 		D09AC9812918DE8C0081C0EC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D09AC97F2918DE8C0081C0EC /* LaunchScreen.storyboard */; };
-		D09AC9982918DE8C0081C0EC /* ItsMEUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC9972918DE8C0081C0EC /* ItsMEUITestsLaunchTests.swift */; };
 		D0A078EA29BF00B800EBD41C /* TextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A078E929BF00B700EBD41C /* TextViewCell.swift */; };
 		D0A965C829B6F9D50071FB3D /* ResumeItemEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A965C729B6F9D50071FB3D /* ResumeItemEditingViewModel.swift */; };
 		D0B1BA862988DA75003ACD41 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B1BA852988DA75003ACD41 /* CategoryCell.swift */; };
@@ -150,7 +150,6 @@
 		DAFCFB6C294C3666006B287A /* EducationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB6B294C3666006B287A /* EducationCell.swift */; };
 		DAFCFB6F2950693F006B287A /* IntrinsicHeightTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB6E2950693F006B287A /* IntrinsicHeightTableView.swift */; };
 		DAFCFB7529543D3B006B287A /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB7429543D3B006B287A /* UIButton+.swift */; };
-		E5926D54B911C86C1F851D83 /* Pods_ItsME_ItsMEUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B709BB6C1D55A620D660FFA3 /* Pods_ItsME_ItsMEUITests.framework */; };
 		F31448DA0A0360CAEAF4A13C /* Pods_ItsMETests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F36B9489CAFC26427A95DF8F /* Pods_ItsMETests.framework */; };
 /* End PBXBuildFile section */
 
@@ -184,7 +183,9 @@
 		42A7E41B08E6E7D45EEC7C81 /* Pods-ItsME-ItsMEUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME-ItsMEUITests.release.xcconfig"; path = "Target Support Files/Pods-ItsME-ItsMEUITests/Pods-ItsME-ItsMEUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5DEF833EE19BC64A581D61EA /* Pods-ItsMETests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsMETests.debug.xcconfig"; path = "Target Support Files/Pods-ItsMETests/Pods-ItsMETests.debug.xcconfig"; sourceTree = "<group>"; };
 		6667093557B44DC7600D1241 /* Pods-ItsME-ItsMEUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME-ItsMEUITests.debug.xcconfig"; path = "Target Support Files/Pods-ItsME-ItsMEUITests/Pods-ItsME-ItsMEUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		B709BB6C1D55A620D660FFA3 /* Pods_ItsME_ItsMEUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ItsME_ItsMEUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6CD8830E6C8B60B03A4F4A8A /* Pods-ItsMEUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsMEUITests.debug.xcconfig"; path = "Target Support Files/Pods-ItsMEUITests/Pods-ItsMEUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		8F2234B1049411B8BC6547A1 /* Pods-ItsMEUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsMEUITests.release.xcconfig"; path = "Target Support Files/Pods-ItsMEUITests/Pods-ItsMEUITests.release.xcconfig"; sourceTree = "<group>"; };
+		976AC160000F5B7165C2A728 /* Pods_ItsME_ItsMEUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ItsME_ItsMEUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5973950B0C881FD5D80F955 /* Pods-ItsME.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItsME.debug.xcconfig"; path = "Target Support Files/Pods-ItsME/Pods-ItsME.debug.xcconfig"; sourceTree = "<group>"; };
 		D0304B8D29DC07CA0017C529 /* AddCVButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCVButton.swift; sourceTree = "<group>"; };
 		D0304B9029DC0C870017C529 /* CVEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVEditViewController.swift; sourceTree = "<group>"; };
@@ -207,7 +208,6 @@
 		D09AC9872918DE8C0081C0EC /* ItsMETests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ItsMETests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09AC9912918DE8C0081C0EC /* ItsMEUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ItsMEUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09AC9952918DE8C0081C0EC /* ItsMEUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMEUITests.swift; sourceTree = "<group>"; };
-		D09AC9972918DE8C0081C0EC /* ItsMEUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsMEUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D0A078E929BF00B700EBD41C /* TextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewCell.swift; sourceTree = "<group>"; };
 		D0A965C729B6F9D50071FB3D /* ResumeItemEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeItemEditingViewModel.swift; sourceTree = "<group>"; };
 		D0B1BA852988DA75003ACD41 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
@@ -356,7 +356,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5926D54B911C86C1F851D83 /* Pods_ItsME_ItsMEUITests.framework in Frameworks */,
+				37E3481872DF6359091E995B /* Pods_ItsME_ItsMEUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,8 +374,8 @@
 			isa = PBXGroup;
 			children = (
 				E376D8E0A70652A602521B80 /* Pods_ItsME.framework */,
-				B709BB6C1D55A620D660FFA3 /* Pods_ItsME_ItsMEUITests.framework */,
 				F36B9489CAFC26427A95DF8F /* Pods_ItsMETests.framework */,
+				976AC160000F5B7165C2A728 /* Pods_ItsME_ItsMEUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -389,6 +389,8 @@
 				42A7E41B08E6E7D45EEC7C81 /* Pods-ItsME-ItsMEUITests.release.xcconfig */,
 				5DEF833EE19BC64A581D61EA /* Pods-ItsMETests.debug.xcconfig */,
 				04B3CDA1FD0D611CDA323289 /* Pods-ItsMETests.release.xcconfig */,
+				6CD8830E6C8B60B03A4F4A8A /* Pods-ItsMEUITests.debug.xcconfig */,
+				8F2234B1049411B8BC6547A1 /* Pods-ItsMEUITests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -490,7 +492,6 @@
 			isa = PBXGroup;
 			children = (
 				D09AC9952918DE8C0081C0EC /* ItsMEUITests.swift */,
-				D09AC9972918DE8C0081C0EC /* ItsMEUITestsLaunchTests.swift */,
 			);
 			path = ItsMEUITests;
 			sourceTree = "<group>";
@@ -1028,7 +1029,7 @@
 				D09AC98D2918DE8C0081C0EC /* Sources */,
 				D09AC98E2918DE8C0081C0EC /* Frameworks */,
 				D09AC98F2918DE8C0081C0EC /* Resources */,
-				24B9E9D6BBA53B52B45A9945 /* [CP] Embed Pods Frameworks */,
+				9EBB9C71434905ACA6AEB84E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1141,23 +1142,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		24B9E9D6BBA53B52B45A9945 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ItsME-ItsMEUITests/Pods-ItsME-ItsMEUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ItsME-ItsMEUITests/Pods-ItsME-ItsMEUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ItsME-ItsMEUITests/Pods-ItsME-ItsMEUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		7CFC57357B9D4670BDB1395A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1200,6 +1184,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9EBB9C71434905ACA6AEB84E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ItsME-ItsMEUITests/Pods-ItsME-ItsMEUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ItsME-ItsMEUITests/Pods-ItsME-ItsMEUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ItsME-ItsMEUITests/Pods-ItsME-ItsMEUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CB343CFC47F9BA56069E4F87 /* [CP] Embed Pods Frameworks */ = {
@@ -1411,7 +1412,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA739DE62925E35A003AEE4C /* ItsMEUITests.swift in Sources */,
-				D09AC9982918DE8C0081C0EC /* ItsMEUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
