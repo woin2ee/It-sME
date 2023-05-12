@@ -25,9 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
         window?.rootViewController = rootNavigationController
         
-        let rootViewController = (Auth.auth().isLoggedIn &&
-                                  ItsMEUserDefaults.allowsAutoLogin) ? HomeViewController() : LoginViewController()
-        rootNavigationController.setViewControllers([rootViewController], animated: false)
+        setRootViewController()
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -97,5 +95,25 @@ extension SceneDelegate {
             self.rootNavigationController.setViewControllers([loginViewController], animated: false)
             self.logoutWithAppleUseCase.execute()
         }
+    }
+    
+    private func setRootViewController() {
+        let launchArguments = CommandLine.arguments
+        let rootViewController: UIViewController
+        
+        if launchArguments.contains("-TEST"),
+           let index = launchArguments.firstIndex(of: "-TARGET_VIEW_CONTROLLER") {
+            switch launchArguments[index + 1] {
+            case "HOME_VIEW_CONTROLLER":
+                rootViewController = HomeViewController()
+            default:
+                fatalError("올바른 argument 를 입력해주세요.")
+            }
+        } else {
+            rootViewController = (Auth.auth().isLoggedIn &&
+                                  ItsMEUserDefaults.allowsAutoLogin) ? HomeViewController() : LoginViewController()
+        }
+        
+        rootNavigationController.setViewControllers([rootViewController], animated: false)
     }
 }
