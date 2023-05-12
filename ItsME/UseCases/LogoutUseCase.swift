@@ -19,28 +19,29 @@ struct LogoutUseCase: LogoutUseCaseProtocol {
     
     // MARK: Dependencies
     
-    let getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCase
+    let getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCaseProtocol
+    let logoutWithAppleUseCase: LogoutWithAppleUseCaseProtocol
     
-    init(getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCase) {
+    init(
+        getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCaseProtocol,
+        logoutWithApple: LogoutWithAppleUseCaseProtocol
+    ) {
         self.getCurrentAuthProviderIDUseCase = getCurrentAuthProviderIDUseCase
+        self.logoutWithAppleUseCase = logoutWithApple
     }
     
     func execute() -> Completable {
-        ItsMEUserDefaults.allowsAutoLogin = false
-        
-        let signOutFromFIRAuth = Auth.auth().rx.signOut()
-        
         return getCurrentAuthProviderIDUseCase.execute()
             .flatMapCompletable { providerID in
                 switch providerID {
                 case .kakao:
+                    ItsMEUserDefaults.allowsAutoLogin = false
+                    let signOutFromFIRAuth = Auth.auth().rx.signOut()
                     let logoutWithKakao = UserApi.shared.rx.logout()
                     return Completable.zip(logoutWithKakao, signOutFromFIRAuth)
                 case .apple:
-                    ItsMEUserDefaults.removeAppleUserID()
-                    ItsMEUserDefaults.isLoggedInAsApple = false
-                    let logoutWithApple: Completable = .empty()
-                    return Completable.zip(logoutWithApple, signOutFromFIRAuth)
+                    logoutWithAppleUseCase.execute()
+                    return .empty()
                 }
             }
     }

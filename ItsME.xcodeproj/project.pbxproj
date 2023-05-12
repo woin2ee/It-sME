@@ -144,6 +144,7 @@
 		DAE6090B2942095400481742 /* TotalUserInfoItemStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE6090A2942095400481742 /* TotalUserInfoItemStackView.swift */; };
 		DAE6090D29420D9900481742 /* ItemAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE6090C29420D9900481742 /* ItemAddButton.swift */; };
 		DAF516FE29D5765E00BDAD68 /* UIButton.Configuration+Then.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF516FD29D5765E00BDAD68 /* UIButton.Configuration+Then.swift */; };
+		DAF7534E2A0BA1CE00166829 /* LogoutWithAppleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF7534D2A0BA1CE00166829 /* LogoutWithAppleUseCase.swift */; };
 		DAFCFB63294A9CD0006B287A /* Education.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB62294A9CD0006B287A /* Education.swift */; };
 		DAFCFB67294AC00C006B287A /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB66294AC00C006B287A /* UIStackView+.swift */; };
 		DAFCFB6C294C3666006B287A /* EducationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB6B294C3666006B287A /* EducationCell.swift */; };
@@ -324,6 +325,7 @@
 		DAE6090A2942095400481742 /* TotalUserInfoItemStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalUserInfoItemStackView.swift; sourceTree = "<group>"; };
 		DAE6090C29420D9900481742 /* ItemAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemAddButton.swift; sourceTree = "<group>"; };
 		DAF516FD29D5765E00BDAD68 /* UIButton.Configuration+Then.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton.Configuration+Then.swift"; sourceTree = "<group>"; };
+		DAF7534D2A0BA1CE00166829 /* LogoutWithAppleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutWithAppleUseCase.swift; sourceTree = "<group>"; };
 		DAFCFB62294A9CD0006B287A /* Education.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Education.swift; sourceTree = "<group>"; };
 		DAFCFB66294AC00C006B287A /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		DAFCFB6B294C3666006B287A /* EducationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationCell.swift; sourceTree = "<group>"; };
@@ -653,6 +655,7 @@
 				DA43163829F96615004453B9 /* RevokeAppleIDRefreshTokenUseCase.swift */,
 				DA43168129FBFEB2004453B9 /* GetCurrentAuthProviderIDUseCase.swift */,
 				DA00F0052A08E15600297501 /* GetProfileImageUseCase.swift */,
+				DAF7534D2A0BA1CE00166829 /* LogoutWithAppleUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1382,6 +1385,7 @@
 				DAA44AC929FD58D3000CD1A4 /* CGPoint+.swift in Sources */,
 				DA739DDC292398C3003AEE4C /* LoginViewModel.swift in Sources */,
 				D0304B9329DC0CEE0017C529 /* CVEditViewModel.swift in Sources */,
+				DAF7534E2A0BA1CE00166829 /* LogoutWithAppleUseCase.swift in Sources */,
 				DAE6090B2942095400481742 /* TotalUserInfoItemStackView.swift in Sources */,
 				D0CCF504292CCB4C00AD4AE6 /* CVCard.swift in Sources */,
 				DA708F1929DE864600EF84F2 /* IconCell.swift in Sources */,

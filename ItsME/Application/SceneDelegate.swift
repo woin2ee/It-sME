@@ -15,6 +15,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     let rootNavigationController: UINavigationController = .init()
+    
+    let logoutWithAppleUseCase: LogoutWithAppleUseCaseProtocol = LogoutWithAppleUseCase()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -62,8 +64,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             let appleIDProvider = ASAuthorizationAppleIDProvider()
             appleIDProvider.getCredentialState(forUserID: userID) { credentialState, error in
-                // 비동기적으로 실행되므로 원하는 방식대로 동작 안할 수 있음 - 관찰, 테스트 필요
-                if let _ = error {
+                if let error = error {
+                    ItsMELogger.standard.error("\(error)")
                     self.handleAppleIDLogout()
                     return
                 }
@@ -76,7 +78,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
             }
         }
-        
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
@@ -94,8 +95,7 @@ extension SceneDelegate {
         DispatchQueue.main.async {
             let loginViewController: LoginViewController = .init()
             self.rootNavigationController.setViewControllers([loginViewController], animated: false)
-            ItsMEUserDefaults.removeAppleUserID()
-            ItsMEUserDefaults.isLoggedInAsApple = false
+            self.logoutWithAppleUseCase.execute()
         }
     }
 }

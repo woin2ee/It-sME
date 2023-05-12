@@ -19,7 +19,10 @@ final class ProfileEditingViewModel: ViewModelType {
         revokeAppleIDTokenUseCase: .init(),
         getCurrentAuthProviderIDUseCase: .init()
     )
-    private let logoutUseCase: LogoutUseCase = .init(getCurrentAuthProviderIDUseCase: .init())
+    private let logoutUseCase: LogoutUseCase = .init(
+        getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCase(),
+        logoutWithApple: LogoutWithAppleUseCase()
+    )
     private let saveProfileImageUseCase: SaveProfileImageUseCase = .init()
     private let getProfileImageUseCase: GetProfileImageUseCaseProtocol = GetProfileImageUseCase()
     
