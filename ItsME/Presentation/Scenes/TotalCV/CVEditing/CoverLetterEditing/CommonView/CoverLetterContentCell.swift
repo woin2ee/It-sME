@@ -22,6 +22,7 @@ class CoverLetterContentCell: UITableViewCell {
         $0.isScrollEnabled = true
         $0.textColor = .label
         $0.font = .systemFont(ofSize: 15, weight: .regular)
+        $0.keyboardType = .default
         $0.autocorrectionType = .no
         $0.autocapitalizationType = .none
     }

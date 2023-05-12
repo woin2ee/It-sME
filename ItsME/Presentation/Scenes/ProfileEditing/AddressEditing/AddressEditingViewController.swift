@@ -21,7 +21,8 @@ final class AddressEditingViewController: UIViewController {
         $0.backgroundColor = .secondarySystemGroupedBackground
         $0.textContainerInset = .init(top: 10, left: 4, bottom: 10, right: 4)
         $0.font = .systemFont(ofSize: 18)
-        $0.keyboardType = .twitter
+        $0.keyboardType = .default
+        $0.returnKeyType = .done
         $0.layer.cornerRadius = 12.0
     }
     

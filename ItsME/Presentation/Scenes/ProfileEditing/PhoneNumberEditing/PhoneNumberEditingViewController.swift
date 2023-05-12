@@ -25,8 +25,9 @@ final class PhoneNumberEditingViewController: UIViewController {
     private lazy var inputCell: ContentsInputCell = .init().then {
         $0.titleLabel.text = "전화번호"
         $0.contentsTextField.placeholder = "전화"
-        $0.contentsTextField.keyboardType = .phonePad
         $0.contentsTextField.delegate = self
+        $0.contentsTextField.keyboardType = .numberPad
+        $0.contentsTextField.returnKeyType = .done
     }
     
     private lazy var completeBarButton: UIBarButtonItem = .init(title: "완료")

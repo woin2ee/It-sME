@@ -20,23 +20,30 @@ final class ResumeItemEditingViewController: UIViewController {
     private lazy var inputTableView: IntrinsicHeightTableView = .init(style: .insetGrouped).then {
         $0.dataSource = self
         $0.delegate = self
+        $0.keyboardDismissMode = .interactive
         $0.backgroundColor = .clear
     }
     
     private lazy var firstTitleInputCell: TextFieldCell = .init().then {
         $0.textField.placeholder = "제목"
-        $0.textField.autocorrectionType = .no
         $0.textField.clearButtonMode = .whileEditing
         $0.textField.delegate = self
+        $0.textField.keyboardType = .default
+        $0.textField.returnKeyType = .continue
+        $0.textField.autocorrectionType = .no
+        $0.textField.autocapitalizationType = .none
         $0.backgroundColor = .secondarySystemGroupedBackground
         $0.selectionStyle = .none
     }
     
     private lazy var secondTitleInputCell: TextFieldCell = .init().then {
         $0.textField.placeholder = "부제목"
-        $0.textField.autocorrectionType = .no
         $0.textField.clearButtonMode = .whileEditing
         $0.textField.delegate = self
+        $0.textField.keyboardType = .default
+        $0.textField.returnKeyType = .continue
+        $0.textField.autocorrectionType = .no
+        $0.textField.autocapitalizationType = .none
         $0.backgroundColor = .secondarySystemGroupedBackground
         $0.selectionStyle = .none
     }
@@ -51,10 +58,9 @@ final class ResumeItemEditingViewController: UIViewController {
         $0.textView.layer.masksToBounds = true
         $0.textView.isUserInteractionEnabled = true
         $0.textView.allowsEditingTextAttributes = true
+        $0.textView.keyboardType = .default
         $0.textView.autocorrectionType = .no
         $0.textView.autocapitalizationType = .none
-        $0.textView.returnKeyType = .done
-        $0.textView.delegate = self
         $0.backgroundColor = .secondarySystemGroupedBackground
         $0.selectionStyle = .none
     }
@@ -83,6 +89,8 @@ final class ResumeItemEditingViewController: UIViewController {
                 self?.showEndDateInputCells()
             }),
         ]
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(contextMenuCellTapped))
+        $0.wrappingButton.addGestureRecognizer(tapGesture)
         $0.backgroundColor = .secondarySystemGroupedBackground
     }
     
@@ -163,6 +171,7 @@ private extension ResumeItemEditingViewController {
     }
     
     func toggleEntranceDatePickerCell() {
+        self.view.endEditing(true)
         let section = 1
         let row = 1
         let indexPath: IndexPath = .init(row: row, section: section)
@@ -184,6 +193,7 @@ private extension ResumeItemEditingViewController {
     }
     
     func toggleEndDatePickerCell() {
+        self.view.endEditing(true)
         let section = 1
         let row = inputTableViewDataSource[section].endIndex
         let animationDuration: TimeInterval = 0.3
@@ -230,6 +240,10 @@ private extension ResumeItemEditingViewController {
             inputTableViewDataSource[section].insert(endDateInputCell, at: nextRow)
             inputTableView.insertRows(at: [.init(row: nextRow, section: section)], with: .fade)
         }
+    }
+    
+    @objc private func contextMenuCellTapped() {
+        self.view.endEditing(true)
     }
 }
 
@@ -322,15 +336,14 @@ extension ResumeItemEditingViewController: UITableViewDataSource, UITableViewDel
 
 // MARK: - UITextFieldDelegate, UITextViewDelegate
 
-extension ResumeItemEditingViewController: UITextFieldDelegate, UITextViewDelegate {
+extension ResumeItemEditingViewController: UITextFieldDelegate {
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.resignFirstResponder()
-    }
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            textView.resignFirstResponder()
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == firstTitleInputCell.textField {
+            secondTitleInputCell.textField.becomeFirstResponder()
+        }
+        else if textField == secondTitleInputCell.textField {
+            descriptionInputCell.textView.becomeFirstResponder()
         }
         return true
     }

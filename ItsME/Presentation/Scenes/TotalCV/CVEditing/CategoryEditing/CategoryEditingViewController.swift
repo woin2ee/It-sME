@@ -26,6 +26,8 @@ class CategoryEditingViewController: UIViewController {
         $0.titleLabel.text = "항목"
         $0.titleLabel.font = .systemFont(ofSize: 18, weight: .bold)
         $0.contentsTextField.font = .systemFont(ofSize: 18)
+        $0.contentsTextField.keyboardType = .default
+        $0.contentsTextField.returnKeyType = .done
     }
     
     lazy var removeButton = UIButton().then {

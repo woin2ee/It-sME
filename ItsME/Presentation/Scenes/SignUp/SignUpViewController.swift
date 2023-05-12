@@ -55,7 +55,10 @@ final class SignUpViewController: UIViewController {
         $0.placeholder = "주소를 입력해주세요."
         $0.borderStyle = .roundedRect
         $0.font = inputTextFieldFont
+        $0.keyboardType = .default
+        $0.returnKeyType = .continue
         $0.adjustsFontForContentSizeCategory = true
+        $0.delegate = self
     }
     private lazy var addressValidationLabel: UILabel = .init().then {
         $0.text = "선택 사항입니다."
@@ -67,7 +70,10 @@ final class SignUpViewController: UIViewController {
         $0.placeholder = "전화번호를 입력해주세요."
         $0.borderStyle = .roundedRect
         $0.font = inputTextFieldFont
+        $0.keyboardType = .numberPad
+        $0.returnKeyType = .continue
         $0.adjustsFontForContentSizeCategory = true
+        $0.delegate = self
     }
     private lazy var phoneNumberValidationLabel: UILabel = .init().then {
         $0.text = "선택 사항입니다."
@@ -201,6 +207,16 @@ extension SignUpViewController {
                 owner.navigationController?.setViewControllers([homeViewController], animated: true)
             })
             .disposed(by: disposeBag)
+    }
+}
+
+//MARK: - Delgate
+extension SignUpViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == addressTextField {
+            phoneNumberTextField.becomeFirstResponder()
+        }
+        return true
     }
 }
 
