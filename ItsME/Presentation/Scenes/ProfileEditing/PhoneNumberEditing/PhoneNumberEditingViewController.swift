@@ -122,7 +122,12 @@ extension PhoneNumberEditingViewController: UITableViewDataSource {
 extension PhoneNumberEditingViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if range.length > 0 {
+        let isEntering = !(range.length > 0)
+        let expectedText: String
+        
+        if isEntering {
+            expectedText = (textField.text ?? "") + string
+        } else {
             guard
                 var currentText = textField.text,
                 let removeRange = Range<String.Index>.init(range, in: currentText)
@@ -131,14 +136,10 @@ extension PhoneNumberEditingViewController: UITextFieldDelegate {
             }
             
             currentText.removeSubrange(removeRange)
-            let formattedText = formatPhoneNumber(currentText)
-            textField.text = formattedText
-            return false
-        } else {
-            let expectedText = (textField.text ?? "") + string
-            let formattedText = formatPhoneNumber(expectedText)
-            textField.text = formattedText
-            return false
+            expectedText = currentText
         }
+        
+        textField.text = formatPhoneNumber(expectedText)
+        return false
     }
 }

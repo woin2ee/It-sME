@@ -210,8 +210,32 @@ extension SignUpViewController {
     }
 }
 
-//MARK: - Delgate
+// MARK: - UITextFieldDelegate
+
 extension SignUpViewController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let isEntering = !(range.length > 0)
+        let expectedText: String
+        
+        if isEntering {
+            expectedText = (textField.text ?? "") + string
+        } else {
+            guard
+                var currentText = textField.text,
+                let removeRange = Range<String.Index>.init(range, in: currentText)
+            else {
+                return true
+            }
+            
+            currentText.removeSubrange(removeRange)
+            expectedText = currentText
+        }
+        
+        textField.text = formatPhoneNumber(expectedText)
+        return false
+    }
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == addressTextField {
             phoneNumberTextField.becomeFirstResponder()
