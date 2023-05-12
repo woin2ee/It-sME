@@ -212,7 +212,7 @@ private extension ResumeItemEditingViewController {
             })
         }
     }
-    //MARK: - Selector
+    
     @objc dynamic func hideEndDateInputCells() {
         inputTableView.beginUpdates()
         defer { inputTableView.endUpdates() }
