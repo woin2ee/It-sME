@@ -44,21 +44,21 @@ struct DeleteAccountUseCase: DeleteAccountUseCaseProtocol {
         ItsMEUserDefaults.allowsAutoLogin = false
         
         let deleteUserProfile = userProfileRepository.deleteUserProfile()
-            .andThenJustOnNext()
+            .andThenJustNext()
         let deleteAllCVs = cvRepository.deleteAllCVs()
-            .andThenJustOnNext()
+            .andThenJustNext()
         let deleteStorage = Single<Void>.just(())
             .map { try StoragePath().userProfileImage }
             .flatMap {
                 return Storage.storage().reference().child($0).rx.delete()
-                    .andThenJustOnNext()
+                    .andThenJustNext()
             }
         let unlinkProvider = getCurrentAuthProviderIDUseCase.execute()
             .flatMap { providerID -> Single<Void> in
                 switch providerID {
                 case .kakao:
                     return UserApi.shared.rx.unlink()
-                        .andThenJustOnNext()
+                        .andThenJustNext()
                 case .apple:
                     let refreshToken = try getAppleIDRefreshTokenFromKeychainUseCase.execute()
                     return revokeAppleIDTokenUseCase.execute(withRefreshToken: refreshToken)
