@@ -77,6 +77,7 @@
 		DA43167A29FBF19A004453B9 /* DeleteAccountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43167929FBF19A004453B9 /* DeleteAccountUseCase.swift */; };
 		DA43167E29FBFD9D004453B9 /* LogoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43167D29FBFD9D004453B9 /* LogoutUseCase.swift */; };
 		DA43168229FBFEB2004453B9 /* GetCurrentAuthProviderIDUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43168129FBFEB2004453B9 /* GetCurrentAuthProviderIDUseCase.swift */; };
+		DA43168629FC110C004453B9 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43168529FC110C004453B9 /* DIContainer.swift */; };
 		DA481D7F299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D7E299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift */; };
 		DA481D87299F735E00C8C734 /* UserInfoItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */; };
 		DA481D8929A4BFE500C8C734 /* IntrinsicHeightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */; };
@@ -260,6 +261,7 @@
 		DA43167929FBF19A004453B9 /* DeleteAccountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountUseCase.swift; sourceTree = "<group>"; };
 		DA43167D29FBFD9D004453B9 /* LogoutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUseCase.swift; sourceTree = "<group>"; };
 		DA43168129FBFEB2004453B9 /* GetCurrentAuthProviderIDUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCurrentAuthProviderIDUseCase.swift; sourceTree = "<group>"; };
+		DA43168529FC110C004453B9 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		DA481D7E299F5DAD00C8C734 /* ProfileEditingViewController+HeaderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileEditingViewController+HeaderLabel.swift"; sourceTree = "<group>"; };
 		DA481D86299F735E00C8C734 /* UserInfoItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoItemCell.swift; sourceTree = "<group>"; };
 		DA481D8829A4BFE500C8C734 /* IntrinsicHeightTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrinsicHeightTextView.swift; sourceTree = "<group>"; };
@@ -861,6 +863,7 @@
 			children = (
 				D09AC9742918DE8B0081C0EC /* AppDelegate.swift */,
 				D09AC9762918DE8B0081C0EC /* SceneDelegate.swift */,
+				DA43168529FC110C004453B9 /* DIContainer.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -1335,6 +1338,7 @@
 				DA3302B129ADD36000C36154 /* TextFieldCell.swift in Sources */,
 				DA43163729F95621004453B9 /* GetAppleIDRefreshTokenFromKeychainUseCase.swift in Sources */,
 				DA43163929F96615004453B9 /* RevokeAppleIDRefreshTokenUseCase.swift in Sources */,
+				DA43168629FC110C004453B9 /* DIContainer.swift in Sources */,
 				DA018809296D146A002C5CB0 /* BirthdayEditingViewController.swift in Sources */,
 				DA6B3CEB29B1CCD9002BB159 /* YearMonthPickerView+Rx.swift in Sources */,
 				DA43168229FBFEB2004453B9 /* GetCurrentAuthProviderIDUseCase.swift in Sources */,

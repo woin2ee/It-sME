@@ -10,11 +10,12 @@ import RxCocoa
 
 final class CVEditViewModel: ViewModelType {
     
-    private let cvRepository: CVRepository = CVRepository.shared
+    private let cvRepository: CVRepository
     
     let editingType: EditingType
     
-    init(editingType: EditingType) {
+    init(cvRepository: CVRepository, editingType: EditingType) {
+        self.cvRepository = cvRepository
         self.editingType = editingType
     }
     

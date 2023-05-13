@@ -15,7 +15,7 @@ protocol GetNicknameAndEmailForKakaoUseCaseProtocol {
     func execute() -> Single<(name: String, email: String)>
 }
 
-struct GetNicknameAndEmailForKakaoUseCase {
+struct GetNicknameAndEmailForKakaoUseCase: GetNicknameAndEmailForKakaoUseCaseProtocol {
     
     func execute() -> Single<(name: String, email: String)> {
         return UserApi.shared.rx.me()

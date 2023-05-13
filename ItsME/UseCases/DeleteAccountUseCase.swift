@@ -20,18 +20,18 @@ struct DeleteAccountUseCase: DeleteAccountUseCaseProtocol {
     
     // MARK: Dependencies
     
-    let userProfileRepository: UserProfileRepository
-    let cvRepository: CVRepository
-    let getAppleIDRefreshTokenFromKeychainUseCase: GetAppleIDRefreshTokenFromKeychainUseCase
-    let revokeAppleIDTokenUseCase: RevokeAppleIDRefreshTokenUseCase
-    let getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCase
+    let userProfileRepository: UserProfileRepositoryProtocol
+    let cvRepository: CVRepositoryProtocol
+    let getAppleIDRefreshTokenFromKeychainUseCase: GetAppleIDRefreshTokenFromKeychainUseCaseProtocol
+    let revokeAppleIDTokenUseCase: RevokeAppleIDRefreshTokenUseCaseProtocol
+    let getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCaseProtocol
     
     init(
-        userProfileRepository: UserProfileRepository,
-        cvRepository: CVRepository,
-        getAppleIDRefreshTokenFromKeychainUseCase: GetAppleIDRefreshTokenFromKeychainUseCase,
-        revokeAppleIDTokenUseCase: RevokeAppleIDRefreshTokenUseCase,
-        getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCase
+        userProfileRepository: UserProfileRepositoryProtocol,
+        cvRepository: CVRepositoryProtocol,
+        getAppleIDRefreshTokenFromKeychainUseCase: GetAppleIDRefreshTokenFromKeychainUseCaseProtocol,
+        revokeAppleIDTokenUseCase: RevokeAppleIDRefreshTokenUseCaseProtocol,
+        getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCaseProtocol
     ) {
         self.userProfileRepository = userProfileRepository
         self.cvRepository = cvRepository

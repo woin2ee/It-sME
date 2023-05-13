@@ -239,13 +239,15 @@ private extension ProfileEditingViewController {
                 }),
             output.logoutComplete
                 .emit(with: self, onNext: { owner, _ in
-                    owner.navigationController?.setViewControllers([LoginViewController()], animated: false)
+                    let loginViewController = DIContainer.makeLoginViewController()
+                    owner.navigationController?.setViewControllers([loginViewController], animated: false)
                 }),
             output.deleteAccountComplete
                 .emit(with: self, onNext: { owner, _ in
                     let alertController: UIAlertController = .init(title: "", message: "계정 삭제가 완료되었습니다.", preferredStyle: .alert)
                     let okAction: UIAlertAction = .init(title: "확인", style: .default) { _ in
-                        owner.navigationController?.setViewControllers([LoginViewController()], animated: false)
+                        let loginViewController = DIContainer.makeLoginViewController()
+                        owner.navigationController?.setViewControllers([loginViewController], animated: false)
                     }
                     alertController.addAction(okAction)
                     owner.present(alertController, animated: true)
@@ -546,11 +548,7 @@ struct ProfileEditingViewControllerRepresenter: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> UIViewController {
         let navigationController: UINavigationController = .init(rootViewController: .init())
-        let profileEditingViewModel: ProfileEditingViewModel = .init(
-            initalProfileImageData: UIImage.defaultProfileImage.jpegData(compressionQuality: 1.0),
-            userInfo: .empty
-        )
-        let profileEditingViewController: ProfileEditingViewController = .init(viewModel: profileEditingViewModel)
+        let profileEditingViewController = DIContainer.mock.makeProfileEditingViewController()
         navigationController.pushViewController(profileEditingViewController, animated: false)
         return navigationController
     }
