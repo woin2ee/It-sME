@@ -16,7 +16,7 @@ protocol SaveAppleIDRefreshTokenToKeychainUseCaseProtocol {
 struct SaveAppleIDRefreshTokenToKeychainUseCase: SaveAppleIDRefreshTokenToKeychainUseCaseProtocol {
     
     func execute(authorizationCode: String) -> Single<Void> {
-        return AppleRESTAPI.rx.validateToken(withAuthorizationCode: authorizationCode)
+        return AppleRESTAPI.validateToken(withAuthorizationCode: authorizationCode)
             .map(\.refreshToken)
             .doOnSuccess { refreshToken in
                 try Keychain.genericPassword.makeSaveQuery()

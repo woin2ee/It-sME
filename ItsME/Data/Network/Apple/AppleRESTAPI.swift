@@ -10,6 +10,23 @@ import FirebaseStorage
 import Foundation
 import SwiftJWT
 
+protocol AppleRESTAPIProtocol {
+    
+    associatedtype TokenTypeHint: Encodable
+    associatedtype ResponseDTO: Decodable
+    
+    static func validateToken(
+        withAuthorizationCode authorizationCode: String,
+        completionHandler: @escaping ((Result<ResponseDTO, Error>) -> Void)
+    )
+    
+    static func revokeToken(
+        _ token: String,
+        tokenTypeHint: TokenTypeHint,
+        completionHandler: @escaping ((Result<Void, Error>) -> Void)
+    )
+}
+
 struct AppleRESTAPI {
     
     struct EndPoint {
