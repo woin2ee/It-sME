@@ -19,7 +19,7 @@ jobs:
     env:
       WORKSPACE: ${{ 'ItsME.xcworkspace' }}
       SCHEME: ${{ 'ItsME' }}
-      DESTINATION: ${{ "'platform=iOS Simulator,name=iPhone 14 Pro Max'" }}
+      DESTINATION: ${{ \'platform=iOS Simulator,name=iPhone 14 Pro Max\' }}
 
     steps:
       - name: Checkout
