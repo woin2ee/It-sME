@@ -11,7 +11,7 @@ on:
       - develop
       - release/*
       - main
-
+      
 jobs:
   build:
     name: Build and Test main scheme using iPhone simulator
@@ -19,8 +19,7 @@ jobs:
     env:
       WORKSPACE: ${{ 'ItsME.xcworkspace' }}
       SCHEME: ${{ 'ItsME' }}
-      DESTINATION: ${{ \'platform=iOS Simulator,name=iPhone 14 Pro Max\' }}
-
+      
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -34,6 +33,7 @@ jobs:
         if: steps.cocoapods-cache.outputs.cache-hit != 'true'
         run: pod install --repo-update --clean-install
       - name: Build for testing
-        run: xcodebuild build-for-testing -workspace $WORKSPACE -scheme $SCHEME -destination $DESTINATION
+        run: xcodebuild build-for-testing -workspace $WORKSPACE -scheme $SCHEME -destination 'platform=iOS Simulator,name=iPhone 14 Pro Max'
       - name: Test without building
-        run: xcodebuild test-without-building -workspace $WORKSPACE -scheme $SCHEME -destination $DESTINATION
+        run: xcodebuild test-without-building -workspace $WORKSPACE -scheme $SCHEME -destination 'platform=iOS Simulator,name=iPhone 14 Pro Max'
+        
