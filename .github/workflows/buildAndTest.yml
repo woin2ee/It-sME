@@ -2,45 +2,38 @@ name: Build and Test
 
 on:
   push:
-    branches: [ "develop" ]
+    branches:
+      - develop
+      - release/*
+      - main
   pull_request:
-    branches: [ "develop" ]
+    branches: 
+      - develop
+      - release/*
+      - main
 
 jobs:
   build:
-    name: Build and Test default scheme using any available iPhone simulator
-    runs-on: macos-latest
+    name: Build and Test main scheme using iPhone simulator
+    runs-on: macos-12
+    env:
+      WORKSPACE: ${{ 'ItsME.xcworkspace' }}
+      SCHEME: ${{ 'ItsME' }}
+      DESTINATION: ${{ 'platform=iOS Simulator,name=iPhone 14 Pro Max' }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Pod Install
-        run: pod install
-      - name: Set Default Scheme
-        run: |
-          scheme_list=$(xcodebuild -list -json | tr -d "\n")
-          default=$(echo $scheme_list | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['targets'][0]")
-          echo $default | cat >default
-          echo Using default scheme: $default
-      - name: Build
-        env:
-          scheme: ${{ 'default' }}
-          platform: ${{ 'iOS Simulator' }}
-        run: |
-          # xcrun xctrace returns via stderr, not the expected stdout (see https://developer.apple.com/forums/thread/663959)
-          device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{$1=$1;print}' | sed -e "s/ Simulator$//"`
-          if [ $scheme = default ]; then scheme=$(cat default); fi
-          if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
-          file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
-          xcodebuild build-for-testing -scheme "$scheme" -"$filetype_parameter" "$file_to_build" -destination "platform=$platform,name=$device"
-      - name: Test
-        env:
-          scheme: ${{ 'default' }}
-          platform: ${{ 'iOS Simulator' }}
-        run: |
-          # xcrun xctrace returns via stderr, not the expected stdout (see https://developer.apple.com/forums/thread/663959)
-          device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{$1=$1;print}' | sed -e "s/ Simulator$//"`
-          if [ $scheme = default ]; then scheme=$(cat default); fi
-          if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
-          file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
-          xcodebuild test-without-building -scheme "$scheme" -"$filetype_parameter" "$file_to_build" -destination "platform=$platform,name=$device"
+      - name: Check cache
+        uses: actions/cache@v3
+        id: cocoapods-cache
+        with:
+          path: ./Pods
+          key: ${{ runner.os }}-cocoapods-${{ hashFiles('./Podfile.lock') }}
+      - name: Pod install when miss the cache
+        if: steps.cocoapods-cache.outputs.cache-hit != 'true'
+        run: pod install --repo-update --clean-install
+      - name: Build for testing
+        run: xcodebuild build-for-testing -workspace $WORKSPACE -scheme $SCHEME -destination $DESTINATION
+      - name: Test without building
+        run: xcodebuild test-without-building -workspace $WORKSPACE -scheme $SCHEME -destination $DESTINATION
