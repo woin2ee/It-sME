@@ -25,17 +25,19 @@ protocol UserProfileRepositoryProtocol {
 
 final class UserProfileRepository: UserProfileRepositoryProtocol {
     
-    // MARK: Make to Singleton
+    // MARK: Shared Instance
     
-    static let shared: UserProfileRepository = .init()
-    
-    private init() {
-        self.database = .shared
-    }
+    static let shared: UserProfileRepository = .init(database: DatabaseReferenceManager.shared)
     
     // MARK: Dependencies
     
     private let database: DatabaseReferenceManager
+    
+    // MARK: Initializers
+    
+    init(database: DatabaseReferenceManager) {
+        self.database = database
+    }
     
     // MARK: API
     

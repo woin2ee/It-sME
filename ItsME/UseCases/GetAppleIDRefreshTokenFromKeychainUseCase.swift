@@ -14,9 +14,11 @@ protocol GetAppleIDRefreshTokenFromKeychainUseCaseProtocol {
 
 struct GetAppleIDRefreshTokenFromKeychainUseCase: GetAppleIDRefreshTokenFromKeychainUseCaseProtocol {
     
+    // MARK: Shared Instance
+    
     static let shared: GetAppleIDRefreshTokenFromKeychainUseCase = .init()
     
-    private init() {}
+    // MARK: Execute
     
     func execute() throws -> String {
         let refreshTokenData = try Keychain.genericPassword.makeSearchQuery()

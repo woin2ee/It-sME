@@ -19,6 +19,12 @@ protocol SignInToFirebaseUseCaseProtocol {
 
 struct SignInToFirebaseUseCase: SignInToFirebaseUseCaseProtocol {
     
+    // MARK: Shared Instance
+    
+    static let shared: SignInToFirebaseUseCase = .init()
+    
+    // MARK: Execute
+    
     func execute(
         withIDToken idToken: String,
         providerID: AuthProviderID,

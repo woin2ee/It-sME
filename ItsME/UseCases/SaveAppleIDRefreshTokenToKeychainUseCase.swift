@@ -15,6 +15,12 @@ protocol SaveAppleIDRefreshTokenToKeychainUseCaseProtocol {
 
 struct SaveAppleIDRefreshTokenToKeychainUseCase: SaveAppleIDRefreshTokenToKeychainUseCaseProtocol {
     
+    // MARK: Shared Instance
+    
+    static let shared: SaveAppleIDRefreshTokenToKeychainUseCase = .init()
+    
+    // MARK: Execute
+    
     func execute(authorizationCode: String) -> Single<Void> {
         return AppleRESTAPI.validateToken(withAuthorizationCode: authorizationCode)
             .map(\.refreshToken)

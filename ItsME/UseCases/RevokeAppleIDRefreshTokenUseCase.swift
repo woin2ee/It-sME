@@ -14,6 +14,12 @@ protocol RevokeAppleIDRefreshTokenUseCaseProtocol {
 
 struct RevokeAppleIDRefreshTokenUseCase: RevokeAppleIDRefreshTokenUseCaseProtocol {
     
+    // MARK: Shared Instance
+    
+    static let shared: RevokeAppleIDRefreshTokenUseCase = .init()
+    
+    // MARK: Execute
+    
     func execute(withRefreshToken refreshToken: String) -> Single<Void> {
         return AppleRESTAPI.revokeToken(refreshToken, tokenTypeHint: .refreshToken)
     }
