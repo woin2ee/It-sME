@@ -8,6 +8,11 @@
 import RxSwift
 import RxCocoa
 
+enum ProgressStatus: String {
+    case progress = "진행중"
+    case finish = "종료"
+}
+
 protocol ResumeItemEditingViewModelDelegate: AnyObject {
     func resumeItemEditingViewModelDidEndEditing(with resumeItem: ResumeItem, at indexPath: IndexPath)
     func resumeItemEditingViewModelDidAppend(with resumeItem: ResumeItem, at section: Int)
@@ -15,74 +20,124 @@ protocol ResumeItemEditingViewModelDelegate: AnyObject {
 
 final class ResumeItemEditingViewModel: ViewModelType {
     
-    let resumeItem: ResumeItem
     let editingType: EditingType
     private weak var delegate: ResumeItemEditingViewModelDelegate?
     
     init(
-        resumeItem: ResumeItem,
         editingType: EditingType,
-        delegate: ResumeItemEditingViewModelDelegate? = nil
+        delegate: ResumeItemEditingViewModelDelegate?
     ) {
-        self.resumeItem = resumeItem
         self.editingType = editingType
         self.delegate = delegate
     }
     
     func transform(input: Input) -> Output {
-        
-        let endDateString = Driver.merge(
-            input.endDate.startWith((year: resumeItem.endYear ?? 0, month: resumeItem.endMonth ?? 0))
-                .map { return "\($0.year).\($0.month.toLeadingZero(digit: 2))" },
-            input.enrollmentSelection.startWith(())
-                .map { return "진행중" },
-            input.endSelection
-                .map {
-                    let year = Calendar.current.currentYear
-                    let month = Calendar.current.currentMonth
-                    return "\(year).\(month.toLeadingZero(digit: 2))"
-                }
-        )
-        
-        let resumeItem = Driver.combineLatest(
-            input.title,
-            input.secondTitle,
-            input.description,
-            input.entranceDate
-                .startWith((
-                    year: resumeItem.entranceYear ?? Calendar.current.currentYear,
-                    month: resumeItem.entranceMonth ?? Calendar.current.currentMonth
-                )),
-            endDateString
-        ) {
-            (title, secondTitle, description, entranceDate, endDate) -> ResumeItem in
-            let period = "\(entranceDate.year).\(entranceDate.month.toLeadingZero(digit: 2)) - \(endDate)"
-            return .init(
-                period: period,
-                title: title,
-                secondTitle: secondTitle,
-                description: description
-            )
-        }
-            .startWith(resumeItem)
-        
-        let doneHandler = input.doneTrigger
-            .withLatestFrom(resumeItem)
-            .do(onNext: endEditing(with:))
-            .mapToVoid()
+        let currentYear = Calendar.current.component(.year, from: .now)
+        let currentMonth = Calendar.current.component(.month, from: .now)
         
         let editingType = Driver.just(editingType)
-                
+        
+        let progressStatus = input.selectedProgressStatus
+            .startWith {
+                switch self.editingType {
+                case .edit(_, let editingTarget):
+                    if let endDate = editingTarget.endDate,
+                       endDate == ProgressStatus.finish.rawValue {
+                        return .progress
+                    } else {
+                        return .finish
+                    }
+                case .new:
+                    return .finish
+                }
+            }
+        
+        let title = input.title
+            .startWith {
+                if case let .edit(_, target) = self.editingType {
+                    return target.title
+                } else {
+                    return ""
+                }
+            }
+        
+        let secondTitle = input.secondTitle
+            .startWith {
+                if case let .edit(_, target) = self.editingType {
+                    return target.secondTitle
+                } else {
+                    return ""
+                }
+            }
+        
+        let description = input.description
+            .startWith {
+                if case let .edit(_, target) = self.editingType {
+                    return target.description
+                } else {
+                    return ""
+                }
+            }
+        
+        let startDate = input.selectedStartDate
+            .startWith {
+                if case let .edit(_, target) = self.editingType {
+                    return (target.startYear ?? currentYear, target.startMonth ?? currentMonth)
+                } else {
+                    return (currentYear, currentMonth)
+                }
+            }
+        
+        let endDate = input.selectedEndDate
+            .startWith {
+                if case let .edit(_, target) = self.editingType {
+                    return (target.endYear ?? currentYear, target.endMonth ?? currentMonth)
+                } else {
+                    return (currentYear, currentMonth)
+                }
+            }
+        
+        let resumeItem = Driver.combineLatest(
+            title,
+            secondTitle,
+            description,
+            startDate.map { "\($0.year).\($0.month.toLeadingZero(digit: 2))" },
+            endDate.map { "\($0.year).\($0.month.toLeadingZero(digit: 2))" },
+            progressStatus
+        ) { title, secondTitle, description, startDateString, endDateString, progressStatus in
+            let period: String
+            switch progressStatus {
+            case .progress:
+                period = "\(startDateString) - \(ProgressStatus.progress.rawValue)"
+            case .finish:
+                period = "\(startDateString) - \(endDateString)"
+            }
+            return ResumeItem(period: period,
+                              title: title,
+                              secondTitle: secondTitle,
+                              description: description)
+        }
+        
+        let doneComplete = input.doneTrigger
+            .withLatestFrom(resumeItem)
+            .doOnNext(endEditing(with:))
+            .mapToVoid()
+        
         return .init(
-            resumeItem: resumeItem,
-            doneHandler: doneHandler,
-            editingType: editingType
+            title: title,
+            secondTitle: secondTitle,
+            description: description,
+            startDate: startDate,
+            endDate: endDate,
+            doneComplete: doneComplete,
+            editingType: editingType,
+            progressStatus: progressStatus
         )
     }
     
     private func endEditing(with resumeItem: ResumeItem) {
         switch editingType {
-        case .edit(let indexPath):
+        case .edit(let indexPath, _):
             delegate?.resumeItemEditingViewModelDidEndEditing(with: resumeItem, at: indexPath)
         case .new(let section):
             delegate?.resumeItemEditingViewModelDidAppend(with: resumeItem, at: section)
@@ -90,34 +145,40 @@ final class ResumeItemEditingViewModel: ViewModelType {
     }
 }
 
-//MARK: - Input & Output
+// MARK: - Input & Output
+
 extension ResumeItemEditingViewModel {
     
     struct Input {
         let title: Driver<String>
         let secondTitle: Driver<String>
         let description: Driver<String>
-        let entranceDate: Driver<(year: Int, month: Int)>
-        let endDate: Driver<(year: Int, month: Int)>
+        let selectedStartDate: Driver<(year: Int, month: Int)>
+        let selectedEndDate: Driver<(year: Int, month: Int)>
         let doneTrigger: Signal<Void>
-        let enrollmentSelection: Driver<Void>
-        let endSelection: Driver<Void>
+        let selectedProgressStatus: Driver<ProgressStatus>
     }
     
     struct Output {
-        let resumeItem: Driver<ResumeItem>
-        let doneHandler: Signal<Void>
+        let title: Driver<String>
+        let secondTitle: Driver<String>
+        let description: Driver<String>
+        let startDate: Driver<(year: Int, month: Int)>
+        let endDate: Driver<(year: Int, month: Int)>
+        let doneComplete: Signal<Void>
         let editingType: Driver<EditingType>
+        let progressStatus: Driver<ProgressStatus>
     }
 }
 
-//MARK: - EditingType
+// MARK: - EditingType
+
 extension ResumeItemEditingViewModel {
     
     enum EditingType {
         
         /// 기존 카테고리 정보를 수정할 때 사용하는 열거형 값입니다.
-        case edit(indexPath: IndexPath)
+        case edit(indexPath: IndexPath, resumeItem: ResumeItem)
         
         /// 새 카테고리를 추가할 때 사용하는 열거형 값입니다.
         case new(section: Int)
