@@ -73,6 +73,18 @@ struct DIContainer {
         let viewController: TotalCVViewController = .init(viewModel: viewModel)
         return viewController
     }
+    
+    static func makeResumeItemEditingViewController(
+        editingType: ResumeItemEditingViewModel.EditingType,
+        delegate: ResumeItemEditingViewModelDelegate
+    ) -> ResumeItemEditingViewController {
+        let viewModel: ResumeItemEditingViewModel = .init(
+            editingType: editingType,
+            delegate: delegate
+        )
+        let viewController: ResumeItemEditingViewController = .init(viewModel: viewModel)
+        return viewController
+    }
 }
 
 extension DIContainer {

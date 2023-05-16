@@ -14,15 +14,15 @@ final class ResumeItem: Codable {
     var secondTitle: String
     var description: String
     
-    var entranceDate: String? {
+    var startDate: String? {
         period.components(separatedBy: "-")[ifExists: 0]?.trimmingCharacters(in: .whitespacesAndNewlines)
     }
-    var entranceYear: Int? {
-        guard let year = entranceDate?.components(separatedBy: ".")[ifExists: 0] else { return nil }
+    var startYear: Int? {
+        guard let year = startDate?.components(separatedBy: ".")[ifExists: 0] else { return nil }
         return Int.init(year)
     }
-    var entranceMonth: Int? {
-        guard let month = entranceDate?.components(separatedBy: ".")[ifExists: 1] else { return nil }
+    var startMonth: Int? {
+        guard let month = startDate?.components(separatedBy: ".")[ifExists: 1] else { return nil }
         return Int.init(month)
     }
     var endDate: String? {
