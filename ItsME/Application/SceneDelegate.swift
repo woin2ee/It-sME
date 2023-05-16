@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     let rootNavigationController: UINavigationController = .init()
     
-    let logoutWithAppleUseCase: LogoutWithAppleUseCaseProtocol = LogoutWithAppleUseCase()
+    let logoutWithAppleUseCase: LogoutWithAppleUseCaseProtocol = DIContainer.makeLogoutWithAppleUseCase()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }

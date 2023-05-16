@@ -14,6 +14,12 @@ protocol LoginWithAppleUseCaseProtocol {
 
 struct LoginWithAppleUseCase: LoginWithAppleUseCaseProtocol {
     
+    // MARK: Shared Instance
+    
+    static let shared: LoginWithAppleUseCase = .init()
+    
+    // MARK: Execute
+    
     func execute(withRawNonce rawNonce: String) -> Observable<ASAuthorization> {
         let appleIDProvider = ASAuthorizationAppleIDProvider.init()
         let request = appleIDProvider.createRequest()

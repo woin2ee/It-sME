@@ -18,6 +18,16 @@ protocol DeleteAccountUseCaseProtocol {
 
 struct DeleteAccountUseCase: DeleteAccountUseCaseProtocol {
     
+    // MARK: Shared Instance
+    
+    static let shared: DeleteAccountUseCase = .init(
+        userProfileRepository: UserProfileRepository.shared,
+        cvRepository: CVRepository.shared,
+        getAppleIDRefreshTokenFromKeychainUseCase: GetAppleIDRefreshTokenFromKeychainUseCase.shared,
+        revokeAppleIDTokenUseCase: RevokeAppleIDRefreshTokenUseCase.shared,
+        getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCase.shared
+    )
+    
     // MARK: Dependencies
     
     let userProfileRepository: UserProfileRepositoryProtocol
@@ -26,19 +36,7 @@ struct DeleteAccountUseCase: DeleteAccountUseCaseProtocol {
     let revokeAppleIDTokenUseCase: RevokeAppleIDRefreshTokenUseCaseProtocol
     let getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCaseProtocol
     
-    init(
-        userProfileRepository: UserProfileRepositoryProtocol,
-        cvRepository: CVRepositoryProtocol,
-        getAppleIDRefreshTokenFromKeychainUseCase: GetAppleIDRefreshTokenFromKeychainUseCaseProtocol,
-        revokeAppleIDTokenUseCase: RevokeAppleIDRefreshTokenUseCaseProtocol,
-        getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCaseProtocol
-    ) {
-        self.userProfileRepository = userProfileRepository
-        self.cvRepository = cvRepository
-        self.getAppleIDRefreshTokenFromKeychainUseCase = getAppleIDRefreshTokenFromKeychainUseCase
-        self.revokeAppleIDTokenUseCase = revokeAppleIDTokenUseCase
-        self.getCurrentAuthProviderIDUseCase = getCurrentAuthProviderIDUseCase
-    }
+    // MARK: Execute
     
     func execute() -> Completable {
         ItsMEUserDefaults.allowsAutoLogin = false

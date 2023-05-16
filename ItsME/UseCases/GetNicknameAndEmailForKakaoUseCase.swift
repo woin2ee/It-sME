@@ -17,6 +17,12 @@ protocol GetNicknameAndEmailForKakaoUseCaseProtocol {
 
 struct GetNicknameAndEmailForKakaoUseCase: GetNicknameAndEmailForKakaoUseCaseProtocol {
     
+    // MARK: Shared Instance
+    
+    static let shared: GetNicknameAndEmailForKakaoUseCase = .init()
+    
+    // MARK: Execute
+    
     func execute() -> Single<(name: String, email: String)> {
         return UserApi.shared.rx.me()
             .map { user in

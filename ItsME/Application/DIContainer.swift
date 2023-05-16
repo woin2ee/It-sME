@@ -78,7 +78,7 @@ struct DIContainer {
 extension DIContainer {
     
     static func makeGetCurrentAuthProviderIDUseCase() -> GetCurrentAuthProviderIDUseCaseProtocol {
-        return GetCurrentAuthProviderIDUseCase()
+        return GetCurrentAuthProviderIDUseCase.shared
     }
     
     static func makeGetAppleIDRefreshTokenFromKeychainUseCase() -> GetAppleIDRefreshTokenFromKeychainUseCaseProtocol {
@@ -86,56 +86,47 @@ extension DIContainer {
     }
     
     static func makeSaveAppleIDRefreshTokenToKeychainUseCase() -> SaveAppleIDRefreshTokenToKeychainUseCaseProtocol {
-        return SaveAppleIDRefreshTokenToKeychainUseCase()
+        return SaveAppleIDRefreshTokenToKeychainUseCase.shared
     }
     
     static func makeLoginWithAppleUseCase() -> LoginWithAppleUseCaseProtocol {
-        return LoginWithAppleUseCase()
+        return LoginWithAppleUseCase.shared
     }
     
     static func makeLoginWithKakaoUseCase() -> LoginWithKakaoUseCaseProtocol {
-        return LoginWithKakaoUseCase()
+        return LoginWithKakaoUseCase.shared
     }
     
     static func makeSignInToFirebaseUseCase() -> SignInToFirebaseUseCaseProtocol {
-        return SignInToFirebaseUseCase()
+        return SignInToFirebaseUseCase.shared
     }
     
     static func makeLogoutWithAppleUseCase() -> LogoutWithAppleUseCaseProtocol {
-        return LogoutWithAppleUseCase()
+        return LogoutWithAppleUseCase.shared
     }
     
     static func makeLogoutUseCase() -> LogoutUseCaseProtocol {
-        return LogoutUseCase(
-            getCurrentAuthProviderIDUseCase: makeGetCurrentAuthProviderIDUseCase(),
-            logoutWithAppleUseCase: makeLogoutWithAppleUseCase()
-        )
+        return LogoutUseCase.shared
     }
     
     static func makeRevokeAppleIDTokenUseCase() -> RevokeAppleIDRefreshTokenUseCaseProtocol {
-        return RevokeAppleIDRefreshTokenUseCase()
+        return RevokeAppleIDRefreshTokenUseCase.shared
     }
     
     static func makeDeleteAccountUseCase() -> DeleteAccountUseCaseProtocol {
-        return DeleteAccountUseCase(
-            userProfileRepository: makeUserProfileRepository(),
-            cvRepository: makeCVRepository(),
-            getAppleIDRefreshTokenFromKeychainUseCase: makeGetAppleIDRefreshTokenFromKeychainUseCase(),
-            revokeAppleIDTokenUseCase: makeRevokeAppleIDTokenUseCase(),
-            getCurrentAuthProviderIDUseCase: makeGetCurrentAuthProviderIDUseCase()
-        )
+        return DeleteAccountUseCase.shared
     }
     
     static func makeGetNicknameAndEmailForKakaoUseCase() -> GetNicknameAndEmailForKakaoUseCaseProtocol {
-        return GetNicknameAndEmailForKakaoUseCase()
+        return GetNicknameAndEmailForKakaoUseCase.shared
     }
     
     static func makeSaveProfileImageUseCase() -> SaveProfileImageUseCaseProtocol {
-        return SaveProfileImageUseCase()
+        return SaveProfileImageUseCase.shared
     }
     
     static func makeGetProfileImageUseCase() -> GetProfileImageUseCaseProtocol {
-        return GetProfileImageUseCase()
+        return GetProfileImageUseCase.shared
     }
 }
 

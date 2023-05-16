@@ -13,6 +13,12 @@ protocol LogoutWithAppleUseCaseProtocol {
 
 struct LogoutWithAppleUseCase: LogoutWithAppleUseCaseProtocol {
     
+    // MARK: Shared Instance
+    
+    static let shared: LogoutWithAppleUseCase = .init()
+    
+    // MARK: Execute
+    
     func execute() {
         ItsMEUserDefaults.allowsAutoLogin = false
         ItsMEUserDefaults.removeAppleUserID()

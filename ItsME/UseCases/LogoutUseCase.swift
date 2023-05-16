@@ -17,18 +17,19 @@ protocol LogoutUseCaseProtocol {
 
 struct LogoutUseCase: LogoutUseCaseProtocol {
     
+    // MARK: Shared Instance
+    
+    static let shared: LogoutUseCase = .init(
+        getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCase.shared,
+        logoutWithAppleUseCase: LogoutWithAppleUseCase.shared
+    )
+    
     // MARK: Dependencies
     
     let getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCaseProtocol
     let logoutWithAppleUseCase: LogoutWithAppleUseCaseProtocol
     
-    init(
-        getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCaseProtocol,
-        logoutWithAppleUseCase: LogoutWithAppleUseCaseProtocol
-    ) {
-        self.getCurrentAuthProviderIDUseCase = getCurrentAuthProviderIDUseCase
-        self.logoutWithAppleUseCase = logoutWithAppleUseCase
-    }
+    // MARK: Execute
     
     func execute() -> Completable {
         return getCurrentAuthProviderIDUseCase.execute()
