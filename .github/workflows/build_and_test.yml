@@ -11,15 +11,16 @@ on:
       - develop
       - release/*
       - main
-      
-jobs:
-  build:
+  
+env:
+  WORKSPACE: ${{ 'ItsME.xcworkspace' }}
+  SCHEME: ${{ 'ItsME' }}
+    
+jobs:  
+  build_and_test:
     name: Build and Test main scheme using iPhone simulator
     runs-on: macos-12
-    env:
-      WORKSPACE: ${{ 'ItsME.xcworkspace' }}
-      SCHEME: ${{ 'ItsME' }}
-      
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -28,7 +29,7 @@ jobs:
         id: cocoapods-cache
         with:
           path: ./Pods
-          key: ${{ runner.os }}-cocoapods-${{ hashFiles('./Podfile.lock') }}
+          key: ${{ runner.os }}-cocoapods-v1-${{ hashFiles('./Podfile.lock') }}
       - name: Pod install when miss the cache
         if: steps.cocoapods-cache.outputs.cache-hit != 'true'
         run: pod install --repo-update --clean-install
@@ -36,4 +37,4 @@ jobs:
         run: xcodebuild build-for-testing -workspace $WORKSPACE -scheme $SCHEME -destination 'platform=iOS Simulator,name=iPhone 14 Pro Max'
       - name: Test without building
         run: xcodebuild test-without-building -workspace $WORKSPACE -scheme $SCHEME -destination 'platform=iOS Simulator,name=iPhone 14 Pro Max'
-        
+  
