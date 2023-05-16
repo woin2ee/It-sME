@@ -23,7 +23,15 @@ struct DatabaseReferenceManager {
     private let cvsRef: DatabaseReference
     
     private init() {
-        self.dataBaseURL = "https://itsme-30e1a-default-rtdb.asia-southeast1.firebasedatabase.app"
+        guard
+            let url = Bundle.main.url(forResource: "GoogleService-Info", withExtension: "plist"),
+            let dictionary = try? NSDictionary(contentsOf: url, error: ()),
+            let dataBaseURL = dictionary["DATABASE_URL"] as? String
+        else {
+            preconditionFailure("실시간 데이터베이스의 URL 이 잘못되었습니다.")
+        }
+        
+        self.dataBaseURL = dataBaseURL
         self.rootRef = Database.database(url: dataBaseURL).reference()
         self.usersRef = rootRef.child("users")
         self.cvsRef = rootRef.child("cvs")
