@@ -11,7 +11,7 @@ import FirebaseDatabase
 extension Reactive where Base: DatabaseReference {
     
     /// Observable sequence of DataSnapshot
-    var dataSnapshot: Single<DataSnapshot> {
+    public var dataSnapshot: Single<DataSnapshot> {
         return .create { observer in
             Task {
                 do {
@@ -27,7 +27,7 @@ extension Reactive where Base: DatabaseReference {
     }
     
     /// `setValue(_:)` 메소드의 `Reactive wrapper` 입니다.
-    func setValue(_ jsonObject: Any?) -> Single<DatabaseReference> {
+    public func setValue(_ jsonObject: Any?) -> Single<DatabaseReference> {
         return .create { observer in
             Task {
                 do {
@@ -43,7 +43,7 @@ extension Reactive where Base: DatabaseReference {
     }
     
     /// `removeValue()` 메소드의 `Reactive wrapper` 입니다.
-    func removeValue() -> Single<DatabaseReference> {
+    public func removeValue() -> Single<DatabaseReference> {
         return .create { observer in
             Task {
                 do {

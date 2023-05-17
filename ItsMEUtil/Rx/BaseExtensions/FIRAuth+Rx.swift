@@ -10,7 +10,7 @@ import RxSwift
 
 extension Reactive where Base: Auth {
     
-    func signIn(with credential: AuthCredential) -> Single<AuthDataResult> {
+    public func signIn(with credential: AuthCredential) -> Single<AuthDataResult> {
         return .create { singleObserver in
             Task {
                 do {
@@ -24,7 +24,7 @@ extension Reactive where Base: Auth {
         }
     }
     
-    func signOut() -> Completable {
+    public func signOut() -> Completable {
         return .create { observer in
             do {
                 try self.base.signOut()
@@ -36,7 +36,7 @@ extension Reactive where Base: Auth {
         }
     }
     
-    var currentUser: Single<User> {
+    public var currentUser: Single<User> {
         guard let currentUser = Auth.auth().currentUser else {
             return .error(AuthErrorCode(.nullUser))
         }

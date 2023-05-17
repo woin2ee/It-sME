@@ -1,21 +1,17 @@
 //
-//  DefaultJsonDecoder.swift
-//  ItsME
+//  JsonDecoder.swift
+//  ItsMEUtil
 //
-//  Created by Jaewon Yun on 2023/02/01.
+//  Created by Jaewon Yun on 2023/05/17.
 //
 
 import Foundation
 
-enum JSONSerializationError: Error {
-    case invalidJSONObject
-}
-
-struct LoggedJsonDecoder {
+public struct LoggedJsonDecoder {
     
     private init() {}
     
-    static func decode<T>(_ type: T.Type, from data: Data) throws -> T where T: Decodable {
+    public static func decode<T>(_ type: T.Type, from data: Data) throws -> T where T: Decodable {
         do {
             return try JSONDecoder().decode(type, from: data)
         } catch {
@@ -26,7 +22,7 @@ struct LoggedJsonDecoder {
         }
     }
     
-    static func decode<T>(_ type: T.Type, withJSONObject jsonObject: Any?) throws -> T where T: Decodable {
+    public static func decode<T>(_ type: T.Type, withJSONObject jsonObject: Any?) throws -> T where T: Decodable {
         let jsonObject = jsonObject as Any
         
         guard JSONSerialization.isValidJSONObject(jsonObject) else {
@@ -38,5 +34,14 @@ struct LoggedJsonDecoder {
         
         let jsonData = try JSONSerialization.data(withJSONObject: jsonObject)
         return try self.decode(type, from: jsonData)
+    }
+}
+
+// MARK: - Error
+
+extension LoggedJsonDecoder {
+    
+    enum JSONSerializationError: Error {
+        case invalidJSONObject
     }
 }

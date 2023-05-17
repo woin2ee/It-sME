@@ -20,7 +20,7 @@ extension Int {
     - Parameter digit: 표현할 자릿수의 개수입니다.
     - Returns: `Leading zero` 방식이 적용된 문자열
     */
-    func toLeadingZero(digit: UInt) -> String {
+    public func toLeadingZero(digit: UInt) -> String {
         let absNumString = String(abs(self))
         if absNumString.count >= digit {
             return self >= 0 ? absNumString : "-\(absNumString)"

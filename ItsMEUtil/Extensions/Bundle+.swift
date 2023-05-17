@@ -12,7 +12,7 @@ extension Bundle {
     /// The receiver’s bundle identifier.
     ///
     /// If `receiver’s bundleIdentifier` is nil, stop the program.
-    var identifier: String {
+    public var identifier: String {
         guard let identifier = self.bundleIdentifier else {
             preconditionFailure("bundleIdentifier is nil.")
         }
@@ -20,7 +20,7 @@ extension Bundle {
     }
     
     /// A 10-character key identifier generated for the Sign in with Apple private key associated with your developer account.
-    var signInAppleKeyID: String {
+    public var signInAppleKeyID: String {
         let dictionaryKey = "SignInAppleKeyID"
         guard let keyID = self.object(forInfoDictionaryKey: dictionaryKey) as? String else {
             preconditionFailure("No \(dictionaryKey) key in info.plist file.")
@@ -29,7 +29,7 @@ extension Bundle {
     }
     
     /// Team ID based on `info.plist`.
-    var teamID: String {
+    public var teamID: String {
         let dictionaryKey = "TeamID"
         guard let teamIDWithDot = self.object(forInfoDictionaryKey: dictionaryKey) as? String else {
             preconditionFailure("No \(dictionaryKey) key in info.plist file.")

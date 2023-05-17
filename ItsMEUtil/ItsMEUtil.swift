@@ -1,27 +1,27 @@
 //
-//  ItsMEUtils.swift
-//  ItsME
+//  ItsMEUtil.swift
+//  ItsMEUtil
 //
-//  Created by Jaewon Yun on 2023/04/12.
+//  Created by Jaewon Yun on 2023/05/17.
 //
 
 import Foundation
 
-func castOrThrow<T>(_ resultType: T.Type, _ object: Any) throws -> T {
+public func castOrThrow<T>(_ resultType: T.Type, _ object: Any) throws -> T {
     guard let returnValue = object as? T else {
-        throw ItsMEError.castingFailed(object: object, targetType: resultType)
+        throw ItsMEUtilError.castingFailed(object: object, targetType: resultType)
     }
     return returnValue
 }
 
-func unwrapOrThrow<T>(_ optionalValue: T?) throws -> T {
+public func unwrapOrThrow<T>(_ optionalValue: T?) throws -> T {
     guard let unwrappedValue = optionalValue else {
-        throw ItsMEError.nilValue(object: optionalValue)
+        throw ItsMEUtilError.nilValue(objectType: T.self)
     }
     return unwrappedValue
 }
 
-func closestValue<T: BinaryFloatingPoint>(_ target: T, in arr: [T]) -> T? {
+public func closestValue<T: BinaryFloatingPoint>(_ target: T, in arr: [T]) -> T? {
     if arr.isEmpty { return nil }
     
     let sorted = arr.sorted()
@@ -34,7 +34,7 @@ func closestValue<T: BinaryFloatingPoint>(_ target: T, in arr: [T]) -> T? {
     return (diffOver < diffUnder) ? over : under
 }
 
-func randomNonceString(length: Int = 32) -> String {
+public func randomNonceString(length: Int = 32) -> String {
     precondition(length > 0)
     let charset: Array<Character> = Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
     var result = ""
@@ -61,55 +61,10 @@ func randomNonceString(length: Int = 32) -> String {
     return result
 }
 
-struct ItsMEStandardDateFormatter {
-    
-    static let dateFormatter: DateFormatter = {
-        let dateFormatter: DateFormatter = .init()
-        dateFormatter.timeZone = .current
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        return dateFormatter
-    }()
-    
-    private init() {}
-    
-    static func string(from date: Date) -> String {
-        return dateFormatter.string(from: date)
-    }
-    
-    static func date(from string: String) -> Date? {
-        return dateFormatter.date(from: string)
-    }
-}
-
-struct ItsMESimpleDateFormatter {
-    
-    static let dateFormatter: DateFormatter = {
-        let dateFormatter: DateFormatter = .init()
-        dateFormatter.timeZone = .current
-        dateFormatter.dateFormat = "yyyy.MM.dd."
-        return dateFormatter
-    }()
-    
-    private init() {}
-    
-    static func string(from date: Date) -> String {
-        return dateFormatter.string(from: date)
-    }
-    
-    static func string(from date: Date?) -> String {
-        guard let date = date else { return "" }
-        return dateFormatter.string(from: date)
-    }
-    
-    static func date(from string: String) -> Date? {
-        return dateFormatter.date(from: string)
-    }
-}
-
 /// 하이픈(-) 문자가 포함된 전화번호로 변환합니다.
 /// - Parameter phoneNumber: 변환할 전화번호를 나타내는 문자열. 숫자간의 구분을 나타내는 다른 문자가 포함되어 있을 수 있습니다. (e.g. `.` `,` `-`...)
 /// - Returns: 하이픈 문자가 포함된 전화번호입니다. 자릿수가 11자리를 초과시 하이픈 문자가 포함되지 않습니다.
-func formatPhoneNumber(_ phoneNumber: String) -> String {
+public func formatPhoneNumber(_ phoneNumber: String) -> String {
     var formattedNumber = phoneNumber.replacingOccurrences(of: "[^0-9]", with: "", options: [.regularExpression])
     
     guard let _ = Int(formattedNumber) else { return phoneNumber }

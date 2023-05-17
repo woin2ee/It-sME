@@ -9,15 +9,15 @@ import Foundation
 
 extension Calendar {
     
-    var currentYear: Int {
+    public var currentYear: Int {
         self.component(.year, from: .now)
     }
     
-    var currentMonth: Int {
+    public var currentMonth: Int {
         self.component(.month, from: .now)
     }
     
-    var currentDay: Int {
+    public var currentDay: Int {
         self.component(.day, from: .now)
     }
 }

@@ -5,8 +5,8 @@
 //  Created by Jaewon Yun on 2023/03/06.
 //
 
+import ItsMEUtil
 import XCTest
-@testable import ItsME
 
 final class IntExtensionsTests: XCTestCase {
     
