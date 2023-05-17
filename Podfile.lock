@@ -188,6 +188,8 @@ PODS:
   - RxRelay (6.5.0):
     - RxSwift (= 6.5.0)
   - RxSwift (6.5.0)
+  - RxTest (6.5.0):
+    - RxSwift (= 6.5.0)
   - SFSafeSymbols (4.1.1)
   - SnapKit (5.6.0)
   - SwiftJWT (3.6.200):
@@ -209,6 +211,7 @@ DEPENDENCIES:
   - RxCocoa (= 6.5.0)
   - RxKakaoSDK (= 2.14.0)
   - RxSwift (= 6.5.0)
+  - RxTest (= 6.5.0)
   - SFSafeSymbols (~> 4.1.1)
   - SnapKit (= 5.6.0)
   - SwiftJWT (~> 3.6.2)
@@ -264,6 +267,7 @@ SPEC REPOS:
     - RxKakaoSDKUser
     - RxRelay
     - RxSwift
+    - RxTest
     - SFSafeSymbols
     - SnapKit
     - SwiftJWT
@@ -318,12 +322,13 @@ SPEC CHECKSUMS:
   RxKakaoSDKUser: ef3d2df1fd1728278ede2ce45adf92eef4f2dbb6
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  RxTest: eb2d23adefc5a5ebf5779c7792fa3edfe6ebcc17
   SFSafeSymbols: 902576dbf8ea16b4c6152cef2a26e47b3f55defb
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftJWT: 88c412708f58c169d431d344c87bc79a87c830ae
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
   "UITextView+Placeholder": d7b0c400921f66523f3a85d74f774512e14f6502
 
-PODFILE CHECKSUM: e8d7e670981fdc11f0b5453cc6174ca26dbcb379
+PODFILE CHECKSUM: c0d60370d47882004927065ffe89dc58df03248b
 
 COCOAPODS: 1.12.1
