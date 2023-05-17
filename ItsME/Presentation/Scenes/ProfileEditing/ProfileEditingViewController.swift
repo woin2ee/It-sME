@@ -60,6 +60,7 @@ final class ProfileEditingViewController: UIViewController {
         $0.layer.masksToBounds = true
         $0.layer.borderColor = UIColor.tertiaryLabel.cgColor
         $0.layer.borderWidth = 1.0
+        $0.accessibilityIdentifier = "PROFILE_EDITING__NAME_TEXT_FIELD"
     }
     
     private lazy var totalUserInfoItemHeaderLabel: HeaderLabel = .init(title: "기본정보")
