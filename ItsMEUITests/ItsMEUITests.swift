@@ -30,47 +30,50 @@ final class ItsMEUITests: XCTestCase {
         removeUIInterruptionMonitor(loginAlertHandlerToken)
     }
     
-    func testPresentProfileEditingViewWhenTapEditProfileButton() {
-        // Arrange: 앱 시작
+    func testSaveNewName() {
+        // Arrange: Values for test
+        let newName = "홍길동"
+        
+        // Arrange: 앱 시작 후 프로필 수정화면 이동
         app.launchArguments = [
             "-TEST",
             "-TARGET_VIEW_CONTROLLER", "HOME_VIEW_CONTROLLER",
             "-AUTHENTICATION", "TRUE",
         ]
         app.launch()
+        let editProfileButton = app.buttons["HOME__EDIT_PROFILE"]
+        editProfileButton.tap()
         
-        // Act: 버튼 탭
-        app.buttons["HOME_EDIT_PROFILE"].tap()
+        // Act: 이름 수정
+        let nameTextField = app.textFields["PROFILE_EDITING__NAME_TEXT_FIELD"]
+        nameTextField.tap()
+        nameTextField.clearAndEnterText(text: newName)
+        let doneButton = app.navigationBars["프로필 수정"].buttons["수정완료"]
+        doneButton.tap()
         
-        // Assert: 네비게이션 바 타이틀 검증
-        XCTAssert(app.navigationBars["프로필 수정"].waitForExistence(timeout: 5))
+        // Assert: 수정된 이름 확인
+        XCTAssert(editProfileButton.waitForExistence(timeout: 5))
+        editProfileButton.tap()
+        XCTAssertEqual(nameTextField.value as! String, newName)
     }
-    
-//    func test_프로필수정화면_이동() {
-//        프로필수정화면_이동()
-//        대기()
-//    }
-//
-//    func test_학력정보_수정화면_이동() {
-//        프로필수정화면_이동()
-//
-//        let scrollViewsQuery = app.scrollViews
-//        scrollViewsQuery.otherElements.tables/*@START_MENU_TOKEN@*/.staticTexts["자연계"]/*[[".cells.staticTexts[\"자연계\"]",".staticTexts[\"자연계\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-//
-//        대기()
-//    }
-//
-//    private func 프로필수정화면_이동() {
-//        app.launch()
-//
-//        app.buttons["kakao login large"].tap()
-//        app.tap() // 앱 상태 active 로 전환
-//
-//        app/*@START_MENU_TOKEN@*/.webViews.webViews.webViews.buttons["계속하기"]/*[[".otherElements[\"BrowserView?IsPageLoaded=true&WebViewProcessID=12441\"].webViews.webViews.webViews",".otherElements[\"카카오계정으로 로그인\"].buttons[\"계속하기\"]",".buttons[\"계속하기\"]",".webViews.webViews.webViews"],[[[-1,3,1],[-1,0,1]],[[-1,2],[-1,1]]],[0,0]]@END_MENU_TOKEN@*/.tap()
-//        app/*@START_MENU_TOKEN@*/.staticTexts["프로필 수정"]/*[[".buttons[\"프로필 수정\"].staticTexts[\"프로필 수정\"]",".staticTexts[\"프로필 수정\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-//    }
-//
-//    private func 대기() {
-//        _ = app.wait(for: .notRunning, timeout: .infinity)
-//    }
+}
+
+extension XCUIElement {
+    /**
+     Removes any current text in the field before typing in the new value
+     - Parameter text: the text to enter into the field
+     */
+    func clearAndEnterText(text: String) {
+        guard let stringValue = self.value as? String else {
+            XCTFail("Tried to clear and enter text into a non string value")
+            return
+        }
+
+        self.tap()
+
+        let deleteString = String(repeating: XCUIKeyboardKey.delete.rawValue, count: stringValue.count)
+
+        self.typeText(deleteString)
+        self.typeText(text)
+    }
 }
