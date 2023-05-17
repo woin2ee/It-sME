@@ -662,19 +662,19 @@
 		DA43163329F9544B004453B9 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				DA00F0012A080AD900297501 /* SaveProfileImageUseCase.swift */,
-				DA43166B29FB9527004453B9 /* LoginWithAppleUseCase.swift */,
-				DA43163629F95621004453B9 /* GetAppleIDRefreshTokenFromKeychainUseCase.swift */,
-				DA43166D29FB9812004453B9 /* SignInToFirebaseUseCase.swift */,
-				DA43167129FB99A2004453B9 /* LoginWithKakaoUseCase.swift */,
-				DA43167529FBAE82004453B9 /* GetNicknameAndEmailForKakaoUseCase.swift */,
 				DA43167929FBF19A004453B9 /* DeleteAccountUseCase.swift */,
-				DA43167D29FBFD9D004453B9 /* LogoutUseCase.swift */,
-				DA43163429F9549A004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase.swift */,
-				DA43163829F96615004453B9 /* RevokeAppleIDRefreshTokenUseCase.swift */,
+				DA43163629F95621004453B9 /* GetAppleIDRefreshTokenFromKeychainUseCase.swift */,
 				DA43168129FBFEB2004453B9 /* GetCurrentAuthProviderIDUseCase.swift */,
+				DA43167529FBAE82004453B9 /* GetNicknameAndEmailForKakaoUseCase.swift */,
 				DA00F0052A08E15600297501 /* GetProfileImageUseCase.swift */,
+				DA43166B29FB9527004453B9 /* LoginWithAppleUseCase.swift */,
+				DA43167129FB99A2004453B9 /* LoginWithKakaoUseCase.swift */,
+				DA43167D29FBFD9D004453B9 /* LogoutUseCase.swift */,
 				DAF7534D2A0BA1CE00166829 /* LogoutWithAppleUseCase.swift */,
+				DA43163829F96615004453B9 /* RevokeAppleIDRefreshTokenUseCase.swift */,
+				DA43163429F9549A004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase.swift */,
+				DA00F0012A080AD900297501 /* SaveProfileImageUseCase.swift */,
+				DA43166D29FB9812004453B9 /* SignInToFirebaseUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -764,9 +764,9 @@
 		DA708F1D29DFF81500EF84F2 /* Rx */ = {
 			isa = PBXGroup;
 			children = (
-				DA708F1F29DFF96100EF84F2 /* DelegateProxy */,
-				DA708F1E29DFF84500EF84F2 /* BaseExtensions */,
 				DAAC7A5B29715C0A0083A8E9 /* Rx+Ext.swift */,
+				DA708F1E29DFF84500EF84F2 /* BaseExtensions */,
+				DA708F1F29DFF96100EF84F2 /* DelegateProxy */,
 			);
 			path = Rx;
 			sourceTree = "<group>";
@@ -774,12 +774,12 @@
 		DA708F1E29DFF84500EF84F2 /* BaseExtensions */ = {
 			isa = PBXGroup;
 			children = (
-				DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */,
 				DA7201EB29309B9600A69519 /* AuthenticationServices+Rx.swift */,
-				DA6B3CEA29B1CCD9002BB159 /* YearMonthPickerView+Rx.swift */,
+				DA7201E6292F6A0600A69519 /* DatabaseReference+Rx.swift */,
 				DA708F0629D9F11900EF84F2 /* FIRAuth+Rx.swift */,
-				DA708F1029DC32BB00EF84F2 /* UIImagePickerController+Rx.swift */,
 				DA708F1429DC465800EF84F2 /* StorageReference+Rx.swift */,
+				DA708F1029DC32BB00EF84F2 /* UIImagePickerController+Rx.swift */,
+				DA6B3CEA29B1CCD9002BB159 /* YearMonthPickerView+Rx.swift */,
 			);
 			path = BaseExtensions;
 			sourceTree = "<group>";
@@ -788,8 +788,8 @@
 			isa = PBXGroup;
 			children = (
 				DA7201E929309B2F00A69519 /* ASAuthorizationControllerDelegateProxy.swift */,
-				DA6B3CEC29B1D453002BB159 /* YearMonthPickerViewDelegateProxy.swift */,
 				DA708F1229DC32F600EF84F2 /* UIImagePickerControllerDelegateProxy.swift */,
+				DA6B3CEC29B1D453002BB159 /* YearMonthPickerViewDelegateProxy.swift */,
 			);
 			path = DelegateProxy;
 			sourceTree = "<group>";
@@ -800,6 +800,7 @@
 				DAAF1BDE299A1E8100728376 /* Array+SafeIndex.swift */,
 				DA43163129F94F64004453B9 /* Bundle+.swift */,
 				DAD1D02F29B759CE00B12BF8 /* Calendar+Current.swift */,
+				DAA44AC829FD58D3000CD1A4 /* CGPoint+.swift */,
 				DA9069D529CDA64B00535A3D /* Collection+isNotEmpty.swift */,
 				DA708F0829D9FE1700EF84F2 /* FIRAuth+isLoggedIn.swift */,
 				DA53B73729B5BDA1000BBB26 /* Int+.swift */,
@@ -814,7 +815,6 @@
 				DAFCFB66294AC00C006B287A /* UIStackView+.swift */,
 				D0CCF4E02925FB0100AD4AE6 /* UIView+.swift */,
 				DA708F0229D6EDBF00EF84F2 /* UIViewController+presentConfirmAlert.swift */,
-				DAA44AC829FD58D3000CD1A4 /* CGPoint+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -917,15 +917,15 @@
 		DAAFB2512918EE3D007A8DF0 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				DAAFB2522918EE5A007A8DF0 /* UserProfile.swift */,
-				D0CCF4E729260ED200AD4AE6 /* UserBasicProfileInfo.swift */,
+				DA7201F72931F8EB00A69519 /* CoverLetter.swift */,
+				DA7201F32931F25500A69519 /* CoverLetterItem.swift */,
 				DA7201EF2931EEE600A69519 /* CVInfo.swift */,
+				DAFCFB62294A9CD0006B287A /* Education.swift */,
 				DA7201F92931F90900A69519 /* Resume.swift */,
 				DA7201F12931F21100A69519 /* ResumeCategory.swift */,
 				DA7201F52931F41100A69519 /* ResumeItem.swift */,
-				DA7201F72931F8EB00A69519 /* CoverLetter.swift */,
-				DA7201F32931F25500A69519 /* CoverLetterItem.swift */,
-				DAFCFB62294A9CD0006B287A /* Education.swift */,
+				D0CCF4E729260ED200AD4AE6 /* UserBasicProfileInfo.swift */,
+				DAAFB2522918EE5A007A8DF0 /* UserProfile.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -945,15 +945,15 @@
 		DAB06A3E291BA5E600E86163 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				DA708F1D29DFF81500EF84F2 /* Rx */,
-				DA7201E5292F684900A69519 /* Extensions */,
-				DAB06A41291BA8C800E86163 /* Protocols */,
-				DA26989B298A4709008A5D30 /* LoggedJsonDecoder.swift */,
+				DA43162229F7C2AA004453B9 /* AuthProviderID.swift */,
 				DA708F0429D9DC4500EF84F2 /* Hash.swift */,
+				DA4FEC2D29E6D14000D41CE1 /* ItsMEError.swift */,
 				DA4FEC2429E40C4C00D41CE1 /* ItsMELogger.swift */,
 				DA4FEC2B29E6D12C00D41CE1 /* ItsMEUtils.swift */,
-				DA4FEC2D29E6D14000D41CE1 /* ItsMEError.swift */,
-				DA43162229F7C2AA004453B9 /* AuthProviderID.swift */,
+				DA26989B298A4709008A5D30 /* LoggedJsonDecoder.swift */,
+				DA7201E5292F684900A69519 /* Extensions */,
+				DAB06A41291BA8C800E86163 /* Protocols */,
+				DA708F1D29DFF81500EF84F2 /* Rx */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -961,8 +961,8 @@
 		DAB06A41291BA8C800E86163 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				DAB06A3F291BA61100E86163 /* ViewModelType.swift */,
 				DAAB20C0299B6AEF00D5338D /* Reusable.swift */,
+				DAB06A3F291BA61100E86163 /* ViewModelType.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
