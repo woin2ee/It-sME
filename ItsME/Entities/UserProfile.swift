@@ -1,5 +1,5 @@
 //
-//  UserInfo.swift
+//  UserProfile.swift
 //  It'sME
 //
 //  Created by Jaewon Yun on 2022/11/07.
@@ -7,33 +7,33 @@
 
 import Foundation
 
-final class UserInfo: Codable {
+final class UserProfile: Codable {
     var name: String
     var profileImageURL: String
-    var birthday: UserInfoItem
-    let address: UserInfoItem
-    let phoneNumber: UserInfoItem
-    let email: UserInfoItem
-    var otherItems: [UserInfoItem]
-    var educationItems: [EducationItem]
+    var birthday: UserBasicProfileInfo
+    let address: UserBasicProfileInfo
+    let phoneNumber: UserBasicProfileInfo
+    let email: UserBasicProfileInfo
+    var otherItems: [UserBasicProfileInfo]
+    var educationItems: [Education]
 
-    var defaultItems: [UserInfoItem] {
+    var defaultItems: [UserBasicProfileInfo] {
         [birthday, address, phoneNumber, email]
     }
     
-    var allItems: [UserInfoItem] {
+    var allItems: [UserBasicProfileInfo] {
         defaultItems + otherItems
     }
     
     init(
         name: String,
         profileImageURL: String,
-        birthday: UserInfoItem,
-        address: UserInfoItem,
-        phoneNumber: UserInfoItem,
-        email: UserInfoItem,
-        otherItems: [UserInfoItem],
-        educationItems: [EducationItem]
+        birthday: UserBasicProfileInfo,
+        address: UserBasicProfileInfo,
+        phoneNumber: UserBasicProfileInfo,
+        email: UserBasicProfileInfo,
+        otherItems: [UserBasicProfileInfo],
+        educationItems: [Education]
     ) {
         self.name = name
         self.profileImageURL = profileImageURL
@@ -49,17 +49,17 @@ final class UserInfo: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decode(String.self, forKey: .name)
         self.profileImageURL = try container.decode(String.self, forKey: .profileImageURL)
-        self.birthday = try container.decode(UserInfoItem.self, forKey: .birthday)
-        self.address = try container.decode(UserInfoItem.self, forKey: .address)
-        self.phoneNumber = try container.decode(UserInfoItem.self, forKey: .phoneNumber)
-        self.email = try container.decode(UserInfoItem.self, forKey: .email)
+        self.birthday = try container.decode(UserBasicProfileInfo.self, forKey: .birthday)
+        self.address = try container.decode(UserBasicProfileInfo.self, forKey: .address)
+        self.phoneNumber = try container.decode(UserBasicProfileInfo.self, forKey: .phoneNumber)
+        self.email = try container.decode(UserBasicProfileInfo.self, forKey: .email)
         do {
-            self.otherItems = try container.decode([UserInfoItem].self, forKey: .otherItems)
+            self.otherItems = try container.decode([UserBasicProfileInfo].self, forKey: .otherItems)
         } catch {
             self.otherItems = []
         }
         do {
-            self.educationItems = try container.decode([EducationItem].self, forKey: .educationItems)
+            self.educationItems = try container.decode([Education].self, forKey: .educationItems)
         } catch {
             self.educationItems = []
         }
@@ -68,7 +68,7 @@ final class UserInfo: Codable {
 
 // MARK: - CodingKeys
 
-extension UserInfo {
+extension UserProfile {
     
     enum CodingKeys: String, CodingKey {
         case name
@@ -84,9 +84,9 @@ extension UserInfo {
 
 // MARK: - Equatable
 
-extension UserInfo: Equatable {
+extension UserProfile: Equatable {
     
-    static func == (lhs: UserInfo, rhs: UserInfo) -> Bool {
+    static func == (lhs: UserProfile, rhs: UserProfile) -> Bool {
         lhs.name == rhs.name &&
         lhs.profileImageURL == rhs.profileImageURL &&
         lhs.birthday == rhs.birthday &&
@@ -98,9 +98,9 @@ extension UserInfo: Equatable {
     }
 }
 
-extension UserInfo {
+extension UserProfile {
     
-    static var empty: UserInfo {
+    static var empty: UserProfile {
         .init(
             name: "",
             profileImageURL: "",

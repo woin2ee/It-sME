@@ -20,23 +20,30 @@ final class ResumeItemEditingViewController: UIViewController {
     private lazy var inputTableView: IntrinsicHeightTableView = .init(style: .insetGrouped).then {
         $0.dataSource = self
         $0.delegate = self
+        $0.keyboardDismissMode = .interactive
         $0.backgroundColor = .clear
     }
     
     private lazy var firstTitleInputCell: TextFieldCell = .init().then {
         $0.textField.placeholder = "제목"
-        $0.textField.autocorrectionType = .no
         $0.textField.clearButtonMode = .whileEditing
         $0.textField.delegate = self
+        $0.textField.keyboardType = .default
+        $0.textField.returnKeyType = .continue
+        $0.textField.autocorrectionType = .no
+        $0.textField.autocapitalizationType = .none
         $0.backgroundColor = .secondarySystemGroupedBackground
         $0.selectionStyle = .none
     }
     
     private lazy var secondTitleInputCell: TextFieldCell = .init().then {
         $0.textField.placeholder = "부제목"
-        $0.textField.autocorrectionType = .no
         $0.textField.clearButtonMode = .whileEditing
         $0.textField.delegate = self
+        $0.textField.keyboardType = .default
+        $0.textField.returnKeyType = .continue
+        $0.textField.autocorrectionType = .no
+        $0.textField.autocapitalizationType = .none
         $0.backgroundColor = .secondarySystemGroupedBackground
         $0.selectionStyle = .none
     }
@@ -51,15 +58,14 @@ final class ResumeItemEditingViewController: UIViewController {
         $0.textView.layer.masksToBounds = true
         $0.textView.isUserInteractionEnabled = true
         $0.textView.allowsEditingTextAttributes = true
+        $0.textView.keyboardType = .default
         $0.textView.autocorrectionType = .no
         $0.textView.autocapitalizationType = .none
-        $0.textView.returnKeyType = .done
-        $0.textView.delegate = self
         $0.backgroundColor = .secondarySystemGroupedBackground
         $0.selectionStyle = .none
     }
     
-    private lazy var entranceDateInputCell: ButtonCell = .init(title: "시작일").then {
+    private lazy var startDateInputCell: ButtonCell = .init(title: "시작일").then {
         let action: UIAction = .init { [weak self] _ in
             self?.toggleEntranceDatePickerCell()
         }
@@ -69,7 +75,7 @@ final class ResumeItemEditingViewController: UIViewController {
         $0.selectionStyle = .none
     }
     
-    private lazy var entranceDatePickerCell: YearMonthPickerCell = .init().then {
+    private lazy var startDatePickerCell: YearMonthPickerCell = .init().then {
         $0.backgroundColor = .secondarySystemGroupedBackground
     }
     
@@ -83,6 +89,8 @@ final class ResumeItemEditingViewController: UIViewController {
                 self?.showEndDateInputCells()
             }),
         ]
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(contextMenuCellTapped))
+        $0.wrappingButton.addGestureRecognizer(tapGesture)
         $0.backgroundColor = .secondarySystemGroupedBackground
     }
     
@@ -102,7 +110,7 @@ final class ResumeItemEditingViewController: UIViewController {
     
     private(set) lazy var inputTableViewDataSource: [[UITableViewCell]] = [
         [firstTitleInputCell, secondTitleInputCell, descriptionInputCell],
-        [entranceDateInputCell, endOrNotEnrollmentStatusCell]
+        [startDateInputCell, endOrNotEnrollmentStatusCell]
     ]
     
     private lazy var completeBarButton: UIBarButtonItem = .init(title: "완료").then {
@@ -163,20 +171,21 @@ private extension ResumeItemEditingViewController {
     }
     
     func toggleEntranceDatePickerCell() {
+        self.view.endEditing(true)
         let section = 1
         let row = 1
         let indexPath: IndexPath = .init(row: row, section: section)
         let animationDuration: TimeInterval = 0.3
-        let isShowingDatePickerCell: Bool = inputTableViewDataSource[section].contains(entranceDatePickerCell)
+        let isShowingDatePickerCell: Bool = inputTableViewDataSource[section].contains(startDatePickerCell)
         if isShowingDatePickerCell {
             UIView.animate(withDuration: animationDuration, animations: {
-                self.inputTableViewDataSource[section].removeAll { $0 === self.entranceDatePickerCell }
+                self.inputTableViewDataSource[section].removeAll { $0 === self.startDatePickerCell }
                 self.inputTableView.deleteRows(at: [indexPath], with: .fade)
                 self.view.layoutIfNeeded()
             })
         } else {
             UIView.animate(withDuration: animationDuration, animations: {
-                self.inputTableViewDataSource[section].insert(self.entranceDatePickerCell, at: row)
+                self.inputTableViewDataSource[section].insert(self.startDatePickerCell, at: row)
                 self.inputTableView.insertRows(at: [indexPath], with: .fade)
                 self.view.layoutIfNeeded()
             })
@@ -184,6 +193,7 @@ private extension ResumeItemEditingViewController {
     }
     
     func toggleEndDatePickerCell() {
+        self.view.endEditing(true)
         let section = 1
         let row = inputTableViewDataSource[section].endIndex
         let animationDuration: TimeInterval = 0.3
@@ -203,7 +213,7 @@ private extension ResumeItemEditingViewController {
         }
     }
     
-    @objc dynamic func hideEndDateInputCells() {
+    private func hideEndDateInputCells() {
         inputTableView.beginUpdates()
         defer { inputTableView.endUpdates() }
         
@@ -221,7 +231,11 @@ private extension ResumeItemEditingViewController {
         }
     }
     
-    @objc dynamic func showEndDateInputCells() {
+    @objc dynamic private func tapProgressMenu() {
+        self.hideEndDateInputCells()
+    }
+    
+    private func showEndDateInputCells() {
         let section = 1
         if inputTableViewDataSource[section].contains(endDateInputCell) { return }
         
@@ -231,53 +245,70 @@ private extension ResumeItemEditingViewController {
             inputTableView.insertRows(at: [.init(row: nextRow, section: section)], with: .fade)
         }
     }
+    
+    @objc dynamic private func tapFinishMenu() {
+        self.showEndDateInputCells()
+    }
+    
+    @objc private func contextMenuCellTapped() {
+        self.view.endEditing(true)
+    }
 }
 
-//MARK: - Binding ViewModel
+// MARK: - Binding ViewModel
+
 private extension ResumeItemEditingViewController {
     
     func bindViewModel() {
-        
         let input: ResumeItemEditingViewModel.Input = .init(
             title: firstTitleInputCell.textField.rx.text.orEmpty.asDriver(),
             secondTitle: secondTitleInputCell.textField.rx.text.orEmpty.asDriver(),
             description: descriptionInputCell.textView.rx.text.orEmpty.asDriver(),
-            entranceDate: entranceDatePickerCell.yearMonthPickerView.rx.selectedDate.asDriver(),
-            endDate: endDatePickerCell.yearMonthPickerView.rx.selectedDate.asDriver(),
+            selectedStartDate: startDatePickerCell.yearMonthPickerView.rx.selectedDate.asDriver(),
+            selectedEndDate: endDatePickerCell.yearMonthPickerView.rx.selectedDate.asDriver(),
             doneTrigger: completeBarButton.rx.tap.asSignal(),
-            enrollmentSelection: self.rx.methodInvoked(#selector(hideEndDateInputCells))
-                .mapToVoid()
-                .asDriverOnErrorJustComplete(),
-            endSelection: self.rx.methodInvoked(#selector(showEndDateInputCells))
-                .mapToVoid()
-                .asDriverOnErrorJustComplete()
+            selectedProgressStatus: .merge(
+                self.rx.methodInvoked(#selector(tapProgressMenu))
+                    .map { _ in ProgressStatus.progress }
+                    .asDriverOnErrorJustComplete(),
+                self.rx.methodInvoked(#selector(tapFinishMenu))
+                    .map { _ in ProgressStatus.finish }
+                    .asDriverOnErrorJustComplete()
+            )
         )
-        
         let output = viewModel.transform(input: input)
-        
         [
-            output.resumeItem
-                .drive(resumeItemBinding),
-            output.doneHandler
+            output.title
+                .drive(firstTitleInputCell.textField.rx.text),
+            output.title
+                .map(\.isNotEmpty)
+                .drive(completeBarButton.rx.isEnabled),
+            output.secondTitle
+                .drive(secondTitleInputCell.textField.rx.text),
+            output.description
+                .drive(descriptionInputCell.textView.rx.text),
+            output.doneComplete
                 .emit(with: self, onNext: { owner, _ in
                     owner.navigationController?.popViewController(animated: true)
                 }),
             output.editingType
                 .drive(editingTypeBinding),
+            output.progressStatus
+                .drive(progressStatusBinding),
+            output.startDate
+                .drive(with: self, onNext: { owner, date in
+                    let dateString = "\(date.year).\(date.month.toLeadingZero(digit: 2))"
+                    owner.startDateInputCell.trailingButton.setTitle(dateString, for: .normal)
+                    owner.startDatePickerCell.yearMonthPickerView.setDate(year: date.year, month: date.month, animated: false)
+                }),
+            output.endDate
+                .drive(with: self, onNext: { owner, date in
+                    let dateString = "\(date.year).\(date.month.toLeadingZero(digit: 2))"
+                    owner.endDateInputCell.trailingButton.setTitle(dateString, for: .normal)
+                    owner.endDatePickerCell.yearMonthPickerView.setDate(year: date.year, month: date.month, animated: false)
+                }),
         ]
             .forEach { $0.disposed(by: disposeBag) }
-    }
-    
-    var resumeItemBinding: Binder<ResumeItem> {
-        .init(self) { vc, resumeItem in
-            vc.firstTitleInputCell.textField.text = resumeItem.title
-            vc.secondTitleInputCell.textField.text = resumeItem.secondTitle
-            vc.descriptionInputCell.textView.text = resumeItem.description
-            vc.entranceDateInputCell.trailingButton.setTitle(resumeItem.entranceDate, for: .normal)
-            vc.entranceDatePickerCell.yearMonthPickerView.setDate(year: resumeItem.entranceYear ?? 0, month: resumeItem.entranceMonth ?? 0, animated: false)
-            vc.endDateInputCell.trailingButton.setTitle(resumeItem.endDate, for: .normal)
-            vc.endDatePickerCell.yearMonthPickerView.setDate(year: resumeItem.endYear ?? 0, month: resumeItem.endMonth ?? 0, animated: false)
-        }
     }
     
     var editingTypeBinding: Binder<ResumeItemEditingViewModel.EditingType> {
@@ -289,6 +320,19 @@ private extension ResumeItemEditingViewController {
             case .new:
                 vc.navigationItem.title = "추가"
                 vc.completeBarButton.title = "추가"
+            }
+        }
+    }
+    
+    var progressStatusBinding: Binder<ProgressStatus> {
+        return .init(self) { vc, status in
+            switch status {
+            case .progress:
+                vc.endOrNotEnrollmentStatusCell.menuTitleLabel.text = ProgressStatus.progress.rawValue
+                vc.hideEndDateInputCells()
+            case .finish:
+                vc.endOrNotEnrollmentStatusCell.menuTitleLabel.text = ProgressStatus.finish.rawValue
+                vc.showEndDateInputCells()
             }
         }
     }
@@ -311,7 +355,7 @@ extension ResumeItemEditingViewController: UITableViewDataSource, UITableViewDel
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let commonHeightCells = [entranceDateInputCell, endOrNotEnrollmentStatusCell, endDateInputCell]
+        let commonHeightCells = [startDateInputCell, endOrNotEnrollmentStatusCell, endDateInputCell]
         if commonHeightCells.contains(inputTableViewDataSource[indexPath.section][indexPath.row]) {
             return 44
         }
@@ -321,15 +365,14 @@ extension ResumeItemEditingViewController: UITableViewDataSource, UITableViewDel
 
 // MARK: - UITextFieldDelegate, UITextViewDelegate
 
-extension ResumeItemEditingViewController: UITextFieldDelegate, UITextViewDelegate {
+extension ResumeItemEditingViewController: UITextFieldDelegate {
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.resignFirstResponder()
-    }
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            textView.resignFirstResponder()
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == firstTitleInputCell.textField {
+            secondTitleInputCell.textField.becomeFirstResponder()
+        }
+        else if textField == secondTitleInputCell.textField {
+            descriptionInputCell.textView.becomeFirstResponder()
         }
         return true
     }

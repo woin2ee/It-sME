@@ -8,7 +8,21 @@
 import FirebaseAuth
 import RxSwift
 
-final class CVRepository {
+protocol CVRepositoryProtocol {
+    
+    func getAllCV() -> Single<[CVInfo]>
+    
+    func saveCVInfo(_ cvInfo: CVInfo) -> Single<Void>
+    
+    func saveCVTitle(_ cvTitle: String, lastModified: String, uuid: String) -> Single<Void>
+    
+    func removeCV(by uuid: String) -> Single<Void>
+    
+    /// 데이터베이스에 저장된 현재 사용자의 이력서 정보를 삭제합니다.
+    func deleteAllCVs() -> Completable
+}
+
+final class CVRepository: CVRepositoryProtocol {
     
     // MARK: Make to Singleton
     
@@ -75,7 +89,6 @@ final class CVRepository {
         return source
     }
     
-    /// 데이터베이스에 저장된 현재 사용자의 이력서 정보를 삭제합니다.
     func deleteAllCVs() -> Completable {
         let source = Auth.auth().rx.currentUser
             .map(\.uid)

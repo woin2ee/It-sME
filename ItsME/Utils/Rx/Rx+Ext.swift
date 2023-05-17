@@ -19,6 +19,13 @@ extension ObservableConvertibleType {
     }
 }
 
+extension ObservableConvertibleType where Element == Void {
+    
+    func asSignalOnErrorJustNext() -> Signal<Element> {
+        return self.asSignal(onErrorJustReturn: ())
+    }
+}
+
 extension ObservableType {
     
     func mapToVoid() -> Observable<Void> {
@@ -81,7 +88,7 @@ extension PrimitiveSequenceType where Trait == MaybeTrait {
 
 extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Never {
     
-    func andThenJustOnNext() -> Single<Void> {
+    func andThenJustNext() -> Single<Void> {
         return self.andThen(.just(()))
     }
 }

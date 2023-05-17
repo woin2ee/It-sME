@@ -55,7 +55,10 @@ final class SignUpViewController: UIViewController {
         $0.placeholder = "주소를 입력해주세요."
         $0.borderStyle = .roundedRect
         $0.font = inputTextFieldFont
+        $0.keyboardType = .default
+        $0.returnKeyType = .continue
         $0.adjustsFontForContentSizeCategory = true
+        $0.delegate = self
     }
     private lazy var addressValidationLabel: UILabel = .init().then {
         $0.text = "선택 사항입니다."
@@ -67,7 +70,10 @@ final class SignUpViewController: UIViewController {
         $0.placeholder = "전화번호를 입력해주세요."
         $0.borderStyle = .roundedRect
         $0.font = inputTextFieldFont
+        $0.keyboardType = .numberPad
+        $0.returnKeyType = .continue
         $0.adjustsFontForContentSizeCategory = true
+        $0.delegate = self
     }
     private lazy var phoneNumberValidationLabel: UILabel = .init().then {
         $0.text = "선택 사항입니다."
@@ -197,10 +203,44 @@ extension SignUpViewController {
         
         output.signUpComplete
             .emit(with: self, onNext: { owner, _ in
-                let homeViewController: HomeViewController = .init()
+                let homeViewController = DIContainer.makeHomeViewController()
                 owner.navigationController?.setViewControllers([homeViewController], animated: true)
             })
             .disposed(by: disposeBag)
+    }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension SignUpViewController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let isEntering = !(range.length > 0)
+        let expectedText: String
+        
+        if isEntering {
+            expectedText = (textField.text ?? "") + string
+        } else {
+            guard
+                var currentText = textField.text,
+                let removeRange = Range<String.Index>.init(range, in: currentText)
+            else {
+                return true
+            }
+            
+            currentText.removeSubrange(removeRange)
+            expectedText = currentText
+        }
+        
+        textField.text = formatPhoneNumber(expectedText)
+        return false
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == addressTextField {
+            phoneNumberTextField.becomeFirstResponder()
+        }
+        return true
     }
 }
 
@@ -214,8 +254,7 @@ import SwiftUI
 struct SignUpViewControllerRepresenter: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> UIViewController {
-        let signUpViewModel: SignUpViewModel = .init(userNameForSignUp: "", userEmailForSignUp: "")
-        let signUpViewController: SignUpViewController = .init(viewModel: signUpViewModel)
+        let signUpViewController = DIContainer.mock.makeSignUpViewController()
         let navigationController: UINavigationController = .init(rootViewController: signUpViewController)
         return navigationController
     }

@@ -261,13 +261,13 @@ private extension TotalCVViewController {
             .forEach { $0.disposed(by: disposeBag) }
     }
     
-    var userInfoBinding: Binder<[UserInfoItem]> {
+    var userInfoBinding: Binder<[UserBasicProfileInfo]> {
         return .init(self) { viewController, userInfoItems in
             self.totalUserInfoItemStackView.bind(userInfoItems: userInfoItems)
         }
     }
     
-    var educationBinding: Binder<[EducationItem]> {
+    var educationBinding: Binder<[Education]> {
         return .init(self) { viewController, education in
             
         }
@@ -463,19 +463,21 @@ private extension TotalCVViewController {
     }
     
     func pushResumeItemEditingView(indexPath: IndexPath) {
-        
-        guard let resumeItem = self.viewModel.resumeCategory[ifExists: indexPath.section]?.items[indexPath.row] else { return }
-        
-        let resumeItemEditingViewModel: ResumeItemEditingViewModel = .init(resumeItem: resumeItem, editingType: .edit(indexPath: indexPath), delegate: viewModel)
-        
-        let viewController: ResumeItemEditingViewController = .init(viewModel: resumeItemEditingViewModel)
+        guard let resumeItem = self.viewModel.resumeCategory[ifExists: indexPath.section]?.items[indexPath.row] else {
+            return
+        }
+        let viewController = DIContainer.makeResumeItemEditingViewController(
+            editingType: .edit(indexPath: indexPath, resumeItem: resumeItem),
+            delegate: viewModel
+        )
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func pushResumItemAddView(section: Int) {
-        let resumeItem = ResumeItem.empty
-        let resumeItemEditingViewModel: ResumeItemEditingViewModel = .init(resumeItem: resumeItem, editingType: .new(section: section), delegate: viewModel)
-        let viewController: ResumeItemEditingViewController = .init(viewModel: resumeItemEditingViewModel)
+        let viewController = DIContainer.makeResumeItemEditingViewController(
+            editingType: .new(section: section),
+            delegate: viewModel
+        )
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     

@@ -5,23 +5,23 @@
 //  Created by Jaewon Yun on 2022/12/01.
 //
 
-import FirebaseAuth
 import FirebaseStorage
-import KakaoSDKUser
 import RxSwift
 import RxCocoa
 import Then
 
 final class ProfileEditingViewModel: ViewModelType {
     
-    private let getAppleIDRefreshTokenFromKeychainUseCase: GetAppleIDRefreshTokenFromKeychainUseCase = .init()
-    private let revokeAppleIDTokenUseCase: RevokeAppleIDRefreshTokenUseCase = .init()
+    private let deleteAccountUseCase: DeleteAccountUseCaseProtocol
+    private let logoutUseCase: LogoutUseCaseProtocol
+    private let saveProfileImageUseCase: SaveProfileImageUseCaseProtocol
+    private let getProfileImageUseCase: GetProfileImageUseCaseProtocol
     
-    private let userRepository: UserRepository = .shared
-    private let cvRepository: CVRepository = .shared
+    private let userRepository: UserProfileRepositoryProtocol
+    private let cvRepository: CVRepositoryProtocol
     
     private let initalProfileImageData: Data?
-    private let userInfoRelay: BehaviorRelay<UserInfo>
+    private let userInfoRelay: BehaviorRelay<UserProfile>
     
     var currentBirthday: Date {
         let birthday = userInfoRelay.value.birthday.contents
@@ -39,19 +39,34 @@ final class ProfileEditingViewModel: ViewModelType {
     var currentAddress: String {
         userInfoRelay.value.address.contents
     }
-    var currentOtherItems: [UserInfoItem] {
+    var currentOtherItems: [UserBasicProfileInfo] {
         userInfoRelay.value.otherItems
     }
-    var currentAllItems: [UserInfoItem] {
+    var currentAllItems: [UserBasicProfileInfo] {
         userInfoRelay.value.allItems
     }
-    var currentEducationItems: [EducationItem] {
+    var currentEducationItems: [Education] {
         userInfoRelay.value.educationItems
     }
     
-    init(initalProfileImageData: Data?, userInfo: UserInfo) {
+    init(
+        deleteAccountUseCase: DeleteAccountUseCaseProtocol,
+        logoutUseCase: LogoutUseCaseProtocol,
+        saveProfileImageUseCase: SaveProfileImageUseCaseProtocol,
+        getProfileImageUseCase: GetProfileImageUseCaseProtocol,
+        userRepository: UserProfileRepositoryProtocol,
+        cvRepository: CVRepositoryProtocol,
+        initalProfileImageData: Data?,
+        userProfile: UserProfile
+    ) {
+        self.deleteAccountUseCase = deleteAccountUseCase
+        self.logoutUseCase = logoutUseCase
+        self.saveProfileImageUseCase = saveProfileImageUseCase
+        self.getProfileImageUseCase = getProfileImageUseCase
+        self.userRepository = userRepository
+        self.cvRepository = cvRepository
         self.initalProfileImageData = initalProfileImageData
-        self.userInfoRelay = .init(value: userInfo)
+        self.userInfoRelay = .init(value: userProfile)
     }
     
     func transform(input: Input) -> Output {
@@ -60,7 +75,7 @@ final class ProfileEditingViewModel: ViewModelType {
         let viewDidLoad = input.viewDidLoad
             .filter { self.userInfoRelay.value == .empty }
             .flatMapLatest { _ -> Driver<Void> in
-                return self.userRepository.getUserInfo()
+                return self.userRepository.getUserProfile()
                     .doOnSuccess { self.userInfoRelay.accept($0) }
                     .mapToVoid()
                     .asDriverOnErrorJustComplete()
@@ -69,7 +84,7 @@ final class ProfileEditingViewModel: ViewModelType {
         let profileImageData = Driver.merge(
             input.newProfileImageData,
             userInfoDriver.flatMap {
-                Storage.storage().reference().child($0.profileImageURL).rx.getData().map { $0 }
+                return self.getProfileImageUseCase.execute(withStoragePath: $0.profileImageURL).map { $0 }
                     .asDriverOnErrorJustComplete()
             }
                 .asObservable()
@@ -88,20 +103,27 @@ final class ProfileEditingViewModel: ViewModelType {
             .asObservable()
             .withLatestFrom(profileImageData)
             .compactMap { $0 }
-            .flatMap { data in
-                let path = try StoragePath().userProfileImage
-                return Storage.storage().reference().child(path).rx.putData(data)
-            }
+            .flatMapFirst { self.saveProfileImageUseCase.execute(withImageData: $0) }
             .compactMap { $0.path }
             .flatMap { path in
                 let userInfo = self.userInfoRelay.value
                 userInfo.profileImageURL = path
-                return self.userRepository.saveUserInfo(userInfo)
+                return self.userRepository.saveUserProfile(userInfo)
             }
             .asSignalOnErrorJustComplete()
         
-        let logoutComplete = makeLogoutComplete(with: input.logoutTrigger)
-        let deleteAccountComplete = makeDeleteAccountComplete(with: input.deleteAccountTrigger)
+        let logoutComplete = input.logoutTrigger
+            .flatMapFirst { _ in
+                return self.logoutUseCase.execute()
+                    .andThenJustNext()
+                    .asSignalOnErrorJustNext()
+            }
+        let deleteAccountComplete = input.deleteAccountTrigger
+            .flatMapFirst { _ in
+                return self.deleteAccountUseCase.execute()
+                    .andThenJustNext()
+                    .asSignalOnErrorJustNext()
+            }
         
         return .init(
             profileImageData: profileImageData,
@@ -132,82 +154,12 @@ extension ProfileEditingViewModel {
     struct Output {
         let profileImageData: Driver<Data?>
         let userName: Driver<String>
-        let userInfoItems: Driver<[UserInfoItem]>
-        let educationItems: Driver<[EducationItem]>
+        let userInfoItems: Driver<[UserBasicProfileInfo]>
+        let educationItems: Driver<[Education]>
         let tappedEditingCompleteButton: Signal<Void>
         let viewDidLoad: Driver<Void>
         let logoutComplete: Signal<Void>
         let deleteAccountComplete: Signal<Void>
-    }
-}
-
-// MARK: - Private
-
-private extension ProfileEditingViewModel {
-    
-    func makeLogoutComplete(with input: Signal<Void>) -> Signal<Void> {
-        let logoutWithKakao = UserApi.shared.rx.logout()
-            .andThenJustOnNext()
-            .asSignal(onErrorJustReturn: ()) // TODO: 에러 발생 시 로그 심기
-        let signOutFromFIRAuth = Auth.auth().rx.signOut()
-            .andThenJustOnNext()
-            .asSignal(onErrorJustReturn: ()) // TODO: 에러 발생 시 로그 심기
-        
-        return input
-            .doOnNext {
-                ItsMEUserDefaults.removeAppleUserID()
-                ItsMEUserDefaults.isLoggedInAsApple = false
-                ItsMEUserDefaults.allowsAutoLogin = false
-            }
-            .flatMapFirst {
-                return Signal.zip(logoutWithKakao, signOutFromFIRAuth)
-                    .mapToVoid()
-            }
-    }
-    
-    func makeDeleteAccountComplete(with input: Signal<Void>) -> Signal<Void> {
-        let deleteUserInfo = userRepository.deleteUserInfo()
-            .andThenJustOnNext()
-            .asSignal(onErrorJustReturn: ()) // TODO: 에러 트래커 추가
-        let deleteAllCVs = cvRepository.deleteAllCVs()
-            .andThenJustOnNext()
-            .asSignal(onErrorJustReturn: ()) // TODO: 에러 트래커 추가
-        let deleteStorage = Single<Void>.just(())
-            .map { try StoragePath().userProfileImage }
-            .flatMap {
-                return Storage.storage().reference().child($0).rx.delete()
-                    .andThenJustOnNext()
-            }
-            .asSignal(onErrorJustReturn: ())
-        let deleteUserAuth = userRepository.deleteUser()
-            .asSignal(onErrorJustReturn: ()) // TODO: 에러 트래커 추가
-        let revokeProvider = makeRevokeProviderWithCurrentProviderID()
-        
-        return input
-            .flatMapFirst {
-                return Signal.zip(deleteUserInfo, deleteAllCVs, deleteStorage, deleteUserAuth, revokeProvider)
-                    .mapToVoid()
-            }
-    }
-    
-    func makeRevokeProviderWithCurrentProviderID() -> Signal<Void> {
-        let source = Auth.auth().rx.currentUser
-            .map(\.providerData.first)
-            .unwrapOrThrow()
-            .map { AuthProviderID(rawValue: $0.providerID) }
-            .unwrapOrThrow()
-            .flatMap { providerID -> Single<Void> in
-                switch providerID {
-                case .kakao:
-                    return UserApi.shared.rx.unlink()
-                        .andThenJustOnNext()
-                case .apple:
-                    let refreshToken = try self.getAppleIDRefreshTokenFromKeychainUseCase.execute()
-                    return self.revokeAppleIDTokenUseCase.rx.execute(refreshToken: refreshToken)
-                }
-            }
-            .asSignal(onErrorJustReturn: ()) // 과정 중 에러가 발생해도 사용자에게는 계정 삭제 처리가 완료된걸로 보여야 경험을 해치지 않음
-        return source
     }
 }
 
@@ -221,28 +173,18 @@ extension ProfileEditingViewModel {
         userInfoRelay.accept(userInfo)
     }
     
-    func updateBirthday(_ userInfoItem: UserInfoItem) {
+    func updateBirthday(_ userInfoItem: UserBasicProfileInfo) {
         let userInfo = userInfoRelay.value
         userInfo.birthday = userInfoItem
         userInfoRelay.accept(userInfo)
     }
     
-    func updateEmail(_ email: String) {
-        let userInfo = userInfoRelay.value
-        userInfo.email.contents = email
-        userInfoRelay.accept(userInfo)
+    func swapEducation(at sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        userInfoRelay.value.educationItems.swapAt(sourceIndexPath.row, destinationIndexPath.row)
     }
     
-    func updatePhoneNumber(_ phoneNumber: String) {
-        let userInfo = userInfoRelay.value
-        userInfo.phoneNumber.contents = phoneNumber
-        userInfoRelay.accept(userInfo)
-    }
-    
-    func updateAddress(_ address: String) {
-        let userInfo = userInfoRelay.value
-        userInfo.address.contents = address
-        userInfoRelay.accept(userInfo)
+    func endSwapEducation() {
+        userInfoRelay.accept(userInfoRelay.value)
     }
 }
 
@@ -250,7 +192,7 @@ extension ProfileEditingViewModel {
 
 extension ProfileEditingViewModel: EducationEditingViewModelDelegate {
     
-    func educationEditingViewModelDidEndEditing(with educationItem: EducationItem, at index: IndexPath.Index) {
+    func educationEditingViewModelDidEndEditing(with educationItem: Education, at index: IndexPath.Index) {
         let userInfo = userInfoRelay.value
         if userInfo.educationItems.indices ~= index {
             userInfo.educationItems[index] = educationItem
@@ -258,7 +200,7 @@ extension ProfileEditingViewModel: EducationEditingViewModelDelegate {
         }
     }
     
-    func educationEditingViewModelDidAppend(educationItem: EducationItem) {
+    func educationEditingViewModelDidAppend(educationItem: Education) {
         let userInfo = userInfoRelay.value
         userInfo.educationItems.append(educationItem)
         userInfoRelay.accept(userInfo)
@@ -275,7 +217,7 @@ extension ProfileEditingViewModel: EducationEditingViewModelDelegate {
 
 extension ProfileEditingViewModel: OtherItemEditingViewModelDelegate {
     
-    func otherItemEditingViewModelDidEndEditing(with otherItem: UserInfoItem, at index: IndexPath.Index) {
+    func otherItemEditingViewModelDidEndEditing(with otherItem: UserBasicProfileInfo, at index: IndexPath.Index) {
         let userInfo = userInfoRelay.value
         if userInfo.otherItems.indices ~= index {
             userInfo.otherItems[index] = otherItem
@@ -283,7 +225,7 @@ extension ProfileEditingViewModel: OtherItemEditingViewModelDelegate {
         }
     }
     
-    func otherItemEditingViewModelDidAppend(otherItem: UserInfoItem) {
+    func otherItemEditingViewModelDidAppend(otherItem: UserBasicProfileInfo) {
         let userInfo = userInfoRelay.value
         userInfo.otherItems.append(otherItem)
         userInfoRelay.accept(userInfo)
@@ -292,6 +234,39 @@ extension ProfileEditingViewModel: OtherItemEditingViewModelDelegate {
     func otherItemEditingViewModelDidDeleteOtherItem(at index: IndexPath.Index) {
         let userInfo = userInfoRelay.value
         userInfo.otherItems.remove(at: index)
+        userInfoRelay.accept(userInfo)
+    }
+}
+
+// MARK: - AddressEditingViewModelDelegate
+
+extension ProfileEditingViewModel: AddressEditingViewModelDelegate {
+    
+    func addressEditingViewModelDidEndEditing(with address: String) {
+        let userInfo = userInfoRelay.value
+        userInfo.address.contents = address
+        userInfoRelay.accept(userInfo)
+    }
+}
+
+// MARK: - PhoneNumberEditingViewModelDelegate
+
+extension ProfileEditingViewModel: PhoneNumberEditingViewModelDelegate {
+    
+    func phoneNumberEditingViewModelDidEndEditing(with phoneNumber: String) {
+        let userInfo = userInfoRelay.value
+        userInfo.phoneNumber.contents = phoneNumber
+        userInfoRelay.accept(userInfo)
+    }
+}
+
+// MARK: - EmailEditingViewModelDelegate
+
+extension ProfileEditingViewModel: EmailEditingViewModelDelegate {
+    
+    func emailEditingViewModelDidEndEditing(with email: String) {
+        let userInfo = userInfoRelay.value
+        userInfo.email.contents = email
         userInfoRelay.accept(userInfo)
     }
 }

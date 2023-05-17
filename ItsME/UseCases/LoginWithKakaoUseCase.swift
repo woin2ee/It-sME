@@ -1,5 +1,5 @@
 //
-//  LoginWithKakaoUseCase+Rx.swift
+//  LoginWithKakaoUseCase.swift
 //  ItsME
 //
 //  Created by Jaewon Yun on 2023/04/28.
@@ -11,9 +11,17 @@ import KakaoSDKUser
 import RxKakaoSDKUser
 import RxSwift
 
-extension LoginWithKakaoUseCase: ReactiveCompatible {}
+protocol LoginWithKakaoUseCaseProtocol {
+    func execute(withRawNonce rawNonce: String) -> Observable<OAuthToken>
+}
 
-extension Reactive where Base == LoginWithKakaoUseCase {
+struct LoginWithKakaoUseCase: LoginWithKakaoUseCaseProtocol {
+    
+    // MARK: Shared Instance
+    
+    static let shared: LoginWithKakaoUseCase = .init()
+    
+    // MARK: Execute
     
     func execute(withRawNonce rawNonce: String) -> Observable<OAuthToken> {
         if (UserApi.isKakaoTalkLoginAvailable()) {

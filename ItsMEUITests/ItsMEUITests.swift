@@ -11,15 +11,39 @@ final class ItsMEUITests: XCTestCase {
 
     var app: XCUIApplication!
     
+    var loginAlertHandlerToken: NSObjectProtocol!
+    
     override func setUpWithError() throws {
         app = XCUIApplication()
         
         continueAfterFailure = false
         
-        addUIInterruptionMonitor(withDescription: "Login Alert") { alert in
+        loginAlertHandlerToken = addUIInterruptionMonitor(withDescription: "Login Alert") { alert in
             alert.buttons["계속"].tap()
             return true
         }
+    }
+    
+    override func tearDownWithError() throws {
+        app = nil
+        
+        removeUIInterruptionMonitor(loginAlertHandlerToken)
+    }
+    
+    func testPresentProfileEditingViewWhenTapEditProfileButton() {
+        // Arrange: 앱 시작
+        app.launchArguments = [
+            "-TEST",
+            "-TARGET_VIEW_CONTROLLER", "HOME_VIEW_CONTROLLER",
+            "-AUTHENTICATION", "TRUE",
+        ]
+        app.launch()
+        
+        // Act: 버튼 탭
+        app.buttons["HOME_EDIT_PROFILE"].tap()
+        
+        // Assert: 네비게이션 바 타이틀 검증
+        XCTAssert(app.navigationBars["프로필 수정"].waitForExistence(timeout: 5))
     }
     
 //    func test_프로필수정화면_이동() {

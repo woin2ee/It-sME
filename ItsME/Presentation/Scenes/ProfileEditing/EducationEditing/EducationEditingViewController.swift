@@ -6,6 +6,7 @@
 //
 
 import RxSwift
+import RxCocoa
 import SnapKit
 import Then
 import UIKit
@@ -283,6 +284,9 @@ extension EducationEditingViewController {
                 .drive(titleInputCell.textField.rx.text),
             output.description
                 .drive(descriptionInputCell.textField.rx.text),
+            Driver.combineLatest(output.title, output.description) { (title: $0, description: $1) }
+                .map { $0.title.isNotEmpty && $0.description.isNotEmpty }
+                .drive(completeButton.rx.isEnabled),
             output.entranceDate
                 .drive(with: self, onNext: { owner, date in
                     let dateString = "\(date.year).\(date.month.toLeadingZero(digit: 2))"

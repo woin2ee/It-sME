@@ -1,5 +1,5 @@
 //
-//  SignInToFirebaseUseCase+Rx.swift
+//  SignInToFirebaseUseCase.swift
 //  ItsME
 //
 //  Created by Jaewon Yun on 2023/04/28.
@@ -9,9 +9,21 @@ import FirebaseAuth
 import Foundation
 import RxSwift
 
-extension SignInToFirebaseUseCase: ReactiveCompatible {}
+protocol SignInToFirebaseUseCaseProtocol {
+    func execute(
+        withIDToken idToken: String,
+        providerID: AuthProviderID,
+        rawNonce: String
+    ) -> Single<AuthDataResult>
+}
 
-extension Reactive where Base == SignInToFirebaseUseCase {
+struct SignInToFirebaseUseCase: SignInToFirebaseUseCaseProtocol {
+    
+    // MARK: Shared Instance
+    
+    static let shared: SignInToFirebaseUseCase = .init()
+    
+    // MARK: Execute
     
     func execute(
         withIDToken idToken: String,

@@ -7,4 +7,9 @@
 
 import Foundation
 
-struct GetNicknameAndEmailForKakaoUseCase {}
+struct GetNicknameAndEmailForKakaoUseCase {
+    
+    static let shared: GetNicknameAndEmailForKakaoUseCase = .init()
+        
+    private init() {}
+}

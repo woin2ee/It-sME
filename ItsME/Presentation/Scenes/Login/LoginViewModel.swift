@@ -13,32 +13,48 @@ final class LoginViewModel: ViewModelType {
     
     // MARK: UseCases
     
-    let saveAppleIDRefreshTokenToKeychainUseCase: SaveAppleIDRefreshTokenToKeychainUseCase = .init()
-    let loginWithAppleUseCase: LoginWithAppleUseCase = .init()
-    let loginWithKakaoUseCase: LoginWithKakaoUseCase = .init()
-    let signInToFirebaseUseCase: SignInToFirebaseUseCase = .init()
-    let getNicknameAndEmailForKakaoUseCase: GetNicknameAndEmailForKakaoUseCase = .init()
+    let saveAppleIDRefreshTokenToKeychainUseCase: SaveAppleIDRefreshTokenToKeychainUseCaseProtocol
+    let loginWithAppleUseCase: LoginWithAppleUseCaseProtocol
+    let loginWithKakaoUseCase: LoginWithKakaoUseCaseProtocol
+    let signInToFirebaseUseCase: SignInToFirebaseUseCaseProtocol
+    let getNicknameAndEmailForKakaoUseCase: GetNicknameAndEmailForKakaoUseCaseProtocol
     
-    let userRepository: UserRepository = .shared
+    let userRepository: UserProfileRepositoryProtocol
+    
+    init(
+        saveAppleIDRefreshTokenToKeychainUseCase: SaveAppleIDRefreshTokenToKeychainUseCaseProtocol,
+        loginWithAppleUseCase: LoginWithAppleUseCaseProtocol,
+        loginWithKakaoUseCase: LoginWithKakaoUseCaseProtocol,
+        signInToFirebaseUseCase: SignInToFirebaseUseCaseProtocol,
+        getNicknameAndEmailForKakaoUseCase: GetNicknameAndEmailForKakaoUseCaseProtocol,
+        userRepository: UserProfileRepositoryProtocol
+    ) {
+        self.saveAppleIDRefreshTokenToKeychainUseCase = saveAppleIDRefreshTokenToKeychainUseCase
+        self.loginWithAppleUseCase = loginWithAppleUseCase
+        self.loginWithKakaoUseCase = loginWithKakaoUseCase
+        self.signInToFirebaseUseCase = signInToFirebaseUseCase
+        self.getNicknameAndEmailForKakaoUseCase = getNicknameAndEmailForKakaoUseCase
+        self.userRepository = userRepository
+    }
     
     func transform(input: Input) -> Output {
         let loggedInWithKakao = input.kakaoLoginRequest
             .flatMapFirst {
                 let rawNonce = randomNonceString()
-                return self.loginWithKakaoUseCase.rx.execute(withRawNonce: rawNonce)
+                return self.loginWithKakaoUseCase.execute(withRawNonce: rawNonce)
                     .map(\.idToken)
                     .unwrapOrThrow()
                     .flatMap { idToken in
-                        self.signInToFirebaseUseCase.rx.execute(withIDToken: idToken, providerID: .kakao, rawNonce: rawNonce)
+                        self.signInToFirebaseUseCase.execute(withIDToken: idToken, providerID: .kakao, rawNonce: rawNonce)
                     }
-                    .flatMap { _ in self.getNicknameAndEmailForKakaoUseCase.rx.execute() }
+                    .flatMap { _ in self.getNicknameAndEmailForKakaoUseCase.execute() }
                     .asSignalOnErrorJustComplete()
             }
         
         let loggedInWithApple = input.appleLoginRequest
             .flatMapFirst {
                 let rawNonce = randomNonceString()
-                return self.loginWithAppleUseCase.rx.execute(withRawNonce: rawNonce)
+                return self.loginWithAppleUseCase.execute(withRawNonce: rawNonce)
                     .flatMap { authorization in
                         guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
                               let idTokenData = appleIDCredential.identityToken,
@@ -58,9 +74,9 @@ final class LoginViewModel: ViewModelType {
                             return try unwrapOrThrow(String(data: codeData, encoding: .utf8))
                         }()
                         
-                        let signInToFirebase = self.signInToFirebaseUseCase.rx.execute(withIDToken: idTokenString, providerID: .apple, rawNonce: rawNonce)
+                        let signInToFirebase = self.signInToFirebaseUseCase.execute(withIDToken: idTokenString, providerID: .apple, rawNonce: rawNonce)
                             .mapToVoid()
-                        let saveAppleIDRefreshToken = self.saveAppleIDRefreshTokenToKeychainUseCase.rx.execute(authorizationCode: authorizationCode)
+                        let saveAppleIDRefreshToken = self.saveAppleIDRefreshTokenToKeychainUseCase.execute(authorizationCode: authorizationCode)
                         
                         return signInToFirebase.flatMap { _ in
                             return saveAppleIDRefreshToken
@@ -72,7 +88,7 @@ final class LoginViewModel: ViewModelType {
         
         let loggedInAndNeedsSignUp = Signal.merge(loggedInWithKakao, loggedInWithApple)
             .flatMapFirst { nameAndEmail in
-                return self.userRepository.hasUserInfo
+                return self.userRepository.hasUserProfile
                     .doOnSuccess { hasUserInfo in
                         ItsMEUserDefaults.allowsAutoLogin = hasUserInfo
                     }

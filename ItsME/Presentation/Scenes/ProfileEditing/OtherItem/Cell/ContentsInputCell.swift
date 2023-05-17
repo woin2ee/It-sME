@@ -18,9 +18,10 @@ final class ContentsInputCell: UITableViewCell {
     lazy var contentsTextField: UITextField = .init().then {
         $0.font = .systemFont(ofSize: 16.0)
         $0.placeholder = "http://example.com"
-        $0.autocorrectionType = .no
         $0.keyboardType = .URL
+        $0.returnKeyType = .done
         $0.autocapitalizationType = .none
+        $0.autocorrectionType = .no
         $0.clearButtonMode = .whileEditing
         $0.delegate = self
     }

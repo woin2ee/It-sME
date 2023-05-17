@@ -8,15 +8,20 @@
 import Foundation
 import RxSwift
 
-extension AppleRESTAPI: ReactiveCompatible {}
+protocol RxAppleRESTAPIProtocol: AppleRESTAPIProtocol {
+    
+    static func validateToken(withAuthorizationCode authorizationCode: String) -> Single<ResponseDTO>
+    
+    static func revokeToken(_ token: String, tokenTypeHint: TokenTypeHint) -> Single<Void>
+}
 
-extension Reactive where Base == AppleRESTAPI {
+extension AppleRESTAPI: RxAppleRESTAPIProtocol {
     
     static func validateToken(
         withAuthorizationCode authorizationCode: String
-    ) -> Single<Base.AppleIDTokenValidationResponseDTO> {
+    ) -> Single<AppleIDTokenValidationResponseDTO> {
         return .create { observer in
-            Base.validateToken(withAuthorizationCode: authorizationCode) { result in
+            validateToken(withAuthorizationCode: authorizationCode) { result in
                 switch result {
                 case .success(let response):
                     observer(.success(response))
@@ -30,10 +35,10 @@ extension Reactive where Base == AppleRESTAPI {
     
     static func revokeToken(
         _ token: String,
-        tokenTypeHint: Base.AppleIDTokenRevocationRequestDTO.TokenTypeHint
+        tokenTypeHint: AppleIDTokenRevocationRequestDTO.TokenTypeHint
     ) -> Single<Void> {
         return .create { observer in
-            Base.revokeToken(token, tokenTypeHint: tokenTypeHint) { result in
+            revokeToken(token, tokenTypeHint: tokenTypeHint) { result in
                 switch result {
                 case .success(_):
                     observer(.success(()))
@@ -45,4 +50,3 @@ extension Reactive where Base == AppleRESTAPI {
         }
     }
 }
-

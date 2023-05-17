@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import Then
 
 final class ProfileInfoComponent: UIStackView {
     
@@ -16,37 +17,41 @@ final class ProfileInfoComponent: UIStackView {
      
      Component 의 내용을 변경하고 싶다면 이 프로퍼티에 새 객체를 할당하십시오.
      */
-    var userInfoItem: UserInfoItem {
+    var userInfoItem: UserBasicProfileInfo {
         didSet {
             icon.text = userInfoItem.icon.toEmoji
-            contents.text = userInfoItem.contents
+            contentsLabel.text = userInfoItem.contents
         }
     }
     
     // MARK: - UI Components
     
-    private lazy var icon: UILabel = {
-        let label = UILabel()
-        label.text = userInfoItem.icon.toEmoji
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.textAlignment = .center
-        return label
-    }()
+    private lazy var icon: UILabel = .init().then {
+        $0.text = userInfoItem.icon.toEmoji
+        $0.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        $0.textAlignment = .center
+    }
     
-    private lazy var contents: UILabel = {
-        var label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        label.textColor = .label
-        label.textAlignment = .left
-        label.text = userInfoItem.contents
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        return label
-    }()
+    private lazy var contentsPlaceholder: UITextField = .init().then {
+        $0.placeholder = "기본 정보를 입력해주세요."
+        $0.isEnabled = false
+        $0.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        $0.textColor = .label
+        $0.textAlignment = .left
+    }
+    
+    private lazy var contentsLabel: UILabel = .init().then {
+        $0.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        $0.textColor = .label
+        $0.textAlignment = .left
+        $0.text = userInfoItem.contents
+        $0.numberOfLines = 0
+        $0.lineBreakMode = .byWordWrapping
+    }
     
     // MARK: - Initialization
     
-    init(userInfoItem: UserInfoItem) {
+    init(userInfoItem: UserBasicProfileInfo) {
         self.userInfoItem = userInfoItem
         super.init(frame: .zero)
         
@@ -64,14 +69,20 @@ final class ProfileInfoComponent: UIStackView {
     
     private func configureSubviews() {
         self.addArrangedSubview(icon)
-        self.addArrangedSubview(contents)
-        
         icon.snp.makeConstraints { make in
             make.height.width.equalTo(35)
         }
         
-        contents.snp.makeConstraints { make in
-            make.height.equalToSuperview()
+        if userInfoItem.contents == "" {
+            self.addArrangedSubview(contentsPlaceholder)
+            contentsPlaceholder.snp.makeConstraints { make in
+                make.height.equalToSuperview()
+            }
+        } else {
+            self.addArrangedSubview(contentsLabel)
+            contentsLabel.snp.makeConstraints { make in
+                make.height.equalToSuperview()
+            }
         }
     }
 }

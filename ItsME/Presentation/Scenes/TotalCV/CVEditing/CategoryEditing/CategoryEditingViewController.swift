@@ -26,6 +26,8 @@ class CategoryEditingViewController: UIViewController {
         $0.titleLabel.text = "항목"
         $0.titleLabel.font = .systemFont(ofSize: 18, weight: .bold)
         $0.contentsTextField.font = .systemFont(ofSize: 18)
+        $0.contentsTextField.keyboardType = .default
+        $0.contentsTextField.returnKeyType = .done
     }
     
     lazy var removeButton = UIButton().then {
@@ -102,7 +104,6 @@ private extension CategoryEditingViewController {
 private extension CategoryEditingViewController {
     
     func bindViewModel() {
-        
         let input: CategoryEditingViewModel.Input = .init(
             title: inputCell.contentsTextField.rx.text.orEmpty.asDriver(),
             doneTrigger: completeBarButton.rx.tap.asSignal(),
@@ -114,21 +115,23 @@ private extension CategoryEditingViewController {
                 )
             }.asSignalOnErrorJustComplete()
         )
-        
         let output = viewModel.transform(input: input)
-        
-        [ output.title
-            .drive(inputCell.contentsTextField.rx.text),
-          output.doneHandler
-            .emit(with: self, onNext: { owner, _ in
-                owner.navigationController?.popViewController(animated: true)
-            }),
-          output.removeHandler
-            .emit(with: self, onNext: { owner, _ in
-                owner.navigationController?.popViewController(animated: true)
-            }),
-          output.editingType
-            .drive(editingTypeBinding),
+        [
+            output.title
+                .drive(inputCell.contentsTextField.rx.text),
+            output.title
+                .map(\.isNotEmpty)
+                .drive(completeBarButton.rx.isEnabled),
+            output.doneHandler
+                .emit(with: self, onNext: { owner, _ in
+                    owner.navigationController?.popViewController(animated: true)
+                }),
+            output.removeHandler
+                .emit(with: self, onNext: { owner, _ in
+                    owner.navigationController?.popViewController(animated: true)
+                }),
+            output.editingType
+                .drive(editingTypeBinding),
         ]
             .forEach { $0.disposed(by: disposeBag) }
     }

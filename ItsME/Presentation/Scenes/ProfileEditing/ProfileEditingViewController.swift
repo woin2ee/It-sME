@@ -83,8 +83,10 @@ final class ProfileEditingViewController: UIViewController {
         $0.delegate = self
         $0.backgroundColor = .clear
         $0.isScrollEnabled = false
-        let cellType = EducationCell.self
+        let cellType = MovableEducationCell.self
         $0.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(respondToLongPressGesture))
+        $0.addGestureRecognizer(longPressGestureRecognizer)
     }
     
     private lazy var educationItemAddButton: ItemAddButton = .init().then {
@@ -131,6 +133,10 @@ final class ProfileEditingViewController: UIViewController {
             )
         })
     }
+    
+    private var sourceIndexPath: IndexPath?
+    private var educationCellSnapshot: UIImageView?
+    private var centerYOffset: CGFloat?
     
     // MARK: - Initializer
     
@@ -223,7 +229,7 @@ private extension ProfileEditingViewController {
                 },
             output.educationItems
                 .drive(
-                    educationTableView.rx.items(cellIdentifier: EducationCell.reuseIdentifier, cellType: EducationCell.self)
+                    educationTableView.rx.items(cellIdentifier: MovableEducationCell.reuseIdentifier, cellType: MovableEducationCell.self)
                 ) { (index, educationItem, cell) in
                     cell.bind(educationItem: educationItem)
                 },
@@ -233,13 +239,15 @@ private extension ProfileEditingViewController {
                 }),
             output.logoutComplete
                 .emit(with: self, onNext: { owner, _ in
-                    owner.navigationController?.setViewControllers([LoginViewController()], animated: false)
+                    let loginViewController = DIContainer.makeLoginViewController()
+                    owner.navigationController?.setViewControllers([loginViewController], animated: false)
                 }),
             output.deleteAccountComplete
                 .emit(with: self, onNext: { owner, _ in
                     let alertController: UIAlertController = .init(title: "", message: "계정 삭제가 완료되었습니다.", preferredStyle: .alert)
                     let okAction: UIAlertAction = .init(title: "확인", style: .default) { _ in
-                        owner.navigationController?.setViewControllers([LoginViewController()], animated: false)
+                        let loginViewController = DIContainer.makeLoginViewController()
+                        owner.navigationController?.setViewControllers([loginViewController], animated: false)
                     }
                     alertController.addAction(okAction)
                     owner.present(alertController, animated: true)
@@ -359,21 +367,24 @@ private extension ProfileEditingViewController {
     }
     
     func presentAddressEditingView() {
+        let viewModel: AddressEditingViewModel = .init(initialAddress: viewModel.currentAddress, delegate: viewModel)
         let viewController: AddressEditingViewController = .init(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func presentPhoneNumberEditingView() {
+        let viewModel: PhoneNumberEditingViewModel = .init(initialPhoneNumber: viewModel.currentPhoneNumber, delegate: viewModel)
         let viewController: PhoneNumberEditingViewController = .init(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func presentEmailEditingView() {
+        let viewModel: EmailEditingViewModel = .init(initialEmail: viewModel.currentEmail, delegate: viewModel)
         let viewController: EmailEditingViewController = .init(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func pushOtherItemEditingViewController(with otherItem: UserInfoItem) {
+    func pushOtherItemEditingViewController(with otherItem: UserBasicProfileInfo) {
         guard let indexOfItem = viewModel.currentOtherItems.firstIndex(where: { $0 === otherItem }) else {
             return
         }
@@ -410,6 +421,67 @@ private extension ProfileEditingViewController {
             if let otherItem = viewModel.currentAllItems[ifExists: index] {
                 pushOtherItemEditingViewController(with: otherItem)
             }
+        }
+    }
+    
+    @objc func respondToLongPressGesture(sender: UILongPressGestureRecognizer) {
+        let pointInTableView = sender.location(in: educationTableView)
+        
+        switch sender.state {
+        case .began:
+            guard let selectedIndexPath = educationTableView.indexPathForRow(at: pointInTableView),
+                  let selectedCell = educationTableView.cellForRow(at: selectedIndexPath)
+            else { return }
+            
+            selectedCell.setHighlighted(false, animated: false)
+            
+            sourceIndexPath = selectedIndexPath
+            centerYOffset = pointInTableView.y - selectedCell.center.y
+            educationCellSnapshot = UIImageView(image: selectedCell.asImage())
+            
+            guard let educationCellSnapshot = educationCellSnapshot else { return }
+            
+            let centerX = selectedCell.convert(selectedCell.center, to: educationTableView).x
+            let centerY = selectedCell.center.y
+            educationCellSnapshot.center = .init(x: centerX, y: centerY)
+            
+            educationTableView.addSubview(educationCellSnapshot)
+            
+            UIView.animate(withDuration: 0.2) {
+                educationCellSnapshot.transform = .init(scaleX: 1.03, y: 1.03)
+                educationCellSnapshot.alpha = 0.8
+                
+                selectedCell.isHidden = true
+            }
+            
+        case .changed:
+            guard let selectedIndexPath = educationTableView.indexPathForRow(at: pointInTableView),
+                  let selectedCell = educationTableView.cellForRow(at: selectedIndexPath),
+                  let educationCellSnapshot = educationCellSnapshot,
+                  let centerYOffset = centerYOffset,
+                  let sourceIndexPath = sourceIndexPath
+            else { return }
+            
+            let centerX = selectedCell.convert(selectedCell.center, to: educationTableView).x
+            let centerY = pointInTableView.y - centerYOffset
+            educationCellSnapshot.center = .init(x: centerX, y: centerY)
+            
+            if sourceIndexPath != selectedIndexPath {
+                educationTableView.moveRow(at: sourceIndexPath, to: selectedIndexPath)
+                viewModel.swapEducation(at: sourceIndexPath, to: selectedIndexPath)
+                self.sourceIndexPath = selectedIndexPath
+            }
+            
+        default:
+            if let sourceIndexPath = sourceIndexPath,
+               let sourceCell = educationTableView.cellForRow(at: sourceIndexPath) {
+                viewModel.endSwapEducation()
+                sourceCell.isHidden = false
+            }
+            
+            educationCellSnapshot?.removeFromSuperview()
+            educationCellSnapshot = nil
+            sourceIndexPath = nil
         }
     }
 }
@@ -476,11 +548,7 @@ struct ProfileEditingViewControllerRepresenter: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> UIViewController {
         let navigationController: UINavigationController = .init(rootViewController: .init())
-        let profileEditingViewModel: ProfileEditingViewModel = .init(
-            initalProfileImageData: UIImage.defaultProfileImage.jpegData(compressionQuality: 1.0),
-            userInfo: .empty
-        )
-        let profileEditingViewController: ProfileEditingViewController = .init(viewModel: profileEditingViewModel)
+        let profileEditingViewController = DIContainer.mock.makeProfileEditingViewController()
         navigationController.pushViewController(profileEditingViewController, animated: false)
         return navigationController
     }

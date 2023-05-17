@@ -21,8 +21,7 @@ class DatePickerTextField: UITextField {
         $0.maximumDate = .now
         $0.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
     }
-    //FIXME: - width 수정 필요
-    private lazy var inputAccessoryBackgroundView: UIView = .init(frame: .init(x: .zero, y: .zero, width: 390, height: 44.0)).then {
+    private lazy var inputAccessoryBackgroundView: UIView = .init(frame: .init(x: .zero, y: .zero, width: UIScreen.main.bounds.width, height: 44.0)).then {
         $0.backgroundColor = .systemGray4
     }
     private lazy var doneButton: UIButton = .init().then {

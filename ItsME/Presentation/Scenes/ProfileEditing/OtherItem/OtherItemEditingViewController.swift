@@ -109,6 +109,9 @@ private extension OtherItemEditingViewController {
                 .drive(editingTypeBinding),
             output.userInfoItem
                 .drive(userInfoItemBinding),
+            output.userInfoItem
+                .map(\.contents.isNotEmpty)
+                .drive(completeButton.rx.isEnabled),
             output.doneCompleted
                 .emit(with: self, onNext: { owner, _ in
                     owner.navigationController?.popViewController(animated: true)
@@ -152,7 +155,7 @@ private extension OtherItemEditingViewController {
         }
     }
     
-    var userInfoItemBinding: Binder<UserInfoItem> {
+    var userInfoItemBinding: Binder<UserBasicProfileInfo> {
         .init(self) { vc, userInfoItem in
             vc.iconInputCell.icon = userInfoItem.icon
             vc.contentsInputCell.contentsTextField.text = userInfoItem.contents

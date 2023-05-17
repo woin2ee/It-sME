@@ -7,4 +7,9 @@
 
 import Foundation
 
-struct SignInToFirebaseUseCase {}
+struct SignInToFirebaseUseCase {
+    
+    static let shared: SignInToFirebaseUseCase = .init()
+        
+    private init() {}
+}

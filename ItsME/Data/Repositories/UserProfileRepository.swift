@@ -1,5 +1,5 @@
 //
-//  UserRepository.swift
+//  UserProfileRepository.swift
 //  ItsME
 //
 //  Created by Jaewon Yun on 2022/11/13.
@@ -8,23 +8,40 @@
 import FirebaseAuth
 import RxSwift
 
-final class UserRepository {
+protocol UserProfileRepositoryProtocol {
     
-    // MARK: Make to Singleton
+    var hasUserProfile: Single<Bool> { get }
     
-    static let shared: UserRepository = .init()
+    func getUserProfile() -> Single<UserProfile>
     
-    private init() {
-        self.database = .shared
-    }
+    func saveUserProfile(_ userInfo: UserProfile) -> Single<Void>
+    
+    /// 데이터베이스에 저장된 현재 사용자의 프로필 정보를 삭제합니다.
+    func deleteUserProfile() -> Completable
+    
+    /// 현재 사용자의 계정을 Firebase Authentication 에서 삭제합니다.
+    func deleteAccount() -> Single<Void>
+}
+
+final class UserProfileRepository: UserProfileRepositoryProtocol {
+    
+    // MARK: Shared Instance
+    
+    static let shared: UserProfileRepository = .init(database: DatabaseReferenceManager.shared)
     
     // MARK: Dependencies
     
     private let database: DatabaseReferenceManager
     
+    // MARK: Initializers
+    
+    init(database: DatabaseReferenceManager) {
+        self.database = database
+    }
+    
     // MARK: API
     
-    var hasUserInfo: Single<Bool> {
+    var hasUserProfile: Single<Bool> {
         let source = Auth.auth().rx.currentUser
             .map { $0.uid }
             .flatMap { self.database.userRef($0).rx.dataSnapshot }
@@ -32,17 +49,17 @@ final class UserRepository {
         return source
     }
     
-    func getUserInfo() -> Single<UserInfo> {
+    func getUserProfile() -> Single<UserProfile> {
         let source = Auth.auth().rx.currentUser
             .map { $0.uid }
             .flatMap { self.database.userRef($0).rx.dataSnapshot }
             .map { dataSnapshot in
-                return try LoggedJsonDecoder.decode(UserInfo.self, withJSONObject: dataSnapshot.value)
+                return try LoggedJsonDecoder.decode(UserProfile.self, withJSONObject: dataSnapshot.value)
             }
         return source
     }
     
-    func saveUserInfo(_ userInfo: UserInfo) -> Single<Void> {
+    func saveUserProfile(_ userInfo: UserProfile) -> Single<Void> {
         let source = Auth.auth().rx.currentUser
             .map { $0.uid }
             .flatMap { uid in
@@ -53,8 +70,7 @@ final class UserRepository {
         return source
     }
     
-    /// 데이터베이스에 저장된 현재 사용자의 프로필 정보를 삭제합니다.
-    func deleteUserInfo() -> Completable {
+    func deleteUserProfile() -> Completable {
         let source = Auth.auth().rx.currentUser
             .map(\.uid)
             .flatMap { self.database.userRef($0).rx.removeValue() }
@@ -62,8 +78,7 @@ final class UserRepository {
         return source
     }
     
-    /// 현재 사용자의 계정을 Firebase Authentication 에서 삭제합니다.
-    func deleteUser() -> Single<Void> {
+    func deleteAccount() -> Single<Void> {
         let source = Auth.auth().rx.currentUser
             .flatMap { user -> Single<Void> in
                 return .create { observer in

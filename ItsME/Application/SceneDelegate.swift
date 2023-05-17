@@ -15,6 +15,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     let rootNavigationController: UINavigationController = .init()
+    
+    let logoutWithAppleUseCase: LogoutWithAppleUseCaseProtocol = DIContainer.makeLogoutWithAppleUseCase()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -23,9 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
         window?.rootViewController = rootNavigationController
         
-        let rootViewController = (Auth.auth().isLoggedIn &&
-                                  ItsMEUserDefaults.allowsAutoLogin) ? HomeViewController() : LoginViewController()
-        rootNavigationController.setViewControllers([rootViewController], animated: false)
+        setRootViewController()
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -62,8 +62,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             let appleIDProvider = ASAuthorizationAppleIDProvider()
             appleIDProvider.getCredentialState(forUserID: userID) { credentialState, error in
-                // 비동기적으로 실행되므로 원하는 방식대로 동작 안할 수 있음 - 관찰, 테스트 필요
-                if let _ = error {
+                if let error = error {
+                    ItsMELogger.standard.error("\(error)")
                     self.handleAppleIDLogout()
                     return
                 }
@@ -76,7 +76,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
             }
         }
-        
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
@@ -92,10 +91,32 @@ extension SceneDelegate {
     
     private func handleAppleIDLogout() {
         DispatchQueue.main.async {
-            let loginViewController: LoginViewController = .init()
+            let loginViewController = DIContainer.makeLoginViewController()
             self.rootNavigationController.setViewControllers([loginViewController], animated: false)
-            ItsMEUserDefaults.removeAppleUserID()
-            ItsMEUserDefaults.isLoggedInAsApple = false
+            self.logoutWithAppleUseCase.execute()
         }
+    }
+    
+    private func setRootViewController() {
+        let launchArguments = CommandLine.arguments
+        let rootViewController: UIViewController
+        
+        if launchArguments.contains("-TEST"),
+           let index = launchArguments.firstIndex(of: "-TARGET_VIEW_CONTROLLER") {
+            switch launchArguments[index + 1] {
+            case "HOME_VIEW_CONTROLLER":
+                rootViewController = DIContainer.makeHomeViewController()
+            default:
+                fatalError("올바른 argument 를 입력해주세요.")
+            }
+        } else {
+            rootViewController = (Auth.auth().isLoggedIn && ItsMEUserDefaults.allowsAutoLogin) ? {
+                return DIContainer.makeHomeViewController()
+            }() : {
+                return DIContainer.makeLoginViewController()
+            }()
+        }
+        
+        rootNavigationController.setViewControllers([rootViewController], animated: false)
     }
 }

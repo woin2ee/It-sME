@@ -23,6 +23,7 @@ target 'ItsME' do
   target 'ItsMETests' do
     inherit! :search_paths
     # Pods for testing
+		pod 'RxBlocking', '6.5.0'
   end
 
   target 'ItsMEUITests' do

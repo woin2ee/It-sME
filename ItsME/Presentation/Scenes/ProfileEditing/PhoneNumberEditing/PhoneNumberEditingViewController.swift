@@ -5,14 +5,15 @@
 //  Created by Jaewon Yun on 2023/01/10.
 //
 
+import RxSwift
 import SnapKit
 import Then
 import UIKit
 
-
 final class PhoneNumberEditingViewController: UIViewController {
     
-    private let viewModel: ProfileEditingViewModel
+    private let disposeBag: DisposeBag = .init()
+    private let viewModel: PhoneNumberEditingViewModel
     
     // MARK: - UI Components
     
@@ -21,20 +22,19 @@ final class PhoneNumberEditingViewController: UIViewController {
         $0.backgroundColor = .clear
     }
     
-    var inputCell: ContentsInputCell? {
-        inputTableView.visibleCells[ifExists: 0] as? ContentsInputCell
+    private lazy var inputCell: ContentsInputCell = .init().then {
+        $0.titleLabel.text = "전화번호"
+        $0.contentsTextField.placeholder = "전화"
+        $0.contentsTextField.delegate = self
+        $0.contentsTextField.keyboardType = .numberPad
+        $0.contentsTextField.returnKeyType = .done
     }
     
-    private lazy var completeBarButton: UIBarButtonItem = .init().then {
-        $0.primaryAction = .init(title: "완료", handler: { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
-            self?.updatePhoneNumber()
-        })
-    }
+    private lazy var completeBarButton: UIBarButtonItem = .init(title: "완료")
     
     // MARK: - Initalizer
     
-    init(viewModel: ProfileEditingViewModel) {
+    init(viewModel: PhoneNumberEditingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -43,16 +43,19 @@ final class PhoneNumberEditingViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemGroupedBackground
         configureSubviews()
         configureNavigationBar()
+        bindViewModel()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        inputCell?.contentsTextField.becomeFirstResponder()
+        inputCell.contentsTextField.becomeFirstResponder()
     }
 }
 
@@ -73,10 +76,31 @@ private extension PhoneNumberEditingViewController {
         self.navigationItem.rightBarButtonItem = completeBarButton
         self.navigationItem.rightBarButtonItem?.style = .done
     }
+}
+
+// MARK: - Binding ViewModel
+
+extension PhoneNumberEditingViewController {
     
-    func updatePhoneNumber() {
-        let phoneNumber = inputCell?.contentsTextField.text ?? ""
-        viewModel.updatePhoneNumber(phoneNumber)
+    private func bindViewModel() {
+        let input: PhoneNumberEditingViewModel.Input = .init(
+            phoneNumber: inputCell.contentsTextField.rx.text.orEmpty.asDriver(),
+            saveTrigger: completeBarButton.rx.tap.asSignal()
+        )
+        let output = viewModel.transform(input: input)
+        
+        [
+            output.phoneNumber
+                .drive(inputCell.contentsTextField.rx.text),
+            output.phoneNumber
+                .map(\.isNotEmpty)
+                .drive(completeBarButton.rx.isEnabled),
+            output.saveComplete
+                .emit(with: self, onNext: { owner, _ in
+                    owner.navigationController?.popViewController(animated: true)
+                }),
+        ]
+            .forEach { $0.disposed(by: disposeBag) }
     }
 }
 
@@ -89,10 +113,33 @@ extension PhoneNumberEditingViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: ContentsInputCell = .init()
-        cell.titleLabel.text = "전화번호"
-        cell.contentsTextField.text = viewModel.currentPhoneNumber
-        cell.contentsTextField.placeholder = "전화"
-        return cell
+        return inputCell
+    }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension PhoneNumberEditingViewController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let isEntering = !(range.length > 0)
+        let expectedText: String
+        
+        if isEntering {
+            expectedText = (textField.text ?? "") + string
+        } else {
+            guard
+                var currentText = textField.text,
+                let removeRange = Range<String.Index>.init(range, in: currentText)
+            else {
+                return true
+            }
+            
+            currentText.removeSubrange(removeRange)
+            expectedText = currentText
+        }
+        
+        textField.text = formatPhoneNumber(expectedText)
+        return false
     }
 }

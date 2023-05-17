@@ -1,5 +1,5 @@
 //
-//  UserInfoItem.swift
+//  UserBasicProfileInfo.swift
 //  ItsME
 //
 //  Created by MacBook Air on 2022/11/17.
@@ -7,11 +7,11 @@
 
 import Foundation
 
-final class UserInfoItem: Codable {
-    let icon: UserInfoItemIcon
+final class UserBasicProfileInfo: Codable {
+    let icon: UserBasicProfileInfoIcon
     var contents: String
     
-    init(icon: UserInfoItemIcon, contents: String) {
+    init(icon: UserBasicProfileInfoIcon, contents: String) {
         self.icon = icon
         self.contents = contents
     }
@@ -31,7 +31,7 @@ final class UserInfoItem: Codable {
     }
 }
 
-enum UserInfoItemIcon: String, CaseIterable{
+enum UserBasicProfileInfoIcon: String, CaseIterable{
     case `default` = "default"
     case computer = "computer"
     case cake = "cake"
@@ -76,7 +76,7 @@ enum UserInfoItemIcon: String, CaseIterable{
     ///
     /// 해당하는 `rawString` 이 없을 경우 `default(👤)` 인스턴스를 반환합니다.
     init(rawString: String) {
-        if let instance = UserInfoItemIcon.init(rawValue: rawString) {
+        if let instance = UserBasicProfileInfoIcon.init(rawValue: rawString) {
             self = instance
         } else {
             self = .default
@@ -86,7 +86,7 @@ enum UserInfoItemIcon: String, CaseIterable{
 
 // MARK: - CodingKeys
 
-extension UserInfoItem {
+extension UserBasicProfileInfo {
     
     enum CodingKeys: CodingKey {
         case icon
@@ -96,17 +96,17 @@ extension UserInfoItem {
 
 // MARK: - Equatable
 
-extension UserInfoItem: Equatable {
+extension UserBasicProfileInfo: Equatable {
     
-    static func == (lhs: UserInfoItem, rhs: UserInfoItem) -> Bool {
+    static func == (lhs: UserBasicProfileInfo, rhs: UserBasicProfileInfo) -> Bool {
         lhs.icon == rhs.icon &&
         lhs.contents == rhs.contents
     }
 }
 
-extension UserInfoItem {
+extension UserBasicProfileInfo {
     
-    static var empty: UserInfoItem {
+    static var empty: UserBasicProfileInfo {
         .init(icon: .default, contents: "")
     }
 }

@@ -5,35 +5,32 @@
 //  Created by Jaewon Yun on 2023/01/10.
 //
 
+import RxSwift
 import SnapKit
 import Then
 import UIKit
 
 final class AddressEditingViewController: UIViewController {
     
-    private let viewModel: ProfileEditingViewModel
+    private let disposeBag: DisposeBag = .init()
+    private let viewModel: AddressEditingViewModel
     
     // MARK: - UI Components
     
     private lazy var addressTextView: IntrinsicHeightTextView = .init().then {
-        $0.text = viewModel.currentAddress
         $0.backgroundColor = .secondarySystemGroupedBackground
         $0.textContainerInset = .init(top: 10, left: 4, bottom: 10, right: 4)
         $0.font = .systemFont(ofSize: 18)
-        $0.keyboardType = .twitter
+        $0.keyboardType = .default
+        $0.returnKeyType = .done
         $0.layer.cornerRadius = 12.0
     }
     
-    private lazy var completeBarButton: UIBarButtonItem = .init().then {
-        $0.primaryAction = .init(title: "완료", handler: { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
-            self?.updateAddres()
-        })
-    }
+    private lazy var completeBarButton: UIBarButtonItem = .init(title: "완료")
     
     // MARK: - Initializer
     
-    init(viewModel: ProfileEditingViewModel) {
+    init(viewModel: AddressEditingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -49,6 +46,7 @@ final class AddressEditingViewController: UIViewController {
         self.view.backgroundColor = .systemGroupedBackground
         configureSubviews()
         configureNavigationBar()
+        bindViewModel()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -74,9 +72,30 @@ private extension AddressEditingViewController {
         self.navigationItem.rightBarButtonItem = completeBarButton
         self.navigationItem.rightBarButtonItem?.style = .done
     }
+}
+
+// MARK: - Binding ViewModel
+
+extension AddressEditingViewController {
     
-    func updateAddres() {
-        let address: String = addressTextView.text
-        viewModel.updateAddress(address)
+    private func bindViewModel() {
+        let input = AddressEditingViewModel.Input.init(
+            address: addressTextView.rx.text.orEmpty.asDriver(),
+            saveTrigger: completeBarButton.rx.tap.asSignal()
+        )
+        let output = viewModel.transform(input: input)
+        
+        [
+            output.address
+                .drive(addressTextView.rx.text),
+            output.address
+                .map(\.isNotEmpty)
+                .drive(completeBarButton.rx.isEnabled),
+            output.saveComplete
+                .emit(with: self, onNext: { owner, _ in
+                    owner.navigationController?.popViewController(animated: true)
+                }),
+        ]
+            .forEach { $0.disposed(by: disposeBag) }
     }
 }
