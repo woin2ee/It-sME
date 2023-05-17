@@ -10,7 +10,7 @@ import Foundation
 extension Array {
     
     /// 배열에 해당 인덱스가 존재할 경우 해당 인덱스의 값을 반환합니다. 그렇지 않을 경우 nil 을 반환합니다.
-    subscript(ifExists index: Index) -> Element? {
+    public subscript(ifExists index: Index) -> Element? {
         get {
             guard self.indices ~= index else {
                 #if DEBUG

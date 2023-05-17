@@ -1,8 +1,8 @@
 //
 //  Hash.swift
-//  ItsME
+//  ItsMEUtil
 //
-//  Created by Jaewon Yun on 2023/04/03.
+//  Created by Jaewon Yun on 2023/05/17.
 //
 
 import CryptoKit
@@ -13,7 +13,7 @@ import Foundation
 /// - Parameter input: 해시 함수를 적용할 문자열
 /// - Returns: `Hexadecimal String`
 @available(iOS 13, *)
-func sha256(_ input: String) -> String {
+public func sha256(_ input: String) -> String {
     let inputData = Data(input.utf8)
     let digest = SHA256.hash(data: inputData)
     let hexadecimalString = digest.map {

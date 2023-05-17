@@ -31,6 +31,10 @@ target 'ItsME' do
     # Pods for testing
   end
 
+	target 'ItsMEUtil' do
+	  inherit! :search_paths
+  end
+
 end
 
 post_install do |installer|

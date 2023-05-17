@@ -9,7 +9,8 @@ import FirebaseAuth
 import Foundation
 
 extension Auth {
-    var isLoggedIn: Bool {
+    
+    public var isLoggedIn: Bool {
         (self.currentUser != nil) ? true : false
     }
 }

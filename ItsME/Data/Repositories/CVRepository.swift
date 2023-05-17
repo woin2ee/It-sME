@@ -6,6 +6,7 @@
 //
 
 import FirebaseAuth
+import ItsMEUtil
 import RxSwift
 
 protocol CVRepositoryProtocol {
