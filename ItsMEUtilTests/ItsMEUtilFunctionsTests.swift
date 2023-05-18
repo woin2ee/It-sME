@@ -259,4 +259,40 @@ final class ItsMEUtilFunctionsTests: XCTestCase {
         // Assert
         XCTAssertNotEqual(nonce.count, 0)
     }
+    
+    func test_sha256() {
+    WhenEmptyInput:
+        do {
+            // Arrange
+            let input = ""
+            
+            // Act
+            let result = sha256(input)
+            
+            // Assert
+            XCTAssertEqual(result.count, 64)
+        }
+    WhenOneLengthInput:
+        do {
+            // Arrange
+            let input = "a"
+            
+            // Act
+            let result = sha256(input)
+            
+            // Assert
+            XCTAssertEqual(result.count, 64)
+        }
+    WhenLongLengthInput:
+        do {
+            // Arrange
+            let input = "aasdaaeifajij389faw38faw93f8awj9fajw38fjaw893jf98waj3f89ajw38fjwa893fj98aw3jf89aw3fa"
+            
+            // Act
+            let result = sha256(input)
+            
+            // Assert
+            XCTAssertEqual(result.count, 64)
+        }
+    }
 }

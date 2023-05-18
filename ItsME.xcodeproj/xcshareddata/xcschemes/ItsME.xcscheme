@@ -58,6 +58,20 @@
             BlueprintName = "ItsMENoneHostAppTests"
             ReferencedContainer = "container:ItsME.xcodeproj">
          </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "DAF241672A14ED0C00612729"
+            BuildableName = "ItsMEUtilTests.xctest"
+            BlueprintName = "ItsMEUtilTests"
+            ReferencedContainer = "container:ItsME.xcodeproj">
+         </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "DAF2415E2A14ED0C00612729"
+            BuildableName = "ItsMEUtil.framework"
+            BlueprintName = "ItsMEUtil"
+            ReferencedContainer = "container:ItsME.xcodeproj">
+         </BuildableReference>
       </CodeCoverageTargets>
       <Testables>
          <TestableReference
@@ -90,6 +104,16 @@
                BlueprintIdentifier = "DA90694C29C8234600535A3D"
                BuildableName = "ItsMENoneHostAppTests.xctest"
                BlueprintName = "ItsMENoneHostAppTests"
+               ReferencedContainer = "container:ItsME.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DAF241672A14ED0C00612729"
+               BuildableName = "ItsMEUtilTests.xctest"
+               BlueprintName = "ItsMEUtilTests"
                ReferencedContainer = "container:ItsME.xcodeproj">
             </BuildableReference>
          </TestableReference>
