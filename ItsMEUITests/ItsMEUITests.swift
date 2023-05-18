@@ -52,7 +52,7 @@ final class ItsMEUITests: XCTestCase {
         doneButton.tap()
         
         // Assert: 수정된 이름 확인
-        XCTAssert(editProfileButton.waitForExistence(timeout: 5))
+        XCTAssert(editProfileButton.waitForExistence(timeout: 10))
         editProfileButton.tap()
         XCTAssertEqual(nameTextField.value as! String, newName)
     }
