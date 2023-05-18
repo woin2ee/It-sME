@@ -53,10 +53,10 @@ final class LogoutUseCaseTests: RxBaseTestCase {
 extension LogoutUseCaseTests {
     
     private func makeSUT(with authProviderID: AuthProviderID, hasError: Bool) -> LogoutUseCase {
-        let getCurrentAuthProviderIDUseCaseStub = GetCurrentAuthProviderIDUseCaseStub.init(authProviderID: authProviderID, hasError: hasError)
+        let getCurrentAuthProviderIDUseCaseMock = GetCurrentAuthProviderIDUseCaseMock.init(authProviderID: authProviderID, hasError: hasError)
         let logoutWithAppleUseCase = LogoutWithAppleUseCaseDummy()
         return .init(
-            getCurrentAuthProviderIDUseCase: getCurrentAuthProviderIDUseCaseStub,
+            getCurrentAuthProviderIDUseCase: getCurrentAuthProviderIDUseCaseMock,
             logoutWithAppleUseCase: logoutWithAppleUseCase
         )
     }

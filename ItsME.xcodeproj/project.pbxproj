@@ -116,7 +116,7 @@
 		DAB06A40291BA61100E86163 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06A3F291BA61100E86163 /* ViewModelType.swift */; };
 		DAC21C6A2A022825001E6229 /* MovableEducationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC21C692A022825001E6229 /* MovableEducationCell.swift */; };
 		DAC6EDAF2A149B4500EA181C /* LogoutWithAppleUseCaseDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC6EDAE2A149B4500EA181C /* LogoutWithAppleUseCaseDummy.swift */; };
-		DAC6EDB12A149B6500EA181C /* GetCurrentAuthProviderIDUseCaseStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC6EDB02A149B6500EA181C /* GetCurrentAuthProviderIDUseCaseStub.swift */; };
+		DAC6EDB12A149B6500EA181C /* GetCurrentAuthProviderIDUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC6EDB02A149B6500EA181C /* GetCurrentAuthProviderIDUseCaseMock.swift */; };
 		DAC6EDB32A149BB700EA181C /* TestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC6EDB22A149BB700EA181C /* TestError.swift */; };
 		DAC6EDBA2A14C19000EA181C /* TestScheduler+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC6EDB92A14C19000EA181C /* TestScheduler+.swift */; };
 		DAC6EDBC2A14C48D00EA181C /* RxBaseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC6EDBB2A14C48D00EA181C /* RxBaseTestCase.swift */; };
@@ -351,7 +351,7 @@
 		DAB06A3F291BA61100E86163 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		DAC21C692A022825001E6229 /* MovableEducationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovableEducationCell.swift; sourceTree = "<group>"; };
 		DAC6EDAE2A149B4500EA181C /* LogoutWithAppleUseCaseDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutWithAppleUseCaseDummy.swift; sourceTree = "<group>"; };
-		DAC6EDB02A149B6500EA181C /* GetCurrentAuthProviderIDUseCaseStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCurrentAuthProviderIDUseCaseStub.swift; sourceTree = "<group>"; };
+		DAC6EDB02A149B6500EA181C /* GetCurrentAuthProviderIDUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCurrentAuthProviderIDUseCaseMock.swift; sourceTree = "<group>"; };
 		DAC6EDB22A149BB700EA181C /* TestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestError.swift; sourceTree = "<group>"; };
 		DAC6EDB92A14C19000EA181C /* TestScheduler+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestScheduler+.swift"; sourceTree = "<group>"; };
 		DAC6EDBB2A14C48D00EA181C /* RxBaseTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBaseTestCase.swift; sourceTree = "<group>"; };
@@ -989,7 +989,7 @@
 			children = (
 				DA00EFF62A07A61B00297501 /* DelegateMock.swift */,
 				DAC6EDAE2A149B4500EA181C /* LogoutWithAppleUseCaseDummy.swift */,
-				DAC6EDB02A149B6500EA181C /* GetCurrentAuthProviderIDUseCaseStub.swift */,
+				DAC6EDB02A149B6500EA181C /* GetCurrentAuthProviderIDUseCaseMock.swift */,
 			);
 			path = TestDoubles;
 			sourceTree = "<group>";
@@ -1680,7 +1680,7 @@
 				DAC6EDBC2A14C48D00EA181C /* RxBaseTestCase.swift in Sources */,
 				DAC6EDB32A149BB700EA181C /* TestError.swift in Sources */,
 				DA00EFFB2A07C1A600297501 /* DelegateMock.swift in Sources */,
-				DAC6EDB12A149B6500EA181C /* GetCurrentAuthProviderIDUseCaseStub.swift in Sources */,
+				DAC6EDB12A149B6500EA181C /* GetCurrentAuthProviderIDUseCaseMock.swift in Sources */,
 				DA00EFF92A07C19C00297501 /* PhoneNumberEditingViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
