@@ -16,11 +16,10 @@ final class ProfileEditingViewModel: ViewModelType {
     private let logoutUseCase: LogoutUseCaseProtocol
     private let saveProfileImageUseCase: SaveProfileImageUseCaseProtocol
     private let getProfileImageUseCase: GetProfileImageUseCaseProtocol
+    private let saveUserProfileUseCase: SaveUserProfileUseCaseProtocol
+    private let getUserProfileUseCase: GetUserProfileUseCaseProtocol
     
-    private let userRepository: UserProfileRepositoryProtocol
-    private let cvRepository: CVRepositoryProtocol
-    
-    private let initalProfileImageData: Data?
+    private let initialProfileImageData: Data?
     private let userInfoRelay: BehaviorRelay<UserProfile>
     
     var currentBirthday: Date {
@@ -54,19 +53,19 @@ final class ProfileEditingViewModel: ViewModelType {
         logoutUseCase: LogoutUseCaseProtocol,
         saveProfileImageUseCase: SaveProfileImageUseCaseProtocol,
         getProfileImageUseCase: GetProfileImageUseCaseProtocol,
-        userRepository: UserProfileRepositoryProtocol,
-        cvRepository: CVRepositoryProtocol,
-        initalProfileImageData: Data?,
-        userProfile: UserProfile
+        saveUserProfileUseCase: SaveUserProfileUseCaseProtocol,
+        getUserProfileUseCase: GetUserProfileUseCaseProtocol,
+        initialProfileImageData: Data?,
+        initialUserProfile: UserProfile
     ) {
         self.deleteAccountUseCase = deleteAccountUseCase
         self.logoutUseCase = logoutUseCase
         self.saveProfileImageUseCase = saveProfileImageUseCase
         self.getProfileImageUseCase = getProfileImageUseCase
-        self.userRepository = userRepository
-        self.cvRepository = cvRepository
-        self.initalProfileImageData = initalProfileImageData
-        self.userInfoRelay = .init(value: userProfile)
+        self.saveUserProfileUseCase = saveUserProfileUseCase
+        self.getUserProfileUseCase = getUserProfileUseCase
+        self.initialProfileImageData = initialProfileImageData
+        self.userInfoRelay = .init(value: initialUserProfile)
     }
     
     func transform(input: Input) -> Output {
@@ -75,7 +74,7 @@ final class ProfileEditingViewModel: ViewModelType {
         let viewDidLoad = input.viewDidLoad
             .filter { self.userInfoRelay.value == .empty }
             .flatMapLatest { _ -> Driver<Void> in
-                return self.userRepository.getUserProfile()
+                return self.getUserProfileUseCase.execute()
                     .doOnSuccess { self.userInfoRelay.accept($0) }
                     .mapToVoid()
                     .asDriverOnErrorJustComplete()
@@ -91,7 +90,7 @@ final class ProfileEditingViewModel: ViewModelType {
                 .take(1)
                 .asDriverOnErrorJustComplete()
         )
-            .startWith(initalProfileImageData)
+            .startWith(initialProfileImageData)
         
         let userName = Driver.merge(input.userName,
                                     userInfoDriver.map { $0.name })
@@ -106,9 +105,9 @@ final class ProfileEditingViewModel: ViewModelType {
             .flatMapFirst { self.saveProfileImageUseCase.execute(withImageData: $0) }
             .compactMap { $0.path }
             .flatMap { path in
-                let userInfo = self.userInfoRelay.value
-                userInfo.profileImageURL = path
-                return self.userRepository.saveUserProfile(userInfo)
+                let userProfile = self.userInfoRelay.value
+                userProfile.profileImageURL = path
+                return self.saveUserProfileUseCase.execute(with: userProfile)
             }
             .asSignalOnErrorJustComplete()
         

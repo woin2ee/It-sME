@@ -108,7 +108,7 @@ extension SceneDelegate {
             case "HOME_VIEW_CONTROLLER":
                 rootViewController = DIContainer.makeHomeViewController()
             case "PROFILE_EDITING_VIEW_CONTROLLER":
-                rootViewController = DIContainer.makeProfileEditingViewController(initalProfileImageData: nil, initialUserProfile: .empty)
+                rootViewController = DIContainer.makeProfileEditingViewController(initialProfileImageData: nil, initialUserProfile: .empty)
             default:
                 fatalError("올바른 argument 를 입력해주세요.")
             }

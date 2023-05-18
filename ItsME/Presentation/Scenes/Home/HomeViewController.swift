@@ -36,7 +36,7 @@ final class HomeViewController: UIViewController {
     private lazy var profileEditingButton: UIButton = {
         let action = UIAction { _ in
             let profileEditingViewController = DIContainer.makeProfileEditingViewController(
-                initalProfileImageData: self.profileImageView.image?.jpegData(compressionQuality: 1.0),
+                initialProfileImageData: self.profileImageView.image?.jpegData(compressionQuality: 1.0),
                 initialUserProfile: self.viewModel.userInfo
             )
             let profileEditingNavigationController: UINavigationController = .init(rootViewController: profileEditingViewController)

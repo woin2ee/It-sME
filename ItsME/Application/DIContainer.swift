@@ -30,16 +30,16 @@ struct DIContainer {
         return viewController
     }
     
-    static func makeProfileEditingViewController(initalProfileImageData: Data?, initialUserProfile: UserProfile) -> ProfileEditingViewController {
+    static func makeProfileEditingViewController(initialProfileImageData: Data?, initialUserProfile: UserProfile) -> ProfileEditingViewController {
         let viewModel: ProfileEditingViewModel = .init(
             deleteAccountUseCase: makeDeleteAccountUseCase(),
             logoutUseCase: makeLogoutUseCase(),
             saveProfileImageUseCase: makeSaveProfileImageUseCase(),
             getProfileImageUseCase: makeGetProfileImageUseCase(),
-            userRepository: makeUserProfileRepository(),
-            cvRepository: makeCVRepository(),
-            initalProfileImageData: initalProfileImageData,
-            userProfile: initialUserProfile
+            saveUserProfileUseCase: SaveUserProfileUseCase.shared,
+            getUserProfileUseCase: GetUserProfileUseCase.shared,
+            initialProfileImageData: initialProfileImageData,
+            initialUserProfile: initialUserProfile
         )
         let viewController: ProfileEditingViewController = .init(viewModel: viewModel)
         return viewController
@@ -168,7 +168,7 @@ extension DIContainer {
         }
         
         func makeProfileEditingViewController() -> ProfileEditingViewController {
-            return DIContainer.makeProfileEditingViewController(initalProfileImageData: nil, initialUserProfile: .empty)
+            return DIContainer.makeProfileEditingViewController(initialProfileImageData: nil, initialUserProfile: .empty)
         }
     }
 }
