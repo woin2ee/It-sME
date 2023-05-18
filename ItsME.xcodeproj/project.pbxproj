@@ -156,6 +156,15 @@
 		DAF241C92A14FB5E00612729 /* UIImagePickerControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF2419A2A14F79E00612729 /* UIImagePickerControllerDelegateProxy.swift */; };
 		DAF241CA2A14FB6400612729 /* ASAuthorizationControllerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF241982A14F79E00612729 /* ASAuthorizationControllerDelegateProxy.swift */; };
 		DAF241CB2A14FB7B00612729 /* AuthenticationServices+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF2418E2A14F77500612729 /* AuthenticationServices+Rx.swift */; };
+		DAF241D52A160C8200612729 /* SaveUserProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF241D42A160C8200612729 /* SaveUserProfileUseCase.swift */; };
+		DAF241D72A160E1A00612729 /* GetUserProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF241D62A160E1A00612729 /* GetUserProfileUseCase.swift */; };
+		DAF241D92A1611AF00612729 /* DeleteAccountUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF241D82A1611AF00612729 /* DeleteAccountUseCaseMock.swift */; };
+		DAF241DB2A1611BD00612729 /* LogoutUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF241DA2A1611BD00612729 /* LogoutUseCaseMock.swift */; };
+		DAF241DD2A1611C800612729 /* SaveProfileImageUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF241DC2A1611C800612729 /* SaveProfileImageUseCaseMock.swift */; };
+		DAF241DF2A1611D400612729 /* GetProfileImageUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF241DE2A1611D400612729 /* GetProfileImageUseCaseMock.swift */; };
+		DAF241E12A1611DE00612729 /* SaveUserProfileUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF241E02A1611DE00612729 /* SaveUserProfileUseCaseMock.swift */; };
+		DAF241E32A1611E900612729 /* GetUserProfileUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF241E22A1611E900612729 /* GetUserProfileUseCaseMock.swift */; };
+		DAF241E72A164BA500612729 /* XCTest+Rx+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF241E62A164BA500612729 /* XCTest+Rx+.swift */; };
 		DAF516FE29D5765E00BDAD68 /* UIButton.Configuration+Then.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF516FD29D5765E00BDAD68 /* UIButton.Configuration+Then.swift */; };
 		DAF7534E2A0BA1CE00166829 /* LogoutWithAppleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF7534D2A0BA1CE00166829 /* LogoutWithAppleUseCase.swift */; };
 		DAFCFB63294A9CD0006B287A /* Education.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCFB62294A9CD0006B287A /* Education.swift */; };
@@ -383,6 +392,15 @@
 		DAF2419A2A14F79E00612729 /* UIImagePickerControllerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImagePickerControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		DAF241A02A14F83500612729 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		DAF241AD2A14FAC100612729 /* SomeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomeTests.swift; sourceTree = "<group>"; };
+		DAF241D42A160C8200612729 /* SaveUserProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveUserProfileUseCase.swift; sourceTree = "<group>"; };
+		DAF241D62A160E1A00612729 /* GetUserProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserProfileUseCase.swift; sourceTree = "<group>"; };
+		DAF241D82A1611AF00612729 /* DeleteAccountUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountUseCaseMock.swift; sourceTree = "<group>"; };
+		DAF241DA2A1611BD00612729 /* LogoutUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUseCaseMock.swift; sourceTree = "<group>"; };
+		DAF241DC2A1611C800612729 /* SaveProfileImageUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveProfileImageUseCaseMock.swift; sourceTree = "<group>"; };
+		DAF241DE2A1611D400612729 /* GetProfileImageUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProfileImageUseCaseMock.swift; sourceTree = "<group>"; };
+		DAF241E02A1611DE00612729 /* SaveUserProfileUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveUserProfileUseCaseMock.swift; sourceTree = "<group>"; };
+		DAF241E22A1611E900612729 /* GetUserProfileUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserProfileUseCaseMock.swift; sourceTree = "<group>"; };
+		DAF241E62A164BA500612729 /* XCTest+Rx+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTest+Rx+.swift"; sourceTree = "<group>"; };
 		DAF516FD29D5765E00BDAD68 /* UIButton.Configuration+Then.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton.Configuration+Then.swift"; sourceTree = "<group>"; };
 		DAF7534D2A0BA1CE00166829 /* LogoutWithAppleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutWithAppleUseCase.swift; sourceTree = "<group>"; };
 		DAFCFB62294A9CD0006B287A /* Education.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Education.swift; sourceTree = "<group>"; };
@@ -569,12 +587,12 @@
 		D09AC98A2918DE8C0081C0EC /* ItsMETests */ = {
 			isa = PBXGroup;
 			children = (
-				DAC6EDB82A14C17200EA181C /* Utils */,
-				DAC6EDAC2A149AE200EA181C /* TestDoubles */,
-				DACB26912A126EA700529374 /* UseCase */,
-				DA00EFF82A07C13700297501 /* ViewModel */,
 				DAC6EDBB2A14C48D00EA181C /* RxBaseTestCase.swift */,
 				DAC6EDB22A149BB700EA181C /* TestError.swift */,
+				DAC6EDAC2A149AE200EA181C /* TestDoubles */,
+				DACB26912A126EA700529374 /* UseCase */,
+				DAC6EDB82A14C17200EA181C /* Utils */,
+				DA00EFF82A07C13700297501 /* ViewModel */,
 			);
 			path = ItsMETests;
 			sourceTree = "<group>";
@@ -662,8 +680,8 @@
 		DA00EFF82A07C13700297501 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				DA00EFFF2A07FD0100297501 /* ProfileEditingViewModelTests.swift */,
 				DA00EFF42A079DF000297501 /* PhoneNumberEditingViewModelTests.swift */,
+				DA00EFFF2A07FD0100297501 /* ProfileEditingViewModelTests.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -739,6 +757,8 @@
 				DA43163429F9549A004453B9 /* SaveAppleIDRefreshTokenToKeychainUseCase.swift */,
 				DA00F0012A080AD900297501 /* SaveProfileImageUseCase.swift */,
 				DA43166D29FB9812004453B9 /* SignInToFirebaseUseCase.swift */,
+				DAF241D42A160C8200612729 /* SaveUserProfileUseCase.swift */,
+				DAF241D62A160E1A00612729 /* GetUserProfileUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -988,8 +1008,14 @@
 			isa = PBXGroup;
 			children = (
 				DA00EFF62A07A61B00297501 /* DelegateMock.swift */,
-				DAC6EDAE2A149B4500EA181C /* LogoutWithAppleUseCaseDummy.swift */,
+				DAF241D82A1611AF00612729 /* DeleteAccountUseCaseMock.swift */,
 				DAC6EDB02A149B6500EA181C /* GetCurrentAuthProviderIDUseCaseMock.swift */,
+				DAF241DE2A1611D400612729 /* GetProfileImageUseCaseMock.swift */,
+				DAF241E22A1611E900612729 /* GetUserProfileUseCaseMock.swift */,
+				DAF241DA2A1611BD00612729 /* LogoutUseCaseMock.swift */,
+				DAC6EDAE2A149B4500EA181C /* LogoutWithAppleUseCaseDummy.swift */,
+				DAF241DC2A1611C800612729 /* SaveProfileImageUseCaseMock.swift */,
+				DAF241E02A1611DE00612729 /* SaveUserProfileUseCaseMock.swift */,
 			);
 			path = TestDoubles;
 			sourceTree = "<group>";
@@ -998,6 +1024,7 @@
 			isa = PBXGroup;
 			children = (
 				DAC6EDB92A14C19000EA181C /* TestScheduler+.swift */,
+				DAF241E62A164BA500612729 /* XCTest+Rx+.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1588,6 +1615,7 @@
 				DAF241C72A14FB4400612729 /* YearMonthPickerViewDelegateProxy.swift in Sources */,
 				D0CCF4E629260C2B00AD4AE6 /* ProfileInfoComponent.swift in Sources */,
 				DA481D8929A4BFE500C8C734 /* IntrinsicHeightTextView.swift in Sources */,
+				DAF241D52A160C8200612729 /* SaveUserProfileUseCase.swift in Sources */,
 				DA01880B296D1471002C5CB0 /* AddressEditingViewController.swift in Sources */,
 				DA4FEC2829E5582600D41CE1 /* SignUpViewController.swift in Sources */,
 				D0472F07296406BC00E83F61 /* TotalCVViewController.swift in Sources */,
@@ -1648,6 +1676,7 @@
 				DA7201F62931F41100A69519 /* ResumeItem.swift in Sources */,
 				D0525AAC29C97C5B0045295E /* CoverLetterContentCell.swift in Sources */,
 				D0C02E8829CAC34700BD3851 /* CategoryEditingViewModel.swift in Sources */,
+				DAF241D72A160E1A00612729 /* GetUserProfileUseCase.swift in Sources */,
 				DAFCFB6F2950693F006B287A /* IntrinsicHeightTableView.swift in Sources */,
 				D09AC9772918DE8B0081C0EC /* SceneDelegate.swift in Sources */,
 				DA404A8329F275F800211272 /* UIImage+DefaultProfileImage.swift in Sources */,
@@ -1673,14 +1702,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAF241E32A1611E900612729 /* GetUserProfileUseCaseMock.swift in Sources */,
+				DAF241E12A1611DE00612729 /* SaveUserProfileUseCaseMock.swift in Sources */,
 				DA00F0002A07FD0100297501 /* ProfileEditingViewModelTests.swift in Sources */,
+				DAF241DB2A1611BD00612729 /* LogoutUseCaseMock.swift in Sources */,
+				DAF241DD2A1611C800612729 /* SaveProfileImageUseCaseMock.swift in Sources */,
 				DAC6EDBA2A14C19000EA181C /* TestScheduler+.swift in Sources */,
+				DAF241E72A164BA500612729 /* XCTest+Rx+.swift in Sources */,
 				DACB26932A126ECA00529374 /* LogoutUseCaseTests.swift in Sources */,
 				DAC6EDAF2A149B4500EA181C /* LogoutWithAppleUseCaseDummy.swift in Sources */,
 				DAC6EDBC2A14C48D00EA181C /* RxBaseTestCase.swift in Sources */,
 				DAC6EDB32A149BB700EA181C /* TestError.swift in Sources */,
 				DA00EFFB2A07C1A600297501 /* DelegateMock.swift in Sources */,
 				DAC6EDB12A149B6500EA181C /* GetCurrentAuthProviderIDUseCaseMock.swift in Sources */,
+				DAF241D92A1611AF00612729 /* DeleteAccountUseCaseMock.swift in Sources */,
+				DAF241DF2A1611D400612729 /* GetProfileImageUseCaseMock.swift in Sources */,
 				DA00EFF92A07C19C00297501 /* PhoneNumberEditingViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
