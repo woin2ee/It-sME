@@ -2,38 +2,51 @@
 platform :ios, '15.0'
 
 target 'ItsME' do
-  # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
+		# Comment the next line if you don't want to use dynamic frameworks
+		use_frameworks!
 
-  # Pods for ItsME
-	pod 'RxSwift', '6.5.0'
-	pod 'RxCocoa', '6.5.0'
-	pod 'SnapKit', '5.6.0'
-	pod 'RxKakaoSDK', '2.14.0'
-	pod 'Firebase/Analytics', '10.3.0' # Google Analytics
-	pod 'FirebaseAuth', '10.3.0'
-	pod 'FirebaseDatabase', '10.3.0' #Realtime Database
-	pod 'FirebaseStorage', '10.3.0' # Cloud Storage
-	pod 'Then', '~> 3.0.0'
-	pod 'UITextView+Placeholder', '~> 1.4.0'
-	pod 'SFSafeSymbols', '~> 4.1.1'
-	pod 'Keychaining', '0.9.0'
-	pod 'SwiftJWT', '~> 3.6.2'
+		# Pods for ItsME
+		pod 'RxSwift', '6.5.0'
+		pod 'RxCocoa', '6.5.0'
+		pod 'SnapKit', '5.6.0'
+		pod 'RxKakaoSDK', '2.14.0'
+		pod 'Firebase/Analytics', '10.3.0' # Google Analytics
+		pod 'FirebaseAuth', '10.3.0'
+		pod 'FirebaseDatabase', '10.3.0' #Realtime Database
+		pod 'FirebaseStorage', '10.3.0' # Cloud Storage
+		pod 'Then', '~> 3.0.0'
+		pod 'UITextView+Placeholder', '~> 1.4.0'
+		pod 'SFSafeSymbols', '~> 4.1.1'
+		pod 'Keychaining', '0.9.0'
 
-  target 'ItsMETests' do
-    inherit! :search_paths
-    # Pods for testing
-		pod 'RxBlocking', '6.5.0'
-		pod 'RxTest', '6.5.0'
-  end
+		target 'ItsMETests' do
+				inherit! :search_paths
+				# Pods for testing
+				pod 'RxBlocking', '6.5.0'
+				pod 'RxTest', '6.5.0'
+		end
 
-  target 'ItsMEUITests' do
-    # Pods for testing
-  end
+		target 'ItsMEUITests' do
+				# Pods for testing
+		end
+	
+end
 
-	target 'ItsMEUtil' do
-	  inherit! :search_paths
-  end
+target 'ItsMEUtil' do
+
+		use_frameworks!
+
+		pod 'RxSwift', '6.5.0'
+		pod 'RxCocoa', '6.5.0'
+		pod 'SwiftJWT', '~> 3.6.2'
+		pod 'Firebase/Analytics', '10.3.0' # Google Analytics
+		pod 'FirebaseAuth', '10.3.0'
+		pod 'FirebaseDatabase', '10.3.0' #Realtime Database
+		pod 'FirebaseStorage', '10.3.0' # Cloud Storage
+
+		target 'ItsMEUtilTests' do
+				inherit! :complete
+		end
 
 end
 
