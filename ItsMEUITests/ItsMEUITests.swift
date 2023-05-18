@@ -30,7 +30,7 @@ final class ItsMEUITests: XCTestCase {
         removeUIInterruptionMonitor(loginAlertHandlerToken)
     }
     
-    func testSaveNewName() {
+    func testUpdateName() {
         // Arrange: Values for test
         let newName = "홍길동"
         
