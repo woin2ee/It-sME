@@ -8,9 +8,9 @@
 import Foundation
 
 final class Resume: Codable {
-    
+
     var category: [ResumeCategory]
-    
+
     init(category: [ResumeCategory]) {
         self.category = category
     }
@@ -19,7 +19,7 @@ final class Resume: Codable {
 // MARK: - CodingKeys
 
 extension Resume {
-    
+
     enum CodingKeys: CodingKey {
         case category
     }
@@ -28,7 +28,7 @@ extension Resume {
 // MARK: - Empty
 
 extension Resume {
-    
+
     static var empty: Resume {
         .init(category: [])
     }

@@ -9,7 +9,7 @@ import RxSwift
 import FirebaseDatabase
 
 extension Reactive where Base: DatabaseReference {
-    
+
     /// Observable sequence of DataSnapshot
     public var dataSnapshot: Single<DataSnapshot> {
         return .create { observer in
@@ -21,11 +21,11 @@ extension Reactive where Base: DatabaseReference {
                     observer(.failure(error))
                 }
             }
-            
+
             return Disposables.create()
         }
     }
-    
+
     /// `setValue(_:)` 메소드의 `Reactive wrapper` 입니다.
     public func setValue(_ jsonObject: Any?) -> Single<DatabaseReference> {
         return .create { observer in
@@ -37,11 +37,11 @@ extension Reactive where Base: DatabaseReference {
                     observer(.failure(error))
                 }
             }
-            
+
             return Disposables.create()
         }
     }
-    
+
     /// `removeValue()` 메소드의 `Reactive wrapper` 입니다.
     public func removeValue() -> Single<DatabaseReference> {
         return .create { observer in
@@ -53,7 +53,7 @@ extension Reactive where Base: DatabaseReference {
                     observer(.failure(error))
                 }
             }
-            
+
             return Disposables.create()
         }
     }

@@ -19,6 +19,6 @@ public func sha256(_ input: String) -> String {
     let hexadecimalString = digest.map {
         String(format: "%02x", $0)
     }.joined()
-    
+
     return hexadecimalString
 }

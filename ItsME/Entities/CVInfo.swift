@@ -13,7 +13,7 @@ final class CVInfo: Codable {
     var resume: Resume
     var coverLetter: CoverLetter
     var lastModified: String
-    
+
     init(
         uuid: String = UUID().uuidString,
         title: String,
@@ -27,25 +27,31 @@ final class CVInfo: Codable {
         self.coverLetter = coverLetter
         self.lastModified = lastModified
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         self.uuid = try container.decode(String.self, forKey: .uuid)
         self.title = try container.decode(String.self, forKey: .title)
-        
-        do { self.resume = try container.decode(Resume.self, forKey: .resume) }
-        catch { self.resume = .empty }
-        
-        do { self.coverLetter = try container.decode(CoverLetter.self, forKey: .coverLetter) }
-        catch { self.coverLetter = .empty }
-        
+
+        do {
+            self.resume = try container.decode(Resume.self, forKey: .resume)
+        } catch {
+            self.resume = .empty
+        }
+
+        do {
+            self.coverLetter = try container.decode(CoverLetter.self, forKey: .coverLetter)
+        } catch {
+            self.coverLetter = .empty
+        }
+
         self.lastModified = try container.decode(String.self, forKey: .lastModified)
     }
 }
 
 extension CVInfo {
-    
+
     enum CodingKeys: String, CodingKey {
         case uuid
         case title
@@ -56,7 +62,7 @@ extension CVInfo {
 }
 
 extension CVInfo {
-    
+
     static var empty: CVInfo {
         return .init(
             title: "",

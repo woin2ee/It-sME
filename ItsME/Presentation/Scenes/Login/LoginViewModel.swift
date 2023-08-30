@@ -11,17 +11,17 @@ import RxSwift
 import RxCocoa
 
 final class LoginViewModel: ViewModelType {
-    
+
     // MARK: UseCases
-    
+
     let saveAppleIDRefreshTokenToKeychainUseCase: SaveAppleIDRefreshTokenToKeychainUseCaseProtocol
     let loginWithAppleUseCase: LoginWithAppleUseCaseProtocol
     let loginWithKakaoUseCase: LoginWithKakaoUseCaseProtocol
     let signInToFirebaseUseCase: SignInToFirebaseUseCaseProtocol
     let getNicknameAndEmailForKakaoUseCase: GetNicknameAndEmailForKakaoUseCaseProtocol
-    
+
     let userRepository: UserProfileRepositoryProtocol
-    
+
     init(
         saveAppleIDRefreshTokenToKeychainUseCase: SaveAppleIDRefreshTokenToKeychainUseCaseProtocol,
         loginWithAppleUseCase: LoginWithAppleUseCaseProtocol,
@@ -37,7 +37,7 @@ final class LoginViewModel: ViewModelType {
         self.getNicknameAndEmailForKakaoUseCase = getNicknameAndEmailForKakaoUseCase
         self.userRepository = userRepository
     }
-    
+
     func transform(input: Input) -> Output {
         let loggedInWithKakao = input.kakaoLoginRequest
             .flatMapFirst {
@@ -51,7 +51,7 @@ final class LoginViewModel: ViewModelType {
                     .flatMap { _ in self.getNicknameAndEmailForKakaoUseCase.execute() }
                     .asSignalOnErrorJustComplete()
             }
-        
+
         let loggedInWithApple = input.appleLoginRequest
             .flatMapFirst {
                 let rawNonce = randomNonceString()
@@ -63,22 +63,22 @@ final class LoginViewModel: ViewModelType {
                         else {
                             throw ASAuthorizationError(.failed)
                         }
-                        
+
                         let name = appleIDCredential.fullName?.formatted() ?? ""
                         let email = appleIDCredential.email ?? ""
-                        
+
                         ItsMEUserDefaults.isLoggedInAsApple = true
                         ItsMEUserDefaults.setAppleUserID(appleIDCredential.user)
-                        
+
                         let authorizationCode: String = try {
                             let codeData = try unwrapOrThrow(appleIDCredential.authorizationCode)
                             return try unwrapOrThrow(String(data: codeData, encoding: .utf8))
                         }()
-                        
+
                         let signInToFirebase = self.signInToFirebaseUseCase.execute(withIDToken: idTokenString, providerID: .apple, rawNonce: rawNonce)
                             .mapToVoid()
                         let saveAppleIDRefreshToken = self.saveAppleIDRefreshTokenToKeychainUseCase.execute(authorizationCode: authorizationCode)
-                        
+
                         return signInToFirebase.flatMap { _ in
                             return saveAppleIDRefreshToken
                         }
@@ -86,7 +86,7 @@ final class LoginViewModel: ViewModelType {
                     }
                     .asSignalOnErrorJustComplete()
             }
-        
+
         let loggedInAndNeedsSignUp = Signal.merge(loggedInWithKakao, loggedInWithApple)
             .flatMapFirst { nameAndEmail in
                 return self.userRepository.hasUserProfile
@@ -99,7 +99,7 @@ final class LoginViewModel: ViewModelType {
                     }
                     .asSignalOnErrorJustComplete()
             }
-        
+
         return .init(loggedInAndNeedsSignUp: loggedInAndNeedsSignUp)
     }
 }
@@ -107,12 +107,12 @@ final class LoginViewModel: ViewModelType {
 // MARK: - Input & Output
 
 extension LoginViewModel {
-    
+
     struct Input {
         let kakaoLoginRequest: Signal<Void>
         let appleLoginRequest: Signal<Void>
     }
-    
+
     struct Output {
         let loggedInAndNeedsSignUp: Signal<NeedSignUp>
     }
@@ -121,7 +121,7 @@ extension LoginViewModel {
 // MARK: - NeedSignUp
 
 extension LoginViewModel {
-    
+
     enum NeedSignUp {
         case needed(name: String, email: String)
         case notNeeded

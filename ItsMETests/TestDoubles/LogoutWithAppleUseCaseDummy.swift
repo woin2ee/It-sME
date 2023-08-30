@@ -8,6 +8,6 @@
 @testable import ItsME
 
 struct LogoutWithAppleUseCaseDummy: LogoutWithAppleUseCaseProtocol {
-    
+
     func execute() {}
 }

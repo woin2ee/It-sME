@@ -8,26 +8,26 @@
 import Foundation
 
 extension AppleRESTAPI {
-    
+
     final class AppleIDTokenValidationRequestDTO: Encodable {
-        
+
         enum CodingKeys: String, CodingKey {
             case clientID = "client_id"
             case clientSecret = "client_secret"
             case code
             case grantType = "grant_type"
         }
-        
+
         enum GrantType: String, Encodable {
             case authorizationCode = "authorization_code"
             case refreshToken = "refresh_token"
         }
-        
+
         let clientID: String
         let clientSecret: String
         let code: String?
         let grantType: GrantType
-        
+
         init(
             clientID: String = Bundle.main.identifier,
             clientSecret: String,

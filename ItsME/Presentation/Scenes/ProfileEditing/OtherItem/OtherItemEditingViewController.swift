@@ -11,12 +11,12 @@ import Then
 import UIKit
 
 final class OtherItemEditingViewController: UIViewController {
-    
+
     private let disposeBag: DisposeBag = .init()
     private let viewModel: OtherItemEditingViewModel
-    
+
     // MARK: - UI Objects
-    
+
     private lazy var userInfoItemInputTableView: IntrinsicHeightTableView = .init(style: .insetGrouped).then {
         $0.dataSource = self
     }
@@ -35,26 +35,26 @@ final class OtherItemEditingViewController: UIViewController {
         $0.imagePadding = 2
         $0.preferredSymbolConfigurationForImage = .init(scale: .medium)
     })
-    
+
     // MARK: - Computed Properties
-    
+
     var inputCells: [UITableViewCell] {
         [iconInputCell, contentsInputCell]
     }
-    
+
     // MARK: - Initializer
-    
+
     init(viewModel: OtherItemEditingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Life Cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemGroupedBackground
@@ -62,12 +62,12 @@ final class OtherItemEditingViewController: UIViewController {
         configureNavigationBar()
         bindViewModel()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         contentsInputCell.contentsTextField.becomeFirstResponder()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         iconInputCell.hideIconPickerView()
@@ -77,20 +77,20 @@ final class OtherItemEditingViewController: UIViewController {
 // MARK: - Private Functions
 
 private extension OtherItemEditingViewController {
-    
+
     func configureSubviews() {
         self.view.addSubview(userInfoItemInputTableView)
         userInfoItemInputTableView.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
         }
-        
+
         self.view.addSubview(deleteButton)
         deleteButton.snp.makeConstraints { make in
             make.top.equalTo(userInfoItemInputTableView.snp.bottom).offset(8)
             make.directionalHorizontalEdges.equalToSuperview().inset(20)
         }
     }
-    
+
     func configureNavigationBar() {
         self.navigationItem.rightBarButtonItem = completeButton
         self.navigationItem.rightBarButtonItem?.style = .done
@@ -100,7 +100,7 @@ private extension OtherItemEditingViewController {
 // MARK: - Binding ViewModel
 
 private extension OtherItemEditingViewController {
-    
+
     func bindViewModel() {
         let input: OtherItemEditingViewModel.Input = makeInput()
         let output = viewModel.transform(input: input)
@@ -123,7 +123,7 @@ private extension OtherItemEditingViewController {
         ]
             .forEach { $0.disposed(by: disposeBag) }
     }
-    
+
     func makeInput() -> OtherItemEditingViewModel.Input {
         return .init(
             doneTrigger: completeButton.rx.tap.asSignal(),
@@ -139,7 +139,7 @@ private extension OtherItemEditingViewController {
             }
         )
     }
-    
+
     var editingTypeBinding: Binder<OtherItemEditingViewModel.EditingType> {
         .init(self) { vc, editingType in
             switch editingType {
@@ -154,7 +154,7 @@ private extension OtherItemEditingViewController {
             }
         }
     }
-    
+
     var userInfoItemBinding: Binder<UserBasicProfileInfo> {
         .init(self) { vc, userInfoItem in
             vc.iconInputCell.icon = userInfoItem.icon
@@ -166,11 +166,11 @@ private extension OtherItemEditingViewController {
 // MARK: - UITableViewDataSource
 
 extension OtherItemEditingViewController: UITableViewDataSource {
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return inputCells.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return inputCells[indexPath.row]
     }

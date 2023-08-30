@@ -9,18 +9,18 @@ import Foundation
 import UIKit
 
 extension UIView {
-    
+
     func circular(
         borderwidth: CGFloat = 2.0,
         bordercolor: CGColor = UIColor.mainColor.cgColor
     ) {
         self.layer.cornerRadius = (self.frame.size.width / 2.0)
         self.clipsToBounds = true
-        
+
         self.layer.borderColor = bordercolor
         self.layer.borderWidth = borderwidth
     }
-    
+
     /// 뷰 하단에 테두리를 추가하고 해당 레이어를 반환합니다.
     ///
     /// 해당 뷰의 레이아웃이 완전히 잡히지 않은 상태에서 이 메소드를 호출하면 하단 테두리가 정상적으로 보이지 않을 수 있습니다. 일반적으로 `layoutSubviews()` 메소드를 오버라이딩하여 이 메소드를 호출합니다.
@@ -42,10 +42,10 @@ extension UIView {
         )
         borderLayer.backgroundColor = color.cgColor
         self.layer.addSublayer(borderLayer)
-        
+
         return borderLayer
     }
-    
+
     /// 뷰의 스냅샷을 `UIImage` 객체로 변환합니다.
     /// - Returns: 변환한 이미지 객체입니다.
     func asImage() -> UIImage {

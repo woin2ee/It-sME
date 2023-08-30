@@ -9,9 +9,9 @@
 import RxSwift
 
 struct SaveUserProfileUseCaseMock: SaveUserProfileUseCaseProtocol {
-    
+
     var hasError: Bool
-    
+
     func execute(with userProfile: UserProfile) -> Single<Void> {
         if hasError {
             return .error(TestError.testError)

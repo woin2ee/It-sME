@@ -9,11 +9,11 @@ import Foundation
 import Keychaining
 
 struct SaveAppleIDRefreshTokenToKeychainUseCase {
-    
+
     static let shared: SaveAppleIDRefreshTokenToKeychainUseCase = .init()
-        
+
     private init() {}
-    
+
     func execute(authorizationCode: String, completion: @escaping ((Result<(), Error>) -> Void)) {
         AppleRESTAPI.validateToken(withAuthorizationCode: authorizationCode) { result in
             switch result {

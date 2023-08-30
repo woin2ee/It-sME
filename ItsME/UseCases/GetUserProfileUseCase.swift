@@ -12,17 +12,17 @@ protocol GetUserProfileUseCaseProtocol {
 }
 
 struct GetUserProfileUseCase: GetUserProfileUseCaseProtocol {
-    
+
     // MARK: Shared Instance
-    
+
     static let shared: GetUserProfileUseCase = .init(
         userProfileRepository: UserProfileRepository.shared
     )
-    
+
     // MARK: Dependencies
-    
+
     let userProfileRepository: UserProfileRepositoryProtocol
-    
+
     func execute() -> Single<UserProfile> {
         return userProfileRepository.getUserProfile()
     }

@@ -8,7 +8,7 @@
 import Foundation
 
 extension Int {
-    
+
     /**
     주어진 숫자에 대해 `Leading zero` 방식을 적용한 문자열을 반환합니다.
     

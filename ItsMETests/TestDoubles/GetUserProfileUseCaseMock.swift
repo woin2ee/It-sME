@@ -9,7 +9,7 @@
 import RxSwift
 
 struct GetUserProfileUseCaseMock: GetUserProfileUseCaseProtocol {
-    
+
     var hasError: Bool
     let userProfile: UserProfile = .init(
         name: "name",
@@ -21,7 +21,7 @@ struct GetUserProfileUseCaseMock: GetUserProfileUseCaseProtocol {
         otherItems: [.init(icon: .computer, contents: "otherItems")],
         educationItems: [.init(period: "period", title: "title", description: "description")]
     )
-    
+
     func execute() -> Single<UserProfile> {
         if hasError {
             return .error(TestError.testError)

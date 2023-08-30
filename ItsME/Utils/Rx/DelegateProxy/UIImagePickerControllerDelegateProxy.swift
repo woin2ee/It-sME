@@ -12,18 +12,18 @@ final class UIImagePickerControllerDelegateProxy:
     DelegateProxy<UIImagePickerController, (UIImagePickerControllerDelegate & UINavigationControllerDelegate)>,
     DelegateProxyType,
     UIImagePickerControllerDelegate,
-    UINavigationControllerDelegate
-{
+    UINavigationControllerDelegate {
+
     static func registerKnownImplementations() {
         self.register { parent in
             return .init(parentObject: parent, delegateProxy: self)
         }
     }
-    
+
     static func currentDelegate(for object: UIImagePickerController) -> (UIImagePickerControllerDelegate & UINavigationControllerDelegate)? {
         return object.delegate
     }
-    
+
     static func setCurrentDelegate(_ delegate: (UIImagePickerControllerDelegate & UINavigationControllerDelegate)?, to object: UIImagePickerController) {
         object.delegate = delegate
     }

@@ -20,10 +20,10 @@ protocol EducationEditingViewModelDelegate: AnyObject {
 }
 
 final class EducationEditingViewModel: ViewModelType {
-    
+
     let editingType: EditingType
     weak var delegate: EducationEditingViewModelDelegate?
-    
+
     init(
         editingType: EditingType,
         delegate: EducationEditingViewModelDelegate? = nil
@@ -31,13 +31,13 @@ final class EducationEditingViewModel: ViewModelType {
         self.editingType = editingType
         self.delegate = delegate
     }
-    
+
     func transform(input: Input) -> Output {
         let currentYear = Calendar.current.component(.year, from: .now)
         let currentMonth = Calendar.current.component(.month, from: .now)
-        
+
         let editingType = Driver.just(editingType)
-        
+
         let schoolEnrollmentStatus = input.selectedEnrollmentStatus
             .startWith {
                 switch self.editingType {
@@ -52,7 +52,7 @@ final class EducationEditingViewModel: ViewModelType {
                     return .graduated
                 }
             }
-        
+
         let title = input.title
             .startWith {
                 if case let .edit(_, target) = self.editingType {
@@ -61,7 +61,7 @@ final class EducationEditingViewModel: ViewModelType {
                     return ""
                 }
             }
-        
+
         let description = input.description
             .startWith {
                 if case let .edit(_, target) = self.editingType {
@@ -70,7 +70,7 @@ final class EducationEditingViewModel: ViewModelType {
                     return ""
                 }
             }
-        
+
         let entranceDate = input.selectedEntranceDate
             .startWith {
                 if case let .edit(_, target) = self.editingType {
@@ -79,7 +79,7 @@ final class EducationEditingViewModel: ViewModelType {
                     return (currentYear, currentMonth)
                 }
             }
-        
+
         let graduateDate = input.selectedGraduateDate
             .startWith {
                 if case let .edit(_, target) = self.editingType {
@@ -88,7 +88,7 @@ final class EducationEditingViewModel: ViewModelType {
                     return (currentYear, currentMonth)
                 }
             }
-        
+
         let educationItem = Driver.combineLatest(
             title,
             description,
@@ -107,19 +107,19 @@ final class EducationEditingViewModel: ViewModelType {
                                  title: title,
                                  description: description)
         }
-        
+
         let doneHandler = input.doneTrigger
             .withLatestFrom(educationItem)
             .doOnNext(endEditing(with:))
             .mapToVoid()
-        
+
         let deleteHandler = input.deleteTrigger
             .doOnNext {
                 if case let .edit(index, _) = self.editingType {
                     self.delegate?.educationEditingViewModelDidDeleteEducationItem(at: index)
                 }
             }
-        
+
         return .init(
             title: title,
             description: description,
@@ -131,7 +131,7 @@ final class EducationEditingViewModel: ViewModelType {
             schoolEnrollmentStatus: schoolEnrollmentStatus
         )
     }
-    
+
     private func endEditing(with educationItem: Education) {
         switch editingType {
         case .edit(let index, _):
@@ -145,7 +145,7 @@ final class EducationEditingViewModel: ViewModelType {
 // MARK: - Input & Output
 
 extension EducationEditingViewModel {
-    
+
     struct Input {
         let title: Driver<String>
         let description: Driver<String>
@@ -155,7 +155,7 @@ extension EducationEditingViewModel {
         let deleteTrigger: Signal<Void>
         let selectedEnrollmentStatus: Driver<SchoolEnrollmentStatus>
     }
-    
+
     struct Output {
         let title: Driver<String>
         let description: Driver<String>
@@ -171,12 +171,12 @@ extension EducationEditingViewModel {
 // MARK: - EditingType
 
 extension EducationEditingViewModel {
-    
+
     enum EditingType {
-        
+
         /// 기존 학력 정보를 수정할 때 사용하는 열거형 값입니다.
         case edit(index: IndexPath.Index, target: Education)
-        
+
         /// 새 학력 정보를 추가할 때 사용하는 열거형 값입니다.
         case new
     }

@@ -12,17 +12,17 @@ protocol SaveUserProfileUseCaseProtocol {
 }
 
 struct SaveUserProfileUseCase: SaveUserProfileUseCaseProtocol {
-    
+
     // MARK: Shared Instance
-    
+
     static let shared: SaveUserProfileUseCase = .init(
         userProfileRepository: UserProfileRepository.shared
     )
-    
+
     // MARK: Dependencies
-    
+
     let userProfileRepository: UserProfileRepositoryProtocol
-    
+
     func execute(with userProfile: UserProfile) -> Single<Void> {
         return userProfileRepository.saveUserProfile(userProfile)
     }

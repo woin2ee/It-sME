@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIEdgeInsets {
-    
+
     static func all(_ insetValue: CGFloat) -> Self {
         return .init(top: insetValue, left: insetValue, bottom: insetValue, right: insetValue)
     }

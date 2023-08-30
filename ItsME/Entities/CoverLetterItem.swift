@@ -10,7 +10,7 @@ import Foundation
 final class CoverLetterItem: Codable {
     var title: String
     var contents: String
-    
+
     init(title: String, contents: String) {
         self.title = title
         self.contents = contents

@@ -11,7 +11,7 @@ final class Education: Codable {
     let period: String
     let title: String
     let description: String
-    
+
     /// 입학일을 나타내는 문자열
     var entranceDate: String? {
         period.components(separatedBy: "-")[ifExists: 0]?.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -24,7 +24,7 @@ final class Education: Codable {
         guard let month = entranceDate?.components(separatedBy: ".")[ifExists: 1] else { return nil }
         return Int.init(month)
     }
-    
+
     /// 졸업일을 나타내는 문자열
     var graduateDate: String? {
         period.components(separatedBy: "-")[ifExists: 1]?.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -37,7 +37,7 @@ final class Education: Codable {
         guard let month = graduateDate?.components(separatedBy: ".")[ifExists: 1] else { return nil }
         return Int.init(month)
     }
-    
+
     init(period: String, title: String, description: String) {
         self.period = period
         self.title = title
@@ -48,7 +48,7 @@ final class Education: Codable {
 // MARK: - Equatable
 
 extension Education: Equatable {
-    
+
     static func == (lhs: Education, rhs: Education) -> Bool {
         lhs.period == rhs.period &&
         lhs.title == rhs.title &&
@@ -57,7 +57,7 @@ extension Education: Equatable {
 }
 
 extension Education {
-    
+
     static var empty: Education {
         .init(period: "", title: "", description: "")
     }

@@ -21,14 +21,14 @@ public func unwrapOrThrow<T>(_ optionalValue: T?) throws -> T {
     return unwrappedValue
 }
 
-public func closestValue<T: BinaryFloatingPoint>(_ target: T, in arr: [T]) -> T? {
+public func closestValue<T: BinaryFloatingPoint>(to target: T, in arr: [T]) -> T? {
     if arr.isEmpty { return nil }
-    
+
     let sorted = arr.sorted()
-    
+
     let over = sorted.first(where: { $0 >= target }) ?? .infinity
     let under = sorted.last(where: { $0 <= target }) ?? -.infinity
-    
+
     let diffOver = over - target
     let diffUnder = target - under
     return (diffOver < diffUnder) ? over : under
@@ -36,10 +36,10 @@ public func closestValue<T: BinaryFloatingPoint>(_ target: T, in arr: [T]) -> T?
 
 public func randomNonceString(length: Int = 32) -> String {
     precondition(length > 0)
-    let charset: Array<Character> = Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+    let charset: [Character] = Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
     var result = ""
     var remainingLength = length
-    
+
     while remainingLength > 0 {
         let randoms: [UInt8] = (0..<16).map { _ in
             var random: UInt8 = 0
@@ -49,7 +49,7 @@ public func randomNonceString(length: Int = 32) -> String {
             }
             return random
         }
-        
+
         randoms.forEach { random in
             if random < charset.count {
                 result.append(charset[Int(random)])
@@ -57,7 +57,7 @@ public func randomNonceString(length: Int = 32) -> String {
             }
         }
     }
-    
+
     return result
 }
 
@@ -66,9 +66,9 @@ public func randomNonceString(length: Int = 32) -> String {
 /// - Returns: 하이픈 문자가 포함된 전화번호입니다. 자릿수가 11자리를 초과시 하이픈 문자가 포함되지 않습니다.
 public func formatPhoneNumber(_ phoneNumber: String) -> String {
     var formattedNumber = phoneNumber.replacingOccurrences(of: "[^0-9]", with: "", options: [.regularExpression])
-    
-    guard let _ = Int(formattedNumber) else { return phoneNumber }
-    
+
+    guard Int(formattedNumber) != nil else { return phoneNumber }
+
     if formattedNumber.count <= "0101234567".count {
         if (4...6) ~= formattedNumber.count {
             formattedNumber.insert("-", at: formattedNumber.index(formattedNumber.startIndex, offsetBy: 3))
@@ -85,6 +85,6 @@ public func formatPhoneNumber(_ phoneNumber: String) -> String {
         formattedNumber.insert("-", at: formattedNumber.index(formattedNumber.startIndex, offsetBy: 8))
         return formattedNumber
     }
-    
+
     return formattedNumber
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 struct DeleteAccountUseCase {
-    
+
     static let shared: DeleteAccountUseCase = .init(
         userProfileRepository: .shared,
         cvRepository: .shared,
@@ -16,15 +16,15 @@ struct DeleteAccountUseCase {
         revokeAppleIDTokenUseCase: .shared,
         getCurrentAuthProviderIDUseCase: .shared
     )
-        
+
     // MARK: Dependencies
-    
+
     let userProfileRepository: UserProfileRepository
     let cvRepository: CVRepository
     let getAppleIDRefreshTokenFromKeychainUseCase: GetAppleIDRefreshTokenFromKeychainUseCase
     let revokeAppleIDTokenUseCase: RevokeAppleIDRefreshTokenUseCase
     let getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCase
-    
+
     private init(
         userProfileRepository: UserProfileRepository,
         cvRepository: CVRepository,

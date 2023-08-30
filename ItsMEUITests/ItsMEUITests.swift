@@ -10,30 +10,30 @@ import XCTest
 final class ItsMEUITests: XCTestCase {
 
     var app: XCUIApplication!
-    
+
     var loginAlertHandlerToken: NSObjectProtocol!
-    
+
     override func setUpWithError() throws {
         app = XCUIApplication()
-        
+
         continueAfterFailure = false
-        
+
         loginAlertHandlerToken = addUIInterruptionMonitor(withDescription: "Login Alert") { alert in
             alert.buttons["계속"].tap()
             return true
         }
     }
-    
+
     override func tearDownWithError() throws {
         app = nil
-        
+
         removeUIInterruptionMonitor(loginAlertHandlerToken)
     }
-    
+
     func testUpdateName() {
         // Arrange: Values for test
         let newName = "홍길동"
-        
+
         // Arrange: 앱 시작 후 프로필 수정화면 이동
         app.launchArguments = [
             "-TEST",
@@ -43,18 +43,22 @@ final class ItsMEUITests: XCTestCase {
         app.launch()
         let editProfileButton = app.buttons["HOME__EDIT_PROFILE"]
         editProfileButton.tap()
-        
+
         // Act: 이름 수정
         let nameTextField = app.textFields["PROFILE_EDITING__NAME_TEXT_FIELD"]
         nameTextField.tap()
         nameTextField.clearAndEnterText(text: newName)
         let doneButton = app.navigationBars["프로필 수정"].buttons["수정완료"]
         doneButton.tap()
-        
+
         // Assert: 수정된 이름 확인
         XCTAssert(editProfileButton.waitForExistence(timeout: 10))
         editProfileButton.tap()
-        XCTAssertEqual(nameTextField.value as! String, newName)
+        guard let text = nameTextField.value as? String else {
+            XCTFail("\(nameTextField).value is not String type.")
+            return
+        }
+        XCTAssertEqual(text, newName)
     }
 }
 

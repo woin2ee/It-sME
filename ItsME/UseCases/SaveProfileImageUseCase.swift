@@ -13,13 +13,13 @@ protocol SaveProfileImageUseCaseProtocol {
 }
 
 struct SaveProfileImageUseCase: SaveProfileImageUseCaseProtocol {
-    
+
     // MARK: Shared Instance
-    
+
     static let shared: SaveProfileImageUseCase = .init()
-    
+
     // MARK: Execute
-    
+
     func execute(withImageData imageData: Data) -> Single<StorageMetadata> {
         do {
             let path = try StoragePath().userProfileImage

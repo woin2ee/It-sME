@@ -16,27 +16,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     let rootNavigationController: UINavigationController = .init()
-    
+
     let logoutWithAppleUseCase: LogoutWithAppleUseCaseProtocol = DIContainer.makeLogoutWithAppleUseCase()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        
+
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         window?.rootViewController = rootNavigationController
-        
+
         setRootViewController()
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         if let url = URLContexts.first?.url {
-            if (AuthApi.isKakaoTalkLoginUrl(url)) {
+            if AuthApi.isKakaoTalkLoginUrl(url) {
                 _ = AuthController.rx.handleOpenUrl(url: url)
             }
         }
     }
-    
+
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.
@@ -60,7 +60,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 handleAppleIDLogout()
                 return
             }
-            
+
             let appleIDProvider = ASAuthorizationAppleIDProvider()
             appleIDProvider.getCredentialState(forUserID: userID) { credentialState, error in
                 if let error = error {
@@ -85,11 +85,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
-
 }
 
 extension SceneDelegate {
-    
+
     private func handleAppleIDLogout() {
         DispatchQueue.main.async {
             let loginViewController = DIContainer.makeLoginViewController()
@@ -97,11 +96,11 @@ extension SceneDelegate {
             self.logoutWithAppleUseCase.execute()
         }
     }
-    
+
     private func setRootViewController() {
         let launchArguments = CommandLine.arguments
         let rootViewController: UIViewController
-        
+
         if launchArguments.contains("-TEST"),
            let index = launchArguments.firstIndex(of: "-TARGET_VIEW_CONTROLLER") {
             switch launchArguments[index + 1] {
@@ -119,7 +118,7 @@ extension SceneDelegate {
                 return DIContainer.makeLoginViewController()
             }()
         }
-        
+
         rootNavigationController.setViewControllers([rootViewController], animated: false)
     }
 }
