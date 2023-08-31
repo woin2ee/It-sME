@@ -11,17 +11,17 @@ import RxCocoa
 import Then
 
 final class ProfileEditingViewModel: ViewModelType {
-    
+
     private let deleteAccountUseCase: DeleteAccountUseCaseProtocol
     private let logoutUseCase: LogoutUseCaseProtocol
     private let saveProfileImageUseCase: SaveProfileImageUseCaseProtocol
     private let getProfileImageUseCase: GetProfileImageUseCaseProtocol
     private let saveUserProfileUseCase: SaveUserProfileUseCaseProtocol
     private let getUserProfileUseCase: GetUserProfileUseCaseProtocol
-    
+
     private let initialProfileImageData: Data?
     private let userInfoRelay: BehaviorRelay<UserProfile>
-    
+
     var currentBirthday: Date {
         let birthday = userInfoRelay.value.birthday.contents
         let dateFormatter = DateFormatter.init().then {
@@ -47,7 +47,7 @@ final class ProfileEditingViewModel: ViewModelType {
     var currentEducationItems: [Education] {
         userInfoRelay.value.educationItems
     }
-    
+
     init(
         deleteAccountUseCase: DeleteAccountUseCaseProtocol,
         logoutUseCase: LogoutUseCaseProtocol,
@@ -67,10 +67,10 @@ final class ProfileEditingViewModel: ViewModelType {
         self.initialProfileImageData = initialProfileImageData
         self.userInfoRelay = .init(value: initialUserProfile)
     }
-    
+
     func transform(input: Input) -> Output {
         let userInfoDriver = userInfoRelay.asDriver()
-        
+
         let viewDidLoad = input.viewDidLoad
             .filter { self.userInfoRelay.value == .empty }
             .flatMapLatest { _ -> Driver<Void> in
@@ -79,7 +79,7 @@ final class ProfileEditingViewModel: ViewModelType {
                     .mapToVoid()
                     .asDriverOnErrorJustComplete()
             }
-        
+
         let profileImageData = Driver.merge(
             input.newProfileImageData,
             userInfoDriver.flatMap {
@@ -91,7 +91,7 @@ final class ProfileEditingViewModel: ViewModelType {
                 .asDriverOnErrorJustComplete()
         )
             .startWith(initialProfileImageData)
-        
+
         let userName = Driver.merge(input.userName,
                                     userInfoDriver.map { $0.name })
             .startWith(userInfoRelay.value.name)
@@ -110,7 +110,7 @@ final class ProfileEditingViewModel: ViewModelType {
                 return self.saveUserProfileUseCase.execute(with: userProfile)
             }
             .asSignalOnErrorJustComplete()
-        
+
         let logoutComplete = input.logoutTrigger
             .flatMapFirst { _ in
                 return self.logoutUseCase.execute()
@@ -123,7 +123,7 @@ final class ProfileEditingViewModel: ViewModelType {
                     .andThenJustNext()
                     .asSignalOnErrorJustNext()
             }
-        
+
         return .init(
             profileImageData: profileImageData,
             userName: userName,
@@ -140,7 +140,7 @@ final class ProfileEditingViewModel: ViewModelType {
 // MARK: - Input & Output
 
 extension ProfileEditingViewModel {
-    
+
     struct Input {
         let tapEditingCompleteButton: Signal<Void>
         let userName: Driver<String>
@@ -149,7 +149,7 @@ extension ProfileEditingViewModel {
         let deleteAccountTrigger: Signal<Void>
         let newProfileImageData: Driver<Data?>
     }
-    
+
     struct Output {
         let profileImageData: Driver<Data?>
         let userName: Driver<String>
@@ -165,23 +165,23 @@ extension ProfileEditingViewModel {
 // MARK: - Internal Functions
 
 extension ProfileEditingViewModel {
-    
+
     func deleteEducationItem(at indexPath: IndexPath) {
         let userInfo = userInfoRelay.value
         userInfo.educationItems.remove(at: indexPath.row)
         userInfoRelay.accept(userInfo)
     }
-    
+
     func updateBirthday(_ userInfoItem: UserBasicProfileInfo) {
         let userInfo = userInfoRelay.value
         userInfo.birthday = userInfoItem
         userInfoRelay.accept(userInfo)
     }
-    
+
     func swapEducation(at sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         userInfoRelay.value.educationItems.swapAt(sourceIndexPath.row, destinationIndexPath.row)
     }
-    
+
     func endSwapEducation() {
         userInfoRelay.accept(userInfoRelay.value)
     }
@@ -190,7 +190,7 @@ extension ProfileEditingViewModel {
 // MARK: - EducationEditingViewModelDelegate
 
 extension ProfileEditingViewModel: EducationEditingViewModelDelegate {
-    
+
     func educationEditingViewModelDidEndEditing(with educationItem: Education, at index: IndexPath.Index) {
         let userInfo = userInfoRelay.value
         if userInfo.educationItems.indices ~= index {
@@ -198,13 +198,13 @@ extension ProfileEditingViewModel: EducationEditingViewModelDelegate {
             userInfoRelay.accept(userInfo)
         }
     }
-    
+
     func educationEditingViewModelDidAppend(educationItem: Education) {
         let userInfo = userInfoRelay.value
         userInfo.educationItems.append(educationItem)
         userInfoRelay.accept(userInfo)
     }
-    
+
     func educationEditingViewModelDidDeleteEducationItem(at index: IndexPath.Index) {
         let userInfo = userInfoRelay.value
         userInfo.educationItems.remove(at: index)
@@ -215,7 +215,7 @@ extension ProfileEditingViewModel: EducationEditingViewModelDelegate {
 // MARK: - OtherItemEditingViewModelDelegate
 
 extension ProfileEditingViewModel: OtherItemEditingViewModelDelegate {
-    
+
     func otherItemEditingViewModelDidEndEditing(with otherItem: UserBasicProfileInfo, at index: IndexPath.Index) {
         let userInfo = userInfoRelay.value
         if userInfo.otherItems.indices ~= index {
@@ -223,13 +223,13 @@ extension ProfileEditingViewModel: OtherItemEditingViewModelDelegate {
             userInfoRelay.accept(userInfo)
         }
     }
-    
+
     func otherItemEditingViewModelDidAppend(otherItem: UserBasicProfileInfo) {
         let userInfo = userInfoRelay.value
         userInfo.otherItems.append(otherItem)
         userInfoRelay.accept(userInfo)
     }
-    
+
     func otherItemEditingViewModelDidDeleteOtherItem(at index: IndexPath.Index) {
         let userInfo = userInfoRelay.value
         userInfo.otherItems.remove(at: index)
@@ -240,7 +240,7 @@ extension ProfileEditingViewModel: OtherItemEditingViewModelDelegate {
 // MARK: - AddressEditingViewModelDelegate
 
 extension ProfileEditingViewModel: AddressEditingViewModelDelegate {
-    
+
     func addressEditingViewModelDidEndEditing(with address: String) {
         let userInfo = userInfoRelay.value
         userInfo.address.contents = address
@@ -251,7 +251,7 @@ extension ProfileEditingViewModel: AddressEditingViewModelDelegate {
 // MARK: - PhoneNumberEditingViewModelDelegate
 
 extension ProfileEditingViewModel: PhoneNumberEditingViewModelDelegate {
-    
+
     func phoneNumberEditingViewModelDidEndEditing(with phoneNumber: String) {
         let userInfo = userInfoRelay.value
         userInfo.phoneNumber.contents = phoneNumber
@@ -262,7 +262,7 @@ extension ProfileEditingViewModel: PhoneNumberEditingViewModelDelegate {
 // MARK: - EmailEditingViewModelDelegate
 
 extension ProfileEditingViewModel: EmailEditingViewModelDelegate {
-    
+
     func emailEditingViewModelDidEndEditing(with email: String) {
         let userInfo = userInfoRelay.value
         userInfo.email.contents = email

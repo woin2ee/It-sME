@@ -14,13 +14,13 @@ final class CVEditViewController: UIViewController {
 
     private let disposeBag: DisposeBag = .init()
     private let viewModel: CVEditViewModel
-    
+
     // MARK: - UI Components
     private lazy var inputTableView: IntrinsicHeightTableView = .init(style: .insetGrouped).then {
         $0.dataSource = self
         $0.backgroundColor = .clear
     }
-    
+
     var inputCell: ContentsInputCell = .init().then {
         $0.contentsTextField.placeholder = "제목을 입력하세요."
         $0.titleLabel.text = "제목"
@@ -28,38 +28,38 @@ final class CVEditViewController: UIViewController {
         $0.contentsTextField.font = .systemFont(ofSize: 18)
         $0.contentsTextField.keyboardType = .default
     }
-    
+
     private lazy var completeBarButton: UIBarButtonItem = .init().then {
         $0.style = .done
     }
-    
+
     // MARK: - Initalizer
     init(viewModel: CVEditViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Life Cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureNavigationBar()
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemGroupedBackground
         configureSubviews()
         bindViewModel()
     }
-    
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         inputCell.contentsTextField.becomeFirstResponder()
@@ -69,7 +69,7 @@ final class CVEditViewController: UIViewController {
 // MARK: - Private Functions
 
 private extension CVEditViewController {
-    
+
     func configureSubviews() {
         let safeArea = self.view.safeAreaLayoutGuide
         self.view.addSubview(inputTableView)
@@ -77,41 +77,42 @@ private extension CVEditViewController {
             make.top.leading.trailing.equalTo(safeArea)
         }
     }
-    
+
     func configureNavigationBar() {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationItem.rightBarButtonItem = completeBarButton
     }
 }
 
-//MARK: - Binding ViewModel
+// MARK: - Binding ViewModel
 
 private extension CVEditViewController {
-    
+
     func bindViewModel() {
-        
+
         let input: CVEditViewModel.Input = .init(
             cvTitle: inputCell.contentsTextField.rx.text.orEmpty.asDriver(),
             doneTrigger: completeBarButton.rx.tap.asSignal()
         )
-        
+
         let output = viewModel.transform(input: input)
-        
-        [ output.cvTitle
-            .drive(inputCell.contentsTextField.rx.text),
-          output.cvTitle
-            .map(\.isNotEmpty)
-            .drive(completeBarButton.rx.isEnabled),
-          output.doneComplete
-            .emit(with: self, onNext: { owner, _ in
-                owner.navigationController?.popViewController(animated: true)
-            }),
-          output.editingType
-            .drive(editingTypeBinding),
+
+        [
+            output.cvTitle
+                .drive(inputCell.contentsTextField.rx.text),
+            output.cvTitle
+                .map(\.isNotEmpty)
+                .drive(completeBarButton.rx.isEnabled),
+            output.doneComplete
+                .emit(with: self, onNext: { owner, _ in
+                    owner.navigationController?.popViewController(animated: true)
+                }),
+            output.editingType
+                .drive(editingTypeBinding),
         ]
             .forEach { $0.disposed(by: disposeBag) }
     }
-    
+
     var editingTypeBinding: Binder<CVEditViewModel.EditingType> {
         .init(self) { vc, editingType in
             switch editingType {
@@ -124,15 +125,15 @@ private extension CVEditViewController {
             }
         }
     }
-    
+
 }
 // MARK: - UITableViewDataSource
 extension CVEditViewController: UITableViewDataSource {
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return inputCell
     }

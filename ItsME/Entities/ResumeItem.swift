@@ -8,12 +8,12 @@
 import Foundation
 
 final class ResumeItem: Codable {
-    
+
     var period: String
     var title: String
     var secondTitle: String
     var description: String
-    
+
     var startDate: String? {
         period.components(separatedBy: "-")[ifExists: 0]?.trimmingCharacters(in: .whitespacesAndNewlines)
     }
@@ -36,7 +36,7 @@ final class ResumeItem: Codable {
         guard let month = endDate?.components(separatedBy: ".")[ifExists: 1] else { return nil }
         return Int.init(month)
     }
-    
+
     init(period: String, title: String, secondTitle: String, description: String) {
         self.period = period
         self.title = title
@@ -48,7 +48,7 @@ final class ResumeItem: Codable {
 // MARK: - CodingKeys
 
 extension ResumeItem {
-    
+
     enum CodingKeys: CodingKey {
         case period
         case title
@@ -60,7 +60,7 @@ extension ResumeItem {
 // MARK: - Empty
 
 extension ResumeItem {
-    
+
     static var empty: ResumeItem {
         .init(period: "",
               title: "",

@@ -13,16 +13,16 @@ protocol AddressEditingViewModelDelegate: AnyObject {
 }
 
 final class AddressEditingViewModel: ViewModelType {
-    
+
     let initialAddress: String
-    
+
     weak var delegate: AddressEditingViewModelDelegate?
-    
+
     init(initialAddress: String, delegate: AddressEditingViewModelDelegate?) {
         self.initialAddress = initialAddress
         self.delegate = delegate
     }
-    
+
     func transform(input: Input) -> Output {
         let address = input.address
             .startWith(initialAddress)
@@ -30,7 +30,7 @@ final class AddressEditingViewModel: ViewModelType {
             .withLatestFrom(address)
             .doOnNext(delegate?.addressEditingViewModelDidEndEditing(with:))
             .mapToVoid()
-        
+
         return .init(
             address: address,
             saveComplete: saveComplete
@@ -41,12 +41,12 @@ final class AddressEditingViewModel: ViewModelType {
 // MARK: - Input & Output
 
 extension AddressEditingViewModel {
-    
+
     struct Input {
         let address: Driver<String>
         let saveTrigger: Signal<Void>
     }
-    
+
     struct Output {
         let address: Driver<String>
         let saveComplete: Signal<Void>

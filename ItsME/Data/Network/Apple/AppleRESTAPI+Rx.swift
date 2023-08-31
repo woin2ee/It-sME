@@ -9,14 +9,14 @@ import Foundation
 import RxSwift
 
 protocol RxAppleRESTAPIProtocol: AppleRESTAPIProtocol {
-    
+
     static func validateToken(withAuthorizationCode authorizationCode: String) -> Single<ResponseDTO>
-    
+
     static func revokeToken(_ token: String, tokenTypeHint: TokenTypeHint) -> Single<Void>
 }
 
 extension AppleRESTAPI: RxAppleRESTAPIProtocol {
-    
+
     static func validateToken(
         withAuthorizationCode authorizationCode: String
     ) -> Single<AppleIDTokenValidationResponseDTO> {
@@ -32,7 +32,7 @@ extension AppleRESTAPI: RxAppleRESTAPIProtocol {
             return Disposables.create()
         }
     }
-    
+
     static func revokeToken(
         _ token: String,
         tokenTypeHint: AppleIDTokenRevocationRequestDTO.TokenTypeHint
@@ -40,7 +40,7 @@ extension AppleRESTAPI: RxAppleRESTAPIProtocol {
         return .create { observer in
             revokeToken(token, tokenTypeHint: tokenTypeHint) { result in
                 switch result {
-                case .success(_):
+                case .success:
                     observer(.success(()))
                 case .failure(let error):
                     observer(.failure(error))

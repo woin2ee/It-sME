@@ -11,7 +11,7 @@ import Then
 import UITextView_Placeholder
 
 class CoverLetterContentCell: UITableViewCell {
-    
+
 // MARK: - UI Components
     lazy var content: UITextView = .init().then {
         $0.layer.cornerRadius = 10
@@ -31,25 +31,25 @@ class CoverLetterContentCell: UITableViewCell {
         super.awakeFromNib()
         fatalError("awakeFromNib() has not been implemented")
     }
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureSubviews()
         self.selectionStyle = .none
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(false, animated: false)
     }
-    
+
     private func configureSubviews() {
-        
+
         let contentInset = 15
-        
+
         self.contentView.addSubview(content)
         content.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(contentInset)

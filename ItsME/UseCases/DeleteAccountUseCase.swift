@@ -17,9 +17,9 @@ protocol DeleteAccountUseCaseProtocol {
 }
 
 struct DeleteAccountUseCase: DeleteAccountUseCaseProtocol {
-    
+
     // MARK: Shared Instance
-    
+
     static let shared: DeleteAccountUseCase = .init(
         userProfileRepository: UserProfileRepository.shared,
         cvRepository: CVRepository.shared,
@@ -27,20 +27,20 @@ struct DeleteAccountUseCase: DeleteAccountUseCaseProtocol {
         revokeAppleIDTokenUseCase: RevokeAppleIDRefreshTokenUseCase.shared,
         getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCase.shared
     )
-    
+
     // MARK: Dependencies
-    
+
     let userProfileRepository: UserProfileRepositoryProtocol
     let cvRepository: CVRepositoryProtocol
     let getAppleIDRefreshTokenFromKeychainUseCase: GetAppleIDRefreshTokenFromKeychainUseCaseProtocol
     let revokeAppleIDTokenUseCase: RevokeAppleIDRefreshTokenUseCaseProtocol
     let getCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCaseProtocol
-    
+
     // MARK: Execute
-    
+
     func execute() -> Completable {
         ItsMEUserDefaults.allowsAutoLogin = false
-        
+
         let deleteUserProfile = userProfileRepository.deleteUserProfile()
             .andThenJustNext()
         let deleteAllCVs = cvRepository.deleteAllCVs()
@@ -63,7 +63,7 @@ struct DeleteAccountUseCase: DeleteAccountUseCaseProtocol {
                 }
             }
         let deleteAccount = userProfileRepository.deleteAccount()
-        
+
         return Single.zip(deleteUserProfile, deleteAllCVs, deleteStorage, unlinkProvider)
             .mapToVoid()
             .catchAndReturn(())

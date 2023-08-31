@@ -12,15 +12,15 @@ import ItsMEUtil
 import SwiftJWT
 
 protocol AppleRESTAPIProtocol {
-    
+
     associatedtype TokenTypeHint: Encodable
     associatedtype ResponseDTO: Decodable
-    
+
     static func validateToken(
         withAuthorizationCode authorizationCode: String,
         completionHandler: @escaping ((Result<ResponseDTO, Error>) -> Void)
     )
-    
+
     static func revokeToken(
         _ token: String,
         tokenTypeHint: TokenTypeHint,
@@ -29,12 +29,12 @@ protocol AppleRESTAPIProtocol {
 }
 
 struct AppleRESTAPI {
-    
+
     struct EndPoint {
         static let token = "https://appleid.apple.com/auth/token"
         static let revoke = "https://appleid.apple.com/auth/revoke"
     }
-    
+
     static func validateToken(
         withAuthorizationCode authorizationCode: String,
         completionHandler: @escaping ((Result<AppleIDTokenValidationResponseDTO, Error>) -> Void)
@@ -47,7 +47,7 @@ struct AppleRESTAPI {
                     code: authorizationCode,
                     grantType: .authorizationCode
                 )
-                
+
                 AF.request(
                     EndPoint.token,
                     method: .post,
@@ -67,7 +67,7 @@ struct AppleRESTAPI {
             }
         }
     }
-    
+
     static func revokeToken(
         _ token: String,
         tokenTypeHint: AppleIDTokenRevocationRequestDTO.TokenTypeHint,
@@ -81,7 +81,7 @@ struct AppleRESTAPI {
                     token: token,
                     tokenTypeHint: tokenTypeHint
                 )
-                
+
                 AF.request(
                     EndPoint.revoke,
                     method: .post,
@@ -90,7 +90,7 @@ struct AppleRESTAPI {
                 )
                 .response { response in
                     switch response.result {
-                    case .success(_):
+                    case .success:
                         completionHandler(.success(()))
                     case .failure(let error):
                         completionHandler(.failure(error))
@@ -104,9 +104,9 @@ struct AppleRESTAPI {
 }
 
 extension AppleRESTAPI {
-    
+
     private static func makeClientSecret(completionHandler: @escaping ((Result<String, Error>) -> Void)) {
-        
+
         struct ClientSecretClaims: Claims {
             let iss: String
             let iat: Date
@@ -114,7 +114,7 @@ extension AppleRESTAPI {
             let aud: String
             let sub: String
         }
-        
+
         let header = Header(kid: Bundle.main.signInAppleKeyID)
         let now: Date = .now
         let claims = ClientSecretClaims(
@@ -125,7 +125,7 @@ extension AppleRESTAPI {
             sub: Bundle.main.identifier
         )
         var jwt = JWT(header: header, claims: claims)
-        
+
         Storage.storage().reference().child("credentials").child("AuthKey_5X3ZD7R927.p8")
             .getData(maxSize: 1 * 1024) { result in
                 switch result {

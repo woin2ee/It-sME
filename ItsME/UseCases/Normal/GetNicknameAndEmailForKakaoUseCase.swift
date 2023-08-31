@@ -8,8 +8,8 @@
 import Foundation
 
 struct GetNicknameAndEmailForKakaoUseCase {
-    
+
     static let shared: GetNicknameAndEmailForKakaoUseCase = .init()
-        
+
     private init() {}
 }

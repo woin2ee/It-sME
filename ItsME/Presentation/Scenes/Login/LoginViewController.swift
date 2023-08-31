@@ -11,13 +11,13 @@ import SnapKit
 import AuthenticationServices
 
 final class LoginViewController: UIViewController {
-    
+
     private let disposeBag: DisposeBag = .init()
-    
+
     private let viewModel: LoginViewModel
-    
+
     // MARK: UI Components
-    
+
     private let logoImageView: UIImageView = {
         return UIImageView.init(image: UIImage.init(named: "its_me_logo"))
     }()
@@ -28,20 +28,20 @@ final class LoginViewController: UIViewController {
         button.setImage(image, for: .normal)
         return button
     }()
-    
+
     // MARK: Initializers
-    
+
     init(viewModel: LoginViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: Life Cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureAppearance()
@@ -53,14 +53,14 @@ final class LoginViewController: UIViewController {
 // MARK: - Binding ViewModel
 
 extension LoginViewController {
-    
+
     private func bindViewModel() {
         let input = LoginViewModel.Input.init(
             kakaoLoginRequest: kakaoLoginButton.rx.tap.asSignal(),
             appleLoginRequest: appleLoginButton.rx.tap.asSignal()
         )
         let output = viewModel.transform(input: input)
-        
+
         output.loggedInAndNeedsSignUp
             .emit(with: self) { owner, needsSignUp in
                 switch needsSignUp {
@@ -79,36 +79,36 @@ extension LoginViewController {
 // MARK: - Methods
 
 extension LoginViewController {
-    
+
     private func configureAppearance() {
         self.view.backgroundColor = .white
     }
-    
+
     private func configureSubviews() {
         self.view.addSubview(logoImageView)
         self.view.addSubview(appleLoginButton)
         self.view.addSubview(kakaoLoginButton)
-        
+
         logoImageView.snp.makeConstraints { make in
             make.centerX.equalTo(self.view)
             make.centerY.equalTo(self.view).multipliedBy(0.7)
             make.width.height.equalTo(200)
         }
-        
+
         layoutLoginButtons()
     }
-    
+
     private func layoutLoginButtons() {
         let screenWidth = self.view.safeAreaLayoutGuide.layoutFrame.size.width
         let widthInset: CGFloat = 60
         let buttonSpec: LoginButtonSpec = .init(width: screenWidth - widthInset)
-        
+
         appleLoginButton.snp.makeConstraints { make in
             make.size.equalTo(buttonSpec.size)
             make.centerX.equalTo(self.view)
             make.top.equalTo(logoImageView.snp.bottom).offset(60)
         }
-        
+
         kakaoLoginButton.snp.makeConstraints { make in
             make.size.equalTo(buttonSpec.size)
             make.centerX.equalTo(self.view)
@@ -120,7 +120,7 @@ extension LoginViewController {
 // MARK: - LoginButtonSpec
 
 extension LoginViewController {
-    
+
     private struct LoginButtonSpec {
         let ratio: CGFloat = 90/600
         let width: CGFloat
@@ -130,7 +130,7 @@ extension LoginViewController {
         var size: CGSize {
             .init(width: width, height: height)
         }
-        
+
         init(width: CGFloat = 335) {
             self.width = width
         }

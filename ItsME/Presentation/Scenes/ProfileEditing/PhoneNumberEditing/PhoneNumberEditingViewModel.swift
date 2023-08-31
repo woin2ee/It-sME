@@ -13,16 +13,16 @@ protocol PhoneNumberEditingViewModelDelegate: AnyObject {
 }
 
 final class PhoneNumberEditingViewModel: ViewModelType {
-    
+
     let initialPhoneNumber: String
-    
+
     weak var delegate: PhoneNumberEditingViewModelDelegate?
-    
+
     init(initialPhoneNumber: String, delegate: PhoneNumberEditingViewModelDelegate) {
         self.initialPhoneNumber = initialPhoneNumber
         self.delegate = delegate
     }
-    
+
     func transform(input: Input) -> Output {
         let phoneNumber = input.phoneNumber
             .startWith(initialPhoneNumber)
@@ -30,7 +30,7 @@ final class PhoneNumberEditingViewModel: ViewModelType {
             .withLatestFrom(phoneNumber)
             .doOnNext(delegate?.phoneNumberEditingViewModelDidEndEditing(with:))
             .mapToVoid()
-        
+
         return .init(
             phoneNumber: phoneNumber,
             saveComplete: saveComplete
@@ -41,12 +41,12 @@ final class PhoneNumberEditingViewModel: ViewModelType {
 // MARK: - Input & Output
 
 extension PhoneNumberEditingViewModel {
-    
+
     struct Input {
         let phoneNumber: Driver<String>
         let saveTrigger: Signal<Void>
     }
-    
+
     struct Output {
         let phoneNumber: Driver<String>
         let saveComplete: Signal<Void>

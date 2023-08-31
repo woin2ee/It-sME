@@ -11,33 +11,33 @@ import RxTest
 import XCTest
 
 final class ProfileEditingViewModelTests: RxBaseTestCase {
-    
+
     var sut: ProfileEditingViewModel!
-    
+
     override func tearDownWithError() throws {
         try super.tearDownWithError()
         sut = nil
     }
-    
+
     func testLogoutCompleteWhenLogoutUseCaseError() {
         // Arrange
         sut = makeSUT(logoutUseCase: LogoutUseCaseMock(hasError: true))
         let trigger = testScheduler.createTrigger()
         let input = makeInput(logoutTrigger: trigger.asObservable())
         let output = sut.transform(input: input)
-        
+
         // Act
         let result = testScheduler.start {
             return output.logoutComplete
         }
-        
+
         // Assert
         XCTAssertRecordedElements(result.events, [()])
     }
 }
 
 extension ProfileEditingViewModelTests {
-    
+
     private func makeSUT(
         deleteAccountUseCase: DeleteAccountUseCaseProtocol = DeleteAccountUseCaseMock(hasError: false),
         logoutUseCase: LogoutUseCaseProtocol = LogoutUseCaseMock(hasError: false),
@@ -59,7 +59,7 @@ extension ProfileEditingViewModelTests {
             initialUserProfile: initialUserProfile
         )
     }
-    
+
     private func makeInput(
         tapEditingCompleteButton: Observable<Void> = .never(),
         userName: Observable<String> = .never(),

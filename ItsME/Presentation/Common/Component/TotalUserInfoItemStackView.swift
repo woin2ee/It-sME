@@ -11,18 +11,18 @@ import UIKit
 typealias UserInfoItemStackView = TotalUserInfoItemStackView
 
 final class TotalUserInfoItemStackView: UIStackView {
-    
+
     private var separatorLayers: [CALayer] = []
-    
+
     var hasSeparator: Bool = false {
         didSet { self.setNeedsLayout() }
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         self.backgroundColor = .clear
-        
+
         self.axis = .vertical
         let spacing: CGFloat = 8.0
         self.spacing = spacing
@@ -30,14 +30,14 @@ final class TotalUserInfoItemStackView: UIStackView {
         self.distribution = .equalSpacing
         self.directionalLayoutMargins = .init(top: spacing / 2, leading: spacing / 2, bottom: spacing / 2, trailing: spacing / 2)
         self.isLayoutMarginsRelativeArrangement = true
-        
+
         bind(userInfoItems: [])
     }
-    
+
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         if hasSeparator {
@@ -46,10 +46,10 @@ final class TotalUserInfoItemStackView: UIStackView {
             removeAllSeparator()
         }
     }
-    
+
     func bind(userInfoItems: [UserBasicProfileInfo]) {
         self.removeAllArrangedSubviews()
-        
+
         userInfoItems.forEach { userInfoItem in
             let component = ProfileInfoComponent.init(userInfoItem: userInfoItem)
             self.addArrangedSubview(component)
@@ -60,20 +60,20 @@ final class TotalUserInfoItemStackView: UIStackView {
 // MARK: - Private Functions
 
 private extension TotalUserInfoItemStackView {
-    
+
     /// ArrangedSubviews 사이에 같은 간격으로 Separator 를 추가합니다.
     func setSeparator() {
         removeAllSeparator()
-        
+
         let count = self.arrangedSubviews.count
         guard count > 0 else { return }
-        
-        for i in 0..<count - 1 {
-            let separatorLayer = self.arrangedSubviews[i].addBottomBorder(offset: self.spacing / 2)
+
+        (0..<count - 1).forEach {
+            let separatorLayer = self.arrangedSubviews[$0].addBottomBorder(offset: self.spacing / 2)
             separatorLayers.append(separatorLayer)
         }
     }
-    
+
     /// 모든 Separator 를 삭제합니다.
     func removeAllSeparator() {
         self.separatorLayers.forEach { layer in

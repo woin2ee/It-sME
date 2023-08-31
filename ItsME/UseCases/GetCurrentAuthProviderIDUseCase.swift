@@ -14,13 +14,13 @@ protocol GetCurrentAuthProviderIDUseCaseProtocol {
 }
 
 struct GetCurrentAuthProviderIDUseCase: GetCurrentAuthProviderIDUseCaseProtocol {
-    
+
     // MARK: Shared Instance
-    
+
     static let shared: GetCurrentAuthProviderIDUseCase = .init()
-    
+
     // MARK: Execute
-    
+
     func execute() -> Single<AuthProviderID> {
         return Auth.auth().rx.currentUser
             .map(\.providerData.first)

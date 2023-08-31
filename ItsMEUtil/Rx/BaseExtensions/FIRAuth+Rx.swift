@@ -9,7 +9,7 @@ import FirebaseAuth
 import RxSwift
 
 extension Reactive where Base: Auth {
-    
+
     public func signIn(with credential: AuthCredential) -> Single<AuthDataResult> {
         return .create { singleObserver in
             Task {
@@ -23,7 +23,7 @@ extension Reactive where Base: Auth {
             return Disposables.create()
         }
     }
-    
+
     public func signOut() -> Completable {
         return .create { observer in
             do {
@@ -35,7 +35,7 @@ extension Reactive where Base: Auth {
             return Disposables.create()
         }
     }
-    
+
     public var currentUser: Single<User> {
         guard let currentUser = Auth.auth().currentUser else {
             return .error(AuthErrorCode(.nullUser))

@@ -198,6 +198,7 @@ PODS:
     - BlueRSA (~> 1.0)
     - KituraContracts (~> 1.2)
     - LoggerAPI (~> 1.7)
+  - SwiftLint (0.52.4)
   - Swinject (2.8.3)
   - Then (3.0.0)
   - "UITextView+Placeholder (1.4.0)"
@@ -216,6 +217,7 @@ DEPENDENCIES:
   - SFSafeSymbols (~> 4.1.1)
   - SnapKit (= 5.6.0)
   - SwiftJWT (~> 3.6.2)
+  - SwiftLint
   - Swinject (= 2.8.3)
   - Then (~> 3.0.0)
   - "UITextView+Placeholder (~> 1.4.0)"
@@ -273,6 +275,7 @@ SPEC REPOS:
     - SFSafeSymbols
     - SnapKit
     - SwiftJWT
+    - SwiftLint
     - Swinject
     - Then
     - "UITextView+Placeholder"
@@ -329,10 +332,11 @@ SPEC CHECKSUMS:
   SFSafeSymbols: 902576dbf8ea16b4c6152cef2a26e47b3f55defb
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftJWT: 88c412708f58c169d431d344c87bc79a87c830ae
+  SwiftLint: 1cc5cd61ba9bacb2194e340aeb47a2a37fda00b3
   Swinject: 893c9a543000ac2f10ee4cbaf0933c6992c935d5
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
   "UITextView+Placeholder": d7b0c400921f66523f3a85d74f774512e14f6502
 
-PODFILE CHECKSUM: b1fca85b7b0cd592fb35b008815f07619b831a53
+PODFILE CHECKSUM: 41d665dabd28c19e60bad5049fa65d76c8a60a88
 
 COCOAPODS: 1.12.1

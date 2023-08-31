@@ -9,10 +9,10 @@
 import RxSwift
 
 struct GetProfileImageUseCaseMock: GetProfileImageUseCaseProtocol {
-    
+
     var hasError: Bool
     let profileImageData: Data = UIImage.defaultProfileImage.jpegData(compressionQuality: 1.0)!
-    
+
     func execute(withStoragePath path: String) -> Single<Data> {
         if hasError {
             return .error(TestError.testError)

@@ -12,26 +12,26 @@ import Then
 import UIKit
 
 final class SignUpViewController: UIViewController {
-    
+
     private let disposeBag: DisposeBag = .init()
     private let viewModel: SignUpViewModel
-    
+
     // MARK: Data Sources
-    
+
     var inputTitleLabelTexts: [String] {
         ["주소", "전화번호", "생일"]
     }
-    
+
     // MARK: Appearance
-    
+
     let inputTitleLabelFont: UIFont = .preferredFont(forTextStyle: .headline, weight: .semibold)
     let inputTextFieldFont: UIFont = .preferredFont(forTextStyle: .body)
     let inputValidationLabelFont: UIFont = .preferredFont(forTextStyle: .subheadline)
-    
+
     let inputValidationLabelColor: UIColor = .placeholderText
-    
+
     // MARK: UI Objects
-    
+
     private lazy var inputTitleLabels: [UILabel] = inputTitleLabelTexts.map { text in
         return UILabel().then {
             $0.text = text
@@ -82,7 +82,7 @@ final class SignUpViewController: UIViewController {
         $0.font = inputValidationLabelFont
         $0.adjustsFontForContentSizeCategory = true
     }
-    
+
     private lazy var startButton: UIButton = .init(configuration: .filled().with {
         let attributes: AttributeContainer = .init([
             NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title2, weight: .bold)
@@ -92,27 +92,27 @@ final class SignUpViewController: UIViewController {
         $0.baseForegroundColor = .white
         $0.buttonSize = .large
     })
-    
+
     // MARK: Initializers
-    
+
     init(viewModel: SignUpViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: Override
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemBackground
         setupConstraints()
         bindViewModel()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
@@ -122,7 +122,7 @@ final class SignUpViewController: UIViewController {
 // MARK: - Methods
 
 extension SignUpViewController {
-    
+
     private func setupConstraints() {
         // Declaration
         let containerScrollView: UIScrollView = .init().then {
@@ -147,7 +147,7 @@ extension SignUpViewController {
         containerScrollView.addSubview(contentView)
         contentView.addSubview(guideLabel)
         contentView.addSubview(inputStackView)
-        
+
         inputStackView.addArrangedSubview(makeInnerStackView().then {
             $0.addArrangedSubview(inputTitleLabels[0])
             $0.addArrangedSubview(addressTextField)
@@ -162,7 +162,7 @@ extension SignUpViewController {
             $0.addArrangedSubview(inputTitleLabels[2])
             $0.addArrangedSubview(birthdayDatePicker)
         })
-        
+
         contentView.addSubview(startButton)
         // Constraints
         containerScrollView.snp.makeConstraints { make in
@@ -190,7 +190,7 @@ extension SignUpViewController {
 // MARK: - Binding ViewModel
 
 extension SignUpViewController {
-    
+
     private func bindViewModel() {
         let input = SignUpViewModel.Input(
             birthday: birthdayDatePicker.rx.text.orEmpty.asDriver().map({ stringDate in
@@ -201,7 +201,7 @@ extension SignUpViewController {
             startTrigger: startButton.rx.tap.asSignal()
         )
         let output = viewModel.transform(input: input)
-        
+
         output.signUpComplete
             .emit(with: self, onNext: { owner, _ in
                 let homeViewController = DIContainer.makeHomeViewController()
@@ -214,11 +214,11 @@ extension SignUpViewController {
 // MARK: - UITextFieldDelegate
 
 extension SignUpViewController: UITextFieldDelegate {
-    
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let isEntering = !(range.length > 0)
         let enteredText: String
-        
+
         if isEntering {
             enteredText = (textField.text ?? "") + string
         } else {
@@ -228,11 +228,11 @@ extension SignUpViewController: UITextFieldDelegate {
             else {
                 return true
             }
-            
+
             currentText.removeSubrange(removeRange)
             enteredText = currentText
         }
-        
+
         textField.text = formatPhoneNumber(enteredText)
         textField.sendActions(for: .valueChanged)
         return false
@@ -254,20 +254,20 @@ import SwiftUI
 
 @available(iOS 13.0, *)
 struct SignUpViewControllerRepresenter: UIViewControllerRepresentable {
-    
+
     func makeUIViewController(context: Context) -> UIViewController {
         let signUpViewController = DIContainer.mock.makeSignUpViewController()
         let navigationController: UINavigationController = .init(rootViewController: signUpViewController)
         return navigationController
     }
-    
+
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
     }
 }
 
 @available(iOS 13.0, *)
 struct SignUpViewControllerPreview: PreviewProvider {
-    
+
     static var previews: some View {
         SignUpViewControllerRepresenter()
     }

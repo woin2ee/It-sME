@@ -8,8 +8,8 @@
 import Foundation
 
 struct LoginWithKakaoUseCase {
-    
+
     static let shared: LoginWithKakaoUseCase = .init()
-        
+
     private init() {}
 }

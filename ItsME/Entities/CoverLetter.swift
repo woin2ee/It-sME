@@ -9,7 +9,7 @@ import Foundation
 
 final class CoverLetter: Codable {
     var items: [CoverLetterItem]
-    
+
     init(items: [CoverLetterItem]) {
         self.items = items
     }
@@ -26,6 +26,6 @@ extension CoverLetter {
 extension CoverLetter {
     static var empty: CoverLetter {
         .init(items: [])
-        
+
     }
 }

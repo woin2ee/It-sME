@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIFont {
-    
+
     /// Returns an instance of the system font for the specified text style with scaling for the user's selected content size category and weight.
     /// - Parameters:
     ///   - style: The text style for which to return a font. See UIFont.TextStyle for recognized values.

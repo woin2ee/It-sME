@@ -16,13 +16,13 @@ protocol GetProfileImageUseCaseProtocol {
 }
 
 struct GetProfileImageUseCase: GetProfileImageUseCaseProtocol {
-    
+
     // MARK: Shared Instance
-    
+
     static let shared: GetProfileImageUseCase = .init()
-    
+
     // MARK: Execute
-    
+
     func execute(withStoragePath path: String) -> Single<Data> {
         return Storage.storage().reference().child(path).rx.getData().map { $0 }
     }

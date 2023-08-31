@@ -8,8 +8,8 @@
 import Foundation
 
 struct LoginWithAppleUseCase {
-    
+
     static let shared: LoginWithAppleUseCase = .init()
-        
+
     private init() {}
 }

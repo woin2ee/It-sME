@@ -14,11 +14,11 @@ import UIKit
 
 @available(iOS 13.0, *)
 extension Reactive where Base: ASAuthorizationController {
-    
+
     var delegateProxy: DelegateProxy<ASAuthorizationController, ASAuthorizationControllerDelegate> {
         return ASAuthorizationControllerDelegateProxy.proxy(for: self.base)
     }
-    
+
     var didCompleteWithAuthorization: Observable<ASAuthorization> {
         let selector = #selector(ASAuthorizationControllerDelegate.authorizationController(controller:didCompleteWithAuthorization:))
         return delegateProxy
@@ -36,22 +36,22 @@ extension Reactive where Base: ASAuthorizationController {
 
 @available(iOS 13.0, *)
 extension Reactive where Base: ASAuthorizationAppleIDButton {
-    
+
     func tapToLogin(scope: [ASAuthorization.Scope]? = nil) -> Observable<ASAuthorization> {
         return controlEvent(.touchUpInside)
             .flatMap {
                 let appleIDProvider = ASAuthorizationAppleIDProvider.init()
-                
+
                 let request = appleIDProvider.createRequest()
                 request.requestedScopes = scope
-                
+
                 let authorizationController = ASAuthorizationController.init(authorizationRequests: [request])
                 authorizationController.performRequests()
-                
+
                 return authorizationController.rx.didCompleteWithAuthorization
             }
     }
-    
+
     var tap: ControlEvent<Void> {
         return controlEvent(.touchUpInside)
     }

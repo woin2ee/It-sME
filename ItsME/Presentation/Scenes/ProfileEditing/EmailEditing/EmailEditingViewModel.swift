@@ -13,16 +13,16 @@ protocol EmailEditingViewModelDelegate: AnyObject {
 }
 
 final class EmailEditingViewModel: ViewModelType {
-    
+
     let initialEmail: String
-    
+
     weak var delegate: EmailEditingViewModelDelegate?
-    
+
     init(initialEmail: String, delegate: EmailEditingViewModelDelegate?) {
         self.initialEmail = initialEmail
         self.delegate = delegate
     }
-    
+
     func transform(input: Input) -> Output {
         let email = input.email
             .startWith(initialEmail)
@@ -30,7 +30,7 @@ final class EmailEditingViewModel: ViewModelType {
             .withLatestFrom(email)
             .doOnNext(delegate?.emailEditingViewModelDidEndEditing(with:))
             .mapToVoid()
-        
+
         return .init(
             email: email,
             saveComplete: saveComplete
@@ -41,12 +41,12 @@ final class EmailEditingViewModel: ViewModelType {
 // MARK: - Input & Output
 
 extension EmailEditingViewModel {
-    
+
     struct Input {
         let email: Driver<String>
         let saveTrigger: Signal<Void>
     }
-    
+
     struct Output {
         let email: Driver<String>
         let saveComplete: Signal<Void>

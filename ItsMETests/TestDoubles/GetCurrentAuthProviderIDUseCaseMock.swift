@@ -9,10 +9,10 @@
 import RxSwift
 
 struct GetCurrentAuthProviderIDUseCaseMock: GetCurrentAuthProviderIDUseCaseProtocol {
-    
+
     var authProviderID: AuthProviderID
     var hasError: Bool
-    
+
     func execute() -> Single<AuthProviderID> {
         if hasError {
             return .error(TestError.testError)

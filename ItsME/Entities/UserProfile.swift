@@ -20,11 +20,11 @@ final class UserProfile: Codable {
     var defaultItems: [UserBasicProfileInfo] {
         [birthday, address, phoneNumber, email]
     }
-    
+
     var allItems: [UserBasicProfileInfo] {
         defaultItems + otherItems
     }
-    
+
     init(
         name: String,
         profileImageURL: String,
@@ -44,7 +44,7 @@ final class UserProfile: Codable {
         self.otherItems = otherItems
         self.educationItems = educationItems
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decode(String.self, forKey: .name)
@@ -69,7 +69,7 @@ final class UserProfile: Codable {
 // MARK: - CodingKeys
 
 extension UserProfile {
-    
+
     enum CodingKeys: String, CodingKey {
         case name
         case profileImageURL
@@ -85,7 +85,7 @@ extension UserProfile {
 // MARK: - Equatable
 
 extension UserProfile: Equatable {
-    
+
     static func == (lhs: UserProfile, rhs: UserProfile) -> Bool {
         lhs.name == rhs.name &&
         lhs.profileImageURL == rhs.profileImageURL &&
@@ -99,7 +99,7 @@ extension UserProfile: Equatable {
 }
 
 extension UserProfile {
-    
+
     static var empty: UserProfile {
         .init(
             name: "",

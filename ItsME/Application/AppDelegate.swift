@@ -13,11 +13,9 @@ import RxKakaoSDKCommon
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
-        
+
         let infoDictionaryKey: String = "KAKAO_NATIVE_APP_KEY"
         guard let appKey = Bundle.main.object(forInfoDictionaryKey: infoDictionaryKey) as? String else {
             fatalError("Info.plist 파일에 \(infoDictionaryKey) 키 항목이 없습니다.")
@@ -44,14 +42,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate {
-    
+
     private func manipulateAuthStatusForTest() {
         let launchArguments = CommandLine.arguments
-        
+
         guard launchArguments.contains("-TEST") else {
             return
         }
-        
+
         guard let index = launchArguments.firstIndex(of: "-AUTHENTICATION"),
               let optionValue = launchArguments[ifExists: index + 1],
               optionValue == "TRUE"
@@ -59,10 +57,10 @@ extension AppDelegate {
             try? Auth.auth().signOut()
             return
         }
-        
+
         Task {
             do {
-                let _ = try await Auth.auth().signIn(withEmail: "itsme_ui_test_1@test.com", password: "ItsME_UI_TEST_1_PASSWORD")
+                _ = try await Auth.auth().signIn(withEmail: "itsme_ui_test_1@test.com", password: "ItsME_UI_TEST_1_PASSWORD")
             } catch {
                 fatalError("\(error)")
             }

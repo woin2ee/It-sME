@@ -9,7 +9,7 @@ import FirebaseStorage
 import RxSwift
 
 extension Reactive where Base: StorageReference {
-    
+
     public func getData(maxSize: Int64 = 3 * 1024 * 1024) -> Single<Data> {
         return .create { observer in
             let task = self.base.getData(maxSize: maxSize) { result in
@@ -21,13 +21,13 @@ extension Reactive where Base: StorageReference {
                 }
             }
             task.resume()
-            
+
             return Disposables.create {
                 task.cancel()
             }
         }
     }
-    
+
     public func putData(_ data: Data) -> Single<StorageMetadata> {
         return .create { observer in
             let task = self.base.putData(data) { result in
@@ -39,13 +39,13 @@ extension Reactive where Base: StorageReference {
                 }
             }
             task.resume()
-            
+
             return Disposables.create {
                 task.cancel()
             }
         }
     }
-    
+
     public func delete() -> Completable {
         return .create { observer in
             Task {

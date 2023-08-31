@@ -19,10 +19,10 @@ protocol ResumeItemEditingViewModelDelegate: AnyObject {
 }
 
 final class ResumeItemEditingViewModel: ViewModelType {
-    
+
     let editingType: EditingType
     private weak var delegate: ResumeItemEditingViewModelDelegate?
-    
+
     init(
         editingType: EditingType,
         delegate: ResumeItemEditingViewModelDelegate?
@@ -30,13 +30,13 @@ final class ResumeItemEditingViewModel: ViewModelType {
         self.editingType = editingType
         self.delegate = delegate
     }
-    
+
     func transform(input: Input) -> Output {
         let currentYear = Calendar.current.component(.year, from: .now)
         let currentMonth = Calendar.current.component(.month, from: .now)
-        
+
         let editingType = Driver.just(editingType)
-        
+
         let progressStatus = input.selectedProgressStatus
             .startWith {
                 switch self.editingType {
@@ -51,7 +51,7 @@ final class ResumeItemEditingViewModel: ViewModelType {
                     return .finish
                 }
             }
-        
+
         let title = input.title
             .startWith {
                 if case let .edit(_, target) = self.editingType {
@@ -60,7 +60,7 @@ final class ResumeItemEditingViewModel: ViewModelType {
                     return ""
                 }
             }
-        
+
         let secondTitle = input.secondTitle
             .startWith {
                 if case let .edit(_, target) = self.editingType {
@@ -69,7 +69,7 @@ final class ResumeItemEditingViewModel: ViewModelType {
                     return ""
                 }
             }
-        
+
         let description = input.description
             .startWith {
                 if case let .edit(_, target) = self.editingType {
@@ -78,7 +78,7 @@ final class ResumeItemEditingViewModel: ViewModelType {
                     return ""
                 }
             }
-        
+
         let startDate = input.selectedStartDate
             .startWith {
                 if case let .edit(_, target) = self.editingType {
@@ -87,7 +87,7 @@ final class ResumeItemEditingViewModel: ViewModelType {
                     return (currentYear, currentMonth)
                 }
             }
-        
+
         let endDate = input.selectedEndDate
             .startWith {
                 if case let .edit(_, target) = self.editingType {
@@ -96,7 +96,7 @@ final class ResumeItemEditingViewModel: ViewModelType {
                     return (currentYear, currentMonth)
                 }
             }
-        
+
         let resumeItem = Driver.combineLatest(
             title,
             secondTitle,
@@ -117,12 +117,12 @@ final class ResumeItemEditingViewModel: ViewModelType {
                               secondTitle: secondTitle,
                               description: description)
         }
-        
+
         let doneComplete = input.doneTrigger
             .withLatestFrom(resumeItem)
             .doOnNext(endEditing(with:))
             .mapToVoid()
-        
+
         return .init(
             title: title,
             secondTitle: secondTitle,
@@ -134,7 +134,7 @@ final class ResumeItemEditingViewModel: ViewModelType {
             progressStatus: progressStatus
         )
     }
-    
+
     private func endEditing(with resumeItem: ResumeItem) {
         switch editingType {
         case .edit(let indexPath, _):
@@ -148,7 +148,7 @@ final class ResumeItemEditingViewModel: ViewModelType {
 // MARK: - Input & Output
 
 extension ResumeItemEditingViewModel {
-    
+
     struct Input {
         let title: Driver<String>
         let secondTitle: Driver<String>
@@ -158,7 +158,7 @@ extension ResumeItemEditingViewModel {
         let doneTrigger: Signal<Void>
         let selectedProgressStatus: Driver<ProgressStatus>
     }
-    
+
     struct Output {
         let title: Driver<String>
         let secondTitle: Driver<String>
@@ -174,12 +174,12 @@ extension ResumeItemEditingViewModel {
 // MARK: - EditingType
 
 extension ResumeItemEditingViewModel {
-    
+
     enum EditingType {
-        
+
         /// 기존 카테고리 정보를 수정할 때 사용하는 열거형 값입니다.
         case edit(indexPath: IndexPath, resumeItem: ResumeItem)
-        
+
         /// 새 카테고리를 추가할 때 사용하는 열거형 값입니다.
         case new(section: Int)
     }

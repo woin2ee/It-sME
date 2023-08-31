@@ -8,8 +8,8 @@
 import Foundation
 
 struct SignInToFirebaseUseCase {
-    
+
     static let shared: SignInToFirebaseUseCase = .init()
-        
+
     private init() {}
 }

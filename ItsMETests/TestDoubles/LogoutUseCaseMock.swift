@@ -9,9 +9,9 @@
 import RxSwift
 
 struct LogoutUseCaseMock: LogoutUseCaseProtocol {
-    
+
     var hasError: Bool
-    
+
     func execute() -> Completable {
         if hasError {
             return .error(TestError.testError)

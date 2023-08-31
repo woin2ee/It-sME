@@ -10,10 +10,10 @@ import FirebaseStorage
 import RxSwift
 
 struct SaveProfileImageUseCaseMock: SaveProfileImageUseCaseProtocol {
-    
+
     var hasError: Bool
     let storageMetadata: StorageMetadata = .init()
-    
+
     func execute(withImageData imageData: Data) -> Single<StorageMetadata> {
         if hasError {
             return .error(TestError.testError)

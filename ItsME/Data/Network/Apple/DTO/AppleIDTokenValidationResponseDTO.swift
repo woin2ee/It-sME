@@ -8,13 +8,13 @@
 import Foundation
 
 extension AppleRESTAPI {
-    
+
     struct AppleIDTokenValidationResponseDTO: Decodable {
-        
+
         enum CodingKeys: String, CodingKey {
             case refreshToken = "refresh_token"
         }
-        
+
         let refreshToken: String
     }
 }

@@ -10,7 +10,7 @@ import RxCocoa
 import UIKit
 
 extension UIViewController {
-    
+
     /// <#Description#>
     /// - Parameters:
     ///   - title: 화면에 띄울 `UIAlertController` 의 `title`.
@@ -33,7 +33,7 @@ extension UIViewController {
 }
 
 extension Reactive where Base: UIViewController {
-    
+
     /// `UIAlertController` 를 띄우면서 확인 버튼을 선택했을 때만 이벤트를 방출하는 `Reactive wrapper` 를 반환합니다.
     /// - Parameters:
     ///   - title: 화면에 띄울 `UIAlertController` 의 `title`.
@@ -51,7 +51,7 @@ extension Reactive where Base: UIViewController {
     ) -> ControlEvent<Void> {
         let source: Observable<Void> = .create { observer in
             MainScheduler.ensureRunningOnMainThread()
-            
+
             let okActionProxy: UIAlertAction = .init(title: okAction.title, style: okAction.style) { _ in
                 observer.onNext(())
                 observer.onCompleted()
@@ -66,7 +66,7 @@ extension Reactive where Base: UIViewController {
                                           animated: animated)
             return Disposables.create()
         }
-        
+
         return ControlEvent<Void>.init(events: source)
     }
 }

@@ -10,38 +10,38 @@ import ItsMEUtil
 import RxSwift
 
 protocol UserProfileRepositoryProtocol {
-    
+
     var hasUserProfile: Single<Bool> { get }
-    
+
     func getUserProfile() -> Single<UserProfile>
-    
+
     func saveUserProfile(_ userInfo: UserProfile) -> Single<Void>
-    
+
     /// 데이터베이스에 저장된 현재 사용자의 프로필 정보를 삭제합니다.
     func deleteUserProfile() -> Completable
-    
+
     /// 현재 사용자의 계정을 Firebase Authentication 에서 삭제합니다.
     func deleteAccount() -> Single<Void>
 }
 
 final class UserProfileRepository: UserProfileRepositoryProtocol {
-    
+
     // MARK: Shared Instance
-    
+
     static let shared: UserProfileRepository = .init(database: DatabaseReferenceManager.shared)
-    
+
     // MARK: Dependencies
-    
+
     private let database: DatabaseReferenceManager
-    
+
     // MARK: Initializers
-    
+
     init(database: DatabaseReferenceManager) {
         self.database = database
     }
-    
+
     // MARK: API
-    
+
     var hasUserProfile: Single<Bool> {
         let source = Auth.auth().rx.currentUser
             .map { $0.uid }
@@ -49,7 +49,7 @@ final class UserProfileRepository: UserProfileRepositoryProtocol {
             .map { $0.exists() }
         return source
     }
-    
+
     func getUserProfile() -> Single<UserProfile> {
         let source = Auth.auth().rx.currentUser
             .map { $0.uid }
@@ -59,7 +59,7 @@ final class UserProfileRepository: UserProfileRepositoryProtocol {
             }
         return source
     }
-    
+
     func saveUserProfile(_ userInfo: UserProfile) -> Single<Void> {
         let source = Auth.auth().rx.currentUser
             .map { $0.uid }
@@ -70,7 +70,7 @@ final class UserProfileRepository: UserProfileRepositoryProtocol {
             }
         return source
     }
-    
+
     func deleteUserProfile() -> Completable {
         let source = Auth.auth().rx.currentUser
             .map(\.uid)
@@ -78,7 +78,7 @@ final class UserProfileRepository: UserProfileRepositoryProtocol {
             .asCompletable()
         return source
     }
-    
+
     func deleteAccount() -> Single<Void> {
         let source = Auth.auth().rx.currentUser
             .flatMap { user -> Single<Void> in

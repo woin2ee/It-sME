@@ -1,0 +1,27 @@
+disabled_rules:
+    - line_length
+    - unneeded_synthesized_initializer
+
+included:
+
+excluded:
+    Pods/
+
+nesting:
+    type_level:
+        warning: 2
+
+identifier_name:
+    max_length:
+        warning: 60
+        error: 80
+    excluded:
+        - vc
+        - ui
+
+type_name:
+    max_length:
+        warning: 60
+
+trailing_comma:
+    mandatory_comma: true

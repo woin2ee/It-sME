@@ -11,9 +11,9 @@ import SFSafeSymbols
 import SnapKit
 
 class DatePickerTextField: UITextField {
-    
+
     private lazy var buttonIcon: UIImageView = .init(image: UIImage(systemSymbol: .chevronDown))
-    
+
     private lazy var datePicker: UIDatePicker = .init().then {
         $0.contentHorizontalAlignment = .leading
         $0.datePickerMode = .date
@@ -31,35 +31,35 @@ class DatePickerTextField: UITextField {
         $0.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
         $0.translatesAutoresizingMaskIntoConstraints = false
     }
-    
-    //MARK: - Initiallizer
+
+    // MARK: - Initiallizer
     override init(frame: CGRect) {
         super.init(frame: frame)
         setViews()
         delegate = self
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
-//MARK: - SetViews
+// MARK: - SetViews
 extension DatePickerTextField {
-    
+
     func setViews() {
         self.inputAccessoryBackgroundView.addSubview(doneButton)
         doneButton.snp.makeConstraints { make in
             make.left.verticalEdges.equalToSuperview()
             make.right.equalToSuperview().offset(-15)
         }
-        
+
         rightView = buttonIcon
         rightViewMode = .always
         inputAccessoryView = inputAccessoryBackgroundView
     }
 }
-//MARK: - Selector
+// MARK: - Selector
 extension DatePickerTextField {
     @objc private func datePickerValueChanged() {
         let formatter = DateFormatter()
@@ -70,9 +70,9 @@ extension DatePickerTextField {
         resignFirstResponder()
     }
 }
-//MARK: - Delegate
-extension DatePickerTextField : UITextFieldDelegate{
-    
+// MARK: - Delegate
+extension DatePickerTextField: UITextFieldDelegate {
+
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         inputView = datePicker
         return true

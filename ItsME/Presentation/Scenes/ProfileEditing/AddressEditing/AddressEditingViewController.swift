@@ -11,12 +11,12 @@ import Then
 import UIKit
 
 final class AddressEditingViewController: UIViewController {
-    
+
     private let disposeBag: DisposeBag = .init()
     private let viewModel: AddressEditingViewModel
-    
+
     // MARK: - UI Components
-    
+
     private lazy var addressTextView: IntrinsicHeightTextView = .init().then {
         $0.backgroundColor = .secondarySystemGroupedBackground
         $0.textContainerInset = .init(top: 10, left: 4, bottom: 10, right: 4)
@@ -25,22 +25,22 @@ final class AddressEditingViewController: UIViewController {
         $0.returnKeyType = .done
         $0.layer.cornerRadius = 12.0
     }
-    
+
     private lazy var completeBarButton: UIBarButtonItem = .init(title: "완료")
-    
+
     // MARK: - Initializer
-    
+
     init(viewModel: AddressEditingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Life Cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemGroupedBackground
@@ -48,7 +48,7 @@ final class AddressEditingViewController: UIViewController {
         configureNavigationBar()
         bindViewModel()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         addressTextView.becomeFirstResponder()
@@ -58,7 +58,7 @@ final class AddressEditingViewController: UIViewController {
 // MARK: - Private Functions
 
 private extension AddressEditingViewController {
-    
+
     func configureSubviews() {
         let safeArea = self.view.safeAreaLayoutGuide
         self.view.addSubview(addressTextView)
@@ -66,7 +66,7 @@ private extension AddressEditingViewController {
             make.top.directionalHorizontalEdges.equalTo(safeArea).inset(20)
         }
     }
-    
+
     func configureNavigationBar() {
         self.navigationItem.title = "주소 편집"
         self.navigationItem.rightBarButtonItem = completeBarButton
@@ -77,14 +77,14 @@ private extension AddressEditingViewController {
 // MARK: - Binding ViewModel
 
 extension AddressEditingViewController {
-    
+
     private func bindViewModel() {
         let input = AddressEditingViewModel.Input.init(
             address: addressTextView.rx.text.orEmpty.asDriver(),
             saveTrigger: completeBarButton.rx.tap.asSignal()
         )
         let output = viewModel.transform(input: input)
-        
+
         [
             output.address
                 .drive(addressTextView.rx.text),
